@@ -1,3 +1,4 @@
+import Image from "next/image"
 export default function XOSection() {
     return (
         <section className="relative w-full md:min-h-screen h-[50vh] overflow-hidden bg-white flex items-start justify-center md:py-0">
@@ -14,11 +15,15 @@ export default function XOSection() {
                 />
             </div>
 
-            {/* Overlay Text */}
-            <div className="absolute inset-0 w-full h-full bg-white mix-blend-screen z-10 flex items-start justify-center pointer-events-none select-none pt-20 md:pt-35">
-                <h1 className="font-black text-black text-[40vw] md:text-[50vw] leading-none tracking-tighter flex items-center justify-center">
-                    XO
-                </h1>
+            {/* Overlay Image */}
+            <div className="absolute inset-0 w-full h-full bg-white mix-blend-screen z-10 flex items-start justify-center pointer-events-none select-none pt-20 md:pt-30">
+                <Image
+                    src="/images/XO.png"
+                    alt="XO"
+                    width={1000}
+                    height={600}
+                    className="w-[80vw] md:w-[70vw] h-auto object-contain"
+                />
             </div>
 
         </section>
