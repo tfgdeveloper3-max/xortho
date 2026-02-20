@@ -1,0 +1,206 @@
+@import "tailwindcss";
+/* @import "tw-animate-css";
+@import "shadcn/tailwind.css"; */
+
+/* NEXA font applied via next/font/local */
+
+/* ─── Nexa Font Family ─── */
+@font-face {
+  font-family: "Nexa";
+  src: url("/fonts/nexa/Nexa-Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nexa";
+  src: url("/fonts/nexa/NexaLightItalic.otf") format("opentype");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nexa";
+  src: url("/fonts/nexa/NexaRegular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+} 
+
+ @font-face {
+  font-family: "Nexa";
+  src: url("/fonts/nexa/NexaRegularItalic.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nexa";
+  src: url("/fonts/nexa/Nexa-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nexa";
+  src: url("/fonts/nexa/NexaBoldItalic.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nexa";
+  src: url("/fonts/nexa/NexaXBold.otf") format("opentype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nexa";
+  src: url("/fonts/nexa/NexaXBoldItalic.otf") format("opentype");
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nexa";
+  src: url("/fonts/nexa/NexaBlack.otf") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nexa";
+  src: url("/fonts/nexa/NexaBlackItalic.otf") format("opentype");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-heading: "Nexa", sans-serif;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+}
+
+:root {
+  --radius: 0.625rem;
+
+  /* Light background from the design */
+  --background: #FFFFFF;
+  --foreground: #0D0F1A;
+
+  /* Cards – white with subtle lift */
+  --card: #FFFFFF;
+  --card-foreground: #0D0F1A;
+
+  /* Popover */
+  --popover: #FFFFFF;
+  --popover-foreground: #0D0F1A;
+
+  /* Primary – vibrant indigo blue from design "blue" style */
+  --primary: #04006D;
+  --primary-foreground: #FFFFFF;
+
+  /* Secondary – "piano blue" from the design */
+  --secondary: #2C2895;
+  --secondary-foreground: #FFFFFF;
+
+  /* Muted – soft gray surface */
+  --muted: #F1F1F5;
+  --muted-foreground: #5C5F73;
+
+  /* Accent – slightly lighter blue for highlights */
+  --accent: #EEECff;
+  --accent-foreground: #3D31D8;
+
+  /* Destructive */
+  --destructive: #FF4C6E;
+
+  /* Borders and inputs */
+  --border: #E4E4EC;
+  --input: #E4E4EC;
+  --ring: #4A3AFF;
+
+  /* Chart palette – blue/indigo spectrum */
+  --chart-1: #4A3AFF;
+  --chart-2: #6C5CE7;
+  --chart-3: #3D31D8;
+  --chart-4: #8B7CFF;
+  --chart-5: #A29BFE;
+
+  /* Sidebar */
+  --sidebar: #F8F8FC;
+  --sidebar-foreground: #0D0F1A;
+  --sidebar-primary: #4A3AFF;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #EEECff;
+  --sidebar-accent-foreground: #0D0F1A;
+  --sidebar-border: #E4E4EC;
+  --sidebar-ring: #4A3AFF;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading) !important;
+  }
+}
