@@ -35,15 +35,15 @@ export default function XOAnimation({ onComplete, onProgress }: XOAnimationProps
       "#7ab8ff","#5b9bff","#4A90E2","#dff0ff",
     ];
 
-    // Image draw size
-    const IW = Math.min(W * 0.42, 420);
-    const IH = IW * 0.6;
+    // Image draw size — natural aspect ratio, not compressed
+    const IW = Math.min(W * 0.50, 520);
+    const IH = IW * 0.45;
     const IX = (W - IW) / 2;
     const IY = (H - IH) / 2;
 
     // Sample pixels from XO image to create particles ON the image
     function buildParticles() {
-      const OW = 420, OH = 252;
+      const OW = 520, OH = 234;
       const oc  = document.createElement("canvas");
       oc.width = OW; oc.height = OH;
       const oct = oc.getContext("2d")!;
@@ -235,7 +235,7 @@ export default function XOAnimation({ onComplete, onProgress }: XOAnimationProps
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         ref={imgRef}
-        src="/images/XO.png"
+        src="/images/XO2.png"
         alt=""
         crossOrigin="anonymous"
         style={{ display: "none" }}
