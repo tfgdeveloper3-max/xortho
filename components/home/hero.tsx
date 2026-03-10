@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import gsap from "gsap";
 import { ArrowRight, ChevronRight, X } from "lucide-react";
 
@@ -13,24 +14,28 @@ const products = [
   {
     id: "xboot", label: "Orthopedic\nXboot", abbr: "XB", short: "Boot", tag: "Orthopedic Boot",
     image: "/images/leg/shoe.png", title: "Orthopedic Xboot", subtitle: "Advanced Recovery Boot",
+    href: "/products/xboot",
     description: "An advanced pulley system allows for tailored compression. Low profile design fits comfortably under clothing — ideal for active patients or lifestyles.",
     features: ["Tailored compression pulley system", "Vertical stays for structural integrity", "Universal strap design", "Optimal Gel Cryo Pad for cold therapy"],
   },
   {
     id: "back", label: "Back\nSupport", abbr: "BS", short: "Back", tag: "Lumbar Belt",
     image: "/images/belt/back-belt3.png", title: "Back Support 627/642", subtitle: "Lumbar Compression Belt",
+    href: "/products/back",
     description: "Low profile design allows support to fit comfortably under clothing. Vertical stays provide structural integrity while allowing the flexibility needed.",
     features: ["Advanced pulley compression system", "Universal fit strap design", "Lumbar support stays", "Gel Cryo Pad compatible"],
   },
   {
     id: "knee", label: "Knee\nBrace", abbr: "KB", short: "Knee", tag: "Osteoarthritis",
     image: "/images/knee_brace/knee-brace.png", title: "Knee Brace OA", subtitle: "Osteoarthritis Support",
+    href: "/products/knee-brace",
     description: "An advanced pulley system allows for tailored compression. Low profile design allows support to fit comfortably under clothing for all-day wear.",
     features: ["Tailored compression control", "Low-profile under-clothing fit", "Vertical structural stays", "Gel Cryo cold therapy pad"],
   },
 ];
 
 export default function Hero({ noAnimation = false, playAnimation = false }: HeroProps) {
+  const router = useRouter();
   const heroRef = useRef<HTMLElement>(null);
   const line1Ref = useRef<HTMLSpanElement>(null);
   const line2Ref = useRef<HTMLSpanElement>(null);
@@ -122,6 +127,22 @@ export default function Hero({ noAnimation = false, playAnimation = false }: Her
     setTimeout(() => setSelectedId(id), activated ? 0 : 250);
   };
 
+  // Navigate to product detail page
+  const goToProduct = (href: string) => {
+    setActivated(false);
+    setTimeout(() => router.push(href), 300);
+  };
+
+  // Scroll to products section or navigate to /products
+  const scrollToProducts = () => {
+    const el = document.getElementById("products");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      router.push("/products");
+    }
+  };
+
   return (
     <>
       <style jsx>{`
@@ -168,7 +189,7 @@ export default function Hero({ noAnimation = false, playAnimation = false }: Her
 
             <div ref={btnRef} className="flex flex-col gap-3" style={{ opacity: 0 }}>
               <button
-                onClick={() => document.getElementById("products")?.scrollIntoView({ behavior: "smooth" })}
+                onClick={scrollToProducts}
                 className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 relative overflow-hidden">
                 <div className="absolute top-0 left-[5%] group-hover:left-[80%] duration-300 transition-all h-full w-10 bg-[#1651D1]/50 rounded-[200%] blur" />
                 <div className="flex items-center bg-white rounded-full px-3 py-2 md:px-5 md:py-3 relative z-10">
@@ -268,7 +289,6 @@ export default function Hero({ noAnimation = false, playAnimation = false }: Her
         className="fixed inset-0 z-[60] items-center justify-center"
         style={{ display: "none", opacity: 0, background: "rgba(2,4,16,0.92)", backdropFilter: "blur(12px)" }}
       >
-        {/* Centered container — same design as before, just full screen */}
         <div className="relative w-full max-w-2xl mx-4 sm:mx-auto p-[1.5px] rounded-2xl"
           style={{
             background: "linear-gradient(135deg, rgba(91,155,255,0.7), rgba(22,81,209,0.25), rgba(91,155,255,0.7))",
@@ -391,9 +411,10 @@ export default function Hero({ noAnimation = false, playAnimation = false }: Her
                   </div>
                 </div>
 
+                {/* ── View Full Details → routes to product page ── */}
                 <div className="px-5 sm:px-6 pb-5 sm:pb-6">
                   <button
-                    onClick={() => { setActivated(false); setTimeout(() => document.getElementById("products")?.scrollIntoView({ behavior: "smooth" }), 350); }}
+                    onClick={() => goToProduct(selected.href)}
                     className="w-full rounded-full py-3 text-white text-sm font-bold uppercase tracking-widest flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
                     style={{ background: "linear-gradient(135deg, #1651D1, #5b9bff)" }}>
                     View Full Details <ChevronRight className="w-4 h-4" />

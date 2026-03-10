@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import XOAnimation from "@/components/xoAnimation";
 import Hero from "@/components/home/hero";
 import XbootSection from "@/components/home/xboot-section";
@@ -15,20 +15,15 @@ import SectionTransition from "@/components/section-transition";
 import StickyButtons from "@/components/sticky-buttons";
 
 export default function Home() {
-  const [phase, setPhase] = useState<"xo" | "done">("xo");
+  const [xoDone, setXoDone] = useState(false);
   const [triggerHeroAnim, setTriggerHeroAnim] = useState(false);
-  const heroPreviewRef = useRef<HTMLDivElement>(null);
 
-  // Once XO phase starts, clone the hero video into the XO overlay preview div
+  // Inject hero video into XO preview div
   useEffect(() => {
-    if (phase !== "xo") return;
-
-    // Wait a tick for DOM to be ready
     const t = setTimeout(() => {
       const target = document.getElementById("xo-hero-preview");
       if (!target) return;
 
-      // Create a video element matching the hero background
       const video = document.createElement("video");
       video.src = "/video/Hero-Bg.mp4";
       video.autoplay = true;
@@ -42,7 +37,6 @@ export default function Home() {
         opacity: 0.82;
       `;
 
-      // Dark overlay on top of video
       const overlay = document.createElement("div");
       overlay.style.cssText = `
         position: absolute; inset: 0;
@@ -60,21 +54,31 @@ export default function Home() {
     }, 100);
 
     return () => clearTimeout(t);
-  }, [phase]);
+  }, []);
 
-  useEffect(() => {
-    if (phase === "done") {
-      setTimeout(() => setTriggerHeroAnim(true), 50);
-    }
-  }, [phase]);
+  const handleXOComplete = () => {
+    setXoDone(true);
+    // small delay then trigger hero entrance animation
+    setTimeout(() => setTriggerHeroAnim(true), 50);
+  };
 
   return (
     <>
-      {phase === "xo" && (
-        <XOAnimation onComplete={() => setPhase("done")} />
-      )}
+      {/* ✅ XO animation — absolutely on top, disappears when done */}
+      {!xoDone && <XOAnimation onComplete={handleXOComplete} />}
 
-      <div style={{ display: phase === "done" ? "block" : "none" }}>
+      {/*
+        ✅ KEY FIX: main content is ALWAYS rendered in DOM (never display:none)
+        When XO is playing, it sits below under the fixed overlay.
+        No mount/unmount = no white flash.
+        We use visibility+opacity to prevent interaction before XO done.
+      */}
+      <div
+        style={{
+          visibility: xoDone ? "visible" : "hidden",
+          // keep in render tree so no layout flash on reveal
+        }}
+      >
         <StickyButtons />
 
         <div

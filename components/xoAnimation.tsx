@@ -24,8 +24,7 @@ export default function XOAnimation({ onComplete, onProgress }: XOAnimationProps
     document.body.style.overflow = "hidden";
 
     let completed = false;
-    let scrollLocked = true; // XO is solid, waiting for scroll
-    let breakProgress = 0;   // 0 → 1 driven by scroll or auto
+    let breakProgress = 0;
 
     const ctx = canvas.getContext("2d", { alpha: true })!;
     ctx.imageSmoothingEnabled = false;
@@ -135,20 +134,25 @@ export default function XOAnimation({ onComplete, onProgress }: XOAnimationProps
       if (completed) return;
       completed = true;
       document.body.style.overflow = "";
+      // ✅ FIX: fade out to transparent (not white), hero is already fully visible underneath
       gsap.to(wrapper, {
-        opacity: 0, duration: 0.4, ease: "power2.inOut",
-        onComplete: () => { if (onComplete) onComplete(); }
+        opacity: 0,
+        duration: 0.35,
+        ease: "power2.inOut",
+        onComplete: () => {
+          // set display none so it's completely gone
+          wrapper.style.display = "none";
+          if (onComplete) onComplete();
+        }
       });
     }
 
-    // Scroll handler — drives break animation
     let autoBreakStarted = false;
     const progressObj = { value: 0 };
 
     function startBreakAnimation() {
       if (autoBreakStarted) return;
       autoBreakStarted = true;
-      scrollLocked = false;
 
       gsap.to(progressObj, {
         value: 1,
@@ -162,7 +166,6 @@ export default function XOAnimation({ onComplete, onProgress }: XOAnimationProps
       });
     }
 
-    // Listen for first scroll/wheel/touch
     function onFirstScroll() {
       if (autoBreakStarted) return;
       startBreakAnimation();
@@ -179,14 +182,10 @@ export default function XOAnimation({ onComplete, onProgress }: XOAnimationProps
     gsap.fromTo(
       xoDiv,
       { opacity: 0, scale: 0.85, filter: "blur(20px)" },
-      {
-        opacity: 1, scale: 1, filter: "blur(0px)",
-        duration: 1.6, delay: 0.3, ease: "power2.out",
-      }
+      { opacity: 1, scale: 1, filter: "blur(0px)", duration: 1.6, delay: 0.3, ease: "power2.out" }
     );
 
-    // Hero behind — starts zoomed in, zooms out as break progresses
-    // Initial zoom: 1.35 scale, zooms to 1.0 as progress → 1
+    // Hero behind — starts zoomed in
     gsap.set(heroScale, { scale: 1.35, opacity: 0 });
 
     let raf: number;
@@ -199,7 +198,7 @@ export default function XOAnimation({ onComplete, onProgress }: XOAnimationProps
       if (!completed) {
         const p = breakProgress;
 
-        // XO text image: solid when p=0, blurs and fades as break starts
+        // XO image fades out
         if (xoDiv) {
           const blurAmt = p * 18;
           const xoAlpha = Math.max(1 - p * 3.5, 0);
@@ -207,16 +206,17 @@ export default function XOAnimation({ onComplete, onProgress }: XOAnimationProps
           xoDiv.style.filter = `blur(${blurAmt}px)`;
         }
 
-        // Background (hero) — reveal and zoom out as break progresses
+        // Hero reveals behind shards — zoom out
         if (heroScale) {
-          const heroOpacity = Math.min(p * 3, 1); // fades in quickly
-          const heroScaleVal = 1.35 - p * 0.35;   // zooms from 1.35 to 1.0
+          const heroOpacity = Math.min(p * 3, 1);
+          const heroScaleVal = 1.35 - p * 0.35;
           heroScale.style.opacity = String(heroOpacity);
           heroScale.style.transform = `scale(${heroScaleVal})`;
         }
 
-        // White overlay fades out as hero reveals
-        const overlayOpacity = Math.max(1 - p * 2.5, 0);
+        // ✅ FIX: wrapper background fades from white to fully transparent
+        // so hero shows through with NO white flash at the end
+        const overlayOpacity = Math.max(1 - p * 2.2, 0);
         wrapper.style.background = `rgba(255,255,255,${overlayOpacity})`;
 
         // Canvas shards
@@ -244,6 +244,8 @@ export default function XOAnimation({ onComplete, onProgress }: XOAnimationProps
   }, [onComplete, onProgress]);
 
   return (
+    // ✅ FIX: wrapper starts transparent background handled in JS
+    // pointerEvents none after complete so hero is clickable
     <div
       ref={wrapperRef}
       style={{

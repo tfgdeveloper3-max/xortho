@@ -17,6 +17,7 @@ export default function BackSupportSection() {
   const healedGlowRef = useRef<HTMLDivElement>(null);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
   const loopRef = useRef<gsap.core.Tween | null>(null);
+  const heartbeatRef = useRef<gsap.core.Tween | null>(null);
   const hasStartedRef = useRef(false);
 
   const [phase, setPhase] = useState<"idle" | "pain" | "healing">("idle");
@@ -33,9 +34,8 @@ export default function BackSupportSection() {
     function resetAll() {
       gsap.set([
         normalRef.current, painRef.current, healedImgRef.current,
-        beltRef.current, healedGlowRef.current, painGlowRef.current,
+        beltRef.current, healedGlowRef.current,
       ], { opacity: 0, clearProps: "transform,clipPath,scale,y,x" });
-      gsap.set(contentRef.current, { opacity: 0, y: 40 });
       gsap.set(indicatorRef.current, { width: "0%" });
     }
 
@@ -45,18 +45,17 @@ export default function BackSupportSection() {
       tl.fromTo(normalRef.current, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 2.0 }, 0);
       tl.to(normalRef.current, { opacity: 0, duration: 1.2 }, 1.5);
       tl.fromTo(painRef.current, { opacity: 0, scale: 1.02 }, { opacity: 1, scale: 1, duration: 2.0 }, 2.0);
-      tl.fromTo(painGlowRef.current, { opacity: 0 }, { opacity: 1, duration: 1.2 }, 2.0);
       tl.to(painRef.current, { scale: 1.03, duration: 0.25, yoyo: true, repeat: 3, ease: "sine.inOut" }, 2.8);
 
       tl.fromTo(beltRef.current,
-        { opacity: 0, x: 50, scale: 0.97 },
-        { opacity: 1, x: 0, scale: 1, duration: 3.0, ease: "power1.out" }, 4.0);
+        { opacity: 0, y: 60, scale: 0.97 },
+        { opacity: 1, y: 0, scale: 1, duration: 3.0, ease: "power1.out" }, 4.0);
 
-      tl.to(painRef.current, { opacity: 0, duration: 1.2 }, 5.5);
-      tl.to(painGlowRef.current, { opacity: 0, duration: 1.2 }, 5.5);
+      // ✅ FIX: healed starts BEFORE pain fades — overlap prevents white flash
+      tl.fromTo(healedImgRef.current, { opacity: 0, scale: 0.98 }, { opacity: 1, scale: 1, duration: 2.5, ease: "power1.out" }, 5.0);
+      tl.fromTo(healedGlowRef.current, { opacity: 0 }, { opacity: 1, duration: 1.8 }, 5.0);
 
-      tl.fromTo(healedImgRef.current, { opacity: 0, scale: 0.98 }, { opacity: 1, scale: 1, duration: 2.5, ease: "power1.out" }, 6.0);
-      tl.fromTo(healedGlowRef.current, { opacity: 0 }, { opacity: 1, duration: 1.8 }, 6.0);
+      tl.to(painRef.current, { opacity: 0, duration: 1.5 }, 5.5);
 
       tl.fromTo(indicatorRef.current, { width: "0%" }, { width: "100%", duration: 12.0, ease: "none" }, 0);
 
@@ -68,7 +67,6 @@ export default function BackSupportSection() {
       hasStartedRef.current = true;
 
       resetAll();
-      gsap.to(contentRef.current, { opacity: 1, y: 0, duration: 1.4, ease: "power2.out", delay: 0.3 });
 
       const tl = buildHealTimeline();
       tlRef.current = tl;
@@ -130,17 +128,23 @@ export default function BackSupportSection() {
   const isPain = phase === "pain";
   const isHealing = phase === "healing";
 
-  const contentGlow = isPain
-    ? "0 0 60px 10px rgba(239,68,68,0.18), 0 0 120px 30px rgba(239,68,68,0.08)"
-    : isHealing
-    ? "0 0 60px 10px rgba(34,197,94,0.18), 0 0 120px 30px rgba(34,197,94,0.08)"
-    : "none";
-
-  const contentBorder = isPain
-    ? "1px solid rgba(239,68,68,0.20)"
-    : isHealing
-    ? "1px solid rgba(34,197,94,0.20)"
-    : "1px solid transparent";
+  // Heartbeat on pain glow, steady on healing
+  useEffect(() => {
+    heartbeatRef.current?.kill();
+    if (phase === "pain") {
+      heartbeatRef.current = gsap.to(painGlowRef.current, {
+        opacity: 0.15,
+        duration: 0.25,
+        ease: "power2.in",
+        yoyo: true,
+        repeat: -1,
+        repeatDelay: 0.6,
+      });
+      gsap.to(painGlowRef.current, { opacity: 1, duration: 0.01, overwrite: false });
+    } else {
+      gsap.set(painGlowRef.current, { opacity: 0 });
+    }
+  }, [phase]);
 
   const labelColor = isPain ? "#ef4444" : isHealing ? "#22c55e" : "#ef4444";
   const labelText = isPain ? "⚠ Pain Phase" : isHealing ? "✦ Recovery Phase" : "Pain → Recovery";
@@ -159,20 +163,21 @@ export default function BackSupportSection() {
       <div className="container mx-auto px-5 md:px-[100px] w-full relative z-10">
         <div className="flex flex-col md:grid md:grid-cols-[40%_60%] gap-0 md:gap-10 items-center">
 
-          {/* Content side with dynamic glow */}
+          {/* Content side */}
           <div
             ref={contentRef}
-            className="flex flex-col gap-4 md:gap-6 px-4 md:px-0 md:pr-10 order-2 md:order-1 py-10 md:py-20 rounded-3xl transition-all duration-700"
-            style={{
-              opacity: 0,
-              transform: "translateY(40px)",
-              boxShadow: contentGlow,
-              border: contentBorder,
-            }}
+            className="flex flex-col gap-4 md:gap-6 px-4 md:px-0 md:pr-10 order-2 md:order-1 py-10 md:py-20"
           >
             <span
               className="text-xs uppercase tracking-widest font-semibold transition-all duration-500"
-              style={{ color: labelColor }}
+              style={{
+                color: labelColor,
+                textShadow: isPain
+                  ? "0 0 12px rgba(239,68,68,0.8), 0 0 24px rgba(239,68,68,0.4)"
+                  : isHealing
+                  ? "0 0 12px rgba(34,197,94,0.8), 0 0 24px rgba(34,197,94,0.4)"
+                  : "none",
+              }}
             >
               {labelText}
             </span>
@@ -183,15 +188,14 @@ export default function BackSupportSection() {
             </h2>
 
             <div
-              className="flex flex-col text-[#4A5568] text-sm sm:text-base md:text-xl leading-relaxed gap-1 transition-all duration-500 rounded-2xl"
+              className="flex flex-col text-sm sm:text-base md:text-xl leading-relaxed gap-1 transition-all duration-500"
               style={{
-                background: isPain ? "rgba(239,68,68,0.04)" : isHealing ? "rgba(34,197,94,0.04)" : "transparent",
-                padding: isPain || isHealing ? "16px" : "0",
-                border: isPain
-                  ? "1px solid rgba(239,68,68,0.12)"
+                color: isPain ? "rgba(239,68,68,0.85)" : isHealing ? "rgba(34,197,94,0.85)" : "#4A5568",
+                textShadow: isPain
+                  ? "0 0 8px rgba(239,68,68,0.25)"
                   : isHealing
-                  ? "1px solid rgba(34,197,94,0.12)"
-                  : "1px solid transparent",
+                  ? "0 0 8px rgba(34,197,94,0.25)"
+                  : "none",
               }}
             >
               {isPain && (
@@ -229,18 +233,22 @@ export default function BackSupportSection() {
 
           {/* Image side */}
           <div className="relative w-full h-[300px] sm:h-[400px] md:h-[700px] order-1 md:order-2 mt-10 md:mt-20">
-            <div ref={normalRef} className="absolute inset-0 opacity-0">
+            {/* ✅ Base layer — always visible, prevents white background showing */}
+            <div className="absolute inset-0" style={{ zIndex: 0 }}>
+              <Image src="/images/belt/back-normal.png" alt="Normal back base" fill className="object-contain object-center" priority />
+            </div>
+            <div ref={normalRef} className="absolute inset-0 opacity-0" style={{ zIndex: 1 }}>
               <Image src="/images/belt/back-normal.png" alt="Normal back" fill className="object-contain object-center" priority />
             </div>
-            <div ref={painRef} className="absolute inset-0 opacity-0">
+            <div ref={painRef} className="absolute inset-0 opacity-0" style={{ zIndex: 2 }}>
               <Image src="/images/belt/back-pain.png" alt="Back pain" fill className="object-contain object-center" />
             </div>
-            <div ref={beltRef} className="absolute inset-0 opacity-0" style={{ zIndex: 3 }}>
+            <div ref={beltRef} className="absolute inset-0 opacity-0" style={{ zIndex: 4 }}>
               <div className="absolute" style={{ width: "100%", height: "100%", mixBlendMode: "multiply" }}>
                 <Image src="/images/belt/back-belt3.png" alt="Back Support Belt" fill className="object-contain" />
               </div>
             </div>
-            <div ref={healedImgRef} className="absolute inset-0 opacity-0" style={{ zIndex: 2 }}>
+            <div ref={healedImgRef} className="absolute inset-0 opacity-0" style={{ zIndex: 3 }}>
               <Image src="/images/belt/back-healed.png" alt="Healed back" fill className="object-contain object-center" />
             </div>
           </div>
