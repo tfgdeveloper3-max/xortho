@@ -232,7 +232,7 @@ export default function Navbar() {
 
       {/* NAVBAR */}
       <div id="main-navbar" className={`fixed top-0 left-0 w-full z-50 transition-all duration-400 ${
-        isScrolled && !productsOpen ? "bg-white/95 backdrop-blur-md shadow-md py-2" : "bg-transparent py-3"
+        isScrolled && !productsOpen ? "bg-white/95 backdrop-blur-md shadow-md py-4" : "bg-transparent py-3"
       }`}>
         <div className="w-full px-20 sm:px-24 md:px-28 lg:px-32 flex items-center justify-between gap-4">
 
@@ -242,7 +242,22 @@ export default function Navbar() {
             style={{
               filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.6)) drop-shadow(0 0 20px rgba(180,200,255,0.25)) drop-shadow(2px 4px 8px rgba(0,0,0,0.8))",
             }}>
-            <Image src="/images/logo.png" alt="Xortho Logo" width={160} height={160} className="w-full h-auto object-contain" />
+            <div className="relative w-full h-auto">
+              <Image
+                src="/images/logo.png"
+                alt="Xortho Logo"
+                width={160} height={160}
+                className="w-full h-auto object-contain transition-all duration-300"
+                style={{ opacity: isScrolled && !productsOpen ? 0 : 1, position: isScrolled && !productsOpen ? "absolute" : "relative" }}
+              />
+              <Image
+                src="/images/XO.png"
+                alt="XO"
+                width={80} height={80}
+                className="w-full h-auto object-contain transition-all duration-300"
+                style={{ opacity: isScrolled && !productsOpen ? 1 : 0, position: isScrolled && !productsOpen ? "relative" : "absolute", top: 0, left: 0 }}
+              />
+            </div>
           </button>
 
           {/* Desktop Nav */}

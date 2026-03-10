@@ -46,8 +46,8 @@ export default function XbootSection() {
       tl.fromTo(normalRef.current, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 2.0 }, 0);
       tl.to(normalRef.current, { opacity: 0, duration: 1.2 }, 1.5);
 
-      tl.fromTo(painRef.current, { opacity: 0, scale: 1.02 }, { opacity: 1, scale: 1, duration: 2.0 }, 2.0);
-      tl.to(painRef.current, { scale: 1.03, duration: 0.25, yoyo: true, repeat: 3, ease: "sine.inOut" }, 2.8);
+      // pain fades in cleanly — no scale/blink
+      tl.fromTo(painRef.current, { opacity: 0 }, { opacity: 1, duration: 2.0 }, 2.0);
 
       // boot slides in from bottom
       tl.fromTo(bootRef.current,
@@ -127,21 +127,28 @@ export default function XbootSection() {
     };
   }, []);
 
-  // Heartbeat on pain glow, steady on healing
+  // Heartbeat — full image aura pulses like a heartbeat
   useEffect(() => {
     heartbeatRef.current?.kill();
     if (phase === "pain") {
-      heartbeatRef.current = gsap.to(painGlowRef.current, {
-        opacity: 0.15,
-        duration: 0.25,
+      const proxy = { v: 1 };
+      const el = painRef.current;
+      const setFilter = (v: number) => {
+        if (!el) return;
+        el.style.filter = `drop-shadow(0 0 ${18 * v}px rgba(239,68,68,${0.95 * v})) drop-shadow(0 0 ${40 * v}px rgba(239,68,68,${0.5 * v})) drop-shadow(0 0 ${70 * v}px rgba(239,68,68,${0.25 * v}))`;
+      };
+      setFilter(1);
+      heartbeatRef.current = gsap.to(proxy, {
+        v: 0.08,
+        duration: 0.3,
         ease: "power2.in",
         yoyo: true,
         repeat: -1,
-        repeatDelay: 0.6,
+        repeatDelay: 0.55,
+        onUpdate: () => setFilter(proxy.v),
       });
-      gsap.to(painGlowRef.current, { opacity: 1, duration: 0.01, overwrite: false });
     } else {
-      gsap.set(painGlowRef.current, { opacity: 0 });
+      if (painRef.current) painRef.current.style.filter = "none";
     }
   }, [phase]);
 

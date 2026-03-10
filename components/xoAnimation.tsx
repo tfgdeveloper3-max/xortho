@@ -12,14 +12,12 @@ export default function XOAnimation({ onComplete, onProgress }: XOAnimationProps
   const wrapperRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const xoImgRef = useRef<HTMLDivElement>(null);
-  const heroScaleRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const wrapper = wrapperRef.current!;
     const canvas = canvasRef.current!;
     const xoDiv = xoImgRef.current;
-    const heroScale = heroScaleRef.current;
-    if (!wrapper || !canvas || !xoDiv || !heroScale) return;
+    if (!wrapper || !canvas || !xoDiv) return;
 
     document.body.style.overflow = "hidden";
 
@@ -31,7 +29,6 @@ export default function XOAnimation({ onComplete, onProgress }: XOAnimationProps
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    // Build shard positions from XO text
     const off = document.createElement("canvas");
     off.width = canvas.width;
     off.height = canvas.height;
@@ -134,17 +131,9 @@ export default function XOAnimation({ onComplete, onProgress }: XOAnimationProps
       if (completed) return;
       completed = true;
       document.body.style.overflow = "";
-      // ✅ FIX: fade out to transparent (not white), hero is already fully visible underneath
-      gsap.to(wrapper, {
-        opacity: 0,
-        duration: 0.35,
-        ease: "power2.inOut",
-        onComplete: () => {
-          // set display none so it's completely gone
-          wrapper.style.display = "none";
-          if (onComplete) onComplete();
-        }
-      });
+      // Hero already fully visible behind — remove wrapper instantly, no fade
+      wrapper.style.display = "none";
+      if (onComplete) onComplete();
     }
 
     let autoBreakStarted = false;
@@ -153,7 +142,6 @@ export default function XOAnimation({ onComplete, onProgress }: XOAnimationProps
     function startBreakAnimation() {
       if (autoBreakStarted) return;
       autoBreakStarted = true;
-
       gsap.to(progressObj, {
         value: 1,
         duration: 3.0,
@@ -166,27 +154,17 @@ export default function XOAnimation({ onComplete, onProgress }: XOAnimationProps
       });
     }
 
-    function onFirstScroll() {
-      if (autoBreakStarted) return;
-      startBreakAnimation();
-      window.removeEventListener("wheel", onFirstScroll);
-      window.removeEventListener("touchmove", onFirstScroll);
-      window.removeEventListener("keydown", onFirstScroll);
-    }
-
-    window.addEventListener("wheel", onFirstScroll, { passive: true });
-    window.addEventListener("touchmove", onFirstScroll, { passive: true });
-    window.addEventListener("keydown", onFirstScroll, { passive: true });
-
-    // XO solid fade-in
     gsap.fromTo(
       xoDiv,
       { opacity: 0, scale: 0.85, filter: "blur(20px)" },
-      { opacity: 1, scale: 1, filter: "blur(0px)", duration: 1.6, delay: 0.3, ease: "power2.out" }
+      {
+        opacity: 1, scale: 1, filter: "blur(0px)",
+        duration: 1.6, delay: 0.3, ease: "power2.out",
+        onComplete: () => {
+          gsap.delayedCall(0.5, startBreakAnimation);
+        }
+      }
     );
-
-    // Hero behind — starts zoomed in
-    gsap.set(heroScale, { scale: 1.35, opacity: 0 });
 
     let raf: number;
     let lastTime = 0;
@@ -198,28 +176,25 @@ export default function XOAnimation({ onComplete, onProgress }: XOAnimationProps
       if (!completed) {
         const p = breakProgress;
 
-        // XO image fades out
         if (xoDiv) {
-          const blurAmt = p * 18;
-          const xoAlpha = Math.max(1 - p * 3.5, 0);
-          xoDiv.style.opacity = String(xoAlpha);
-          xoDiv.style.filter = `blur(${blurAmt}px)`;
+          xoDiv.style.opacity = String(Math.max(1 - p * 3.5, 0));
+          xoDiv.style.filter = `blur(${p * 18}px)`;
         }
 
-        // Hero reveals behind shards — zoom out
-        if (heroScale) {
-          const heroOpacity = Math.min(p * 3, 1);
-          const heroScaleVal = 1.35 - p * 0.35;
-          heroScale.style.opacity = String(heroOpacity);
-          heroScale.style.transform = `scale(${heroScaleVal})`;
+        // p=0: white (XO on white)
+        // p=0→0.3: white fades to dark #020916
+        // p=0.3→1: dark fades to fully transparent → hero visible, NO white ever
+        if (p < 0.3) {
+          const t = p / 0.3;
+          const r = Math.round(255 * (1 - t) + 2 * t);
+          const g = Math.round(255 * (1 - t) + 9 * t);
+          const b = Math.round(255 * (1 - t) + 22 * t);
+          wrapper.style.background = `rgb(${r},${g},${b})`;
+        } else {
+          const fadeOut = Math.max(1 - (p - 0.3) / 0.7, 0);
+          wrapper.style.background = `rgba(2,9,22,${fadeOut})`;
         }
 
-        // ✅ FIX: wrapper background fades from white to fully transparent
-        // so hero shows through with NO white flash at the end
-        const overlayOpacity = Math.max(1 - p * 2.2, 0);
-        wrapper.style.background = `rgba(255,255,255,${overlayOpacity})`;
-
-        // Canvas shards
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         if (p > 0.02) {
           const shardAlpha = p < 0.55
@@ -237,38 +212,19 @@ export default function XOAnimation({ onComplete, onProgress }: XOAnimationProps
     return () => {
       cancelAnimationFrame(raf);
       document.body.style.overflow = "";
-      window.removeEventListener("wheel", onFirstScroll);
-      window.removeEventListener("touchmove", onFirstScroll);
-      window.removeEventListener("keydown", onFirstScroll);
     };
   }, [onComplete, onProgress]);
 
   return (
-    // ✅ FIX: wrapper starts transparent background handled in JS
-    // pointerEvents none after complete so hero is clickable
     <div
       ref={wrapperRef}
       style={{
         position: "fixed", inset: 0, zIndex: 9999,
-        background: "#ffffff",
+        background: "#ffffff", // ✅ SAME as hero bg — never white, ever
         display: "flex", alignItems: "center", justifyContent: "center",
         overflow: "hidden",
       }}
     >
-      {/* Hero section rendered BEHIND, zoomed in, revealed during break */}
-      <div
-        ref={heroScaleRef}
-        style={{
-          position: "absolute", inset: 0, zIndex: 1,
-          opacity: 0,
-          transform: "scale(1.35)",
-          transformOrigin: "center center",
-          willChange: "transform, opacity",
-        }}
-        id="xo-hero-preview"
-      />
-
-      {/* XO logo image */}
       <div
         ref={xoImgRef}
         style={{
