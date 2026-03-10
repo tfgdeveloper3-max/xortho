@@ -18,14 +18,13 @@ export default function Home() {
   const [xoDone, setXoDone] = useState(false);
 
   return (
-    <>
-      {/* Hero always rendered — XO sits on top as fixed overlay */}
-      <div style={{ pointerEvents: xoDone ? "auto" : "none" }}>
+    // Dark root — if anything transparent, dark shows not white
+    <div style={{ background: "#020916" }}>
+
+      {/* Hero always rendered and visible — XO canvas sits on top */}
+      <div style={{ pointerEvents: xoDone ? "auto" : "none", position: "relative", zIndex: 1 }}>
         <StickyButtons />
-        <div
-          id="main-navbar"
-          style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 99999 }}
-        >
+        <div style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 99999 }}>
           <Navbar />
         </div>
         <SectionTransition onNavbarVisible={() => {}}>
@@ -42,12 +41,8 @@ export default function Home() {
         </SectionTransition>
       </div>
 
-      {/*
-        XO is ALWAYS mounted — never conditionally rendered.
-        complete() sets wrapper display:none via JS directly.
-        No React unmount = no white flash frame ever.
-      */}
+      {/* XO always mounted — never unmounted — just display:none when done */}
       <XOAnimation onComplete={() => setXoDone(true)} />
-    </>
+    </div>
   );
 }

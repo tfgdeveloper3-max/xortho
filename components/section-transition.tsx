@@ -12,7 +12,6 @@ export default function SectionTransition({ children, onNavbarVisible }: Props) 
     const [showBackToTop, setShowBackToTop] = useState(false);
     const targetYRef = useRef(0);
 
-    // ── RAF-based smooth scroll ───────────────────────────────────
     useEffect(() => {
         let currentY = window.scrollY;
         targetYRef.current = window.scrollY;
@@ -37,9 +36,7 @@ export default function SectionTransition({ children, onNavbarVisible }: Props) 
         }
 
         let touchStartY = 0;
-        function onTouchStart(e: TouchEvent) {
-            touchStartY = e.touches[0].clientY;
-        }
+        function onTouchStart(e: TouchEvent) { touchStartY = e.touches[0].clientY; }
         function onTouchMove(e: TouchEvent) {
             e.preventDefault();
             const delta = (touchStartY - e.touches[0].clientY) * 1.5;
@@ -61,7 +58,6 @@ export default function SectionTransition({ children, onNavbarVisible }: Props) 
         };
     }, []);
 
-    // ── Navbar + back-to-top visibility ──────────────────────────
     useEffect(() => {
         function onScroll() {
             setShowBackToTop(window.scrollY > window.innerHeight * 0.5);
@@ -72,20 +68,15 @@ export default function SectionTransition({ children, onNavbarVisible }: Props) 
         return () => window.removeEventListener("scroll", onScroll);
     }, [onNavbarVisible]);
 
-    // ── IntersectionObserver → sectionRevealed ───────────────────
     useEffect(() => {
         const sections = sectionsRef.current.filter(Boolean);
         const observers: IntersectionObserver[] = [];
-
         sections.forEach((el, i) => {
             const obs = new IntersectionObserver(
                 (entries) => {
                     entries.forEach((entry) => {
-                        if (entry.isIntersecting) {
-                            window.dispatchEvent(
-                                new CustomEvent("sectionRevealed", { detail: { index: i } })
-                            );
-                        }
+                        if (entry.isIntersecting)
+                            window.dispatchEvent(new CustomEvent("sectionRevealed", { detail: { index: i } }));
                     });
                 },
                 { threshold: 0.35 }
@@ -93,20 +84,17 @@ export default function SectionTransition({ children, onNavbarVisible }: Props) 
             obs.observe(el);
             observers.push(obs);
         });
-
         setTimeout(() => {
             window.dispatchEvent(new CustomEvent("sectionRevealed", { detail: { index: 0 } }));
         }, 300);
-
         return () => observers.forEach((obs) => obs.disconnect());
     }, []);
 
     return (
         <>
-            <style>{`
-                html, body { overflow-x: hidden; }
-            `}</style>
-            <div style={{ width: "100%", background: "#fff" }}>
+            <style>{`html, body { overflow-x: hidden; }`}</style>
+            {/* ✅ background #020916 not white — kills white flash */}
+            <div style={{ width: "100%", background: "#020916" }}>
                 {Array.isArray(children) &&
                     children.map((child, i) => (
                         <div

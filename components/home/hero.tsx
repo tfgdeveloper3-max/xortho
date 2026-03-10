@@ -153,7 +153,7 @@ export default function Hero({ noAnimation = false, playAnimation = false }: Her
         ref={heroRef}
         id="home"
         className="relative w-full min-h-screen flex items-center bg-black overflow-hidden"
-        style={{ opacity: noAnimation ? 1 : 0 }}
+        style={{ opacity: 1 }}
       >
         <video src="/video/Hero-Bg.mp4" autoPlay loop muted playsInline
           className="absolute inset-0 w-full h-full object-cover opacity-80" />
@@ -296,7 +296,7 @@ export default function Hero({ noAnimation = false, playAnimation = false }: Her
           }}>
 
           {/* Corner brackets */}
-          {["tl","tr","bl","br"].map((c) => (
+          {["tl", "tr", "bl", "br"].map((c) => (
             <div key={c} className="absolute w-4 h-4 z-10"
               style={{
                 top: c.startsWith("t") ? -1 : "auto", bottom: c.startsWith("b") ? -1 : "auto",
