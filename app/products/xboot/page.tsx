@@ -345,7 +345,7 @@ export default function XbootDetailPage() {
                 style={{ width: "80%", height: "30%", background: "radial-gradient(ellipse, rgba(17,17,132,0.18) 0%, transparent 70%)", filter: "blur(20px)", zIndex: 0 }} />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/images/leg/XO_Toe_Guard_2_1.png" alt="Boot both sides"
-                style={{ height: 420, maxWidth: "100%", objectFit: "contain", position: "relative", zIndex: 1, filter: "drop-shadow(0 20px 48px rgba(17,17,132,0.25)) drop-shadow(0 4px 18px rgba(0,0,0,0.15))" }} />
+                style={{ height: 420, maxWidth: "100%", objectFit: "contain", position: "relative", zIndex: 1, filter: "drop-shadow(0 20px 48px rgba(17,17,132,0.25)) drop-shadow(0 4px 18px rgba(0,0,0,0.15))", paddingRight: "120px" }} />
             </div>
             <div className="flex flex-col gap-5">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0d1535] leading-tight">
