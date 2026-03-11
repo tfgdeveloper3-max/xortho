@@ -216,7 +216,3 @@
 }
 
 /* ADD THIS TO globals.css — prevents any white flash on load/refresh */
-html,
-body {
-  background-color: #020916 !important;
-}
