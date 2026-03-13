@@ -368,7 +368,7 @@ function PowerStepSection() {
             <a href="/contact" className="ps-info-item cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#111184]/30 hover:bg-[#111184]/50 backdrop-blur-2xl border border-white/30 p-1.5 relative overflow-hidden" style={{ opacity: 0 }}>
               <div className="absolute top-0 left-[5%] group-hover:left-[80%] duration-300 transition-all h-full w-10 bg-[#111184]/50 rounded-[200%] blur" />
               <div className="flex items-center bg-white rounded-full px-5 py-3 relative z-10">
-                <span className="text-base font-semibold">Request Information</span>
+                <span className="text-base font-semibold">Contact for Pricing</span>
                 <ArrowRight className="ml-2 w-4 h-4" />
               </div>
             </a>
@@ -881,10 +881,10 @@ export default function XbootDetailPage() {
                 Engineered for superior strength, performance and comfort — strategically crafted to deliver exceptional clinical outcomes. The XO Boot is designed with Biomechanical Engineers and feedback from Orthopedic, Urgent Care and Podiatry clients.
               </p>
               <div className="hanim flex items-center gap-4 flex-wrap" style={{ opacity: 0 }}>
-                <a href="#contact" className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 relative overflow-hidden">
+                <a href="/contact" className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 relative overflow-hidden">
                   <div className="absolute top-0 left-[5%] group-hover:left-[80%] duration-300 transition-all h-full w-10 bg-[#1651D1]/50 rounded-[200%] blur" />
                   <div className="flex items-center bg-white rounded-full px-4 py-2 md:px-5 md:py-3 relative z-10">
-                    <span className="text-base font-semibold">Request Info</span> <ArrowRight className="ml-2 w-4 h-4" />
+                    <span className="text-base font-semibold">Contact for Pricing</span> <ArrowRight className="ml-2 w-4 h-4" />
                   </div>
                 </a>
                 <a href="/products" className="text-sm font-semibold text-[#7b7bff]/45 hover:text-[#7b7bff] transition-colors flex items-center gap-1.5">
@@ -1327,7 +1327,7 @@ export default function XbootDetailPage() {
             <a href="#contact" className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 relative overflow-hidden">
               <div className="absolute top-0 left-[5%] group-hover:left-[80%] duration-300 transition-all h-full w-10 bg-[#1651D1]/50 rounded-[200%] blur" />
               <div className="flex items-center bg-white rounded-full px-4 py-2 md:px-5 md:py-3 relative z-10">
-                <span className="text-base font-semibold">Contact Us</span> <ArrowRight className="ml-2 w-4 h-4" />
+                <span className="text-base font-semibold">Speak With Specialist</span> <ArrowRight className="ml-2 w-4 h-4" />
               </div>
             </a>
             <a href="/" className="text-sm font-semibold uppercase tracking-widest" style={{ color: "rgba(17,17,132,0.38)", transition: "color 0.25s" }}
