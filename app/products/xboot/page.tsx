@@ -238,11 +238,6 @@ function PowerStepSection() {
   return (
     <section ref={sectionRef} className="w-full bg-white py-20" style={{ borderTop: "1px solid rgba(17,17,132,0.07)" }}>
       <div className="container mx-auto px-5 md:px-[80px]">
-        {/* <p className="ps-breadcrumb text-sm text-[#9ca3af] mb-8" style={{ opacity: 0 }}>
-          <a href="/" className="hover:text-[#111184]">Home</a> /&nbsp;
-          <a href="/products" className="hover:text-[#111184]">Products</a> /&nbsp;
-          <span className="text-[#111184]">Orthopedic Xboot</span>
-        </p> */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-16">
           <div className="ps-gallery flex gap-4" style={{ opacity: 0 }}>
             <div className="flex flex-col gap-2 flex-shrink-0">
@@ -344,6 +339,27 @@ function PowerStepSection() {
                 </li>
               ))}
             </ul>
+            {/* Sizing — compact display in product panel */}
+            <div className="ps-info-item" style={{ opacity: 0 }}>
+              <p className="text-[10px] uppercase tracking-widest font-bold text-[#111184]/50 mb-2">Sizing — Tall or Short · SM, MD, LG</p>
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  { label: "Men — Small", val: "5 – 6.5" },
+                  { label: "Women — Small", val: "4 – 9.5" },
+                  { label: "Men — Medium", val: "6.5 – 11" },
+                  { label: "Women — Medium", val: "9.5 – 13" },
+                  { label: "Men — Large", val: "11 – 15" },
+                  { label: "Women — Large", val: "13 – 16.5" },
+                ].map((s, i) => (
+                  <div key={i} className="flex items-center justify-between px-3 py-2 rounded-xl"
+                    style={{ background: "rgba(17,17,132,0.04)", border: "1px solid rgba(17,17,132,0.08)" }}>
+                    <span className="text-[10px] font-semibold text-[#0d1535]">{s.label}</span>
+                    <span className="text-[10px] font-bold text-[#111184]">{s.val}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             <div className="ps-info-item h-px w-full" style={{ background: "rgba(17,17,132,0.07)", opacity: 0 }} />
             <div className="ps-info-item rounded-2xl p-5 text-sm" style={{ opacity: 0, background: "linear-gradient(135deg,rgba(17,17,132,0.06) 0%,rgba(91,155,255,0.06) 100%)", border: "1px solid rgba(17,17,132,0.12)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.8)" }}>
               <p className="font-bold text-[#111184] mb-1">Available Exclusively Through TLC DME LLC</p>
@@ -390,315 +406,312 @@ function PowerStepSection() {
   );
 }
 
-function CustomSection() {
-  const [activeTab, setActiveTab] = useState("Description");
-  const [activeImg, setActiveImg] = useState(0);
-  const [zoom, setZoom] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const sectionRef = useRef<HTMLElement>(null);
-  const autoRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const tabs = ["Description", "Benefits", "Specifications", "Wear Instructions", "FAQ"];
-  const TOTAL = galleryImages.length;
-  useEffect(() => {
-    if (!isPlaying) { if (autoRef.current) clearInterval(autoRef.current); return; }
-    autoRef.current = setInterval(() => {
-      setActiveImg(prev => (prev + 1) % TOTAL);
-    }, 3500);
-    return () => { if (autoRef.current) clearInterval(autoRef.current); };
-  }, [isPlaying, TOTAL]);
+// function CustomSection() {
+//   const [activeTab, setActiveTab] = useState("Description");
+//   const [activeImg, setActiveImg] = useState(0);
+//   const [zoom, setZoom] = useState(false);
+//   const [isPlaying, setIsPlaying] = useState(true);
+//   const sectionRef = useRef<HTMLElement>(null);
+//   const autoRef = useRef<ReturnType<typeof setInterval> | null>(null);
+//   const tabs = ["Description", "Benefits", "Specifications", "Wear Instructions", "FAQ"];
+//   const TOTAL = galleryImages.length;
+//   useEffect(() => {
+//     if (!isPlaying) { if (autoRef.current) clearInterval(autoRef.current); return; }
+//     autoRef.current = setInterval(() => {
+//       setActiveImg(prev => (prev + 1) % TOTAL);
+//     }, 3500);
+//     return () => { if (autoRef.current) clearInterval(autoRef.current); };
+//   }, [isPlaying, TOTAL]);
 
-  const manualSelect = (i: number) => {
-    setActiveImg(i);
-    setIsPlaying(false);
-    setTimeout(() => setIsPlaying(true), 6000);
-  };
+//   const manualSelect = (i: number) => {
+//     setActiveImg(i);
+//     setIsPlaying(false);
+//     setTimeout(() => setIsPlaying(true), 6000);
+//   };
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(".cs-header > *", { opacity: 0, y: 32, filter: "blur(8px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9, stagger: 0.15, ease: "expo.out", scrollTrigger: { trigger: ".cs-header", start: "top 82%", once: true } });
-      gsap.fromTo(".cs-mainimg", { opacity: 0, scale: 0.93 }, { opacity: 1, scale: 1, duration: 1.0, ease: "expo.out", scrollTrigger: { trigger: ".cs-mainimg", start: "top 80%", once: true } });
-      gsap.fromTo(".cs-thumb", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.07, ease: "power3.out", scrollTrigger: { trigger: ".cs-thumb", start: "top 85%", once: true } });
-      gsap.fromTo(".cs-tabsection", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.9, ease: "expo.out", scrollTrigger: { trigger: ".cs-tabsection", start: "top 88%", once: true } });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
+//   useEffect(() => {
+//     const ctx = gsap.context(() => {
+//       gsap.fromTo(".cs-header > *", { opacity: 0, y: 32, filter: "blur(8px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9, stagger: 0.15, ease: "expo.out", scrollTrigger: { trigger: ".cs-header", start: "top 82%", once: true } });
+//       gsap.fromTo(".cs-mainimg", { opacity: 0, scale: 0.93 }, { opacity: 1, scale: 1, duration: 1.0, ease: "expo.out", scrollTrigger: { trigger: ".cs-mainimg", start: "top 80%", once: true } });
+//       gsap.fromTo(".cs-thumb", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.07, ease: "power3.out", scrollTrigger: { trigger: ".cs-thumb", start: "top 85%", once: true } });
+//       gsap.fromTo(".cs-tabsection", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.9, ease: "expo.out", scrollTrigger: { trigger: ".cs-tabsection", start: "top 88%", once: true } });
+//     }, sectionRef);
+//     return () => ctx.revert();
+//   }, []);
 
-  return (
-    <section ref={sectionRef} className="w-full py-24 overflow-hidden relative" style={{ background: "linear-gradient(160deg, #020916 0%, #060d2e 50%, #020916 100%)" }}>
-      <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(17,17,132,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.05) 1px,transparent 1px)", backgroundSize: "48px 48px" }} />
+//   return (
+//     <section ref={sectionRef} className="w-full py-24 overflow-hidden relative" style={{ background: "linear-gradient(160deg, #020916 0%, #060d2e 50%, #020916 100%)" }}>
+//       <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(17,17,132,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.05) 1px,transparent 1px)", backgroundSize: "48px 48px" }} />
 
-      <div className="container mx-auto px-5 md:px-[80px] relative z-10">
-        <div className="cs-header text-center mb-16">
-          <span className="text-[10px] uppercase tracking-[0.4em] font-bold" style={{ color: "#5b9bff" }}>Product Gallery</span>
-          <h2 className="mt-3 text-3xl md:text-5xl font-bold text-white leading-tight">
-            Every Angle.{" "}
-            <span
-              key={activeImg}
-              style={{
-                color: "#5b9bff",
-                display: "inline-block",
-                animation: "fadeSlideUp 0.4s ease forwards",
-              }}>
-              {galleryImages[activeImg].label}
-            </span>
-          </h2>
-          <style>{`
-            @keyframes fadeSlideUp {
-              from { opacity: 0; transform: translateY(10px); }
-              to   { opacity: 1; transform: translateY(0);    }
-            }
-          `}</style>
-        </div>
-        <div className="mb-16">
-          <div className="cs-mainimg relative w-full rounded-3xl overflow-hidden mb-4 cursor-zoom-in"
-            style={{ opacity: 0, height: 500, background: "linear-gradient(145deg,rgba(6,10,35,0.96),rgba(12,22,65,0.92))", border: "1px solid rgba(91,155,255,0.15)", boxShadow: "0 0 80px rgba(22,81,209,0.15)" }}
-            onClick={() => setZoom(true)}>
-            {(["tl", "tr", "bl", "br"] as const).map(c => (
-              <div key={c} style={{
-                position: "absolute", width: 24, height: 24,
-                top: c.startsWith("t") ? 16 : "auto", bottom: c.startsWith("b") ? 16 : "auto",
-                left: c.endsWith("l") ? 16 : "auto", right: c.endsWith("r") ? 16 : "auto",
-                borderTop: c.startsWith("t") ? "2px solid rgba(91,155,255,0.5)" : "none",
-                borderBottom: c.startsWith("b") ? "2px solid rgba(91,155,255,0.5)" : "none",
-                borderLeft: c.endsWith("l") ? "2px solid rgba(91,155,255,0.5)" : "none",
-                borderRight: c.endsWith("r") ? "2px solid rgba(91,155,255,0.5)" : "none",
-              }} />
-            ))}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={galleryImages[activeImg].src} alt={galleryImages[activeImg].label}
-              className="w-full h-full object-contain p-10 transition-all duration-500"
-              style={{ filter: "drop-shadow(0 20px 60px rgba(22,81,209,0.4))" }} />
-            <button onClick={e => { e.stopPropagation(); manualSelect((activeImg - 1 + TOTAL) % TOTAL); }}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200"
-              style={{ background: "rgba(255,255,255,0.15)", border: "2px solid rgba(255,255,255,0.70)", backdropFilter: "blur(8px)", boxShadow: "0 0 18px rgba(0,0,0,0.4)" }}
-              onMouseEnter={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(255,255,255,0.30)"; b.style.boxShadow = "0 0 24px rgba(91,155,255,0.6)"; }}
-              onMouseLeave={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(255,255,255,0.15)"; b.style.boxShadow = "0 0 18px rgba(0,0,0,0.4)"; }}>
-              <ArrowLeft className="w-5 h-5 text-white" />
-            </button>
-            <button onClick={e => { e.stopPropagation(); manualSelect((activeImg + 1) % TOTAL); }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200"
-              style={{ background: "rgba(255,255,255,0.15)", border: "2px solid rgba(255,255,255,0.70)", backdropFilter: "blur(8px)", boxShadow: "0 0 18px rgba(0,0,0,0.4)" }}
-              onMouseEnter={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(255,255,255,0.30)"; b.style.boxShadow = "0 0 24px rgba(91,155,255,0.6)"; }}
-              onMouseLeave={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(255,255,255,0.15)"; b.style.boxShadow = "0 0 18px rgba(0,0,0,0.4)"; }}>
-              <ArrowRight className="w-5 h-5 text-white" />
-            </button>
-            <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between px-5 py-3 z-20"
-              style={{ background: "linear-gradient(to top, rgba(2,9,22,0.85) 0%, transparent 100%)" }}
-              onClick={e => e.stopPropagation()}>
-              <div className="flex items-center gap-2">
-                {galleryImages.map((_, i) => (
-                  <button key={i} onClick={() => manualSelect(i)}
-                    className="rounded-full transition-all duration-300"
-                    style={{
-                      width: activeImg === i ? 28 : 8,
-                      height: 8,
-                      background: activeImg === i ? "linear-gradient(90deg,#fff,#a0c4ff)" : "rgba(255,255,255,0.35)",
-                      boxShadow: activeImg === i ? "0 0 10px rgba(255,255,255,0.5)" : "none",
-                    }} />
-                ))}
-              </div>
-              <span className="text-[10px] uppercase tracking-widest font-bold text-white/70">
-                {galleryImages[activeImg].label}
-              </span>
-              <button onClick={() => setIsPlaying(p => !p)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all duration-200"
-                style={{
-                  background: "rgba(255,255,255,0.12)",
-                  border: "2px solid rgba(255,255,255,0.60)",
-                  color: "#fff",
-                  backdropFilter: "blur(8px)",
-                }}>
-                {isPlaying ? <><span style={{ fontSize: 10 }}>⏸</span> Pause</> : <><span style={{ fontSize: 10 }}>▶</span> Play</>}
-              </button>
-            </div>
-          </div>
-          <div className="grid grid-cols-6 gap-3">
-            {galleryImages.map((img, i) => (
-              <button key={i} onClick={() => manualSelect(i)}
-                className="cs-thumb relative rounded-2xl overflow-hidden transition-all duration-200"
-                style={{
-                  opacity: 0,
-                  height: 80,
-                  background: "rgba(6,10,35,0.8)",
-                  border: activeImg === i ? "2px solid #5b9bff" : "1px solid rgba(91,155,255,0.12)",
-                  boxShadow: activeImg === i ? "0 0 20px rgba(91,155,255,0.35)" : "none",
-                }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={img.src} alt={img.label} className="w-full h-full object-contain p-2"
-                  style={{ filter: activeImg === i ? "brightness(1.1)" : "brightness(0.6)", transition: "filter 0.2s" }} />
-              </button>
-            ))}
-          </div>
-        </div>
-        <div className="cs-tabsection" style={{ opacity: 0 }}>
-          <div className="flex gap-1 flex-wrap mb-0">
-            {tabs.map((tab) => (
-              <button key={tab} onClick={() => setActiveTab(tab)}
-                className="px-5 py-3 text-xs font-bold uppercase tracking-widest transition-all duration-200"
-                style={{
-                  background: activeTab === tab ? "linear-gradient(135deg,#1651D1,#5b9bff)" : "rgba(255,255,255,0.05)",
-                  color: activeTab === tab ? "#fff" : "rgba(255,255,255,0.45)",
-                  borderRadius: "8px 8px 0 0",
-                  borderTop: activeTab === tab ? "none" : "1px solid rgba(91,155,255,0.1)",
-                  borderLeft: activeTab === tab ? "none" : "1px solid rgba(91,155,255,0.1)",
-                  borderRight: activeTab === tab ? "none" : "1px solid rgba(91,155,255,0.1)",
-                  borderBottom: "none",
-                }}>
-                {tab}
-              </button>
-            ))}
-          </div>
-          <div className="p-8 rounded-b-2xl rounded-tr-2xl"
-            style={{ background: "rgba(6,10,35,0.9)", border: "1px solid rgba(91,155,255,0.12)", backdropFilter: "blur(20px)", minHeight: 200 }}>
-            <div className="text-white/80">
-              {activeTab === "Description" && (
-                <div className="flex flex-col gap-4">
-                  <p className="text-[#5b9bff] text-sm italic border-l-4 border-[#5b9bff]/30 pl-4">
-                    "Wow, this is the nicest boot I've ever seen!" — Direct quote from a well-known national competitor.
-                  </p>
-                  <p className="text-white/70 text-base leading-relaxed">
-                    The XO Boot Pneumatic is engineered for unparalleled strength, performance and comfort — strategically crafted to deliver exceptional clinical outcomes. Designed by TLC DME with Biomechanical Engineers and feedback from Orthopedic, Urgent Care and Podiatry clients.
-                  </p>
-                  <ul className="flex flex-col gap-2">
-                    {["Uniquely designed aerodynamic shell — stronger, lighter, more durable support",
-                      "Innovative adjustable components ensure best possible patient comfort and compliance",
-                      "Ground-breaking Pneumatic System with compartmentalized air delivery and focused compression"
-                    ].map((b, i) => (
-                      <li key={i} className="flex items-start gap-3 text-white/65 text-sm">
-                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#5b9bff] flex-shrink-0" />{b}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {activeTab === "Benefits" && (
-                <ul className="flex flex-col gap-3">
-                  {[
-                    "World class aerodynamic shell — short leg cast-like stability beyond any walking boot available",
-                    "Revolutionary compression system with compartmentalized air cells for focused medial & lateral malleolar compression",
-                    "Real rocker sole — most fluid gait action ever built, from heel strike to toe off",
-                    "Flex polymer struts with softer materials — flexible medial & lateral, less pressure points",
-                    "Removable anterior shield for dorsum protection and optimal ankle joint flexion",
-                    "Exclusive calf adjustment accommodates larger/wider calves",
-                    "Seamless micro-fiber liner — T-shirt soft, low-friction, wicking",
-                    "4-strap system with 360° swivel D-rings and HQ easy grip rubber tips",
-                    "AFO undersleeve included (2 per boot) — eliminates hot spots, wicks perspiration",
-                  ].map((b, i) => (
-                    <li key={i} className="flex items-start gap-3 text-white/70 text-sm">
-                      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#5b9bff] flex-shrink-0" />{b}
-                    </li>
-                  ))}
-                </ul>
-              )}
-              {activeTab === "Specifications" && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {[
-                    ["Product Code", "XB-627 / XB-642"], ["Sizes Available", "XS, S, M, L, XL, XXL"],
-                    ["Calf Circumference", "Up to Size 15"], ["Material", "Flex Polymer / Medical Grade"],
-                    ["Air Compression", "Pneumatic Pump System"], ["Sole Type", "Rocker-Bottom"],
-                    ["Toe Guard", "Removable"], ["Weight", "Lightweight Open Frame"],
-                  ].map(([key, val]) => (
-                    <div key={key} className="p-3 rounded-xl" style={{ background: "rgba(22,81,209,0.08)", border: "1px solid rgba(91,155,255,0.12)" }}>
-                      <span className="text-[10px] uppercase tracking-widest font-bold text-[#5b9bff]/60 block">{key}</span>
-                      <span className="text-sm font-semibold text-white mt-0.5 block">{val}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-              {activeTab === "Wear Instructions" && (
-                <ol className="flex flex-col gap-4">
-                  {[
-                    { n: "01", t: "Loosen All Straps", d: "Before putting on the boot, fully loosen all straps and deflate the air bladders by pressing the release valve." },
-                    { n: "02", t: "Insert Foot", d: "Slide your foot into the boot with your heel firmly seated at the back. Ensure your ankle is centered within the boot shell." },
-                    { n: "03", t: "Secure Lower Straps First", d: "Fasten straps from the bottom up — foot strap first, then ankle, then calf — for even, progressive support." },
-                    { n: "04", t: "Inflate for Compression", d: "Use the pneumatic pump to inflate the air bladders to your desired comfort level. Pump until snug but not painful." },
-                    { n: "05", t: "Attach Toe Guard (if needed)", d: "For post-surgical use or additional protection, clip the removable toe guard onto the front of the boot." },
-                  ].map(s => (
-                    <li key={s.n} className="flex gap-4">
-                      <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 text-white text-xs font-bold flex-shrink-0" style={{ background: "linear-gradient(135deg,#1651D1,#5b9bff)" }}>{s.n}</div>
-                      <div><p className="font-bold text-white text-sm mb-0.5">{s.t}</p><p className="text-sm text-white/50 leading-relaxed">{s.d}</p></div>
-                    </li>
-                  ))}
-                </ol>
-              )}
-              {activeTab === "FAQ" && (
-                <div className="flex flex-col gap-3">
-                  {[
-                    { q: "Can I wear the boot over socks?", a: "Yes. We recommend wearing a thin moisture-wicking sock underneath for comfort and hygiene." },
-                    { q: "How long should I wear it each day?", a: "Follow your clinician's guidance. Typically worn full-time during the acute recovery phase and gradually reduced as healing progresses." },
-                    { q: "Is the boot waterproof?", a: "The boot shell is water-resistant but not waterproof. Do not immerse in water or wear in the shower." },
-                    { q: "Can I drive while wearing the boot?", a: "We do not recommend driving while wearing the boot, especially if it is on the right foot. Consult your clinician." },
-                    { q: "How do I clean the boot?", a: "Wipe the shell with a damp cloth and mild soap. The liner is removable and can be hand-washed. Allow to air dry completely." },
-                  ].map((item, i) => <DarkFAQItem key={i} q={item.q} a={item.a} />)}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-      {zoom && (
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center" style={{ background: "rgba(0,0,0,0.92)" }} onClick={() => setZoom(false)}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={galleryImages[activeImg].src} alt="" className="max-w-[90vw] max-h-[90vh] object-contain rounded-2xl"
-            style={{ filter: "drop-shadow(0 0 60px rgba(91,155,255,0.4))" }} />
-          <button className="absolute top-6 right-6 text-white text-3xl font-bold">✕</button>
-        </div>
-      )}
-    </section>
-  );
-}
+//       <div className="container mx-auto px-5 md:px-[80px] relative z-10">
+//         <div className="cs-header text-center mb-16">
+//           <span className="text-[10px] uppercase tracking-[0.4em] font-bold" style={{ color: "#5b9bff" }}>Product Gallery</span>
+//           <h2 className="mt-3 text-3xl md:text-5xl font-bold text-white leading-tight">
+//             Every Angle.{" "}
+//             <span
+//               key={activeImg}
+//               style={{
+//                 color: "#5b9bff",
+//                 display: "inline-block",
+//                 animation: "fadeSlideUp 0.4s ease forwards",
+//               }}>
+//               {galleryImages[activeImg].label}
+//             </span>
+//           </h2>
+//           <style>{`
+//             @keyframes fadeSlideUp {
+//               from { opacity: 0; transform: translateY(10px); }
+//               to   { opacity: 1; transform: translateY(0);    }
+//             }
+//           `}</style>
+//         </div>
+//         <div className="mb-16">
+//           <div className="cs-mainimg relative w-full rounded-3xl overflow-hidden mb-4 cursor-zoom-in"
+//             style={{ opacity: 0, height: 500, background: "linear-gradient(145deg,rgba(6,10,35,0.96),rgba(12,22,65,0.92))", border: "1px solid rgba(91,155,255,0.15)", boxShadow: "0 0 80px rgba(22,81,209,0.15)" }}
+//             onClick={() => setZoom(true)}>
+//             {(["tl", "tr", "bl", "br"] as const).map(c => (
+//               <div key={c} style={{
+//                 position: "absolute", width: 24, height: 24,
+//                 top: c.startsWith("t") ? 16 : "auto", bottom: c.startsWith("b") ? 16 : "auto",
+//                 left: c.endsWith("l") ? 16 : "auto", right: c.endsWith("r") ? 16 : "auto",
+//                 borderTop: c.startsWith("t") ? "2px solid rgba(91,155,255,0.5)" : "none",
+//                 borderBottom: c.startsWith("b") ? "2px solid rgba(91,155,255,0.5)" : "none",
+//                 borderLeft: c.endsWith("l") ? "2px solid rgba(91,155,255,0.5)" : "none",
+//                 borderRight: c.endsWith("r") ? "2px solid rgba(91,155,255,0.5)" : "none",
+//               }} />
+//             ))}
+//             <img src={galleryImages[activeImg].src} alt={galleryImages[activeImg].label}
+//               className="w-full h-full object-contain p-10 transition-all duration-500"
+//               style={{ filter: "drop-shadow(0 20px 60px rgba(22,81,209,0.4))" }} />
+//             <button onClick={e => { e.stopPropagation(); manualSelect((activeImg - 1 + TOTAL) % TOTAL); }}
+//               className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200"
+//               style={{ background: "rgba(255,255,255,0.15)", border: "2px solid rgba(255,255,255,0.70)", backdropFilter: "blur(8px)", boxShadow: "0 0 18px rgba(0,0,0,0.4)" }}
+//               onMouseEnter={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(255,255,255,0.30)"; b.style.boxShadow = "0 0 24px rgba(91,155,255,0.6)"; }}
+//               onMouseLeave={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(255,255,255,0.15)"; b.style.boxShadow = "0 0 18px rgba(0,0,0,0.4)"; }}>
+//               <ArrowLeft className="w-5 h-5 text-white" />
+//             </button>
+//             <button onClick={e => { e.stopPropagation(); manualSelect((activeImg + 1) % TOTAL); }}
+//               className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200"
+//               style={{ background: "rgba(255,255,255,0.15)", border: "2px solid rgba(255,255,255,0.70)", backdropFilter: "blur(8px)", boxShadow: "0 0 18px rgba(0,0,0,0.4)" }}
+//               onMouseEnter={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(255,255,255,0.30)"; b.style.boxShadow = "0 0 24px rgba(91,155,255,0.6)"; }}
+//               onMouseLeave={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "rgba(255,255,255,0.15)"; b.style.boxShadow = "0 0 18px rgba(0,0,0,0.4)"; }}>
+//               <ArrowRight className="w-5 h-5 text-white" />
+//             </button>
+//             <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between px-5 py-3 z-20"
+//               style={{ background: "linear-gradient(to top, rgba(2,9,22,0.85) 0%, transparent 100%)" }}
+//               onClick={e => e.stopPropagation()}>
+//               <div className="flex items-center gap-2">
+//                 {galleryImages.map((_, i) => (
+//                   <button key={i} onClick={() => manualSelect(i)}
+//                     className="rounded-full transition-all duration-300"
+//                     style={{
+//                       width: activeImg === i ? 28 : 8,
+//                       height: 8,
+//                       background: activeImg === i ? "linear-gradient(90deg,#fff,#a0c4ff)" : "rgba(255,255,255,0.35)",
+//                       boxShadow: activeImg === i ? "0 0 10px rgba(255,255,255,0.5)" : "none",
+//                     }} />
+//                 ))}
+//               </div>
+//               <span className="text-[10px] uppercase tracking-widest font-bold text-white/70">
+//                 {galleryImages[activeImg].label}
+//               </span>
+//               <button onClick={() => setIsPlaying(p => !p)}
+//                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all duration-200"
+//                 style={{
+//                   background: "rgba(255,255,255,0.12)",
+//                   border: "2px solid rgba(255,255,255,0.60)",
+//                   color: "#fff",
+//                   backdropFilter: "blur(8px)",
+//                 }}>
+//                 {isPlaying ? <><span style={{ fontSize: 10 }}>⏸</span> Pause</> : <><span style={{ fontSize: 10 }}>▶</span> Play</>}
+//               </button>
+//             </div>
+//           </div>
+//           <div className="grid grid-cols-6 gap-3">
+//             {galleryImages.map((img, i) => (
+//               <button key={i} onClick={() => manualSelect(i)}
+//                 className="cs-thumb relative rounded-2xl overflow-hidden transition-all duration-200"
+//                 style={{
+//                   opacity: 0,
+//                   height: 80,
+//                   background: "rgba(6,10,35,0.8)",
+//                   border: activeImg === i ? "2px solid #5b9bff" : "1px solid rgba(91,155,255,0.12)",
+//                   boxShadow: activeImg === i ? "0 0 20px rgba(91,155,255,0.35)" : "none",
+//                 }}>
+//                 <img src={img.src} alt={img.label} className="w-full h-full object-contain p-2"
+//                   style={{ filter: activeImg === i ? "brightness(1.1)" : "brightness(0.6)", transition: "filter 0.2s" }} />
+//               </button>
+//             ))}
+//           </div>
+//         </div>
+//         <div className="cs-tabsection" style={{ opacity: 0 }}>
+//           <div className="flex gap-1 flex-wrap mb-0">
+//             {tabs.map((tab) => (
+//               <button key={tab} onClick={() => setActiveTab(tab)}
+//                 className="px-5 py-3 text-xs font-bold uppercase tracking-widest transition-all duration-200"
+//                 style={{
+//                   background: activeTab === tab ? "linear-gradient(135deg,#1651D1,#5b9bff)" : "rgba(255,255,255,0.05)",
+//                   color: activeTab === tab ? "#fff" : "rgba(255,255,255,0.45)",
+//                   borderRadius: "8px 8px 0 0",
+//                   borderTop: activeTab === tab ? "none" : "1px solid rgba(91,155,255,0.1)",
+//                   borderLeft: activeTab === tab ? "none" : "1px solid rgba(91,155,255,0.1)",
+//                   borderRight: activeTab === tab ? "none" : "1px solid rgba(91,155,255,0.1)",
+//                   borderBottom: "none",
+//                 }}>
+//                 {tab}
+//               </button>
+//             ))}
+//           </div>
+//           <div className="p-8 rounded-b-2xl rounded-tr-2xl"
+//             style={{ background: "rgba(6,10,35,0.9)", border: "1px solid rgba(91,155,255,0.12)", backdropFilter: "blur(20px)", minHeight: 200 }}>
+//             <div className="text-white/80">
+//               {activeTab === "Description" && (
+//                 <div className="flex flex-col gap-4">
+//                   <p className="text-[#5b9bff] text-sm italic border-l-4 border-[#5b9bff]/30 pl-4">
+//                     "Wow, this is the nicest boot I've ever seen!" — Direct quote from a well-known national competitor.
+//                   </p>
+//                   <p className="text-white/70 text-base leading-relaxed">
+//                     The XO Boot Pneumatic is engineered for unparalleled strength, performance and comfort — strategically crafted to deliver exceptional clinical outcomes. Designed by TLC DME with Biomechanical Engineers and feedback from Orthopedic, Urgent Care and Podiatry clients.
+//                   </p>
+//                   <ul className="flex flex-col gap-2">
+//                     {["Uniquely designed aerodynamic shell — stronger, lighter, more durable support",
+//                       "Innovative adjustable components ensure best possible patient comfort and compliance",
+//                       "Ground-breaking Pneumatic System with compartmentalized air delivery and focused compression"
+//                     ].map((b, i) => (
+//                       <li key={i} className="flex items-start gap-3 text-white/65 text-sm">
+//                         <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#5b9bff] flex-shrink-0" />{b}
+//                       </li>
+//                     ))}
+//                   </ul>
+//                 </div>
+//               )}
+//               {activeTab === "Benefits" && (
+//                 <ul className="flex flex-col gap-3">
+//                   {[
+//                     "World class aerodynamic shell — short leg cast-like stability beyond any walking boot available",
+//                     "Revolutionary compression system with compartmentalized air cells for focused medial & lateral malleolar compression",
+//                     "Real rocker sole — most fluid gait action ever built, from heel strike to toe off",
+//                     "Flex polymer struts with softer materials — flexible medial & lateral, less pressure points",
+//                     "Removable anterior shield for dorsum protection and optimal ankle joint flexion",
+//                     "Exclusive calf adjustment accommodates larger/wider calves",
+//                     "Seamless micro-fiber liner — T-shirt soft, low-friction, wicking",
+//                     "4-strap system with 360° swivel D-rings and HQ easy grip rubber tips",
+//                     "AFO undersleeve included (2 per boot) — eliminates hot spots, wicks perspiration",
+//                   ].map((b, i) => (
+//                     <li key={i} className="flex items-start gap-3 text-white/70 text-sm">
+//                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#5b9bff] flex-shrink-0" />{b}
+//                     </li>
+//                   ))}
+//                 </ul>
+//               )}
+//               {activeTab === "Specifications" && (
+//                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+//                   {[
+//                     ["Product Code", "XB-627 / XB-642"], ["Sizes Available", "XS, S, M, L, XL, XXL"],
+//                     ["Calf Circumference", "Up to Size 15"], ["Material", "Flex Polymer / Medical Grade"],
+//                     ["Air Compression", "Pneumatic Pump System"], ["Sole Type", "Rocker-Bottom"],
+//                     ["Toe Guard", "Removable"], ["Weight", "Lightweight Open Frame"],
+//                   ].map(([key, val]) => (
+//                     <div key={key} className="p-3 rounded-xl" style={{ background: "rgba(22,81,209,0.08)", border: "1px solid rgba(91,155,255,0.12)" }}>
+//                       <span className="text-[10px] uppercase tracking-widest font-bold text-[#5b9bff]/60 block">{key}</span>
+//                       <span className="text-sm font-semibold text-white mt-0.5 block">{val}</span>
+//                     </div>
+//                   ))}
+//                 </div>
+//               )}
+//               {activeTab === "Wear Instructions" && (
+//                 <ol className="flex flex-col gap-4">
+//                   {[
+//                     { n: "01", t: "Loosen All Straps", d: "Before putting on the boot, fully loosen all straps and deflate the air bladders by pressing the release valve." },
+//                     { n: "02", t: "Insert Foot", d: "Slide your foot into the boot with your heel firmly seated at the back. Ensure your ankle is centered within the boot shell." },
+//                     { n: "03", t: "Secure Lower Straps First", d: "Fasten straps from the bottom up — foot strap first, then ankle, then calf — for even, progressive support." },
+//                     { n: "04", t: "Inflate for Compression", d: "Use the pneumatic pump to inflate the air bladders to your desired comfort level. Pump until snug but not painful." },
+//                     { n: "05", t: "Attach Toe Guard (if needed)", d: "For post-surgical use or additional protection, clip the removable toe guard onto the front of the boot." },
+//                   ].map(s => (
+//                     <li key={s.n} className="flex gap-4">
+//                       <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 text-white text-xs font-bold flex-shrink-0" style={{ background: "linear-gradient(135deg,#1651D1,#5b9bff)" }}>{s.n}</div>
+//                       <div><p className="font-bold text-white text-sm mb-0.5">{s.t}</p><p className="text-sm text-white/50 leading-relaxed">{s.d}</p></div>
+//                     </li>
+//                   ))}
+//                 </ol>
+//               )}
+//               {activeTab === "FAQ" && (
+//                 <div className="flex flex-col gap-3">
+//                   {[
+//                     { q: "Can I wear the boot over socks?", a: "Yes. We recommend wearing a thin moisture-wicking sock underneath for comfort and hygiene." },
+//                     { q: "How long should I wear it each day?", a: "Follow your clinician's guidance. Typically worn full-time during the acute recovery phase and gradually reduced as healing progresses." },
+//                     { q: "Is the boot waterproof?", a: "The boot shell is water-resistant but not waterproof. Do not immerse in water or wear in the shower." },
+//                     { q: "Can I drive while wearing the boot?", a: "We do not recommend driving while wearing the boot, especially if it is on the right foot. Consult your clinician." },
+//                     { q: "How do I clean the boot?", a: "Wipe the shell with a damp cloth and mild soap. The liner is removable and can be hand-washed. Allow to air dry completely." },
+//                   ].map((item, i) => <DarkFAQItem key={i} q={item.q} a={item.a} />)}
+//                 </div>
+//               )}
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//       {zoom && (
+//         <div className="fixed inset-0 z-[99999] flex items-center justify-center" style={{ background: "rgba(0,0,0,0.92)" }} onClick={() => setZoom(false)}>
+//           <img src={galleryImages[activeImg].src} alt="" className="max-w-[90vw] max-h-[90vh] object-contain rounded-2xl"
+//             style={{ filter: "drop-shadow(0 0 60px rgba(91,155,255,0.4))" }} />
+//           <button className="absolute top-6 right-6 text-white text-3xl font-bold">✕</button>
+//         </div>
+//       )}
+//     </section>
+//   );
+// }
 
-function DarkFAQItem({ q, a }: { q: string; a: string }) {
-  const [open, setOpen] = useState(false);
-  const answerRef = useRef<HTMLDivElement>(null);
+// function DarkFAQItem({ q, a }: { q: string; a: string }) {
+//   const [open, setOpen] = useState(false);
+//   const answerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const el = answerRef.current;
-    if (!el) return;
-    if (open) {
-      gsap.fromTo(el, { height: 0, opacity: 0 }, { height: "auto", opacity: 1, duration: 0.38, ease: "power3.out" });
-    } else {
-      gsap.to(el, { height: 0, opacity: 0, duration: 0.28, ease: "power2.in" });
-    }
-  }, [open]);
+//   useEffect(() => {
+//     const el = answerRef.current;
+//     if (!el) return;
+//     if (open) {
+//       gsap.fromTo(el, { height: 0, opacity: 0 }, { height: "auto", opacity: 1, duration: 0.38, ease: "power3.out" });
+//     } else {
+//       gsap.to(el, { height: 0, opacity: 0, duration: 0.28, ease: "power2.in" });
+//     }
+//   }, [open]);
 
-  return (
-    <div className="rounded-2xl overflow-hidden transition-all duration-300"
-      style={{
-        border: open ? "1px solid rgba(91,155,255,0.40)" : "1px solid rgba(91,155,255,0.10)",
-        boxShadow: open ? "0 0 32px rgba(22,81,209,0.25), 0 4px 20px rgba(0,0,0,0.3)" : "none",
-        transition: "box-shadow 0.3s ease, border 0.3s ease",
-      }}>
-      <button onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between px-5 py-4 text-left group"
-        style={{
-          background: open
-            ? "linear-gradient(135deg, rgba(22,81,209,0.28) 0%, rgba(91,155,255,0.12) 100%)"
-            : "linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(91,155,255,0.04) 100%)",
-          transition: "background 0.3s ease",
-        }}>
-        <span className="font-bold text-white text-sm group-hover:text-[#5b9bff] transition-colors duration-200">{q}</span>
-        <div className="flex-shrink-0 ml-4 w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300"
-          style={{
-            background: open ? "linear-gradient(135deg,#1651D1,#5b9bff)" : "rgba(91,155,255,0.12)",
-            boxShadow: open ? "0 0 16px rgba(91,155,255,0.5)" : "none",
-            transform: open ? "rotate(45deg)" : "rotate(0deg)",
-          }}>
-          <span className="text-sm font-bold leading-none text-white">+</span>
-        </div>
-      </button>
-      <div ref={answerRef} style={{ height: 0, overflow: "hidden", opacity: 0 }}>
-        <div className="px-5 py-4 text-sm text-white/55 leading-relaxed"
-          style={{
-            background: "linear-gradient(135deg, rgba(22,81,209,0.10) 0%, rgba(6,10,35,0.8) 100%)",
-            borderTop: "1px solid rgba(91,155,255,0.12)",
-          }}>
-          {a}
-        </div>
-      </div>
-    </div>
-  );
-}
+//   return (
+//     <div className="rounded-2xl overflow-hidden transition-all duration-300"
+//       style={{
+//         border: open ? "1px solid rgba(91,155,255,0.40)" : "1px solid rgba(91,155,255,0.10)",
+//         boxShadow: open ? "0 0 32px rgba(22,81,209,0.25), 0 4px 20px rgba(0,0,0,0.3)" : "none",
+//         transition: "box-shadow 0.3s ease, border 0.3s ease",
+//       }}>
+//       <button onClick={() => setOpen(!open)}
+//         className="w-full flex items-center justify-between px-5 py-4 text-left group"
+//         style={{
+//           background: open
+//             ? "linear-gradient(135deg, rgba(22,81,209,0.28) 0%, rgba(91,155,255,0.12) 100%)"
+//             : "linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(91,155,255,0.04) 100%)",
+//           transition: "background 0.3s ease",
+//         }}>
+//         <span className="font-bold text-white text-sm group-hover:text-[#5b9bff] transition-colors duration-200">{q}</span>
+//         <div className="flex-shrink-0 ml-4 w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300"
+//           style={{
+//             background: open ? "linear-gradient(135deg,#1651D1,#5b9bff)" : "rgba(91,155,255,0.12)",
+//             boxShadow: open ? "0 0 16px rgba(91,155,255,0.5)" : "none",
+//             transform: open ? "rotate(45deg)" : "rotate(0deg)",
+//           }}>
+//           <span className="text-sm font-bold leading-none text-white">+</span>
+//         </div>
+//       </button>
+//       <div ref={answerRef} style={{ height: 0, overflow: "hidden", opacity: 0 }}>
+//         <div className="px-5 py-4 text-sm text-white/55 leading-relaxed"
+//           style={{
+//             background: "linear-gradient(135deg, rgba(22,81,209,0.10) 0%, rgba(6,10,35,0.8) 100%)",
+//             borderTop: "1px solid rgba(91,155,255,0.12)",
+//           }}>
+//           {a}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
 
 function BeforeAfterSlider() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -841,26 +854,26 @@ export default function XbootDetailPage() {
         <Navbar />
       </div>
 
-      {/* HERO SECTION  */}
+      {/* HERO SECTION */}
 
-      <section ref={heroRef} className="relative w-full flex items-center overflow-hidden" style={{ minHeight: "100vh", background: "#020916"}}>
+      <section ref={heroRef} className="relative w-full flex items-center overflow-hidden" style={{ minHeight: "100vh", background: "#020916" }}>
         <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none" style={{ zIndex: 0 }}>
           <source src={CLD.sectionhero} type="video/mp4" />
         </video>
         <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "linear-gradient(135deg,rgba(2,9,22,0.90) 0%,rgba(2,9,22,0.55) 55%,transparent 100%)" }} />
         <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, backgroundImage: "linear-gradient(rgba(17,17,132,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.04) 1px,transparent 1px)", backgroundSize: "52px 52px" }} />
-        <div className="relative w-full container mx-auto px-5 md:px-[100px]" style={{ zIndex: 2, paddingTop: "max(140px,14vh)", paddingBottom: 80 }}>
+        <div className="relative w-full container mx-auto px-5 md:px-[100px]" style={{ zIndex: 2, paddingTop: "max(140px,14vh)", paddingBottom: 100 }}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
             <div className="flex flex-col gap-5">
               <div className="hanim" style={{ opacity: 0 }}>
                 <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.38em] font-bold px-3.5 py-1.5 rounded-full bg-[#7b7bff]/10 text-[#7b7bff] border border-[#7b7bff]/20">
                   <span className="w-1.5 h-1.5 rounded-full animate-pulse bg-[#7b7bff]" />
-                  Orthopedic Boot
+                  Pneumatic Walking Boot
                 </span>
               </div>
               <div className="hanim" style={{ opacity: 0 }}>
                 <h1 className="font-nexa uppercase leading-[0.95] text-[#f0f4ff]" style={{ fontSize: "clamp(3rem,7vw,6rem)", fontWeight: 800, letterSpacing: "-3px" }}>
-                  Orthopedic<br /><span className="text-[#7b7bff]">Xboot</span>
+                  XO Boot<br /><span className="text-[#7b7bff]">Pneumatic</span>
                 </h1>
               </div>
               <p className="hanim text-xs font-semibold uppercase tracking-widest text-[#7b7bff]" style={{ opacity: 0 }}>Better DME · Better Functionality · Better Outcomes</p>
@@ -879,7 +892,7 @@ export default function XbootDetailPage() {
                 </a>
               </div>
             </div>
-            <div ref={heroImgRef} className="hanim relative flex items-center justify-center" style={{ opacity: 0, height: 580, paddingLeft: 50, paddingBottom: 50 }}>
+            <div ref={heroImgRef} className="hanim relative flex items-center justify-center" style={{ opacity: 0, height: 580, paddingLeft: 80, paddingBottom: 80 }}>
               <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at center 60%,rgba(17,17,132,0.35) 0%,transparent 65%)", filter: "blur(24px)" }} />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={CLD.shoe} alt="Orthopedic Xboot"
@@ -890,7 +903,7 @@ export default function XbootDetailPage() {
         <div className="absolute bottom-0 inset-x-0 h-32 pointer-events-none" style={{ zIndex: 2, background: "linear-gradient(to bottom,transparent,#020916)" }} />
       </section>
 
-      {/* SLIDER SECTION  */}
+      {/* BLUE PRINT SECTION  */}
 
       <section className="relative w-full py-20 md:py-28 overflow-hidden" style={{ background: "#f5f7ff" }}>
         <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 68% 52%, rgba(180,180,230,0.55) 0%, transparent 58%)" }} />
@@ -933,56 +946,71 @@ export default function XbootDetailPage() {
         </div>
       </section>
 
-
       {/* ══ Client Design — PowerStep Style (Client Request) ══ */}
       <PowerStepSection />
 
       {/* ══ Custom Design — Custom Dark Attractive ══ */}
-      <CustomSection />
-      {/* ══ AFO UNDERSLEEVE SECTION ══ */}
-      <section className="relative w-full py-16 overflow-hidden" style={{ background: "#020916" }}>
-        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(17,17,132,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.05) 1px,transparent 1px)", backgroundSize: "48px 48px" }} />
-        <div className="container mx-auto px-5 md:px-[100px] relative z-10">
-          <div className="sr" style={{ opacity: 0 }}>
-            <div className="rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-10"
-              style={{ background: "linear-gradient(135deg,rgba(22,81,209,0.18) 0%,rgba(6,10,35,0.9) 100%)", border: "1px solid rgba(91,155,255,0.18)" }}>
-              {/* Icon */}
-              <div className="flex-shrink-0 w-20 h-20 rounded-2xl flex items-center justify-center"
-                style={{ background: "linear-gradient(135deg,#1651D1,#5b9bff)", boxShadow: "0 0 40px rgba(91,155,255,0.3)" }}>
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                  <path d="M12 8 C12 8 10 14 10 20 C10 30 16 36 20 36 C24 36 30 30 30 20 C30 14 28 8 28 8" stroke="white" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-                  <path d="M14 12 C14 12 13 17 13 21 C13 28 16 33 20 33 C24 33 27 28 27 21 C27 17 26 12 26 12" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-                  <path d="M10 18 L30 18" stroke="rgba(255,255,255,0.3)" strokeWidth="1" strokeDasharray="3 3" />
-                  <path d="M10 23 L30 23" stroke="rgba(255,255,255,0.3)" strokeWidth="1" strokeDasharray="3 3" />
-                </svg>
+      {/* <CustomSection /> */}
+
+      {/* ══ SIZING CHART SECTION ══ */}
+      <section className="relative w-full py-20 overflow-hidden bg-white" style={{ borderTop: "1px solid rgba(17,17,132,0.06)" }}>
+        <div className="container mx-auto px-5 md:px-[100px]">
+          <div className="sr text-center mb-12" style={{ opacity: 0 }}>
+            <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-[#111184]">Sizing Guide</span>
+            <h2 className="mt-3 text-3xl md:text-5xl font-bold text-[#0d1535] leading-tight">
+              Find Your <span className="text-[#111184]">Perfect Fit</span>
+            </h2>
+            <p className="mt-4 max-w-lg mx-auto text-sm text-[#6b7fa8]">Available in Tall or Short style — Small, Medium, and Large for both men and women.</p>
+          </div>
+          <div className="sr grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto" style={{ opacity: 0 }}>
+            {/* Men */}
+            <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid rgba(17,17,132,0.10)", boxShadow: "0 4px 24px rgba(17,17,132,0.07)" }}>
+              <div className="px-6 py-4" style={{ background: "linear-gradient(135deg,#0f0f7a,#1651D1)" }}>
+                <p className="text-white font-bold text-sm uppercase tracking-widest">Men</p>
               </div>
-              {/* Content */}
-              <div className="flex-1 text-center md:text-left">
-                <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-[#5b9bff]">Included With Every Boot</span>
-                <h2 className="mt-2 text-2xl md:text-3xl font-bold text-white leading-tight">AFO Undersleeve <span className="text-[#5b9bff]">— 2 Included</span></h2>
-                <p className="mt-3 text-white/60 text-base leading-relaxed max-w-2xl">
-                  Two AFO undersleeves are included with each boot. Increases patient comfort by eliminating hot spots due to friction and wicks away perspiration — helping keep skin clean and reducing odor. Proprietary micro-fiber material provides a cool, comfortable feel with light even compression, enhancing overall wearability.
-                </p>
+              <table className="w-full text-sm">
+                <thead>
+                  <tr style={{ background: "#f4f6ff" }}>
+                    <th className="px-6 py-3 text-left font-bold text-[#0d1535] text-xs uppercase tracking-widest">Size</th>
+                    <th className="px-6 py-3 text-left font-bold text-[#0d1535] text-xs uppercase tracking-widest">Shoe Size</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[["Small", "5 – 6.5"], ["Medium", "6.5 – 11"], ["Large", "11 – 15"]].map(([s, r], i) => (
+                    <tr key={i} style={{ borderTop: "1px solid rgba(17,17,132,0.06)", background: i % 2 === 0 ? "#fff" : "#fafbff" }}>
+                      <td className="px-6 py-4 font-semibold text-[#0d1535]">{s}</td>
+                      <td className="px-6 py-4 text-[#6b7fa8]">{r}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {/* Women */}
+            <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid rgba(17,17,132,0.10)", boxShadow: "0 4px 24px rgba(17,17,132,0.07)" }}>
+              <div className="px-6 py-4" style={{ background: "linear-gradient(135deg,#1651D1,#5b9bff)" }}>
+                <p className="text-white font-bold text-sm uppercase tracking-widest">Women</p>
               </div>
-              {/* 2 feature pills */}
-              <div className="flex-shrink-0 flex flex-col gap-3">
-                {[
-                  { t: "Eliminates Hot Spots", d: "Friction-free fit" },
-                  { t: "Wicking Material", d: "Keeps skin dry & clean" },
-                  { t: "2 Per Boot", d: "Always included" },
-                ].map((f, i) => (
-                  <div key={i} className="flex items-center gap-3 px-4 py-3 rounded-xl"
-                    style={{ background: "rgba(91,155,255,0.10)", border: "1px solid rgba(91,155,255,0.18)" }}>
-                    <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: "#5b9bff" }} />
-                    <div>
-                      <p className="text-white text-xs font-bold">{f.t}</p>
-                      <p className="text-white/45 text-[10px]">{f.d}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <table className="w-full text-sm">
+                <thead>
+                  <tr style={{ background: "#f4f6ff" }}>
+                    <th className="px-6 py-3 text-left font-bold text-[#0d1535] text-xs uppercase tracking-widest">Size</th>
+                    <th className="px-6 py-3 text-left font-bold text-[#0d1535] text-xs uppercase tracking-widest">Shoe Size</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[["Small", "4 – 9.5"], ["Medium", "9.5 – 13"], ["Large", "13 – 16.5"]].map(([s, r], i) => (
+                    <tr key={i} style={{ borderTop: "1px solid rgba(17,17,132,0.06)", background: i % 2 === 0 ? "#fff" : "#fafbff" }}>
+                      <td className="px-6 py-4 font-semibold text-[#0d1535]">{s}</td>
+                      <td className="px-6 py-4 text-[#6b7fa8]">{r}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
+          <p className="sr text-center mt-8 text-xs text-[#9ca3af]" style={{ opacity: 0 }}>
+            The XO Boot Pneumatic is available exclusively through TLC DME LLC · (888) 521-8522 · tlcdme.com
+          </p>
         </div>
       </section>
 
@@ -1032,7 +1060,7 @@ export default function XbootDetailPage() {
         </div>
       </section>
 
-      {/* UNIQUE STRAPPING SYSTEM */}
+      {/* UNIQUE SCRAPPING SYSTEM & GRIPS  */}
 
       <section className="relative w-full overflow-hidden min-h-[560px] flex items-stretch">
         <div className="absolute inset-0 z-0 bg-white" />
@@ -1134,6 +1162,54 @@ export default function XbootDetailPage() {
         </div>
       </section>
 
+      {/* ══ AFO UNDERSLEEVE SECTION ══ */}
+
+      <section className="relative w-full py-16 overflow-hidden" style={{ background: "#020916" }}>
+        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(17,17,132,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.05) 1px,transparent 1px)", backgroundSize: "48px 48px" }} />
+        <div className="container mx-auto px-5 md:px-[100px] relative z-10">
+          <div className="sr" style={{ opacity: 0 }}>
+            <div className="rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-10"
+              style={{ background: "linear-gradient(135deg,rgba(22,81,209,0.18) 0%,rgba(6,10,35,0.9) 100%)", border: "1px solid rgba(91,155,255,0.18)" }}>
+              {/* Icon */}
+              <div className="flex-shrink-0 w-20 h-20 rounded-2xl flex items-center justify-center"
+                style={{ background: "linear-gradient(135deg,#1651D1,#5b9bff)", boxShadow: "0 0 40px rgba(91,155,255,0.3)" }}>
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                  <path d="M12 8 C12 8 10 14 10 20 C10 30 16 36 20 36 C24 36 30 30 30 20 C30 14 28 8 28 8" stroke="white" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+                  <path d="M14 12 C14 12 13 17 13 21 C13 28 16 33 20 33 C24 33 27 28 27 21 C27 17 26 12 26 12" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+                  <path d="M10 18 L30 18" stroke="rgba(255,255,255,0.3)" strokeWidth="1" strokeDasharray="3 3" />
+                  <path d="M10 23 L30 23" stroke="rgba(255,255,255,0.3)" strokeWidth="1" strokeDasharray="3 3" />
+                </svg>
+              </div>
+              {/* Content */}
+              <div className="flex-1 text-center md:text-left">
+                <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-[#5b9bff]">Included With Every Boot</span>
+                <h2 className="mt-2 text-2xl md:text-3xl font-bold text-white leading-tight">AFO Undersleeve <span className="text-[#5b9bff]">— 2 Included</span></h2>
+                <p className="mt-3 text-white/60 text-base leading-relaxed max-w-2xl">
+                  Two AFO undersleeves are included with each boot. Increases patient comfort by eliminating hot spots due to friction and wicks away perspiration — helping keep skin clean and reducing odor. Proprietary micro-fiber material provides a cool, comfortable feel with light even compression, enhancing overall wearability.
+                </p>
+              </div>
+              {/* 2 feature pills */}
+              <div className="flex-shrink-0 flex flex-col gap-3">
+                {[
+                  { t: "Eliminates Hot Spots", d: "Friction-free fit" },
+                  { t: "Wicking Material", d: "Keeps skin dry & clean" },
+                  { t: "2 Per Boot", d: "Always included" },
+                ].map((f, i) => (
+                  <div key={i} className="flex items-center gap-3 px-4 py-3 rounded-xl"
+                    style={{ background: "rgba(91,155,255,0.10)", border: "1px solid rgba(91,155,255,0.18)" }}>
+                    <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: "#5b9bff" }} />
+                    <div>
+                      <p className="text-white text-xs font-bold">{f.t}</p>
+                      <p className="text-white/45 text-[10px]">{f.d}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* BETTER DME SECTION  */}
 
       <section className="relative w-full py-20 md:py-28 overflow-hidden" style={{ background: "linear-gradient(160deg,#eeeeff 0%,#e6e6fa 45%,#f5f7ff 100%)" }}>
@@ -1199,67 +1275,6 @@ export default function XbootDetailPage() {
         </div>
       </section>
 
-      {/* ══ SIZING CHART SECTION ══ */}
-      <section className="relative w-full py-20 overflow-hidden bg-white" style={{ borderTop: "1px solid rgba(17,17,132,0.06)" }}>
-        <div className="container mx-auto px-5 md:px-[100px]">
-          <div className="sr text-center mb-12" style={{ opacity: 0 }}>
-            <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-[#111184]">Sizing Guide</span>
-            <h2 className="mt-3 text-3xl md:text-5xl font-bold text-[#0d1535] leading-tight">
-              Find Your <span className="text-[#111184]">Perfect Fit</span>
-            </h2>
-            <p className="mt-4 max-w-lg mx-auto text-sm text-[#6b7fa8]">Available in Tall or Short style — Small, Medium, and Large for both men and women.</p>
-          </div>
-          <div className="sr grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto" style={{ opacity: 0 }}>
-            {/* Men */}
-            <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid rgba(17,17,132,0.10)", boxShadow: "0 4px 24px rgba(17,17,132,0.07)" }}>
-              <div className="px-6 py-4" style={{ background: "linear-gradient(135deg,#0f0f7a,#1651D1)" }}>
-                <p className="text-white font-bold text-sm uppercase tracking-widest">Men</p>
-              </div>
-              <table className="w-full text-sm">
-                <thead>
-                  <tr style={{ background: "#f4f6ff" }}>
-                    <th className="px-6 py-3 text-left font-bold text-[#0d1535] text-xs uppercase tracking-widest">Size</th>
-                    <th className="px-6 py-3 text-left font-bold text-[#0d1535] text-xs uppercase tracking-widest">Shoe Size</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[["Small", "5 – 6.5"], ["Medium", "6.5 – 11"], ["Large", "11 – 15"]].map(([s, r], i) => (
-                    <tr key={i} style={{ borderTop: "1px solid rgba(17,17,132,0.06)", background: i % 2 === 0 ? "#fff" : "#fafbff" }}>
-                      <td className="px-6 py-4 font-semibold text-[#0d1535]">{s}</td>
-                      <td className="px-6 py-4 text-[#6b7fa8]">{r}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            {/* Women */}
-            <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid rgba(17,17,132,0.10)", boxShadow: "0 4px 24px rgba(17,17,132,0.07)" }}>
-              <div className="px-6 py-4" style={{ background: "linear-gradient(135deg,#1651D1,#5b9bff)" }}>
-                <p className="text-white font-bold text-sm uppercase tracking-widest">Women</p>
-              </div>
-              <table className="w-full text-sm">
-                <thead>
-                  <tr style={{ background: "#f4f6ff" }}>
-                    <th className="px-6 py-3 text-left font-bold text-[#0d1535] text-xs uppercase tracking-widest">Size</th>
-                    <th className="px-6 py-3 text-left font-bold text-[#0d1535] text-xs uppercase tracking-widest">Shoe Size</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[["Small", "4 – 9.5"], ["Medium", "9.5 – 13"], ["Large", "13 – 16.5"]].map(([s, r], i) => (
-                    <tr key={i} style={{ borderTop: "1px solid rgba(17,17,132,0.06)", background: i % 2 === 0 ? "#fff" : "#fafbff" }}>
-                      <td className="px-6 py-4 font-semibold text-[#0d1535]">{s}</td>
-                      <td className="px-6 py-4 text-[#6b7fa8]">{r}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <p className="sr text-center mt-8 text-xs text-[#9ca3af]" style={{ opacity: 0 }}>
-            The XO Boot Pneumatic is available exclusively through TLC DME LLC · (888) 521-8522 · tlcdme.com
-          </p>
-        </div>
-      </section>
 
       {/* ══ CUSTOMER REVIEWS ══ */}
       <section className="relative w-full py-20 md:py-28 overflow-hidden" style={{ background: "linear-gradient(160deg,#eeeeff 0%,#e6e6fa 45%,#f5f7ff 100%)" }}>
@@ -1297,6 +1312,9 @@ export default function XbootDetailPage() {
           </div>
         </div>
       </section>
+
+      {/* CTA SECTION  */}
+
       <section className="relative py-24 overflow-hidden" style={{ background: "linear-gradient(150deg,#f0f0ff 0%,#e8e8ff 50%,#f5f8ff 100%)" }}>
         <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at center,rgba(17,17,132,0.07) 0%,transparent 65%)" }} />
         <div className="relative z-10 max-w-xl mx-auto px-6 flex flex-col items-center text-center gap-6">
