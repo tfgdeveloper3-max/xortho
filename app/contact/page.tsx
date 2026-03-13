@@ -1,4 +1,5 @@
 "use client";
+import { CLD } from "@/lib/cloudinary";
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
@@ -138,7 +139,7 @@ export default function ContactPage() {
       {/* ══ HERO ══ */}
       <section ref={heroRef} className="relative w-full flex items-center overflow-hidden" style={{ minHeight: "100vh", background: "#020916" }}>
         <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none" style={{ zIndex: 0 }}>
-          <source src="/video/section_hero.mp4" type="video/mp4" />
+          <source src={CLD.heroBg} type="video/mp4" />
         </video>
         <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "linear-gradient(135deg,rgba(2,9,22,0.92) 0%,rgba(2,9,22,0.60) 55%,transparent 100%)" }} />
         <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, backgroundImage: "linear-gradient(rgba(17,17,132,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.05) 1px,transparent 1px)", backgroundSize: "52px 52px" }} />

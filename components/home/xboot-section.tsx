@@ -1,4 +1,5 @@
 "use client";
+import { CLD } from "@/lib/cloudinary";
 
 import Image from "next/image";
 import MyButton from "../my-button";
@@ -179,23 +180,23 @@ export default function XbootSection() {
             <div className="absolute inset-0">
               {/* ✅ Base layer — always visible */}
               <div className="absolute inset-0" style={{ zIndex: 0 }}>
-                <Image src="/images/leg/leg-normal.png" alt="" fill
+                <Image src={CLD.legNormal} alt="" fill
                   className="object-contain object-bottom" priority />
               </div>
               <div ref={normalRef} className="absolute inset-0 opacity-0" style={{ zIndex: 1 }}>
-                <Image src="/images/leg/leg-normal.png" alt="Normal leg" fill
+                <Image src={CLD.legNormal} alt="Normal leg" fill
                   className="object-contain object-bottom" priority />
               </div>
               <div ref={painRef} className="absolute inset-0 opacity-0" style={{ zIndex: 2 }}>
-                <Image src="/images/leg/leg-pain.png" alt="Pain leg" fill
+                <Image src={CLD.legPain} alt="Pain leg" fill
                   className="object-contain object-bottom" />
               </div>
               <div ref={bootRef} className="absolute inset-0 opacity-0" style={{ zIndex: 4 }}>
-                <Image src="/images/leg/shoe.png" alt="Xboot" fill
+                <Image src={CLD.shoe} alt="Xboot" fill
                   className="object-contain object-bottom" />
               </div>
               <div ref={healedImgRef} className="absolute inset-0 opacity-0" style={{ zIndex: 3 }}>
-                <Image src="/images/leg/leg-healed.png" alt="Healed leg" fill
+                <Image src={CLD.legHealed} alt="Healed leg" fill
                   className="object-contain object-bottom" />
               </div>
             </div>

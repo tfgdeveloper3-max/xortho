@@ -1,4 +1,5 @@
 "use client";
+import { CLD } from "@/lib/cloudinary";
 
 import Image from "next/image";
 import MyButton from "../my-button";
@@ -242,21 +243,21 @@ export default function BackSupportSection() {
           <div className="relative w-full h-[300px] sm:h-[400px] md:h-[700px] order-1 md:order-2 mt-10 md:mt-20">
             {/* ✅ Base layer — always visible, prevents white background showing */}
             <div className="absolute inset-0" style={{ zIndex: 0 }}>
-              <Image src="/images/belt/back-normal.png" alt="Normal back base" fill className="object-contain object-center" priority />
+              <Image src={CLD.backNormal} alt="Normal back base" fill className="object-contain object-center" priority />
             </div>
             <div ref={normalRef} className="absolute inset-0 opacity-0" style={{ zIndex: 1 }}>
-              <Image src="/images/belt/back-normal.png" alt="Normal back" fill className="object-contain object-center" priority />
+              <Image src={CLD.backNormal} alt="Normal back" fill className="object-contain object-center" priority />
             </div>
             <div ref={painRef} className="absolute inset-0 opacity-0" style={{ zIndex: 2 }}>
-              <Image src="/images/belt/back-pain.png" alt="Back pain" fill className="object-contain object-center" />
+              <Image src={CLD.backPain} alt="Back pain" fill className="object-contain object-center" />
             </div>
             <div ref={beltRef} className="absolute inset-0 opacity-0" style={{ zIndex: 4 }}>
               <div className="absolute" style={{ width: "100%", height: "100%", mixBlendMode: "multiply" }}>
-                <Image src="/images/belt/back-belt3.png" alt="Back Support Belt" fill className="object-contain" />
+                <Image src={CLD.backBelt} alt="Back Support Belt" fill className="object-contain" />
               </div>
             </div>
             <div ref={healedImgRef} className="absolute inset-0 opacity-0" style={{ zIndex: 3 }}>
-              <Image src="/images/belt/back-healed.png" alt="Healed back" fill className="object-contain object-center" />
+              <Image src={CLD.backHealed} alt="Healed back" fill className="object-contain object-center" />
             </div>
             </div>
 

@@ -16,11 +16,11 @@ export default function SectionTransition({ children, onNavbarVisible }: Props) 
         let currentY = window.scrollY;
         targetYRef.current = window.scrollY;
         let rafId = 0;
-        const LERP = 0.08;
+        const LERP = 0.18; // was 0.08 — much faster now
 
         function loop() {
             const diff = targetYRef.current - currentY;
-            if (Math.abs(diff) > 0.5) {
+            if (Math.abs(diff) > 0.3) {
                 currentY += diff * LERP;
                 window.scrollTo(0, currentY);
             } else {
@@ -93,7 +93,6 @@ export default function SectionTransition({ children, onNavbarVisible }: Props) 
     return (
         <>
             <style>{`html, body { overflow-x: hidden; }`}</style>
-            {/* ✅ background #020916 not white — kills white flash */}
             <div style={{ width: "100%", background: "#020916" }}>
                 {Array.isArray(children) &&
                     children.map((child, i) => (

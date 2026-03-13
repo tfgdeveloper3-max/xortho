@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { CLD } from "@/lib/cloudinary";
 
 interface WebsiteIntroProps {
   onVideoEnd?: () => void;
@@ -27,7 +28,7 @@ export default function WebsiteIntro({ onVideoEnd }: WebsiteIntroProps) {
     <div className="fixed inset-0 z-40 bg-black">
       <video
         ref={videoRef}
-        src="/video/Hero-Bg.mp4"
+        src={CLD.heroBg}
         muted
         playsInline
         className="w-full h-full object-cover"

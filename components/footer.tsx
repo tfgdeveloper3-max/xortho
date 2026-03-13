@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { CLD } from "@/lib/cloudinary";
 
 export default function Footer() {
     return (
@@ -11,7 +12,7 @@ export default function Footer() {
                         {/* Left Column: Logo & Description */}
                         <div className="flex flex-col gap-6 max-w-lg">
                             <Image
-                                src="/images/footer-logo.png"
+                                src={CLD.footerLogo}
                                 alt="Xortho Logo"
                                 width={280}
                                 height={100}

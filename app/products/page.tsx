@@ -1,4 +1,5 @@
 "use client";
+import { CLD } from "@/lib/cloudinary";
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import gsap from "gsap";
@@ -17,9 +18,9 @@ const products = [
     tag: "Orthopedic Boot",
     title: "Orthopedic Xboot",
     subtitle: "Advanced Recovery Boot",
-    image: "/images/leg/shoe.png",
-    painImage: "/images/leg/leg-pain.png",
-    healImage: "/images/leg/leg-healed.png",
+    image: CLD.shoe,
+    painImage: CLD.legPain,
+    healImage: CLD.legHealed,
     imgStyle: { height: 360, width: "60%", marginLeft: "80px", marginBottom: "130px" },
     description: "An advanced pulley system allows for tailored compression. Low profile design fits comfortably under clothing — ideal for active patients or lifestyles. Engineered for both clinical and everyday use.",
     features: ["Tailored compression pulley system", "Vertical stays for structural integrity", "Universal strap design", "Optimal Gel Cryo Pad for cold therapy", "Low-profile fits under clothing", "Lightweight construction"],
@@ -31,9 +32,9 @@ const products = [
     tag: "Lumbar Belt",
     title: "Back Support 627/642",
     subtitle: "Lumbar Compression Belt",
-    image: "/images/belt/back-belt3.png",
-    painImage: "/images/belt/back-pain.png",
-    healImage: "/images/belt/back-healed.png",
+    image: CLD.backBelt,
+    painImage: CLD.backPain,
+    healImage: CLD.backHealed,
     imgStyle: { height: 360, width: "96%" },
     description: "Low profile design allows support to fit comfortably under clothing. Vertical stays provide structural integrity while allowing the flexibility needed for daily activities.",
     features: ["Advanced pulley compression system", "Universal fit strap design", "Lumbar support stays", "Gel Cryo Pad compatible", "Breathable mesh construction", "Adjustable tension control"],
@@ -45,9 +46,9 @@ const products = [
     tag: "Osteoarthritis",
     title: "Knee Brace OA",
     subtitle: "Osteoarthritis Support",
-    image: "/images/knee_brace/knee-brace.png",
-    painImage: "/images/knee_brace/knee-pain.png",
-    healImage: "/images/knee_brace/knee-healed.png",
+    image: CLD.kneeBrace,
+    painImage: CLD.kneePain,
+    healImage: CLD.kneeHealed,
     imgStyle: { height: 340, width: "75%", marginLeft: "12%" },
     description: "An advanced pulley system allows for tailored compression. Low profile design allows support to fit comfortably under clothing for all-day wear. Specially engineered for osteoarthritis patients.",
     features: ["Tailored compression control", "Low-profile under-clothing fit", "Vertical structural stays", "Gel Cryo cold therapy pad", "Hinge joint stabilization", "Anti-slip inner lining"],
@@ -60,19 +61,19 @@ const products = [
    3D IMAGE VIEWER — smooth via rAF + GSAP
 ───────────────────────────────────────────── */
 function ImageViewer3D({ product, onClose }: { product: (typeof products)[0]; onClose: () => void }) {
-  const overlayRef  = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const imgRef      = useRef<HTMLImageElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
 
-  const rotX       = useRef(0);
-  const rotY       = useRef(0);
-  const velX       = useRef(0);
-  const velY       = useRef(0);
-  const zoom       = useRef(1);
+  const rotX = useRef(0);
+  const rotY = useRef(0);
+  const velX = useRef(0);
+  const velY = useRef(0);
+  const zoom = useRef(1);
   const isDragging = useRef(false);
-  const lastPos    = useRef({ x: 0, y: 0 });
-  const rafRef     = useRef<number>(0);
-  const stageRef   = useRef<HTMLDivElement>(null);
+  const lastPos = useRef({ x: 0, y: 0 });
+  const rafRef = useRef<number>(0);
+  const stageRef = useRef<HTMLDivElement>(null);
 
   const applyTransform = useCallback(() => {
     const img = imgRef.current;
@@ -84,7 +85,7 @@ function ImageViewer3D({ product, onClose }: { product: (typeof products)[0]; on
     velX.current *= 0.90;
     velY.current *= 0.90;
     rotY.current += velX.current;
-    rotX.current  = Math.max(-55, Math.min(55, rotX.current + velY.current));
+    rotX.current = Math.max(-55, Math.min(55, rotX.current + velY.current));
     applyTransform();
     if (Math.abs(velX.current) > 0.008 || Math.abs(velY.current) > 0.008) {
       rafRef.current = requestAnimationFrame(inertiaLoop);
@@ -92,22 +93,22 @@ function ImageViewer3D({ product, onClose }: { product: (typeof products)[0]; on
   }, [applyTransform]);
 
   useEffect(() => {
-    const overlay   = overlayRef.current;
+    const overlay = overlayRef.current;
     const container = containerRef.current;
     if (!overlay || !container) return;
-    gsap.fromTo(overlay,   { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "power2.out" });
+    gsap.fromTo(overlay, { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "power2.out" });
     gsap.fromTo(container, { opacity: 0, scale: 0.86, y: 48, filter: "blur(10px)" },
-                           { opacity: 1, scale: 1,    y: 0,  filter: "blur(0px)", duration: 0.6, ease: "expo.out" });
+      { opacity: 1, scale: 1, y: 0, filter: "blur(0px)", duration: 0.6, ease: "expo.out" });
     return () => { cancelAnimationFrame(rafRef.current); };
   }, []);
 
   const handleClose = useCallback(() => {
-    const overlay   = overlayRef.current;
+    const overlay = overlayRef.current;
     const container = containerRef.current;
     if (!overlay || !container) { onClose(); return; }
     cancelAnimationFrame(rafRef.current);
     gsap.to(container, { opacity: 0, scale: 0.88, y: 40, filter: "blur(8px)", duration: 0.4, ease: "power3.in" });
-    gsap.to(overlay,   { opacity: 0, duration: 0.4, ease: "power2.in", onComplete: onClose });
+    gsap.to(overlay, { opacity: 0, duration: 0.4, ease: "power2.in", onComplete: onClose });
   }, [onClose]);
 
   useEffect(() => {
@@ -122,7 +123,7 @@ function ImageViewer3D({ product, onClose }: { product: (typeof products)[0]; on
     velX.current = 0;
     velY.current = 0;
     cancelAnimationFrame(rafRef.current);
-    if (imgRef.current)  imgRef.current.style.transition = "none";
+    if (imgRef.current) imgRef.current.style.transition = "none";
     if (stageRef.current) stageRef.current.style.cursor = "grabbing";
   }, []);
 
@@ -133,7 +134,7 @@ function ImageViewer3D({ product, onClose }: { product: (typeof products)[0]; on
     velX.current = dx * 0.40;
     velY.current = -dy * 0.40;
     rotY.current += velX.current;
-    rotX.current  = Math.max(-55, Math.min(55, rotX.current + velY.current));
+    rotX.current = Math.max(-55, Math.min(55, rotX.current + velY.current));
     lastPos.current = { x, y };
     applyTransform();
   }, [applyTransform]);
@@ -163,7 +164,7 @@ function ImageViewer3D({ product, onClose }: { product: (typeof products)[0]; on
     velY.current = 0;
     gsap.to(rotX, { current: 0, duration: 0.75, ease: "elastic.out(1, 0.55)", onUpdate: applyTransform });
     gsap.to(rotY, { current: 0, duration: 0.75, ease: "elastic.out(1, 0.55)", onUpdate: applyTransform });
-    gsap.to(zoom, { current: 1, duration: 0.5,  ease: "power3.out",           onUpdate: applyTransform });
+    gsap.to(zoom, { current: 1, duration: 0.5, ease: "power3.out", onUpdate: applyTransform });
   }, [applyTransform]);
 
   return (
@@ -200,16 +201,16 @@ function ImageViewer3D({ product, onClose }: { product: (typeof products)[0]; on
           onTouchEnd={endDrag}
           onWheel={onWheel}
         >
-          {(["tl","tr","bl","br"] as const).map(c => (
+          {(["tl", "tr", "bl", "br"] as const).map(c => (
             <div key={c} style={{
               position: "absolute", width: 24, height: 24, zIndex: 2,
               top: c.startsWith("t") ? 16 : "auto", bottom: c.startsWith("b") ? 16 : "auto",
-              left: c.endsWith("l") ? 16 : "auto",  right: c.endsWith("r") ? 16 : "auto",
-              borderTop:    c.startsWith("t") ? "2px solid rgba(91,155,255,0.55)" : "none",
+              left: c.endsWith("l") ? 16 : "auto", right: c.endsWith("r") ? 16 : "auto",
+              borderTop: c.startsWith("t") ? "2px solid rgba(91,155,255,0.55)" : "none",
               borderBottom: c.startsWith("b") ? "2px solid rgba(91,155,255,0.55)" : "none",
-              borderLeft:   c.endsWith("l")   ? "2px solid rgba(91,155,255,0.55)" : "none",
-              borderRight:  c.endsWith("r")   ? "2px solid rgba(91,155,255,0.55)" : "none",
-              borderRadius: c==="tl"?"8px 0 0 0":c==="tr"?"0 8px 0 0":c==="bl"?"0 0 0 8px":"0 0 8px 0",
+              borderLeft: c.endsWith("l") ? "2px solid rgba(91,155,255,0.55)" : "none",
+              borderRight: c.endsWith("r") ? "2px solid rgba(91,155,255,0.55)" : "none",
+              borderRadius: c === "tl" ? "8px 0 0 0" : c === "tr" ? "0 8px 0 0" : c === "bl" ? "0 0 0 8px" : "0 0 8px 0",
             }} />
           ))}
           <div className="absolute inset-0 pointer-events-none" style={{
@@ -245,9 +246,9 @@ function ImageViewer3D({ product, onClose }: { product: (typeof products)[0]; on
         </div>
         <div className="flex items-center gap-3">
           {[
-            { icon: <ZoomIn className="w-4 h-4" />,    label: "Zoom In",  action: () => smoothZoom(0.25) },
-            { icon: <ZoomOut className="w-4 h-4" />,   label: "Zoom Out", action: () => smoothZoom(-0.25) },
-            { icon: <RotateCcw className="w-4 h-4" />, label: "Reset",    action: resetView },
+            { icon: <ZoomIn className="w-4 h-4" />, label: "Zoom In", action: () => smoothZoom(0.25) },
+            { icon: <ZoomOut className="w-4 h-4" />, label: "Zoom Out", action: () => smoothZoom(-0.25) },
+            { icon: <RotateCcw className="w-4 h-4" />, label: "Reset", action: resetView },
           ].map(btn => (
             <button key={btn.label} onClick={btn.action}
               className="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider"
@@ -328,16 +329,16 @@ function ProductSection({
   onImageClick: (p: (typeof products)[0]) => void;
 }) {
   const sectionRef = useRef<HTMLElement>(null);
-  const imageRef   = useRef<HTMLDivElement>(null);
-  const textRef    = useRef<HTMLDivElement>(null);
-  const cardRef    = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
   const [barAnimate, setBarAnimate] = useState(false);
   const isEven = index % 2 === 0;
 
   useEffect(() => {
     const section = sectionRef.current;
-    const image   = imageRef.current;
-    const text    = textRef.current;
+    const image = imageRef.current;
+    const text = textRef.current;
     if (!section || !image || !text) return;
 
     const ctx = gsap.context(() => {
@@ -454,16 +455,16 @@ function ProductSection({
             onMouseEnter={onCardEnter}
             onMouseLeave={onCardLeave}
           >
-            {(["tl","tr","bl","br"] as const).map(c => (
+            {(["tl", "tr", "bl", "br"] as const).map(c => (
               <div key={c} style={{
-                position:"absolute", width:20, height:20,
-                top:c.startsWith("t")?16:"auto", bottom:c.startsWith("b")?16:"auto",
-                left:c.endsWith("l")?16:"auto",  right:c.endsWith("r")?16:"auto",
-                borderTop:    c.startsWith("t")?"2px solid rgba(22,81,209,0.30)":"none",
-                borderBottom: c.startsWith("b")?"2px solid rgba(22,81,209,0.30)":"none",
-                borderLeft:   c.endsWith("l")?"2px solid rgba(22,81,209,0.30)":"none",
-                borderRight:  c.endsWith("r")?"2px solid rgba(22,81,209,0.30)":"none",
-                borderRadius: c==="tl"?"8px 0 0 0":c==="tr"?"0 8px 0 0":c==="bl"?"0 0 0 8px":"0 0 8px 0",
+                position: "absolute", width: 20, height: 20,
+                top: c.startsWith("t") ? 16 : "auto", bottom: c.startsWith("b") ? 16 : "auto",
+                left: c.endsWith("l") ? 16 : "auto", right: c.endsWith("r") ? 16 : "auto",
+                borderTop: c.startsWith("t") ? "2px solid rgba(22,81,209,0.30)" : "none",
+                borderBottom: c.startsWith("b") ? "2px solid rgba(22,81,209,0.30)" : "none",
+                borderLeft: c.endsWith("l") ? "2px solid rgba(22,81,209,0.30)" : "none",
+                borderRight: c.endsWith("r") ? "2px solid rgba(22,81,209,0.30)" : "none",
+                borderRadius: c === "tl" ? "8px 0 0 0" : c === "tr" ? "0 8px 0 0" : c === "bl" ? "0 0 0 8px" : "0 0 8px 0",
               }} />
             ))}
             <div className="absolute top-4 right-4 z-10 flex items-center gap-1.5 opacity-0 group-hover:opacity-100"
@@ -483,15 +484,15 @@ function ProductSection({
               onMouseLeave={e => { (e.target as HTMLImageElement).style.transform = "scale(1)"; (e.target as HTMLImageElement).style.filter = "drop-shadow(0 16px 40px rgba(22,81,209,0.18)) drop-shadow(0 4px 12px rgba(0,0,0,0.07))"; }}
             />
             <div className="scanline-anim" style={{
-              position:"absolute", left:24, right:24, height:1,
-              background:"linear-gradient(90deg,transparent,rgba(22,81,209,0.32),transparent)",
-              pointerEvents:"none",
+              position: "absolute", left: 24, right: 24, height: 1,
+              background: "linear-gradient(90deg,transparent,rgba(22,81,209,0.32),transparent)",
+              pointerEvents: "none",
             }} />
           </div>
           <div className="grid grid-cols-3 gap-3">
             {product.stats.map((stat, i) => (
               <div key={i} className="flex flex-col items-center justify-center gap-1 rounded-2xl py-4 text-center"
-                style={{ background:"rgba(255,255,255,0.80)", backdropFilter:"blur(12px)", border:"1px solid rgba(22,81,209,0.10)", boxShadow:"0 2px 10px rgba(22,81,209,0.05)", transition:"transform 0.3s ease, box-shadow 0.3s ease" }}
+                style={{ background: "rgba(255,255,255,0.80)", backdropFilter: "blur(12px)", border: "1px solid rgba(22,81,209,0.10)", boxShadow: "0 2px 10px rgba(22,81,209,0.05)", transition: "transform 0.3s ease, box-shadow 0.3s ease" }}
                 onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.transform = "translateY(-3px)"; (e.currentTarget as HTMLDivElement).style.boxShadow = "0 8px 24px rgba(22,81,209,0.12)"; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLDivElement).style.boxShadow = "0 2px 10px rgba(22,81,209,0.05)"; }}>
                 <span className="text-xl font-black text-[#1651D1]">{stat.value}</span>
@@ -501,17 +502,17 @@ function ProductSection({
           </div>
           <div className="flex gap-3 items-center">
             {[
-              { label:"Before", src:product.painImage, border:"rgba(239,68,68,0.16)",  bg:"rgba(255,245,245,0.85)", labelClass:"absolute top-2 left-3 text-[9px] uppercase tracking-widest font-bold text-red-400/60",  imgFilter:"grayscale(0.25) brightness(0.85)" },
-              { label:"After",  src:product.healImage,  border:"rgba(22,81,209,0.15)", bg:"rgba(234,240,255,0.85)", labelClass:"absolute top-2 left-3 text-[9px] uppercase tracking-widest font-bold",                   imgFilter:"drop-shadow(0 0 8px rgba(22,81,209,0.22))" },
+              { label: "Before", src: product.painImage, border: "rgba(239,68,68,0.16)", bg: "rgba(255,245,245,0.85)", labelClass: "absolute top-2 left-3 text-[9px] uppercase tracking-widest font-bold text-red-400/60", imgFilter: "grayscale(0.25) brightness(0.85)" },
+              { label: "After", src: product.healImage, border: "rgba(22,81,209,0.15)", bg: "rgba(234,240,255,0.85)", labelClass: "absolute top-2 left-3 text-[9px] uppercase tracking-widest font-bold", imgFilter: "drop-shadow(0 0 8px rgba(22,81,209,0.22))" },
             ].map((item, i) => (
-              <div key={i} className="flex-1 rounded-2xl overflow-hidden relative" style={{ border:`1px solid ${item.border}`, background:item.bg, height:88 }}>
-                <span className={item.labelClass} style={i === 1 ? { color:"rgba(22,81,209,0.50)" } : undefined}>
+              <div key={i} className="flex-1 rounded-2xl overflow-hidden relative" style={{ border: `1px solid ${item.border}`, background: item.bg, height: 88 }}>
+                <span className={item.labelClass} style={i === 1 ? { color: "rgba(22,81,209,0.50)" } : undefined}>
                   {item.label}
                 </span>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={item.src} alt={item.label} className="absolute inset-0 w-full h-full object-contain p-3 pt-7"
-                  style={{ filter:item.imgFilter, transition:"filter 0.3s ease" }}
-                  onError={e => { (e.target as HTMLImageElement).style.display="none"; }} />
+                  style={{ filter: item.imgFilter, transition: "filter 0.3s ease" }}
+                  onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
               </div>
             ))}
             <ArrowRight className="w-4 h-4 flex-shrink-0 text-[#1651D1]/30" style={{ order: 1 }} />
@@ -519,7 +520,7 @@ function ProductSection({
         </div>
       </div>
 
-      <div className="absolute bottom-0 inset-x-0 h-px" style={{ background:"linear-gradient(90deg,transparent,rgba(22,81,209,0.12),transparent)" }} />
+      <div className="absolute bottom-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(22,81,209,0.12),transparent)" }} />
 
       <style jsx>{`
         .scanline-anim { animation: scanline 3.5s cubic-bezier(0.4,0,0.6,1) infinite; }
@@ -562,14 +563,14 @@ export default function ProductsPage() {
 
       {viewerProduct && <ImageViewer3D product={viewerProduct} onClose={() => setViewerProduct(null)} />}
 
-      <div id="main-navbar" style={{ position:"fixed", top:0, left:0, right:0, zIndex:99999 }}>
+      <div id="main-navbar" style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 99999 }}>
         <Navbar />
       </div>
 
       {/* ══ HERO ══ */}
       <section ref={heroRef} className="relative w-full flex items-center overflow-hidden" style={{ minHeight: "100vh", background: "#020916" }}>
         {/* Video background */}
-        <video src="/video/Hero-Bg.mp4" autoPlay loop muted playsInline
+        <video src={CLD.heroBg} autoPlay loop muted playsInline
           className="absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none"
           style={{ zIndex: 0 }} />
 
@@ -584,21 +585,21 @@ export default function ProductsPage() {
 
         <div className="relative z-20 flex flex-col gap-3 px-4 sm:px-8 md:px-[100px] pt-20">
           <span className="hero-anim block text-xs sm:text-sm font-bold uppercase"
-            style={{ opacity:0, color:"#7b7bff", letterSpacing:"0.3em" }}>
+            style={{ opacity: 0, color: "#7b7bff", letterSpacing: "0.3em" }}>
             Orthopedic Solutions
           </span>
           <h1 className="hero-anim font-nexa uppercase text-2xl sm:text-3xl md:text-4xl lg:text-5xl"
-            style={{ opacity:0, fontWeight:800, letterSpacing:"-0.5px", lineHeight:1.1 }}>
-            <span className="block" style={{ color:"#f0f4ff" }}>Our Complete</span>
-            <span className="block" style={{ color:"#7b7bff" }}>Product Range</span>
-            <span className="block" style={{ color:"#f0f4ff" }}>&amp; Solutions</span>
+            style={{ opacity: 0, fontWeight: 800, letterSpacing: "-0.5px", lineHeight: 1.1 }}>
+            <span className="block" style={{ color: "#f0f4ff" }}>Our Complete</span>
+            <span className="block" style={{ color: "#7b7bff" }}>Product Range</span>
+            <span className="block" style={{ color: "#f0f4ff" }}>&amp; Solutions</span>
           </h1>
           <p className="hero-anim text-white/55 text-sm sm:text-base md:text-lg leading-relaxed max-w-md border-l-[3px] border-[#7b7bff]/25 pl-3.5"
-            style={{ opacity:0 }}>
+            style={{ opacity: 0 }}>
             Discover our trusted range of orthopedic products designed to support recovery, reduce pain, and improve everyday comfort.
           </p>
-          <div className="hero-anim flex items-center gap-4 flex-wrap" style={{ opacity:0 }}>
-            <button onClick={() => document.getElementById("xboot")?.scrollIntoView({ behavior:"smooth" })} className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 relative overflow-hidden">
+          <div className="hero-anim flex items-center gap-4 flex-wrap" style={{ opacity: 0 }}>
+            <button onClick={() => document.getElementById("xboot")?.scrollIntoView({ behavior: "smooth" })} className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 relative overflow-hidden">
               <div className="absolute top-0 left-[5%] group-hover:left-[80%] duration-300 transition-all h-full w-10 bg-[#1651D1]/50 rounded-[200%] blur" />
               <div className="flex items-center bg-white rounded-full px-4 py-2 md:px-5 md:py-3 relative z-10">
                 <span className="text-base font-semibold">View All Products</span> <ArrowRight className="ml-2 w-4 h-4" />
@@ -622,25 +623,25 @@ export default function ProductsPage() {
       ))}
 
       {/* BOTTOM CTA */}
-      <section className="relative py-24 overflow-hidden" style={{ background:"linear-gradient(150deg,#f0f5ff 0%,#e8efff 50%,#f5f8ff 100%)" }}>
-        <div className="absolute inset-0 pointer-events-none" style={{ background:"radial-gradient(ellipse at center,rgba(22,81,209,0.07) 0%,transparent 65%)" }} />
+      <section className="relative py-24 overflow-hidden" style={{ background: "linear-gradient(150deg,#f0f5ff 0%,#e8efff 50%,#f5f8ff 100%)" }}>
+        <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at center,rgba(22,81,209,0.07) 0%,transparent 65%)" }} />
         <div className="relative z-10 max-w-xl mx-auto px-6 flex flex-col items-center text-center gap-6">
-          <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background:"rgba(22,81,209,0.45)" }} />
+          <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "rgba(22,81,209,0.45)" }} />
           <h2 className="font-nexa uppercase leading-tight"
-            style={{ fontSize:"clamp(1.8rem,3vw,2.8rem)", fontWeight:800, color:"#0d1535", letterSpacing:"-0.5px" }}>
-            Ready to start your <span style={{ color:"#1651D1" }}>recovery journey?</span>
+            style={{ fontSize: "clamp(1.8rem,3vw,2.8rem)", fontWeight: 800, color: "#0d1535", letterSpacing: "-0.5px" }}>
+            Ready to start your <span style={{ color: "#1651D1" }}>recovery journey?</span>
           </h2>
           <p className="text-[#3a4a6b] text-base leading-relaxed">
             Connect with our team to find the right orthopedic solution for your needs.
           </p>
           <div className="flex items-center gap-4 flex-wrap justify-center">
-<a href="#contact" className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 relative overflow-hidden">
-                  <div className="absolute top-0 left-[5%] group-hover:left-[80%] duration-300 transition-all h-full w-10 bg-[#1651D1]/50 rounded-[200%] blur" />
-                  <div className="flex items-center bg-white rounded-full px-4 py-2 md:px-5 md:py-3 relative z-10">
-                    <span className="text-base font-semibold">Contact Us</span> <ArrowRight className="ml-2 w-4 h-4" />
-                  </div>
-                </a>
-            <a href="/" className="text-sm font-semibold uppercase tracking-widest" style={{ color:"rgba(22,81,209,0.38)", transition:"color 0.25s" }}
+            <a href="#contact" className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 relative overflow-hidden">
+              <div className="absolute top-0 left-[5%] group-hover:left-[80%] duration-300 transition-all h-full w-10 bg-[#1651D1]/50 rounded-[200%] blur" />
+              <div className="flex items-center bg-white rounded-full px-4 py-2 md:px-5 md:py-3 relative z-10">
+                <span className="text-base font-semibold">Contact Us</span> <ArrowRight className="ml-2 w-4 h-4" />
+              </div>
+            </a>
+            <a href="/" className="text-sm font-semibold uppercase tracking-widest" style={{ color: "rgba(22,81,209,0.38)", transition: "color 0.25s" }}
               onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = "#1651D1"; }}
               onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(22,81,209,0.38)"; }}>
               Back to Home

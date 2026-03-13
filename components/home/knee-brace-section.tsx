@@ -1,4 +1,5 @@
 "use client";
+import { CLD } from "@/lib/cloudinary";
 
 import Image from "next/image";
 import MyButton from "../my-button";
@@ -175,21 +176,21 @@ export default function KneeBraceSection() {
           <div className="relative w-[98%] h-[380px] md:h-[620px] mx-auto md:mx-0">
             {/* ✅ Base layer — always visible, prevents white background showing */}
             <div className="absolute inset-0" style={{ zIndex: 0 }}>
-              <Image src="/images/knee_brace/knee-normal.png" alt="Normal knee base" fill className="object-contain object-center" priority />
+              <Image src={CLD.kneeNormal} alt="Normal knee base" fill className="object-contain object-center" priority />
             </div>
             <div ref={normalRef} className="absolute inset-0 opacity-0" style={{ zIndex: 1 }}>
-              <Image src="/images/knee_brace/knee-normal.png" alt="Normal knee" fill className="object-contain object-center" priority />
+              <Image src={CLD.kneeNormal} alt="Normal knee" fill className="object-contain object-center" priority />
             </div>
             <div ref={painRef} className="absolute inset-0 opacity-0" style={{ zIndex: 2 }}>
-              <Image src="/images/knee_brace/knee-pain.png" alt="Knee pain" fill className="object-contain object-center" />
+              <Image src={CLD.kneePain} alt="Knee pain" fill className="object-contain object-center" />
             </div>
             <div ref={braceRef} className="absolute inset-0 opacity-0" style={{ zIndex: 4 }}>
               <div className="relative w-full h-full" style={{ mixBlendMode: "multiply" }}>
-                <Image src="/images/knee_brace/knee-brace.png" alt="Knee Brace" fill className="object-contain object-center" />
+                <Image src={CLD.kneeBrace} alt="Knee Brace" fill className="object-contain object-center" />
               </div>
             </div>
             <div ref={healedImgRef} className="absolute inset-0 opacity-0" style={{ zIndex: 3 }}>
-              <Image src="/images/knee_brace/knee-healed.png" alt="Healed knee" fill className="object-contain object-center" />
+              <Image src={CLD.kneeHealed} alt="Healed knee" fill className="object-contain object-center" />
             </div>
             </div>
 

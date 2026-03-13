@@ -1,4 +1,5 @@
 "use client";
+import { CLD } from "@/lib/cloudinary";
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -13,21 +14,21 @@ interface HeroProps {
 const products = [
   {
     id: "xboot", label: "Orthopedic\nXboot", abbr: "XB", short: "Boot", tag: "Orthopedic Boot",
-    image: "/images/leg/shoe.png", title: "Orthopedic Xboot", subtitle: "Advanced Recovery Boot",
+    image: CLD.shoe, title: "Orthopedic Xboot", subtitle: "Advanced Recovery Boot",
     href: "/products/xboot",
     description: "An advanced pulley system allows for tailored compression. Low profile design fits comfortably under clothing — ideal for active patients or lifestyles.",
     features: ["Tailored compression pulley system", "Vertical stays for structural integrity", "Universal strap design", "Optimal Gel Cryo Pad for cold therapy"],
   },
   {
     id: "back", label: "Back\nSupport", abbr: "BS", short: "Back", tag: "Lumbar Belt",
-    image: "/images/belt/back-belt3.png", title: "Back Support 627/642", subtitle: "Lumbar Compression Belt",
+    image: CLD.backBelt, title: "Back Support 627/642", subtitle: "Lumbar Compression Belt",
     href: "/products/back",
     description: "Low profile design allows support to fit comfortably under clothing. Vertical stays provide structural integrity while allowing the flexibility needed.",
     features: ["Advanced pulley compression system", "Universal fit strap design", "Lumbar support stays", "Gel Cryo Pad compatible"],
   },
   {
     id: "knee", label: "Knee\nBrace", abbr: "KB", short: "Knee", tag: "Osteoarthritis",
-    image: "/images/knee_brace/knee-brace.png", title: "Knee Brace OA", subtitle: "Osteoarthritis Support",
+    image: CLD.kneeBrace, title: "Knee Brace OA", subtitle: "Osteoarthritis Support",
     href: "/products/knee-brace",
     description: "An advanced pulley system allows for tailored compression. Low profile design allows support to fit comfortably under clothing for all-day wear.",
     features: ["Tailored compression control", "Low-profile under-clothing fit", "Vertical structural stays", "Gel Cryo cold therapy pad"],
@@ -155,7 +156,7 @@ export default function Hero({ noAnimation = false, playAnimation = false }: Her
         className="relative w-full min-h-screen flex items-center bg-black overflow-hidden"
         style={{ opacity: 1 }}
       >
-        <video src="/video/Hero-Bg.mp4" autoPlay loop muted playsInline
+        <video src={CLD.heroBg} autoPlay loop muted playsInline
           className="absolute inset-0 w-full h-full object-cover opacity-80" />
         <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/20 to-transparent z-10 pointer-events-none" />
 

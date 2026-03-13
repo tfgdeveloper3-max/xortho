@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { useScrollFade } from "@/components/animation/animations";
+import { CLD } from "@/lib/cloudinary";
 
 export default function TrustSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -27,13 +28,12 @@ export default function TrustSection() {
           </p>
         </div>
 
-
         <div
           ref={videoRef}
           className="w-full relative aspect-video rounded-3xl overflow-hidden shadow-2xl shadow-primary/10 mt-5"
         >
           <video
-            src="/video/Trust.mp4"
+            src={CLD.trust}
             autoPlay
             loop
             muted

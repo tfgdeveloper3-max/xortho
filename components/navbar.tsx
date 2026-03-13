@@ -4,13 +4,14 @@ import Image from "next/image"
 import { useEffect, useState, useRef } from "react"
 import { useRouter, usePathname } from "next/navigation"
 import { Menu, X, ChevronDown, ArrowRight } from "lucide-react"
+import { CLD } from "@/lib/cloudinary"
 
 const productLinks = [
   {
     id: "xboot",
     title: "Orthopedic Xboot",
     subtitle: "Advanced Recovery Boot",
-    image: "/images/leg/shoe.png",
+    image: CLD.shoe,
     href: "/products/xboot",
     tag: "Orthopedic Boot",
     description: "Tailored compression with pulley system. Low profile fits comfortably under clothing.",
@@ -19,7 +20,7 @@ const productLinks = [
     id: "back",
     title: "Back Support 627/642",
     subtitle: "Lumbar Compression Belt",
-    image: "/images/belt/back-belt3.png",
+    image: CLD.backBelt,
     href: "/products/back",
     tag: "Lumbar Belt",
     description: "Vertical stays provide structural integrity while allowing the flexibility needed for daily life.",
@@ -28,7 +29,7 @@ const productLinks = [
     id: "knee",
     title: "Knee Brace OA",
     subtitle: "Osteoarthritis Support",
-    image: "/images/knee_brace/knee-brace.png",
+    image: CLD.kneeBrace,
     href: "/products/knee",
     tag: "Osteoarthritis",
     description: "Low profile design for all-day wear. Advanced pulley for tailored compression control.",
@@ -73,7 +74,6 @@ export default function Navbar() {
     })
   }
 
-  // Smart nav: if on home page scroll to section, else go to home#section
   const handleNavClick = (href: string) => {
     setMobileOpen(false)
     if (href.startsWith("#")) {
@@ -98,16 +98,9 @@ export default function Navbar() {
   return (
     <>
       <style>{`
-        .mobile-submenu {
-          transition: max-height 0.35s ease, opacity 0.3s ease;
-          overflow: hidden;
-        }
-        .prod-row {
-          transition: all 0.22s ease;
-        }
-        .prod-img-slide {
-          transition: opacity 0.4s cubic-bezier(0.4,0,0.2,1), transform 0.4s cubic-bezier(0.4,0,0.2,1);
-        }
+        .mobile-submenu { transition: max-height 0.35s ease, opacity 0.3s ease; overflow: hidden; }
+        .prod-row { transition: all 0.22s ease; }
+        .prod-img-slide { transition: opacity 0.4s cubic-bezier(0.4,0,0.2,1), transform 0.4s cubic-bezier(0.4,0,0.2,1); }
       `}</style>
 
       {/* FULL SCREEN DROPDOWN OVERLAY */}
@@ -231,27 +224,28 @@ export default function Navbar() {
       </div>
 
       {/* NAVBAR */}
-      <div id="main-navbar" className={`fixed top-0 left-0 w-full z-50 transition-all duration-400 ${
-        isScrolled && !productsOpen ? "bg-white/95 backdrop-blur-md shadow-md py-4" : "bg-transparent py-3"
-      }`}>
+      <div id="main-navbar" className={`fixed top-0 left-0 w-full z-50 transition-all duration-400 ${isScrolled && !productsOpen ? "bg-white/95 backdrop-blur-md shadow-md py-4" : "bg-transparent py-3"
+        }`}>
         <div className="w-full px-20 sm:px-24 md:px-28 lg:px-32 flex items-center justify-between gap-4">
 
           {/* Logo */}
           <button onClick={() => router.push("/")}
             className={`relative flex-shrink-0 transition-all duration-300 ${isScrolled && !productsOpen ? "w-16" : "w-28"}`}
             style={{
-              filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.6)) drop-shadow(0 0 20px rgba(180,200,255,0.25)) drop-shadow(2px 4px 8px rgba(0,0,0,0.8))",
+              filter: isScrolled && !productsOpen
+                ? "drop-shadow(0 1px 3px rgba(17,17,132,0.15))"
+                : "drop-shadow(0 0 28px rgba(140,170,255,0.5)) drop-shadow(0 2px 8px rgba(255,255,255,0.12))",
             }}>
             <div className="relative w-full h-auto">
               <Image
-                src="/images/logo.png"
+                src={CLD.logo}
                 alt="Xortho Logo"
                 width={160} height={160}
                 className="w-full h-auto object-contain transition-all duration-300"
                 style={{ opacity: isScrolled && !productsOpen ? 0 : 1, position: isScrolled && !productsOpen ? "absolute" : "relative" }}
               />
               <Image
-                src="/images/XO.png"
+                src={CLD.xo}
                 alt="XO"
                 width={80} height={80}
                 className="w-full h-auto object-contain transition-all duration-300"

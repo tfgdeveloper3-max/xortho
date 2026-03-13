@@ -1,4 +1,5 @@
 "use client";
+import { CLD } from "@/lib/cloudinary";
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
@@ -66,9 +67,9 @@ function BeforeAfterSlider() {
       <div className="absolute pointer-events-none" style={{ right: "-5%", top: "50%", transform: "translateY(-50%)", width: "55%", height: "80%", background: `radial-gradient(ellipse, rgba(17,17,132,0.09) 0%, transparent 70%)`, filter: "blur(32px)", zIndex: 0 }} />
 
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/images/knee_brace/knee-brace.png" alt="Product" className="absolute inset-0 w-full h-full object-contain pointer-events-none" style={{ zIndex: 1, padding: "28px" }} />
+      <img src={CLD.kneeBrace} alt="Product" className="absolute inset-0 w-full h-full object-contain pointer-events-none" style={{ zIndex: 1, padding: "28px" }} />
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/images/knee_brace/knee-brace-blueprint.png" alt="Blueprint" className="absolute inset-0 w-full h-full object-contain pointer-events-none"
+      <img src={CLD.kneeBraceBlueprint} alt="Blueprint" className="absolute inset-0 w-full h-full object-contain pointer-events-none"
         style={{ clipPath: `inset(0 0 0 ${sliderX}%)`, zIndex: 2, filter: "brightness(0.88)", padding: "28px" }} />
 
       <div className="absolute top-0 bottom-0 z-10 pointer-events-none"
@@ -79,8 +80,8 @@ function BeforeAfterSlider() {
         onMouseDown={() => { dragging.current = true; }}
         onTouchStart={() => { dragging.current = true; }}>
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M7 5L3 10L7 15" stroke={P} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M13 5L17 10L13 15" stroke={P} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M7 5L3 10L7 15" stroke={P} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M13 5L17 10L13 15" stroke={P} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
       </div>
 
@@ -168,7 +169,7 @@ export default function KneeBracePage() {
       {/* ══ HERO ══ */}
       <section ref={heroRef} className="relative w-full flex items-center overflow-hidden" style={{ minHeight: "100vh", background: "#020916" }}>
         <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none" style={{ zIndex: 0 }}>
-          <source src="/video/section_hero.mp4" type="video/mp4" />
+          <source src={CLD.heroBg} type="video/mp4" />
         </video>
         <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "linear-gradient(135deg,rgba(2,9,22,0.90) 0%,rgba(2,9,22,0.55) 55%,transparent 100%)" }} />
         <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, backgroundImage: `linear-gradient(rgba(17,17,132,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.05) 1px,transparent 1px)`, backgroundSize: "52px 52px" }} />
@@ -215,7 +216,7 @@ export default function KneeBracePage() {
             <div ref={heroImgRef} className="hanim relative flex items-center justify-center" style={{ opacity: 0, height: 580, paddingLeft: 50, paddingBottom: 50 }}>
               <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse at center 60%,rgba(17,17,132,0.35) 0%,transparent 65%)`, filter: "blur(24px)" }} />
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/knee_brace/knee-brace.png" alt="Knee Brace OA"
+              <img src={CLD.kneeBrace} alt="Knee Brace OA"
                 style={{ position: "relative", zIndex: 1, maxHeight: "100%", maxWidth: "90%", objectFit: "contain", filter: `drop-shadow(0 32px 64px rgba(17,17,132,0.50)) drop-shadow(0 4px 16px rgba(0,0,0,0.40))` }} />
             </div>
           </div>
@@ -238,23 +239,22 @@ export default function KneeBracePage() {
           </div>
 
           <div className="sr grid grid-cols-1 md:grid-cols-2 gap-8 items-center" style={{ opacity: 0 }}>
-            {/* Feature Cards — vertical style like reference image */}
-            <div className="grid grid-cols-1 gap-3">
+            <div className="flex flex-col gap-3">
               {features.map((f, i) => {
                 const on = activeFeature === i;
                 return (
                   <button key={i} onClick={() => setActiveFeature(i)}
-                    className="text-left rounded-2xl p-5 flex flex-col gap-3 transition-all duration-300"
+                    className="w-full text-left rounded-2xl p-5 flex items-center gap-4 transition-all duration-300"
                     style={{
-                      background: on ? "linear-gradient(135deg,#0f0f7a,#111184)" : "#ffffff",
-                      boxShadow: on ? "0 8px 28px rgba(17,17,132,0.28)" : "0 2px 12px rgba(0,0,0,0.06)",
+                      background: on ? `linear-gradient(135deg,${PL},${P})` : "#ffffff",
+                      boxShadow: on ? `0 8px 28px rgba(17,17,132,0.28)` : "0 2px 12px rgba(0,0,0,0.06)",
                       minHeight: 72,
                     }}>
                     <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                      style={{ background: on ? "rgba(255,255,255,0.18)" : "#e8eeff" }}>
-                      <Check className={`w-5 h-5 ${on ? "text-white" : "text-primary"}`} />
+                      style={{ background: on ? "rgba(255,255,255,0.18)" : "rgba(17,17,132,0.08)" }}>
+                      <Check className="w-5 h-5" style={{ color: on ? "#fff" : P }} />
                     </div>
-                    <div>
+                    <div className="flex-1">
                       <p className={`text-sm font-bold leading-snug ${on ? "text-white" : "text-[#0d1535]"}`}>{f.label}</p>
                       {on && <p className="text-xs leading-relaxed text-white/80 mt-1.5">{f.desc}</p>}
                     </div>
@@ -285,7 +285,7 @@ export default function KneeBracePage() {
               <div className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none"
                 style={{ width: "80%", height: "28%", background: `radial-gradient(ellipse, rgba(17,17,132,0.18) 0%, transparent 70%)`, filter: "blur(22px)" }} />
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/knee_brace/knee-brace-side.png" alt="Knee brace side view"
+              <img src={CLD.kneeBraceSide} alt="Knee brace side view"
                 style={{ maxHeight: 560, maxWidth: "110%", objectFit: "contain", position: "relative", zIndex: 1, filter: `drop-shadow(0 18px 48px rgba(17,17,132,0.20)) drop-shadow(0 4px 18px rgba(0,0,0,0.12))` }} />
             </div>
           </div>
@@ -303,7 +303,7 @@ export default function KneeBracePage() {
               <div className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none"
                 style={{ width: "80%", height: "30%", background: `radial-gradient(ellipse, rgba(17,17,132,0.15) 0%, transparent 70%)`, filter: "blur(20px)", zIndex: 0 }} />
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/knee_brace/knee-brace-strap.png" alt="Knee brace strap detail"
+              <img src={CLD.kneeBraceStrap} alt="Knee brace strap detail"
                 style={{ height: 420, maxWidth: "100%", objectFit: "contain", position: "relative", zIndex: 1, filter: `drop-shadow(0 20px 48px rgba(17,17,132,0.22)) drop-shadow(0 4px 18px rgba(0,0,0,0.12))` }} />
             </div>
             <div className="flex flex-col gap-5">
@@ -341,7 +341,7 @@ export default function KneeBracePage() {
               <div className="absolute pointer-events-none"
                 style={{ bottom: "5%", left: "50%", transform: "translateX(-50%)", width: "70%", height: "40%", background: `radial-gradient(ellipse, rgba(17,17,132,0.18) 0%, transparent 70%)`, filter: "blur(22px)", zIndex: 0 }} />
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/knee_brace/knee-brace-worn.png" alt="Knee brace being worn"
+              <img src={CLD.kneeBraceWorn} alt="Knee brace being worn"
                 style={{ maxHeight: 380, maxWidth: "85%", objectFit: "contain", position: "relative", zIndex: 1, filter: `drop-shadow(0 20px 48px rgba(17,17,132,0.24)) drop-shadow(0 4px 16px rgba(0,0,0,0.12))` }} />
             </div>
           </div>
@@ -386,7 +386,7 @@ export default function KneeBracePage() {
               <div className="absolute pointer-events-none"
                 style={{ bottom: "8%", left: "50%", transform: "translateX(-50%)", width: "55%", height: "35%", background: `radial-gradient(ellipse, rgba(17,17,132,0.16) 0%, transparent 70%)`, filter: "blur(20px)" }} />
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/knee_brace/knee-brace.png" alt="How it works"
+              <img src={CLD.kneeBrace} alt="How it works"
                 style={{ position: "relative", zIndex: 1, maxHeight: 400, objectFit: "contain", filter: "drop-shadow(0 8px 28px rgba(0,0,0,0.12))" }} />
             </div>
             <div className="flex flex-col gap-5">
@@ -463,11 +463,11 @@ export default function KneeBracePage() {
           <p className="text-[#3a4a6b] text-base leading-relaxed">Connect with our team to find the right orthopedic solution for your needs.</p>
           <div className="flex items-center gap-4 flex-wrap justify-center">
             <a href="#contact" className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 relative overflow-hidden">
-              <div className="absolute top-0 left-[5%] group-hover:left-[80%] duration-300 transition-all h-full w-10 bg-[#1651D1]/50 rounded-[200%] blur" />
-              <div className="flex items-center bg-white rounded-full px-4 py-2 md:px-5 md:py-3 relative z-10">
-                <span className="text-base font-semibold">Contact Us</span> <ArrowRight className="ml-2 w-4 h-4" />
-              </div>
-            </a>
+                  <div className="absolute top-0 left-[5%] group-hover:left-[80%] duration-300 transition-all h-full w-10 bg-[#1651D1]/50 rounded-[200%] blur" />
+                  <div className="flex items-center bg-white rounded-full px-4 py-2 md:px-5 md:py-3 relative z-10">
+                    <span className="text-base font-semibold">Contact Us</span> <ArrowRight className="ml-2 w-4 h-4" />
+                  </div>
+                </a>
             <a href="/" className="text-sm font-semibold uppercase tracking-widest transition-colors" style={{ color: `rgba(17,17,132,0.38)` }}
               onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = P; }}
               onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = `rgba(17,17,132,0.38)`; }}>
