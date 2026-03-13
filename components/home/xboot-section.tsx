@@ -21,7 +21,6 @@ export default function XbootSection() {
   const heartbeatRef = useRef<gsap.core.Tween | null>(null);
   const hasStartedRef = useRef(false);
 
-  // "pain" | "healing" | "idle"
   const [phase, setPhase] = useState<"idle" | "pain" | "healing">("idle");
 
   useEffect(() => {
@@ -34,53 +33,33 @@ export default function XbootSection() {
     }
 
     function resetAll() {
-      gsap.set([
-        normalRef.current, painRef.current, healedImgRef.current,
-        bootRef.current, healedGlowRef.current,
-      ], { opacity: 0, clearProps: "transform,clipPath,scale,y,x" });
+      gsap.set([normalRef.current, painRef.current, healedImgRef.current, bootRef.current, healedGlowRef.current],
+        { opacity: 0, clearProps: "transform,clipPath,scale,y,x" });
       gsap.set(indicatorRef.current, { width: "0%" });
     }
 
     function buildHealTimeline(): gsap.core.Timeline {
       const tl = gsap.timeline({ paused: true });
-
       tl.fromTo(normalRef.current, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 2.0 }, 0);
       tl.to(normalRef.current, { opacity: 0, duration: 1.2 }, 1.5);
-
-      // pain fades in cleanly — no scale/blink
       tl.fromTo(painRef.current, { opacity: 0 }, { opacity: 1, duration: 2.0 }, 2.0);
-
-      // boot slides in from bottom
-      tl.fromTo(bootRef.current,
-        { opacity: 0, y: 60, scale: 0.97 },
-        { opacity: 1, y: 0, scale: 1, duration: 3.0, ease: "power1.out" }, 4.0);
-
-      // healed starts BEFORE pain fades
+      tl.fromTo(bootRef.current, { opacity: 0, y: 60, scale: 0.97 }, { opacity: 1, y: 0, scale: 1, duration: 3.0, ease: "power1.out" }, 4.0);
       tl.fromTo(healedImgRef.current, { opacity: 0, scale: 0.98 }, { opacity: 1, scale: 1, duration: 2.5, ease: "power1.out" }, 5.0);
       tl.fromTo(healedGlowRef.current, { opacity: 0 }, { opacity: 1, duration: 1.8 }, 5.0);
-
       tl.to(painRef.current, { opacity: 0, duration: 1.5 }, 5.5);
-
       tl.fromTo(indicatorRef.current, { width: "0%" }, { width: "100%", duration: 12.0, ease: "none" }, 0);
-
       return tl;
     }
 
     function startLoop() {
       if (hasStartedRef.current) return;
       hasStartedRef.current = true;
-
       resetAll();
-
       const tl = buildHealTimeline();
       tlRef.current = tl;
-
-      // pain starts ~2.3s, healing ~7.2s, total 12s
-      const PAIN_START    = 2.3 / 12;
+      const PAIN_START = 2.3 / 12;
       const HEALING_START = 7.2 / 12;
-
       const proxy = { p: 0 };
-
       let prevP = 0;
       function updatePhase(p: number) {
         const goingForward = p >= prevP;
@@ -94,7 +73,6 @@ export default function XbootSection() {
           if (p < PAIN_START - 0.05) setPhase("idle");
         }
       }
-
       function playForward() {
         loopRef.current = gsap.to(proxy, {
           p: 1, duration: 14, ease: "sine.inOut",
@@ -102,7 +80,6 @@ export default function XbootSection() {
           onComplete: (): void => { playBackward(); },
         });
       }
-
       function playBackward() {
         loopRef.current = gsap.to(proxy, {
           p: 0, duration: 14, ease: "sine.inOut",
@@ -110,7 +87,6 @@ export default function XbootSection() {
           onComplete: (): void => { setPhase("idle"); playForward(); },
         });
       }
-
       playForward();
     }
 
@@ -128,7 +104,6 @@ export default function XbootSection() {
     };
   }, []);
 
-  // Heartbeat — full image aura pulses like a heartbeat
   useEffect(() => {
     heartbeatRef.current?.kill();
     if (phase === "pain") {
@@ -140,12 +115,7 @@ export default function XbootSection() {
       };
       setFilter(1);
       heartbeatRef.current = gsap.to(proxy, {
-        v: 0.08,
-        duration: 0.3,
-        ease: "power2.in",
-        yoyo: true,
-        repeat: -1,
-        repeatDelay: 0.55,
+        v: 0.08, duration: 0.3, ease: "power2.in", yoyo: true, repeat: -1, repeatDelay: 0.55,
         onUpdate: () => setFilter(proxy.v),
       });
     } else {
@@ -153,19 +123,13 @@ export default function XbootSection() {
     }
   }, [phase]);
 
-  // Derived glow styles for content side
   const isPain = phase === "pain";
   const isHealing = phase === "healing";
-
   const labelColor = isPain ? "#ef4444" : isHealing ? "#22c55e" : "#ef4444";
-  const labelText = isPain ? "⚠ Pain Phase" : isHealing ? "✦ Recovery Phase" : "Pain → Recovery";
+  const labelText = isPain ? "\u26a0 Pain Phase" : isHealing ? "\u2736 Recovery Phase" : "Pain \u2192 Recovery";
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative w-full min-h-screen flex items-center bg-white"
-      style={{ overflow: "hidden" }}
-    >
+    <section ref={sectionRef} className="relative w-full min-h-screen flex items-center bg-white" style={{ overflow: "hidden" }}>
       <div className="absolute bottom-0 w-full h-[55%] md:top-0 md:right-0 md:w-[60%] md:h-full bg-[#F2F4F8] z-0 md:[clip-path:polygon(10%_0,100%_0,100%_100%,0%_100%)]" />
       <div ref={painGlowRef} className="absolute inset-0 pointer-events-none z-0"
         style={{ opacity: 0, background: "radial-gradient(ellipse at 30% 55%, rgba(255,80,0,0.18) 0%, rgba(255,80,0,0.06) 50%, transparent 75%)" }} />
@@ -174,70 +138,45 @@ export default function XbootSection() {
 
       <div className="container mx-auto px-5 md:px-[100px] relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-[45%_55%] gap-0 items-center">
-          {/* Image side */}
           <div className="relative w-full h-[550px] md:h-[750px]">
-            {/* Single fixed container — all images stack at identical size/position */}
             <div className="absolute inset-0">
-              {/* ✅ Base layer — always visible */}
               <div className="absolute inset-0" style={{ zIndex: 0 }}>
-                <Image src={CLD.legNormal} alt="" fill
-                  className="object-contain object-bottom" priority />
+                <Image src={CLD.legNormal} alt="" fill className="object-contain object-bottom" priority />
               </div>
               <div ref={normalRef} className="absolute inset-0 opacity-0" style={{ zIndex: 1 }}>
-                <Image src={CLD.legNormal} alt="Normal leg" fill
-                  className="object-contain object-bottom" priority />
+                <Image src={CLD.legNormal} alt="Normal leg" fill className="object-contain object-bottom" priority />
               </div>
               <div ref={painRef} className="absolute inset-0 opacity-0" style={{ zIndex: 2 }}>
-                <Image src={CLD.legPain} alt="Pain leg" fill
-                  className="object-contain object-bottom" />
+                <Image src={CLD.legPain} alt="Pain leg" fill className="object-contain object-bottom" />
               </div>
               <div ref={bootRef} className="absolute inset-0 opacity-0" style={{ zIndex: 4 }}>
-                <Image src={CLD.shoe} alt="Xboot" fill
-                  className="object-contain object-bottom" />
+                <Image src={CLD.shoe} alt="XO Boot Pneumatic" fill className="object-contain object-bottom" />
               </div>
               <div ref={healedImgRef} className="absolute inset-0 opacity-0" style={{ zIndex: 3 }}>
-                <Image src={CLD.legHealed} alt="Healed leg" fill
-                  className="object-contain object-bottom" />
+                <Image src={CLD.legHealed} alt="Healed leg" fill className="object-contain object-bottom" />
               </div>
             </div>
           </div>
 
-          {/* Content side */}
-          <div
-            ref={contentRef}
-            className="flex flex-col gap-6 pl-8 md:pl-16 pr-4 md:pr-10 py-16 md:py-20"
-            style={{}}
-          >
-            {/* Dynamic label */}
-            <span
-              className="text-xs uppercase tracking-widest font-semibold transition-all duration-500"
+          <div ref={contentRef} className="flex flex-col gap-6 pl-8 md:pl-16 pr-4 md:pr-10 py-16 md:py-20">
+            <span className="text-xs uppercase tracking-widest font-semibold transition-all duration-500"
               style={{
                 color: labelColor,
-                textShadow: isPain
-                  ? "0 0 12px rgba(239,68,68,0.8), 0 0 24px rgba(239,68,68,0.4)"
-                  : isHealing
-                  ? "0 0 12px rgba(34,197,94,0.8), 0 0 24px rgba(34,197,94,0.4)"
-                  : "none",
-              }}
-            >
+                textShadow: isPain ? "0 0 12px rgba(239,68,68,0.8), 0 0 24px rgba(239,68,68,0.4)"
+                  : isHealing ? "0 0 12px rgba(34,197,94,0.8), 0 0 24px rgba(34,197,94,0.4)" : "none",
+              }}>
               {labelText}
             </span>
 
             <h2 className="text-4xl md:text-5xl font-bold uppercase text-primary leading-tight">
-              Orthopedic <br /><span className="text-primary">Xboot</span>
+              XO Boot <br /><span className="text-primary">Pneumatic</span>
             </h2>
 
-            <div
-              className="flex flex-col text-base md:text-lg leading-relaxed gap-1 transition-all duration-500"
+            <div className="flex flex-col text-base md:text-lg leading-relaxed gap-1 transition-all duration-500"
               style={{
                 color: isPain ? "rgba(239,68,68,0.85)" : isHealing ? "rgba(34,197,94,0.85)" : "#4A5568",
-                textShadow: isPain
-                  ? "0 0 8px rgba(239,68,68,0.25)"
-                  : isHealing
-                  ? "0 0 8px rgba(34,197,94,0.25)"
-                  : "none",
-              }}
-            >
+                textShadow: isPain ? "0 0 8px rgba(239,68,68,0.25)" : isHealing ? "0 0 8px rgba(34,197,94,0.25)" : "none",
+              }}>
               {isPain && (
                 <p className="text-sm font-semibold text-red-500 mb-2 flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse inline-block" />
@@ -250,11 +189,11 @@ export default function XbootSection() {
                   Recovery in progress — boot applied
                 </p>
               )}
-              <p>An advanced pulley system allows for tailored compression.</p>
-              <p>Low profile design allows support to fit comfortably under clothing; ideal for active patients or lifestyles.</p>
-              <p>Vertical stays provide structural integrity while allowing for the flexibility needed.</p>
-              <p>A simple strap design allows for a universal fit.</p>
-              <p>Optimal Gel Cryo Pad available for effective cold therapy.</p>
+              <p>World class aerodynamic shell — short leg cast-like stability beyond any walking boot available.</p>
+              <p>Revolutionary compartmentalized pneumatic compression with EZ adjust bulb and intuitive inflate/deflate valve.</p>
+              <p>Real rocker sole supports natural gait from heel strike to toe off.</p>
+              <p>Seamless micro-fiber liner — T-shirt soft, wicking, designed for patient comfort and compliance.</p>
+              <p>4-strap system with 360° swivel D-rings and easy grip rubber tips.</p>
             </div>
 
             <div className="pt-4"><MyButton /></div>

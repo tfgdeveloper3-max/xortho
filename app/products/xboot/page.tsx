@@ -13,23 +13,24 @@ import Footer from "@/components/footer";
 gsap.registerPlugin(ScrollTrigger);
 
 const features = [
-  { label: "Removable Anterior Plate", desc: "Engineered exoskeleton shell with removable anterior plate for anterior access and enhanced protection during all phases of recovery." },
-  { label: "Calf Adjustment Device", desc: "Innovative calf adjustment system accommodates patients up to size 15, providing a secure and customized fit for larger patients." },
-  { label: "Removable Toe Protector", desc: "Optional removable toe guard provides additional forefoot protection — ideal for acute injuries or post-surgical recovery." },
-  { label: "Flex Polymer Strut Design", desc: "Flexible polymer struts allow gentle medial and lateral flexion while maintaining critical structural support throughout recovery." },
+  { label: "Flex Polymer Strut Design", desc: "Softer materials with flexible medial & lateral struts conform gently to the leg — less pressure points, more comfort throughout recovery." },
+  { label: "Removable Anterior Shield", desc: "Protects the dorsum of the foot and allows optimal comfort in flexing the talocrural/ankle joint. Removable for improved compliance." },
+  { label: "Calf Adjustment", desc: "Exclusive adaptation for accommodating larger/wider calves — ensuring a secure, customized fit for every patient, every time." },
+  { label: "Removable Toe Guard", desc: "Provides toe protection and is easily removed when preferred for patient comfort. Ideal for acute injury or post-surgical use." },
 ];
 
 const benefits = [
-  { icon: <ShieldCheck className="w-5 h-5" />, title: "Maximum Stability", desc: "A rigid outer shell and reinforced structure stabilize the ankle and lower leg, reducing unwanted movement and promoting proper alignment during recovery." },
-  { icon: <Gauge className="w-5 h-5" />, title: "Adjustable Air Compression", desc: "Built-in pneumatic air chambers allow customized pressure through an easy-to-use pump, helping reduce swelling while ensuring a secure, personalized fit." },
-  { icon: <Footprints className="w-5 h-5" />, title: "Natural Walking Motion", desc: "The rocker-bottom sole encourages a smooth heel-to-toe gait, minimizing strain on the knee, hip, and lower back." },
-  { icon: <Wind className="w-5 h-5" />, title: "Lightweight & Breathable", desc: "Open-frame design improves airflow and keeps the boot lightweight without compromising strength or durability." },
+  { icon: <ShieldCheck className="w-5 h-5" />, title: "World Class Shell", desc: "Short leg cast-like stability and protection beyond any walking boot available. Unparalleled adjustability reduces pressure points and accommodates swelling variance." },
+  { icon: <Gauge className="w-5 h-5" />, title: "Revolutionary Compression", desc: "Compartmentalized air cells deliver focused medial & lateral malleolar compression. Low-force bulb with intuitive inflate/deflate valve — rapid adjustment, far less effort." },
+  { icon: <Footprints className="w-5 h-5" />, title: "Real Rocker Sole", desc: "The most fluid rocker action ever built — supports gait from heel strike to toe off for natural ambulation. HQ rubber sole resists debris clogging." },
+  { icon: <Wind className="w-5 h-5" />, title: "T-Shirt Soft Liner", desc: "Seamless micro-fiber liner is low-friction and wicking — t-shirt soft against skin. Reduces sweat build-up and maximizes patient comfort and compliance." },
 ];
 
 const steps = [
-  { num: "01", title: "Secure the Boot", desc: "Adjustable straps wrap comfortably around the foot, ankle, and calf for even support." },
-  { num: "02", title: "Inflate for Comfort", desc: "Use the pneumatic pump to inflate internal air bladders until the desired compression is achieved." },
-  { num: "03", title: "Walk with Confidence", desc: "The shock-absorbing rocker sole supports controlled movement while protecting the injured area." },
+  { num: "01", title: "Loosen All Straps", desc: "Fully loosen the 4 straps and deflate air bladders by pressing the release valve before putting on the boot." },
+  { num: "02", title: "Insert & Secure", desc: "Slide foot in with heel firmly seated. Fasten straps bottom-up — foot first, then ankle, then calf — for even progressive support." },
+  { num: "03", title: "Inflate to Fit", desc: "Use the soft pneumatic bulb to inflate air cells to your comfort level. The intuitive inflate/deflate valve makes adjustment fast and easy." },
+  { num: "04", title: "Walk Naturally", desc: "The real rocker sole supports a smooth heel-to-toe gait — walk confidently while your injury heals." },
 ];
 
 const reviews = [
@@ -49,20 +50,37 @@ const galleryImages = [
 
 const tabContent: Record<string, React.ReactNode> = {
   Description: (
-    <p className="text-[#3a4a6b] text-base leading-relaxed">
-      The X-Ortho Orthopedic Xboot is an advanced walking boot engineered for superior ankle and lower leg support during recovery. Featuring a pneumatic air compression system, removable anterior plate, and rocker-bottom sole, this boot provides clinical-grade stabilization while maintaining patient comfort and mobility throughout all phases of recovery.
-    </p>
+    <div className="flex flex-col gap-4">
+      <p className="text-[#3a4a6b] text-base leading-relaxed italic border-l-4 border-[#111184]/20 pl-4">
+        "Wow, this is the nicest boot I've ever seen!" — Direct quote from a well-known national competitor.
+      </p>
+      <p className="text-[#3a4a6b] text-base leading-relaxed">
+        The XO Boot Pneumatic is engineered for unparalleled strength, performance and comfort — strategically crafted to deliver exceptional clinical outcomes. Designed by TLC DME with Biomechanical Engineers and feedback from Orthopedic, Urgent Care and Podiatry clients, the XO Boot sets a new standard in walking boot technology.
+      </p>
+      <ul className="flex flex-col gap-2 mt-1">
+        {["Uniquely designed aerodynamic shell — stronger, lighter weight, more durable support",
+          "Innovative adjustable components ensure best possible patient comfort and compliance",
+          "Ground-breaking Pneumatic System with compartmentalized air delivery and focused compression"
+        ].map((b, i) => (
+          <li key={i} className="flex items-start gap-2.5 text-sm text-[#3a4a6b]">
+            <span className="mt-1.5 w-2 h-2 rounded-full bg-[#111184] flex-shrink-0" />{b}
+          </li>
+        ))}
+      </ul>
+    </div>
   ),
   Benefits: (
     <ul className="flex flex-col gap-3">
       {[
-        "Pneumatic air chambers provide customized, adjustable compression to reduce swelling",
-        "Removable anterior plate allows clinical access while maintaining structural integrity",
-        "Rocker-bottom sole promotes natural heel-to-toe gait pattern",
-        "Flex polymer struts allow controlled medial/lateral motion",
-        "Removable toe protector for post-surgical or acute injury protection",
-        "Calf adjustment accommodates patients up to size 15",
-        "Lightweight open-frame construction improves airflow and reduces fatigue",
+        "World class aerodynamic shell — short leg cast-like stability beyond any walking boot available",
+        "Revolutionary compression system with compartmentalized air cells for focused medial & lateral malleolar compression",
+        "Real rocker sole supports natural gait from heel strike to toe off",
+        "Flex polymer struts with softer materials — flexible medial & lateral, less pressure points",
+        "Removable anterior shield protects dorsum of foot, allows optimal ankle joint flexion",
+        "Exclusive calf adjustment accommodates larger/wider calves",
+        "Seamless micro-fiber liner — T-shirt soft, low-friction, wicking for maximum comfort",
+        "4-strap system with 360° swivel D-rings and HQ easy grip rubber tips",
+        "AFO undersleeve included — eliminates hot spots, wicks perspiration",
       ].map((b, i) => (
         <li key={i} className="flex items-start gap-3 text-[#3a4a6b] text-sm">
           <span className="mt-1 w-2 h-2 rounded-full bg-[#111184] flex-shrink-0" />
@@ -72,22 +90,33 @@ const tabContent: Record<string, React.ReactNode> = {
     </ul>
   ),
   Specifications: (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-      {[
-        ["Product Code", "XB-627 / XB-642"],
-        ["Sizes Available", "XS, S, M, L, XL, XXL"],
-        ["Calf Circumference", "Up to Size 15"],
-        ["Material", "Flex Polymer / Medical Grade"],
-        ["Air Compression", "Pneumatic Pump System"],
-        ["Sole Type", "Rocker-Bottom"],
-        ["Toe Guard", "Removable"],
-        ["Weight", "Lightweight Open Frame"],
-      ].map(([key, val]) => (
-        <div key={key} className="flex flex-col gap-0.5 p-3 rounded-xl" style={{ background: "#f4f6ff", border: "1px solid rgba(17,17,132,0.07)" }}>
-          <span className="text-[10px] uppercase tracking-widest font-bold text-[#111184]/50">{key}</span>
-          <span className="text-sm font-semibold text-[#0d1535]">{val}</span>
-        </div>
-      ))}
+    <div className="flex flex-col gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {[
+          ["Style Options", "Tall or Short"],
+          ["Sizes", "Small, Medium, Large"],
+          ["Men — Small", "Shoe size 5 – 6.5"],
+          ["Men — Medium", "Shoe size 6.5 – 11"],
+          ["Men — Large", "Shoe size 11 – 15"],
+          ["Women — Small", "Shoe size 4 – 9.5"],
+          ["Women — Medium", "Shoe size 9.5 – 13"],
+          ["Women — Large", "Shoe size 13 – 16.5"],
+          ["Calf Fit", "Accommodates larger/wider calves"],
+          ["Straps", "4-strap system"],
+          ["D-Rings", "Full 360° swivel"],
+          ["Air System", "Pneumatic pump with EZ bulb & valve"],
+          ["Sole", "Real rocker bottom — HQ rubber"],
+          ["Liner", "Seamless micro-fiber, removable"],
+          ["Toe Guard", "Removable anterior shield"],
+          ["AFO Undersleeve", "2 included per boot"],
+        ].map(([key, val]) => (
+          <div key={key} className="flex flex-col gap-0.5 p-3 rounded-xl" style={{ background: "#f4f6ff", border: "1px solid rgba(17,17,132,0.07)" }}>
+            <span className="text-[10px] uppercase tracking-widest font-bold text-[#111184]/50">{key}</span>
+            <span className="text-sm font-semibold text-[#0d1535]">{val}</span>
+          </div>
+        ))}
+      </div>
+      <p className="text-xs text-[#6b7fa8] italic">The XO Boot Pneumatic is available exclusively through TLC DME LLC. Call (888) 521-8522 or visit tlcdme.com</p>
     </div>
   ),
   "Wear Instructions": (
@@ -112,11 +141,12 @@ const tabContent: Record<string, React.ReactNode> = {
   FAQ: (
     <div className="flex flex-col gap-3">
       {[
-        { q: "Can I wear the boot over socks?", a: "Yes. We recommend wearing a thin moisture-wicking sock underneath for comfort and hygiene." },
-        { q: "How long should I wear it each day?", a: "Follow your clinician's guidance. Typically worn full-time during the acute recovery phase and gradually reduced as healing progresses." },
-        { q: "Is the boot waterproof?", a: "The boot shell is water-resistant but not waterproof. Do not immerse in water or wear in the shower." },
-        { q: "Can I drive while wearing the boot?", a: "We do not recommend driving while wearing the boot, especially if it is on the right foot. Consult your clinician." },
-        { q: "How do I clean the boot?", a: "Wipe the shell with a damp cloth and mild soap. The liner is removable and can be hand-washed. Allow to air dry completely." },
+        { q: "Is the XO Boot available in Tall and Short versions?", a: "Yes. The XO Boot Pneumatic is available in both Tall and Short styles, each in Small, Medium, and Large sizing for men and women." },
+        { q: "Where can I get the XO Boot?", a: "The XO Boot Pneumatic is available exclusively through TLC DME LLC. Contact us at (888) 521-8522 or visit tlcdme.com." },
+        { q: "How does the pneumatic compression system work?", a: "A larger soft bulb fills the air cells faster and easier. The intuitive inflate/deflate valve allows quick, focused compression. Air cells provide circumferential pressure with effective medial & lateral malleolar custom compression." },
+        { q: "What is the AFO Undersleeve?", a: "Two AFO undersleeves are included with each boot. They increase patient comfort by eliminating hot spots due to friction, wick away perspiration, and help keep skin clean." },
+        { q: "Can I adjust the straps myself at home?", a: "Yes. The Easy Grip rubber strap tips allow easy adjustment for application and for patient re-fitting at home. The 360° swivel D-rings provide smooth, customized strap movement." },
+        { q: "How do I clean the boot?", a: "Wipe the shell with a damp cloth. The liner is removable and can be hand-washed — allow to air dry completely. The removable insole can also be washed separately." },
       ].map((item, i) => (
         <FAQItem key={i} q={item.q} a={item.a} />
       ))}
@@ -171,8 +201,6 @@ function FAQItem({ q, a }: { q: string; a: string }) {
     </div>
   );
 }
-
-{/* CLIENT DESIGN SECTION  */ }
 
 function PowerStepSection() {
   const [activeImg, setActiveImg] = useState(0);
@@ -297,17 +325,19 @@ function PowerStepSection() {
           </div>
           <div className="ps-info flex flex-col gap-5">
             <div className="ps-info-item" style={{ opacity: 0 }}>
-              <span className="text-xs uppercase tracking-widest font-bold px-3 py-1 rounded-full" style={{ background: "rgba(17,17,132,0.08)", color: "#111184" }}>Orthopedic Boot</span>
-              <h1 className="mt-3 text-3xl md:text-4xl font-bold text-[#0d1535] leading-tight">Orthopedic Xboot</h1>
-              <p className="text-[#111184] font-semibold mt-1">Advanced Recovery Boot</p>
+              <span className="text-xs uppercase tracking-widest font-bold px-3 py-1 rounded-full" style={{ background: "rgba(17,17,132,0.08)", color: "#111184" }}>Pneumatic Walking Boot</span>
+              <h1 className="mt-3 text-3xl md:text-4xl font-bold text-[#0d1535] leading-tight">XO Boot Pneumatic</h1>
+              <p className="text-[#111184] font-semibold mt-1">Better DME. Better Functionality. Better Outcomes.</p>
             </div>
             <ul className="ps-info-item flex flex-col gap-2 mt-1" style={{ opacity: 0 }}>
               {[
-                "Pneumatic air compression for customized fit",
-                "Removable anterior plate for clinical access",
-                "Rocker-bottom sole for natural gait",
-                "Accommodates patients up to size 15",
-                "Lightweight open-frame construction",
+                "Aerodynamic shell — stronger, lighter, more durable",
+                "Revolutionary compartmentalized pneumatic compression",
+                "Removable anterior shield for patient compliance",
+                "Real rocker sole — most fluid gait action ever built",
+                "4-strap system with 360° swivel D-rings",
+                "Seamless micro-fiber liner — T-shirt soft",
+                "AFO undersleeve included (2 per boot)",
               ].map((b, i) => (
                 <li key={i} className="ps-li flex items-center gap-2.5 text-sm text-[#3a4a6b]">
                   <Check className="w-4 h-4 text-[#111184] flex-shrink-0" /> {b}
@@ -316,8 +346,8 @@ function PowerStepSection() {
             </ul>
             <div className="ps-info-item h-px w-full" style={{ background: "rgba(17,17,132,0.07)", opacity: 0 }} />
             <div className="ps-info-item rounded-2xl p-5 text-sm" style={{ opacity: 0, background: "linear-gradient(135deg,rgba(17,17,132,0.06) 0%,rgba(91,155,255,0.06) 100%)", border: "1px solid rgba(17,17,132,0.12)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.8)" }}>
-              <p className="font-bold text-[#111184] mb-1">For Clinical & Professional Use</p>
-              <p className="text-[#6b7fa8] leading-relaxed">This product is distributed through authorized medical distributors and clinicians. Contact our team for pricing, availability, and bulk orders.</p>
+              <p className="font-bold text-[#111184] mb-1">Available Exclusively Through TLC DME LLC</p>
+              <p className="text-[#6b7fa8] leading-relaxed">The XO Boot Pneumatic is distributed exclusively through TLC DME LLC — DME Specialists, DME Solutions. Contact us for pricing, availability, and bulk orders: <span className="font-semibold text-[#111184]">(888) 521-8522</span> · tlcdme.com</p>
             </div>
             <a href="/contact" className="ps-info-item cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#111184]/30 hover:bg-[#111184]/50 backdrop-blur-2xl border border-white/30 p-1.5 relative overflow-hidden" style={{ opacity: 0 }}>
               <div className="absolute top-0 left-[5%] group-hover:left-[80%] duration-300 transition-all h-full w-10 bg-[#111184]/50 rounded-[200%] blur" />
@@ -359,8 +389,6 @@ function PowerStepSection() {
     </section>
   );
 }
-
-{/* CUSTOM DESIGN SECTION  */ }
 
 function CustomSection() {
   const [activeTab, setActiveTab] = useState("Description");
@@ -524,20 +552,37 @@ function CustomSection() {
             style={{ background: "rgba(6,10,35,0.9)", border: "1px solid rgba(91,155,255,0.12)", backdropFilter: "blur(20px)", minHeight: 200 }}>
             <div className="text-white/80">
               {activeTab === "Description" && (
-                <p className="text-white/70 text-base leading-relaxed">
-                  The X-Ortho Orthopedic Xboot is an advanced walking boot engineered for superior ankle and lower leg support during recovery. Featuring a pneumatic air compression system, removable anterior plate, and rocker-bottom sole, this boot provides clinical-grade stabilization while maintaining patient comfort and mobility throughout all phases of recovery.
-                </p>
+                <div className="flex flex-col gap-4">
+                  <p className="text-[#5b9bff] text-sm italic border-l-4 border-[#5b9bff]/30 pl-4">
+                    "Wow, this is the nicest boot I've ever seen!" — Direct quote from a well-known national competitor.
+                  </p>
+                  <p className="text-white/70 text-base leading-relaxed">
+                    The XO Boot Pneumatic is engineered for unparalleled strength, performance and comfort — strategically crafted to deliver exceptional clinical outcomes. Designed by TLC DME with Biomechanical Engineers and feedback from Orthopedic, Urgent Care and Podiatry clients.
+                  </p>
+                  <ul className="flex flex-col gap-2">
+                    {["Uniquely designed aerodynamic shell — stronger, lighter, more durable support",
+                      "Innovative adjustable components ensure best possible patient comfort and compliance",
+                      "Ground-breaking Pneumatic System with compartmentalized air delivery and focused compression"
+                    ].map((b, i) => (
+                      <li key={i} className="flex items-start gap-3 text-white/65 text-sm">
+                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#5b9bff] flex-shrink-0" />{b}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               )}
               {activeTab === "Benefits" && (
                 <ul className="flex flex-col gap-3">
                   {[
-                    "Pneumatic air chambers provide customized, adjustable compression to reduce swelling",
-                    "Removable anterior plate allows clinical access while maintaining structural integrity",
-                    "Rocker-bottom sole promotes natural heel-to-toe gait pattern",
-                    "Flex polymer struts allow controlled medial/lateral motion",
-                    "Removable toe protector for post-surgical or acute injury protection",
-                    "Calf adjustment accommodates patients up to size 15",
-                    "Lightweight open-frame construction improves airflow and reduces fatigue",
+                    "World class aerodynamic shell — short leg cast-like stability beyond any walking boot available",
+                    "Revolutionary compression system with compartmentalized air cells for focused medial & lateral malleolar compression",
+                    "Real rocker sole — most fluid gait action ever built, from heel strike to toe off",
+                    "Flex polymer struts with softer materials — flexible medial & lateral, less pressure points",
+                    "Removable anterior shield for dorsum protection and optimal ankle joint flexion",
+                    "Exclusive calf adjustment accommodates larger/wider calves",
+                    "Seamless micro-fiber liner — T-shirt soft, low-friction, wicking",
+                    "4-strap system with 360° swivel D-rings and HQ easy grip rubber tips",
+                    "AFO undersleeve included (2 per boot) — eliminates hot spots, wicks perspiration",
                   ].map((b, i) => (
                     <li key={i} className="flex items-start gap-3 text-white/70 text-sm">
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#5b9bff] flex-shrink-0" />{b}
@@ -798,16 +843,12 @@ export default function XbootDetailPage() {
 
       {/* HERO SECTION  */}
 
-      <section ref={heroRef} className="relative w-full flex items-center overflow-hidden" style={{ minHeight: "100vh", background: "#020916" }}>
+      <section ref={heroRef} className="relative w-full flex items-center overflow-hidden" style={{ minHeight: "100vh", background: "#020916"}}>
         <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none" style={{ zIndex: 0 }}>
-          <source src={CLD.sectionhero} type="video/mp4" />
+          <source src={CLD.heroBg} type="video/mp4" />
         </video>
         <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "linear-gradient(135deg,rgba(2,9,22,0.90) 0%,rgba(2,9,22,0.55) 55%,transparent 100%)" }} />
         <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, backgroundImage: "linear-gradient(rgba(17,17,132,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.04) 1px,transparent 1px)", backgroundSize: "52px 52px" }} />
-        <a href="/products" className="hanim absolute flex items-center gap-2 text-xs uppercase tracking-widest font-bold text-white/30 hover:text-white/70 transition-colors"
-          style={{ zIndex: 100001, opacity: 0, top: "max(140px,13vh)", left: "clamp(20px,7vw,100px)" }}>
-          <ArrowLeft className="w-3.5 h-3.5" /> All Products
-        </a>
         <div className="relative w-full container mx-auto px-5 md:px-[100px]" style={{ zIndex: 2, paddingTop: "max(140px,14vh)", paddingBottom: 80 }}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
             <div className="flex flex-col gap-5">
@@ -822,9 +863,9 @@ export default function XbootDetailPage() {
                   Orthopedic<br /><span className="text-[#7b7bff]">Xboot</span>
                 </h1>
               </div>
-              <p className="hanim text-xs font-semibold uppercase tracking-widest text-[#7b7bff]" style={{ opacity: 0 }}>Advanced Recovery Boot</p>
+              <p className="hanim text-xs font-semibold uppercase tracking-widest text-[#7b7bff]" style={{ opacity: 0 }}>Better DME · Better Functionality · Better Outcomes</p>
               <p className="hanim text-base leading-relaxed text-white/55 border-l-[3px] border-[#7b7bff]/25 pl-3.5" style={{ opacity: 0 }}>
-                Recover safely and comfortably with a medical-grade pneumatic walking boot designed to stabilize the foot and ankle while allowing natural, supported movement during healing.
+                Engineered for superior strength, performance and comfort — strategically crafted to deliver exceptional clinical outcomes. The XO Boot is designed with Biomechanical Engineers and feedback from Orthopedic, Urgent Care and Podiatry clients.
               </p>
               <div className="hanim flex items-center gap-4 flex-wrap" style={{ opacity: 0 }}>
                 <a href="#contact" className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 relative overflow-hidden">
@@ -849,17 +890,17 @@ export default function XbootDetailPage() {
         <div className="absolute bottom-0 inset-x-0 h-32 pointer-events-none" style={{ zIndex: 2, background: "linear-gradient(to bottom,transparent,#020916)" }} />
       </section>
 
-      {/* PRODUCT OVERVIEW SECTION  */}
+      {/* SLIDER SECTION  */}
 
       <section className="relative w-full py-20 md:py-28 overflow-hidden" style={{ background: "#f5f7ff" }}>
         <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 68% 52%, rgba(180,180,230,0.55) 0%, transparent 58%)" }} />
         <div className="container mx-auto px-5 md:px-[100px] relative z-10">
           <div className="sr text-center mb-12" style={{ opacity: 0 }}>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0d1535] leading-tight">
-              Pneumatic <span className="text-[#111184]">Walking Boot</span>
+              World Class <span className="text-[#111184]">Aerodynamic Shell</span>
             </h2>
-            <p className="mt-4 max-w-lg mx-auto text-sm sm:text-base text-[#6b7fa8] leading-relaxed">
-              Recover safely and comfortably with a medical-grade pneumatic walking boot designed to stabilize the foot and ankle while allowing natural, supported movement during healing.
+            <p className="mt-4 max-w-xl mx-auto text-sm sm:text-base text-[#6b7fa8] leading-relaxed">
+              The most sophisticated shell design ever produced — short leg cast-like stability and protection beyond any walking boot available. Unparalleled adjustability features reduce pressure points, accommodate anatomical disparities and swelling variance.
             </p>
           </div>
 
@@ -892,11 +933,335 @@ export default function XbootDetailPage() {
         </div>
       </section>
 
-      {/* CLIENT DESIGN — PowerStep Style */}
+
+      {/* ══ Client Design — PowerStep Style (Client Request) ══ */}
       <PowerStepSection />
 
-      {/* CUSTOM DESIGN — Custom Dark Attractive */}
+      {/* ══ Custom Design — Custom Dark Attractive ══ */}
       <CustomSection />
+      {/* ══ AFO UNDERSLEEVE SECTION ══ */}
+      <section className="relative w-full py-16 overflow-hidden" style={{ background: "#020916" }}>
+        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(17,17,132,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.05) 1px,transparent 1px)", backgroundSize: "48px 48px" }} />
+        <div className="container mx-auto px-5 md:px-[100px] relative z-10">
+          <div className="sr" style={{ opacity: 0 }}>
+            <div className="rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-10"
+              style={{ background: "linear-gradient(135deg,rgba(22,81,209,0.18) 0%,rgba(6,10,35,0.9) 100%)", border: "1px solid rgba(91,155,255,0.18)" }}>
+              {/* Icon */}
+              <div className="flex-shrink-0 w-20 h-20 rounded-2xl flex items-center justify-center"
+                style={{ background: "linear-gradient(135deg,#1651D1,#5b9bff)", boxShadow: "0 0 40px rgba(91,155,255,0.3)" }}>
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                  <path d="M12 8 C12 8 10 14 10 20 C10 30 16 36 20 36 C24 36 30 30 30 20 C30 14 28 8 28 8" stroke="white" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+                  <path d="M14 12 C14 12 13 17 13 21 C13 28 16 33 20 33 C24 33 27 28 27 21 C27 17 26 12 26 12" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+                  <path d="M10 18 L30 18" stroke="rgba(255,255,255,0.3)" strokeWidth="1" strokeDasharray="3 3" />
+                  <path d="M10 23 L30 23" stroke="rgba(255,255,255,0.3)" strokeWidth="1" strokeDasharray="3 3" />
+                </svg>
+              </div>
+              {/* Content */}
+              <div className="flex-1 text-center md:text-left">
+                <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-[#5b9bff]">Included With Every Boot</span>
+                <h2 className="mt-2 text-2xl md:text-3xl font-bold text-white leading-tight">AFO Undersleeve <span className="text-[#5b9bff]">— 2 Included</span></h2>
+                <p className="mt-3 text-white/60 text-base leading-relaxed max-w-2xl">
+                  Two AFO undersleeves are included with each boot. Increases patient comfort by eliminating hot spots due to friction and wicks away perspiration — helping keep skin clean and reducing odor. Proprietary micro-fiber material provides a cool, comfortable feel with light even compression, enhancing overall wearability.
+                </p>
+              </div>
+              {/* 2 feature pills */}
+              <div className="flex-shrink-0 flex flex-col gap-3">
+                {[
+                  { t: "Eliminates Hot Spots", d: "Friction-free fit" },
+                  { t: "Wicking Material", d: "Keeps skin dry & clean" },
+                  { t: "2 Per Boot", d: "Always included" },
+                ].map((f, i) => (
+                  <div key={i} className="flex items-center gap-3 px-4 py-3 rounded-xl"
+                    style={{ background: "rgba(91,155,255,0.10)", border: "1px solid rgba(91,155,255,0.18)" }}>
+                    <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: "#5b9bff" }} />
+                    <div>
+                      <p className="text-white text-xs font-bold">{f.t}</p>
+                      <p className="text-white/45 text-[10px]">{f.d}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* REVOLUTIONARY COMPRESSION SYSTEM SECTION */}
+
+      <section className="relative w-full overflow-hidden bg-white">
+        <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(108deg, #ffffff 46%, #f0f0f8 46%)" }} />
+        <div className="container mx-auto px-5 md:px-[100px] relative z-10 py-20 md:py-28">
+          <div className="sr grid grid-cols-1 md:grid-cols-2 gap-14 items-center" style={{ opacity: 0 }}>
+            <div className="flex flex-col gap-5">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0d1535] leading-tight">
+                Revolutionary <span className="text-[#111184]">Compression System</span>
+              </h2>
+              <p className="text-sm sm:text-base md:text-lg text-[#4A5568] leading-relaxed">
+                Provides optimal surface area contact allowing for customized compression. The liner seamless micro-fiber material is low-friction and wicking — T-Shirt soft — enhancing patient comfort and compliance. Low-force pneumatic bulb and original user-friendly valve allow for rapid inflation & deflation with far less effort. Unique air cell configuration delivers effective medial & lateral malleolar custom compression.
+              </p>
+              {/* Component image cards */}
+              <div className="grid grid-cols-2 gap-4 mt-2">
+                {[
+                  { img: "CLD.ezBulbValve", label: "EZ Adjust Bulb & Valve", desc: "Larger soft bulb fills air cells faster & easier. Intuitive, easy read inflate-deflate valve." },
+                  { img: "CLD.linerBladder", label: "Liner Compression System", desc: "Micro-fiber soft lining; less sweat retention. Unique air pressure cells for effective medial & lateral malleolar custom compression." },
+                ].map((c, i) => (
+                  <div key={i} className="rounded-2xl overflow-hidden flex flex-col"
+                    style={{ border: "1px solid rgba(17,17,132,0.09)", boxShadow: "0 2px 12px rgba(17,17,132,0.06)" }}>
+                    <div className="flex items-center justify-center bg-[#f4f6ff]" style={{ height: 140 }}>
+                      <div className="flex flex-col items-center gap-2 opacity-30">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#111184" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="3" /><circle cx="12" cy="12" r="4" /><line x1="3" y1="9" x2="21" y2="9" /></svg>
+                        <span className="text-[10px] text-[#111184] font-bold uppercase tracking-widest">Image Coming</span>
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <p className="text-xs font-bold text-[#111184] uppercase tracking-widest mb-1">{c.label}</p>
+                      <p className="text-xs text-[#6b7fa8] leading-relaxed">{c.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="relative flex items-center justify-center" style={{ minHeight: 400 }}>
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none"
+                style={{ width: "80%", height: "28%", background: "radial-gradient(ellipse, rgba(17,17,132,0.22) 0%, transparent 70%)", filter: "blur(22px)" }} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={CLD.xbootBothSide} alt="Both boots side view"
+                style={{ maxHeight: 600, maxWidth: "110%", objectFit: "contain", position: "relative", zIndex: 1, filter: "drop-shadow(0 18px 48px rgba(17,17,132,0.24)) drop-shadow(0 4px 18px rgba(0,0,0,0.15))" }} />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* UNIQUE STRAPPING SYSTEM */}
+
+      <section className="relative w-full overflow-hidden min-h-[560px] flex items-stretch">
+        <div className="absolute inset-0 z-0 bg-white" />
+        <div className="absolute inset-0 z-0 bg-[#eeeef6]"
+          style={{ clipPath: "polygon(0 0, 38.5% 0, 54.1% 100%, 0 100%)" }} />
+
+        <div className="container mx-auto px-5 md:px-[100px] relative z-10 py-20 md:py-28 w-full">
+          <div className="sr grid grid-cols-1 md:grid-cols-2 gap-14 items-center" style={{ opacity: 0 }}>
+            <div className="relative flex items-center justify-center" style={{ minHeight: 420 }}>
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none"
+                style={{ width: "80%", height: "30%", background: "radial-gradient(ellipse, rgba(17,17,132,0.18) 0%, transparent 70%)", filter: "blur(20px)", zIndex: 0 }} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={CLD.xbootToeGuard} alt="Boot both sides"
+                style={{ height: 420, maxWidth: "100%", objectFit: "contain", position: "relative", zIndex: 1, filter: "drop-shadow(0 20px 48px rgba(17,17,132,0.25)) drop-shadow(0 4px 18px rgba(0,0,0,0.15))" }} />
+            </div>
+            <div className="flex flex-col gap-5">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0d1535] leading-tight">
+                Unique Strapping<br />
+                <span className="text-[#111184]">System & Grips</span>
+              </h2>
+              <p className="text-sm sm:text-base md:text-lg text-[#4A5568] leading-relaxed">
+                Tall style designed with only 4 straps for less irritation and enhanced comfort. D-rings swivel a full 360° for greater adjustability and a customized fit. Strap tips are constructed of HQ easy grip rubber — less "stick", easier to open, and better control when applying or re-fitting at home. The intuitive inflate/deflate valve system simplifies adjustments for both patients and clinicians.
+              </p>
+              {/* Component image cards */}
+              <div className="grid grid-cols-2 gap-4 mt-2">
+                {[
+                  { label: "4 Strap System", desc: "Less straps (4) for easier application and more comfort. Unique full swivel D-rings, less irritation." },
+                  { label: "Easy Grip Tip", desc: "Unique rubber grip tips allow easy adjust for application and for patient re-fitting at home." },
+                ].map((c, i) => (
+                  <div key={i} className="rounded-2xl overflow-hidden flex flex-col"
+                    style={{ border: "1px solid rgba(17,17,132,0.09)", boxShadow: "0 2px 12px rgba(17,17,132,0.06)" }}>
+                    <div className="flex items-center justify-center bg-[#f4f6ff]" style={{ height: 140 }}>
+                      <div className="flex flex-col items-center gap-2 opacity-30">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#111184" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="3" /><circle cx="12" cy="12" r="4" /><line x1="3" y1="9" x2="21" y2="9" /></svg>
+                        <span className="text-[10px] text-[#111184] font-bold uppercase tracking-widest">Image Coming</span>
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <p className="text-xs font-bold text-[#111184] uppercase tracking-widest mb-1">{c.label}</p>
+                      <p className="text-xs text-[#6b7fa8] leading-relaxed">{c.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* REAL ROCKER SOLE SECTION  */}
+
+      <section className="relative w-full overflow-hidden min-h-[480px] flex items-stretch">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-white"
+            style={{ clipPath: "polygon(0 0, 54% 0, 42% 100%, 0 100%)" }} />
+          <div className="absolute inset-0 bg-[#f0f0f8]"
+            style={{ clipPath: "polygon(54% 0, 100% 0, 100% 100%, 42% 100%)" }} />
+        </div>
+
+        <div className="container mx-auto px-5 md:px-[100px] relative z-10 py-20 md:py-28 w-full">
+          <div className="sr grid grid-cols-1 md:grid-cols-2 gap-14 items-center" style={{ opacity: 0 }}>
+            <div className="flex flex-col gap-5">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0d1535] leading-tight">
+                <span className="text-[#111184]">Real Rocker Sole</span> & Natural Gait Support
+              </h2>
+              <p className="text-sm sm:text-base md:text-lg text-[#4A5568] leading-relaxed">
+                The most fluid rocker action ever built to support gait pattern from heel strike to toe off, for more natural ambulation. Sole tread design provides greater traction and less slippage. The insole foam rubber composite gives a softer plantar surface and is removable for easy washing. HQ rubber sole resists clogging from debris — built to perform in every environment.
+              </p>
+              {/* Component image cards */}
+              <div className="grid grid-cols-2 gap-4 mt-2">
+                {[
+                  { label: "Rocker Sole", desc: "Better absorbs heel shock & allows fluid gait. HQ rubber sole for traction; resists clogging from debris." },
+                  { label: "Inner Sole", desc: "Insole foam rubber composite for softer plantar surface; removable for easy washing." },
+                ].map((c, i) => (
+                  <div key={i} className="rounded-2xl overflow-hidden flex flex-col"
+                    style={{ border: "1px solid rgba(17,17,132,0.09)", boxShadow: "0 2px 12px rgba(17,17,132,0.06)" }}>
+                    <div className="flex items-center justify-center bg-[#f0f0f8]" style={{ height: 140 }}>
+                      <div className="flex flex-col items-center gap-2 opacity-30">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#111184" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="3" /><circle cx="12" cy="12" r="4" /><line x1="3" y1="9" x2="21" y2="9" /></svg>
+                        <span className="text-[10px] text-[#111184] font-bold uppercase tracking-widest">Image Coming</span>
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <p className="text-xs font-bold text-[#111184] uppercase tracking-widest mb-1">{c.label}</p>
+                      <p className="text-xs text-[#6b7fa8] leading-relaxed">{c.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="relative flex items-center justify-center" style={{ minHeight: 360 }}>
+              <div className="absolute pointer-events-none"
+                style={{ bottom: "5%", left: "50%", transform: "translateX(-50%)", width: "70%", height: "40%", background: "radial-gradient(ellipse, rgba(17,17,132,0.22) 0%, transparent 70%)", filter: "blur(22px)", zIndex: 0 }} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={CLD.xbootBottom} alt="Rocker bottom sole"
+                style={{ maxHeight: 380, maxWidth: "85%", objectFit: "contain", position: "relative", zIndex: 1, filter: "drop-shadow(0 20px 48px rgba(17,17,132,0.28)) drop-shadow(0 4px 16px rgba(0,0,0,0.12))" }} />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* BETTER DME SECTION  */}
+
+      <section className="relative w-full py-20 md:py-28 overflow-hidden" style={{ background: "linear-gradient(160deg,#eeeeff 0%,#e6e6fa 45%,#f5f7ff 100%)" }}>
+        <div className="container mx-auto px-5 md:px-[100px]">
+          <div className="sr text-center mb-14" style={{ opacity: 0 }}>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0d1535] leading-tight">
+              Better DME. <span className="text-[#111184]">Better Outcomes.</span>
+            </h2>
+          </div>
+          <div className="sr grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" style={{ opacity: 0 }}>
+            {benefits.map((b, i) => {
+              const on = activeBenefit === i;
+              return (
+                <div key={i} onClick={() => setActiveBenefit(i)}
+                  className="rounded-2xl p-6 flex flex-col gap-3 cursor-pointer transition-all duration-300"
+                  style={{ background: on ? "linear-gradient(145deg,#0f0f7a,#111184)" : "#ffffff", boxShadow: on ? "0 12px 36px rgba(17,17,132,0.26)" : "0 2px 14px rgba(0,0,0,0.06)" }}>
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center"
+                    style={{ background: on ? "rgba(255,255,255,0.16)" : "#e8eeff", color: on ? "#fff" : "#111184" }}>
+                    {b.icon}
+                  </div>
+                  <p className={`text-sm font-bold leading-snug ${on ? "text-white" : "text-[#0d1535]"}`}>{b.title}</p>
+                  <p className={`text-xs leading-relaxed ${on ? "text-white/74" : "text-[#6b7fa8]"}`}>{b.desc}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* FITTING YOUR XO BOOT SECTION  */}
+
+      <section className="relative w-full py-20 md:py-28 overflow-hidden bg-white">
+        <div className="container mx-auto px-5 md:px-[100px]">
+          <div className="sr grid grid-cols-1 md:grid-cols-2 gap-14 items-center" style={{ opacity: 0 }}>
+            <div className="relative flex items-center justify-center" style={{ minHeight: 400 }}>
+              <div className="absolute pointer-events-none"
+                style={{ bottom: "8%", left: "50%", transform: "translateX(-50%)", width: "55%", height: "35%", background: "radial-gradient(ellipse, rgba(17,17,132,0.20) 0%, transparent 70%)", filter: "blur(20px)" }} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={CLD.xbootLowRocker} alt="How it works"
+                style={{ position: "relative", zIndex: 1, maxHeight: 400, objectFit: "contain", filter: "drop-shadow(0 8px 28px rgba(0,0,0,0.12))" }} />
+            </div>
+            <div className="flex flex-col gap-5">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0d1535] leading-tight">
+                Fitting Your <span className="text-[#111184]">XO Boot</span>
+              </h2>
+              <div className="flex flex-col gap-3 mt-1">
+                {steps.map((s) => (
+                  <div key={s.num} className="flex gap-4 p-5 rounded-2xl"
+                    style={{ background: "#f8faff", border: "1px solid rgba(17,17,132,0.07)", boxShadow: "0 2px 10px rgba(0,0,0,0.05)" }}>
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-white text-sm font-bold"
+                      style={{ background: "linear-gradient(135deg,#0f0f7a,#111184)", boxShadow: "0 4px 14px rgba(17,17,132,0.28)" }}>
+                      {s.num}.
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-[#0d1535] mb-1">{s.title}</p>
+                      <p className="text-sm text-[#6b7fa8] leading-relaxed">{s.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ SIZING CHART SECTION ══ */}
+      <section className="relative w-full py-20 overflow-hidden bg-white" style={{ borderTop: "1px solid rgba(17,17,132,0.06)" }}>
+        <div className="container mx-auto px-5 md:px-[100px]">
+          <div className="sr text-center mb-12" style={{ opacity: 0 }}>
+            <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-[#111184]">Sizing Guide</span>
+            <h2 className="mt-3 text-3xl md:text-5xl font-bold text-[#0d1535] leading-tight">
+              Find Your <span className="text-[#111184]">Perfect Fit</span>
+            </h2>
+            <p className="mt-4 max-w-lg mx-auto text-sm text-[#6b7fa8]">Available in Tall or Short style — Small, Medium, and Large for both men and women.</p>
+          </div>
+          <div className="sr grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto" style={{ opacity: 0 }}>
+            {/* Men */}
+            <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid rgba(17,17,132,0.10)", boxShadow: "0 4px 24px rgba(17,17,132,0.07)" }}>
+              <div className="px-6 py-4" style={{ background: "linear-gradient(135deg,#0f0f7a,#1651D1)" }}>
+                <p className="text-white font-bold text-sm uppercase tracking-widest">Men</p>
+              </div>
+              <table className="w-full text-sm">
+                <thead>
+                  <tr style={{ background: "#f4f6ff" }}>
+                    <th className="px-6 py-3 text-left font-bold text-[#0d1535] text-xs uppercase tracking-widest">Size</th>
+                    <th className="px-6 py-3 text-left font-bold text-[#0d1535] text-xs uppercase tracking-widest">Shoe Size</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[["Small", "5 – 6.5"], ["Medium", "6.5 – 11"], ["Large", "11 – 15"]].map(([s, r], i) => (
+                    <tr key={i} style={{ borderTop: "1px solid rgba(17,17,132,0.06)", background: i % 2 === 0 ? "#fff" : "#fafbff" }}>
+                      <td className="px-6 py-4 font-semibold text-[#0d1535]">{s}</td>
+                      <td className="px-6 py-4 text-[#6b7fa8]">{r}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {/* Women */}
+            <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid rgba(17,17,132,0.10)", boxShadow: "0 4px 24px rgba(17,17,132,0.07)" }}>
+              <div className="px-6 py-4" style={{ background: "linear-gradient(135deg,#1651D1,#5b9bff)" }}>
+                <p className="text-white font-bold text-sm uppercase tracking-widest">Women</p>
+              </div>
+              <table className="w-full text-sm">
+                <thead>
+                  <tr style={{ background: "#f4f6ff" }}>
+                    <th className="px-6 py-3 text-left font-bold text-[#0d1535] text-xs uppercase tracking-widest">Size</th>
+                    <th className="px-6 py-3 text-left font-bold text-[#0d1535] text-xs uppercase tracking-widest">Shoe Size</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[["Small", "4 – 9.5"], ["Medium", "9.5 – 13"], ["Large", "13 – 16.5"]].map(([s, r], i) => (
+                    <tr key={i} style={{ borderTop: "1px solid rgba(17,17,132,0.06)", background: i % 2 === 0 ? "#fff" : "#fafbff" }}>
+                      <td className="px-6 py-4 font-semibold text-[#0d1535]">{s}</td>
+                      <td className="px-6 py-4 text-[#6b7fa8]">{r}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <p className="sr text-center mt-8 text-xs text-[#9ca3af]" style={{ opacity: 0 }}>
+            The XO Boot Pneumatic is available exclusively through TLC DME LLC · (888) 521-8522 · tlcdme.com
+          </p>
+        </div>
+      </section>
+
+      {/* ══ CUSTOMER REVIEWS ══ */}
       <section className="relative w-full py-20 md:py-28 overflow-hidden" style={{ background: "linear-gradient(160deg,#eeeeff 0%,#e6e6fa 45%,#f5f7ff 100%)" }}>
         <div className="container mx-auto px-5 md:px-[100px]">
           <div className="sr text-center mb-14" style={{ opacity: 0 }}>
@@ -932,168 +1297,14 @@ export default function XbootDetailPage() {
           </div>
         </div>
       </section>
-
-      {/* ADVANCED ENGINEERING & ADAPTIVE FIT DESIGN SECTION  */}
-
-      <section className="relative w-full overflow-hidden bg-white">
-        <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(108deg, #ffffff 46%, #f0f0f8 46%)" }} />
-        <div className="container mx-auto px-5 md:px-[100px] relative z-10 py-20 md:py-28">
-          <div className="sr grid grid-cols-1 md:grid-cols-2 gap-14 items-center" style={{ opacity: 0 }}>
-            <div className="flex flex-col gap-5">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0d1535] leading-tight">
-                Advanced Engineering &<br /><span className="text-[#111184]">Adaptive Fit Design</span>
-              </h2>
-              <p className="text-sm sm:text-base md:text-lg text-[#4A5568] leading-relaxed">
-                This is a completely new design, engineered by TLC in collaboration with biomechanical engineers, orthopedic specialists, DPMs, and refined through UC feedback. The device is PDAC approved under L4361 and is available in both Tall and Short options. It now comes in three sizes (reduced from five) while accommodating patients up to size 15, compared to the previous size 13 limit. The exoskeleton design features a removable anterior plate and a removable toe cover for enhanced protection, along with a flexible strut system made from softer materials that allow gentle medial and lateral flexion. An adjustable calf system ensures a more comfortable and secure fit for larger patients.
-              </p>
-            </div>
-            <div className="relative flex items-center justify-center" style={{ minHeight: 400 }}>
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none"
-                style={{ width: "80%", height: "28%", background: "radial-gradient(ellipse, rgba(17,17,132,0.22) 0%, transparent 70%)", filter: "blur(22px)" }} />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={CLD.xbootBothSide} alt="Both boots side view"
-                style={{ maxHeight: 600, maxWidth: "110%", objectFit: "contain", position: "relative", zIndex: 1, filter: "drop-shadow(0 18px 48px rgba(17,17,132,0.24)) drop-shadow(0 4px 18px rgba(0,0,0,0.15))" }} />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ENHANCED STABILITY, STRAPPING & COMPRESSION CONTROL SECTION  */}
-
-      <section className="relative w-full overflow-hidden min-h-[560px] flex items-stretch">
-        <div className="absolute inset-0 z-0 bg-white" />
-        <div className="absolute inset-0 z-0 bg-[#eeeef6]"
-          style={{ clipPath: "polygon(0 0, 36.3% 0, 54.1% 100%, 0 100%)" }} />
-
-        <div className="container mx-auto px-5 md:px-[100px] relative z-10 py-20 md:py-28 w-full">
-          <div className="sr grid grid-cols-1 md:grid-cols-2 gap-14 items-center" style={{ opacity: 0 }}>
-            <div className="relative flex items-center justify-center" style={{ minHeight: 420 }}>
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none"
-                style={{ width: "80%", height: "30%", background: "radial-gradient(ellipse, rgba(17,17,132,0.18) 0%, transparent 70%)", filter: "blur(20px)", zIndex: 0 }} />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={CLD.xbootToeGuard} alt="Boot both sides"
-                style={{ height: 420, maxWidth: "100%", objectFit: "contain", position: "relative", zIndex: 1, filter: "drop-shadow(0 20px 48px rgba(17,17,132,0.25)) drop-shadow(0 4px 18px rgba(0,0,0,0.15))", paddingRight: "150px" }} />
-            </div>
-            <div className="flex flex-col gap-5">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0d1535] leading-tight">
-                Enhanced Stability,<br />
-                Strapping &<br />
-                Compression Control
-              </h2>
-              <p className="text-sm sm:text-base md:text-lg text-[#4A5568] leading-relaxed">
-                The Tall version now utilizes four straps instead of five, improving ease of use without compromising stability. Each strap features a high-quality rubber edge that does not stick, making it easier to open and adjust. The D-rings swivel a full 360 degrees, providing smoother strap movement compared to previous designs. A newly engineered bladder system uses compartmentalized air chambers to prevent air migration while increasing surface area contact, allowing for more controlled and consistent compression from acute injury through post-rehabilitation.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SUPERIOR COMFORT, EASE OF USE & NATURAL GAIT SUPPORT SECTION  */}
-
-      <section className="relative w-full overflow-hidden min-h-[480px] flex items-stretch">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-white"
-            style={{ clipPath: "polygon(0 0, 54% 0, 42% 100%, 0 100%)" }} />
-          <div className="absolute inset-0 bg-[#f0f0f8]"
-            style={{ clipPath: "polygon(54% 0, 100% 0, 100% 100%, 42% 100%)" }} />
-        </div>
-
-        <div className="container mx-auto px-5 md:px-[100px] relative z-10 py-20 md:py-28 w-full">
-          <div className="sr grid grid-cols-1 md:grid-cols-2 gap-14 items-center" style={{ opacity: 0 }}>
-            <div className="flex flex-col gap-5">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0d1535] leading-tight">
-                <span className="text-[#111184]">Superior Comfort,</span> Ease Of Use &amp; Natural Gait Support
-              </h2>
-              <p className="text-sm sm:text-base md:text-lg text-[#4A5568] leading-relaxed">
-                Compression is further enhanced by a softer, more responsive pump bulb that fills the bladders faster and with less effort. The intuitive inflate/deflate valve system simplifies adjustments for both patients and clinicians. Inside, the softgoods are redesigned with a fabric that feels like a favorite t-shirt rather than closed-cell foam, extending contoured coverage around the foundation to eliminate friction points. A newly optimized rocker bottom creates the most fluid motion ever built, supporting a natural gait pattern from heel strike through toe-off.
-              </p>
-            </div>
-            <div className="relative flex items-center justify-center" style={{ minHeight: 360 }}>
-              <div className="absolute pointer-events-none"
-                style={{ bottom: "5%", left: "50%", transform: "translateX(-50%)", width: "70%", height: "40%", background: "radial-gradient(ellipse, rgba(17,17,132,0.22) 0%, transparent 70%)", filter: "blur(22px)", zIndex: 0 }} />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={CLD.xbootBottom} alt="Rocker bottom sole"
-                style={{ maxHeight: 380, maxWidth: "85%", objectFit: "contain", position: "relative", zIndex: 1, filter: "drop-shadow(0 20px 48px rgba(17,17,132,0.28)) drop-shadow(0 4px 16px rgba(0,0,0,0.12))" }} />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* BENEFITS SECTION  */}
-
-      <section className="relative w-full py-20 md:py-28 overflow-hidden" style={{ background: "linear-gradient(160deg,#eeeeff 0%,#e6e6fa 45%,#f5f7ff 100%)" }}>
-        <div className="container mx-auto px-5 md:px-[100px]">
-          <div className="sr text-center mb-14" style={{ opacity: 0 }}>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0d1535] leading-tight">
-              Quality Care, Delivered <span className="text-[#111184]">Efficiently</span>
-            </h2>
-          </div>
-          <div className="sr grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" style={{ opacity: 0 }}>
-            {benefits.map((b, i) => {
-              const on = activeBenefit === i;
-              return (
-                <div key={i} onClick={() => setActiveBenefit(i)}
-                  className="rounded-2xl p-6 flex flex-col gap-3 cursor-pointer transition-all duration-300"
-                  style={{ background: on ? "linear-gradient(145deg,#0f0f7a,#111184)" : "#ffffff", boxShadow: on ? "0 12px 36px rgba(17,17,132,0.26)" : "0 2px 14px rgba(0,0,0,0.06)" }}>
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center"
-                    style={{ background: on ? "rgba(255,255,255,0.16)" : "#e8eeff", color: on ? "#fff" : "#111184" }}>
-                    {b.icon}
-                  </div>
-                  <p className={`text-sm font-bold leading-snug ${on ? "text-white" : "text-[#0d1535]"}`}>{b.title}</p>
-                  <p className={`text-xs leading-relaxed ${on ? "text-white/74" : "text-[#6b7fa8]"}`}>{b.desc}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* HOW IT WORKS SECTION  */}
-
-      <section className="relative w-full py-20 md:py-28 overflow-hidden bg-white">
-        <div className="container mx-auto px-5 md:px-[100px]">
-          <div className="sr grid grid-cols-1 md:grid-cols-2 gap-14 items-center" style={{ opacity: 0 }}>
-            <div className="relative flex items-center justify-center" style={{ minHeight: 400 }}>
-              <div className="absolute pointer-events-none"
-                style={{ bottom: "8%", left: "50%", transform: "translateX(-50%)", width: "55%", height: "35%", background: "radial-gradient(ellipse, rgba(17,17,132,0.20) 0%, transparent 70%)", filter: "blur(20px)" }} />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={CLD.xbootLowRocker} alt="How it works"
-                style={{ position: "relative", zIndex: 1, maxHeight: 400, objectFit: "contain", filter: "drop-shadow(0 8px 28px rgba(0,0,0,0.12))" }} />
-            </div>
-            <div className="flex flex-col gap-5">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0d1535] leading-tight">
-                How It <span className="text-[#111184]">Works</span>
-              </h2>
-              <div className="flex flex-col gap-3 mt-1">
-                {steps.map((s) => (
-                  <div key={s.num} className="flex gap-4 p-5 rounded-2xl"
-                    style={{ background: "#f8faff", border: "1px solid rgba(17,17,132,0.07)", boxShadow: "0 2px 10px rgba(0,0,0,0.05)" }}>
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-white text-sm font-bold"
-                      style={{ background: "linear-gradient(135deg,#0f0f7a,#111184)", boxShadow: "0 4px 14px rgba(17,17,132,0.28)" }}>
-                      {s.num}.
-                    </div>
-                    <div>
-                      <p className="text-sm font-bold text-[#0d1535] mb-1">{s.title}</p>
-                      <p className="text-sm text-[#6b7fa8] leading-relaxed">{s.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA SECTION  */}
-
       <section className="relative py-24 overflow-hidden" style={{ background: "linear-gradient(150deg,#f0f0ff 0%,#e8e8ff 50%,#f5f8ff 100%)" }}>
         <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at center,rgba(17,17,132,0.07) 0%,transparent 65%)" }} />
         <div className="relative z-10 max-w-xl mx-auto px-6 flex flex-col items-center text-center gap-6">
           <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "rgba(17,17,132,0.45)" }} />
           <h2 className="font-nexa uppercase leading-tight" style={{ fontSize: "clamp(1.8rem,3vw,2.8rem)", fontWeight: 800, color: "#0d1535", letterSpacing: "-0.5px" }}>
-            Ready to start your <span style={{ color: "#111184" }}>recovery journey?</span>
+            Provide Your Patients <span style={{ color: "#111184" }}>With The Best.</span>
           </h2>
-          <p className="text-[#3a4a6b] text-base leading-relaxed">Connect with our team to find the right orthopedic solution for your needs.</p>
+          <p className="text-[#3a4a6b] text-base leading-relaxed">The XO Boot Pneumatic is available exclusively through TLC DME LLC. Contact our team for pricing, availability, and distribution inquiries.</p>
           <div className="flex items-center gap-4 flex-wrap justify-center">
             <a href="#contact" className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 relative overflow-hidden">
               <div className="absolute top-0 left-[5%] group-hover:left-[80%] duration-300 transition-all h-full w-10 bg-[#1651D1]/50 rounded-[200%] blur" />

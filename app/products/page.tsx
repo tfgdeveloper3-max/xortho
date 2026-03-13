@@ -1,7 +1,7 @@
 "use client";
 import { CLD } from "@/lib/cloudinary";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
@@ -9,21 +9,30 @@ import { ArrowRight, Check, X, ZoomIn, ZoomOut, RotateCcw, ChevronUp } from "luc
 import Navbar from "@/components/navbar";
 import StickyButtons from "@/components/sticky-buttons";
 import Footer from "@/components/footer";
+import { useCallback } from "react";
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const products = [
   {
     id: "xboot",
-    tag: "Orthopedic Boot",
-    title: "Orthopedic Xboot",
-    subtitle: "Advanced Recovery Boot",
+    tag: "Pneumatic Walking Boot",
+    title: "XO Boot Pneumatic",
+    subtitle: "Better DME. Better Functionality. Better Outcomes.",
     image: CLD.shoe,
     painImage: CLD.legPain,
     healImage: CLD.legHealed,
     imgStyle: { height: 360, width: "60%", marginLeft: "80px", marginBottom: "130px" },
-    description: "An advanced pulley system allows for tailored compression. Low profile design fits comfortably under clothing — ideal for active patients or lifestyles. Engineered for both clinical and everyday use.",
-    features: ["Tailored compression pulley system", "Vertical stays for structural integrity", "Universal strap design", "Optimal Gel Cryo Pad for cold therapy", "Low-profile fits under clothing", "Lightweight construction"],
+    description: "Engineered for superior strength, performance and comfort — crafted to deliver exceptional clinical outcomes. Designed with Biomechanical Engineers and feedback from Orthopedic, Urgent Care and Podiatry clients.",
+    features: [
+      "World class aerodynamic shell design",
+      "Revolutionary compartmentalized pneumatic compression",
+      "Real rocker sole — most fluid gait action built",
+      "Removable anterior shield for patient compliance",
+      "4-strap system with 360° swivel D-rings",
+      "Seamless micro-fiber liner — T-shirt soft",
+      "AFO undersleeve included (2 per boot)",
+    ],
     stats: [{ label: "Pain Relief", value: "94%" }, { label: "Recovery Speed", value: "2.4×" }, { label: "Satisfaction", value: "98%" }],
     indicator: "Ankle → Recovery",
   },
@@ -569,18 +578,11 @@ export default function ProductsPage() {
 
       {/* ══ HERO ══ */}
       <section ref={heroRef} className="relative w-full flex items-center overflow-hidden" style={{ minHeight: "100vh", background: "#020916" }}>
-        {/* Video background */}
         <video src={CLD.heroBg} autoPlay loop muted playsInline
           className="absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none"
           style={{ zIndex: 0 }} />
-
-        {/* Dark gradient overlay — left-heavy like detail pages */}
         <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "linear-gradient(135deg,rgba(2,9,22,0.90) 0%,rgba(2,9,22,0.55) 55%,transparent 100%)" }} />
-
-        {/* Blue grid */}
         <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, backgroundImage: "linear-gradient(rgba(17,17,132,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.04) 1px,transparent 1px)", backgroundSize: "52px 52px" }} />
-
-        {/* Bottom fade */}
         <div className="absolute bottom-0 inset-x-0 h-32 pointer-events-none" style={{ zIndex: 2, background: "linear-gradient(to bottom,transparent,#020916)" }} />
 
         <div className="relative z-20 flex flex-col gap-3 px-4 sm:px-8 md:px-[100px] pt-20">
@@ -596,7 +598,7 @@ export default function ProductsPage() {
           </h1>
           <p className="hero-anim text-white/55 text-sm sm:text-base md:text-lg leading-relaxed max-w-md border-l-[3px] border-[#7b7bff]/25 pl-3.5"
             style={{ opacity: 0 }}>
-            Discover our trusted range of orthopedic products designed to support recovery, reduce pain, and improve everyday comfort.
+            Discover our trusted range of orthopedic products — engineered for superior strength, performance and comfort, crafted to deliver exceptional clinical outcomes.
           </p>
           <div className="hero-anim flex items-center gap-4 flex-wrap" style={{ opacity: 0 }}>
             <button onClick={() => document.getElementById("xboot")?.scrollIntoView({ behavior: "smooth" })} className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 relative overflow-hidden">
@@ -629,10 +631,10 @@ export default function ProductsPage() {
           <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "rgba(22,81,209,0.45)" }} />
           <h2 className="font-nexa uppercase leading-tight"
             style={{ fontSize: "clamp(1.8rem,3vw,2.8rem)", fontWeight: 800, color: "#0d1535", letterSpacing: "-0.5px" }}>
-            Ready to start your <span style={{ color: "#1651D1" }}>recovery journey?</span>
+            Provide Your Patients <span style={{ color: "#1651D1" }}>With The Best.</span>
           </h2>
           <p className="text-[#3a4a6b] text-base leading-relaxed">
-            Connect with our team to find the right orthopedic solution for your needs.
+            The XO Boot Pneumatic is available exclusively through TLC DME LLC. Contact our team for pricing, availability, and distribution inquiries.
           </p>
           <div className="flex items-center gap-4 flex-wrap justify-center">
             <a href="#contact" className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 relative overflow-hidden">
