@@ -210,11 +210,11 @@ function PowerStepSection() {
   return (
     <section ref={sectionRef} className="w-full bg-white py-20" style={{ borderTop: "1px solid rgba(17,17,132,0.07)" }}>
       <div className="container mx-auto px-5 md:px-[80px]">
-        <p className="ps-breadcrumb text-sm text-[#9ca3af] mb-8" style={{ opacity: 0 }}>
+        {/* <p className="ps-breadcrumb text-sm text-[#9ca3af] mb-8" style={{ opacity: 0 }}>
           <a href="/" className="hover:text-[#111184]">Home</a> /&nbsp;
           <a href="/products" className="hover:text-[#111184]">Products</a> /&nbsp;
           <span className="text-[#111184]">Orthopedic Xboot</span>
-        </p>
+        </p> */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-16">
           <div className="ps-gallery flex gap-4" style={{ opacity: 0 }}>
             <div className="flex flex-col gap-2 flex-shrink-0">
