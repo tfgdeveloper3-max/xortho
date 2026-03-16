@@ -36,7 +36,8 @@ const products = [
     stats: [{ label: "Pain Relief", value: "94%" }, { label: "Recovery Speed", value: "2.4×" }, { label: "Satisfaction", value: "98%" }],
     indicator: "Ankle → Recovery",
   },
-  {
+  // Back Support — temporarily hidden
+  /*{
     id: "back",
     tag: "Lumbar Belt",
     title: "Back Support 627/642",
@@ -49,19 +50,27 @@ const products = [
     features: ["Advanced pulley compression system", "Universal fit strap design", "Lumbar support stays", "Gel Cryo Pad compatible", "Breathable mesh construction", "Adjustable tension control"],
     stats: [{ label: "Pain Reduction", value: "91%" }, { label: "Mobility Retained", value: "96%" }, { label: "Daily Comfort", value: "99%" }],
     indicator: "Back Pain → Recovery",
-  },
+  },*/
   {
     id: "knee",
-    tag: "Osteoarthritis",
-    title: "Knee Brace OA",
-    subtitle: "Osteoarthritis Support",
-    image: CLD.kneeBrace,
+    tag: "Knee Support ROM Cryo",
+    title: "XO Knee Support ROM Cryo",
+    subtitle: "Better DME. Better Functionality. Better Outcomes.",
+    image: CLD.kneeProduct2,
     painImage: CLD.kneePain,
     healImage: CLD.kneeHealed,
     imgStyle: { height: 340, width: "75%", marginLeft: "12%" },
-    description: "An advanced pulley system allows for tailored compression. Low profile design allows support to fit comfortably under clothing for all-day wear. Specially engineered for osteoarthritis patients.",
-    features: ["Tailored compression control", "Low-profile under-clothing fit", "Vertical structural stays", "Gel Cryo cold therapy pad", "Hinge joint stabilization", "Anti-slip inner lining"],
-    stats: [{ label: "Swelling Reduction", value: "87%" }, { label: "Joint Stability", value: "3.1×" }, { label: "Activity Return", value: "93%" }],
+    description: "Designed and crafted by TLC DME with Biomechanical Engineers and feedback from Orthopedic, Urgent Care and Podiatry clients. PDAC approved — billable with HCPCS codes L1832 & L1833.",
+    features: [
+      "Dual-Axis hinge mirrors natural knee movement",
+      "Open patella & open back — less friction, all-day comfort",
+      "Removable Cryo Gel Pad for cold or heat therapy",
+      "Wrap-around strapping with medical grade hook & loop",
+      "Side stabilizers & patella buttress for proper alignment",
+      "KO Undersleeve included — microfiber, wicking",
+      "PDAC approved — HCPCS L1832 & L1833",
+    ],
+    stats: [{ label: "Comfort Rating", value: "98%" }, { label: "Range of Motion", value: "2.1×" }, { label: "PDAC Approved", value: "✓" }],
     indicator: "Knee Pain → Recovery",
   },
 ];
@@ -436,7 +445,7 @@ function ProductSection({
             <p className="text-[10px] mt-1.5 font-semibold" style={{ color: "rgba(22,81,209,0.50)" }}>{product.indicator}</p>
           </div>
           <div className="anim-item flex items-center gap-4" style={{ opacity: 0 }}>
-            <a href={`/products/${product.id}`} className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 relative overflow-hidden">
+            <a href={product.id === "knee" ? "/products/knee" : `/products/${product.id}`} className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 relative overflow-hidden">
               <div className="absolute top-0 left-[5%] group-hover:left-[80%] duration-300 transition-all h-full w-10 bg-[#1651D1]/50 rounded-[200%] blur" />
               <div className="flex items-center bg-white rounded-full px-4 py-2 md:px-5 md:py-3 relative z-10">
                 <span className="text-base font-semibold">See Product Details</span> <ArrowRight className="ml-2 w-4 h-4" />
@@ -587,13 +596,13 @@ export default function ProductsPage() {
 
         <div className="relative z-20 flex flex-col gap-3 px-4 sm:px-8 md:px-[100px] pt-20">
           <span className="hero-anim block text-xs sm:text-sm font-bold uppercase"
-            style={{ opacity: 0, color: "#7b7bff", letterSpacing: "0.3em" }}>
+            style={{ opacity: 0, background: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)", WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text", letterSpacing: "0.3em" }}>
             X-Ortho Product Line
           </span>
           <h1 className="hero-anim font-nexa uppercase text-2xl sm:text-3xl md:text-4xl lg:text-5xl"
             style={{ opacity: 0, fontWeight: 800, letterSpacing: "-0.5px", lineHeight: 1.1 }}>
             <span className="block" style={{ color: "#f0f4ff" }}>X-Ortho</span>
-            <span className="block" style={{ color: "#7b7bff" }}>Product Range</span>
+            <span className="block" style={{ background: "linear-gradient(180deg, #e8e8e8 0%, #a8a8a8 30%, #d0d0d0 50%, #787878 65%, #c0c0c0 80%, #8a8a8a 100%)", WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Product Range</span>
             <span className="block" style={{ color: "#f0f4ff" }}>&amp; Solutions</span>
           </h1>
           <p className="hero-anim text-white/55 text-sm sm:text-base md:text-lg leading-relaxed max-w-md border-l-[3px] border-[#7b7bff]/25 pl-3.5"
@@ -601,25 +610,24 @@ export default function ProductsPage() {
             Discover our trusted range of orthopedic products — engineered for superior strength, performance and comfort, crafted to deliver exceptional clinical outcomes.
           </p>
           <div className="hero-anim flex items-center gap-4 flex-wrap" style={{ opacity: 0 }}>
-            <button onClick={() => document.getElementById("xboot")?.scrollIntoView({ behavior: "smooth" })} className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 relative overflow-hidden">
+            <a href="/gallery" className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 relative overflow-hidden">
               <div className="absolute top-0 left-[5%] group-hover:left-[80%] duration-300 transition-all h-full w-10 bg-[#1651D1]/50 rounded-[200%] blur" />
               <div className="flex items-center bg-white rounded-full px-4 py-2 md:px-5 md:py-3 relative z-10">
-                <span className="text-base font-semibold">View All Products</span> <ArrowRight className="ml-2 w-4 h-4" />
+                <span className="text-base font-semibold">View Product Gallery</span> <ArrowRight className="ml-2 w-4 h-4" />
               </div>
-            </button>
+            </a>
             <a href="/"
-              className="text-sm font-semibold flex items-center gap-1.5 transition-colors"
-              style={{ color: "rgba(123,123,255,0.45)" }}
-              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = "#7b7bff"; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(123,123,255,0.45)"; }}
-            >
+              className="text-sm font-semibold flex items-center gap-1.5"
+              style={{ background: "linear-gradient(180deg, #e8e8e8 0%, #a8a8a8 30%, #d0d0d0 50%, #787878 65%, #c0c0c0 80%, #8a8a8a 100%)", WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text" }}
+              onMouseEnter={e => { const a = e.currentTarget as HTMLAnchorElement; a.style.background = "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)"; a.style.webkitBackgroundClip = "text"; a.style.webkitTextFillColor = "transparent"; a.style.backgroundClip = "text"; }}
+              onMouseLeave={e => { const a = e.currentTarget as HTMLAnchorElement; a.style.background = "linear-gradient(180deg, #e8e8e8 0%, #a8a8a8 30%, #d0d0d0 50%, #787878 65%, #c0c0c0 80%, #8a8a8a 100%)"; a.style.webkitBackgroundClip = "text"; a.style.webkitTextFillColor = "transparent"; a.style.backgroundClip = "text"; }}>
               Back to Home <ArrowRight className="w-3.5 h-3.5" />
             </a>
           </div>
         </div>
       </section>
 
-      {/* PRODUCT SECTIONS */}
+      {/* ══ PRODUCT SECTIONS ══ */}
       {products.map((product, index) => (
         <ProductSection key={product.id} product={product} index={index} onImageClick={setViewerProduct} />
       ))}

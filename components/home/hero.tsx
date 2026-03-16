@@ -14,21 +14,22 @@ interface HeroProps {
 const products = [
   {
     id: "xboot", label: "Orthopedic\nXboot", abbr: "XB", short: "Boot", tag: "Orthopedic Boot",
-    image: CLD.shoe, title: "Orthopedic Xboot", subtitle: "Advanced Recovery Boot",
+    image: CLD.XoBootHero, title: "Orthopedic XO Boot", subtitle: "Advanced Recovery Boot",
     href: "/products/xboot",
     description: "An advanced pulley system allows for tailored compression. Low profile design fits comfortably under clothing — ideal for active patients or lifestyles.",
     features: ["Tailored compression pulley system", "Vertical stays for structural integrity", "Universal strap design", "Optimal Gel Cryo Pad for cold therapy"],
   },
-  {
+  // Back Support — temporarily hidden
+  /*{
     id: "back", label: "Back\nSupport", abbr: "BS", short: "Back", tag: "Lumbar Belt",
     image: CLD.backBelt, title: "Back Support 627/642", subtitle: "Lumbar Compression Belt",
     href: "/products/back",
     description: "Low profile design allows support to fit comfortably under clothing. Vertical stays provide structural integrity while allowing the flexibility needed.",
     features: ["Advanced pulley compression system", "Universal fit strap design", "Lumbar support stays", "Gel Cryo Pad compatible"],
-  },
+  },*/
   {
     id: "knee", label: "Knee\nBrace", abbr: "KB", short: "Knee", tag: "Osteoarthritis",
-    image: CLD.kneeBrace, title: "Knee Brace OA", subtitle: "Osteoarthritis Support",
+    image: CLD.kneeProduct2, title: "Knee Brace OA", subtitle: "Osteoarthritis Support",
     href: "/products/knee-brace",
     description: "An advanced pulley system allows for tailored compression. Low profile design allows support to fit comfortably under clothing for all-day wear.",
     features: ["Tailored compression control", "Low-profile under-clothing fit", "Vertical structural stays", "Gel Cryo cold therapy pad"],
@@ -166,7 +167,7 @@ export default function Hero({ noAnimation = false, playAnimation = false }: Her
           {/* LEFT: Text + Buttons */}
           <div className="flex flex-col gap-3 px-4 sm:px-8 md:px-[100px] pt-20 flex-1 min-w-0">
             <span ref={line1Ref} className="block text-xs sm:text-sm font-bold uppercase"
-              style={{ opacity: 0, background: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.9)) drop-shadow(0 0 16px rgba(22,81,209,0.4))", letterSpacing: "0.3em" }}>
+              style={{ opacity: 0, background: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)", WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.9)) drop-shadow(0 0 16px rgba(22,81,209,0.4))", letterSpacing: "0.3em" }}>
               Orthopedic Solutions
             </span>
 
@@ -175,10 +176,10 @@ export default function Hero({ noAnimation = false, playAnimation = false }: Her
               <span ref={line2Ref} className="block" style={{ opacity: 0, color: "#f0f4ff", textShadow: "2px 2px 0px rgba(80,100,160,0.15), 0 4px 16px rgba(60,80,140,0.25)" }}>
                 Tender Loving Care,
               </span>
-              <span ref={line3Ref} className="block" style={{ opacity: 0, background: "linear-gradient(180deg, #e8e8e8 0%, #a8a8a8 30%, #d0d0d0 50%, #787878 65%, #c0c0c0 80%, #8a8a8a 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.9)) drop-shadow(0 0 10px rgba(160,160,160,0.25))" }}>
+              <span ref={line3Ref} className="block" style={{ opacity: 0, background: "linear-gradient(180deg, #e8e8e8 0%, #a8a8a8 30%, #d0d0d0 50%, #787878 65%, #c0c0c0 80%, #8a8a8a 100%)", WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.9)) drop-shadow(0 0 10px rgba(160,160,160,0.25))" }}>
                 Trust Loyalty
               </span>
-              <span ref={line4Ref} className="block" style={{ opacity: 0, background: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.9)) drop-shadow(0 0 16px rgba(22,81,209,0.4))" }}>
+              <span ref={line4Ref} className="block" style={{ opacity: 0, background: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)", WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.9)) drop-shadow(0 0 16px rgba(22,81,209,0.4))" }}>
                 Commitment
               </span>
             </h1>
@@ -351,7 +352,7 @@ export default function Hero({ noAnimation = false, playAnimation = false }: Her
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={p.image} alt={p.title}
                         style={{
-                          width: isMobile ? 38 : 58, height: isMobile ? 38 : 58, objectFit: "contain",
+                          width: isMobile ? 38 : 58, height: isMobile ? 38 : 58, objectFit: "contain", display: "block", margin: "auto",
                           filter: isSel ? "drop-shadow(0 0 8px rgba(91,155,255,0.9)) brightness(1.15)" : "brightness(0.65) grayscale(0.25)",
                           transition: "filter 0.3s",
                         }} />

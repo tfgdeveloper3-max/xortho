@@ -9,30 +9,21 @@ import { CLD } from "@/lib/cloudinary"
 const productLinks = [
   {
     id: "xboot",
-    title: "Orthopedic Xboot",
-    subtitle: "Advanced Recovery Boot",
-    image: CLD.shoe,
+    title: "XO Boot Pneumatic",
+    subtitle: "Better DME. Better Functionality. Better Outcomes.",
+    image: CLD.XoBootHero,
     href: "/products/xboot",
-    tag: "Orthopedic Boot",
-    description: "Tailored compression with pulley system. Low profile fits comfortably under clothing.",
-  },
-  {
-    id: "back",
-    title: "Back Support 627/642",
-    subtitle: "Lumbar Compression Belt",
-    image: CLD.backBelt,
-    href: "/products/back",
-    tag: "Lumbar Belt",
-    description: "Vertical stays provide structural integrity while allowing the flexibility needed for daily life.",
+    tag: "Pneumatic Walking Boot",
+    description: "World class aerodynamic shell — short leg cast-like stability. Revolutionary pneumatic compression with real rocker sole.",
   },
   {
     id: "knee",
-    title: "Knee Brace OA",
-    subtitle: "Osteoarthritis Support",
-    image: CLD.kneeBrace,
+    title: "XO Knee Support ROM Cryo",
+    subtitle: "Better DME. Better Functionality. Better Outcomes.",
+    image: CLD.kneeProduct2,
     href: "/products/knee",
-    tag: "Osteoarthritis",
-    description: "Low profile design for all-day wear. Advanced pulley for tailored compression control.",
+    tag: "Knee Support ROM Cryo",
+    description: "Dual-Axis hinge mirrors natural knee movement. Removable Cryo Gel Pad — PDAC approved, HCPCS L1832 & L1833.",
   },
 ]
 
@@ -346,4 +337,4 @@ export default function Navbar() {
       </div>
     </>
   )
-}
+} 
