@@ -77,4 +77,16 @@ export const CLD = {
     xoShell: cldImg("Shell"),
     sleeves: cldImg("sleeves"),
     XoBootHero: cldImg("XoBoot-Hero"),
+
+    // Knee support real product images
+    kneeSleeve: cldImg("knee-sleeve"),
+    kneeFront: cldImg("knee-front"),
+    kneeHinge1: cldImg("knee-hinge-1"),
+    kneeHinge2: cldImg("knee-hinge-2"),
+    kneeStrap1: cldImg("knee-strap-1"),
+    kneeBlueprint: cldImg("knee-blueprint"),
+    kneeCryoPad: cldImg("knee-cryo-pad"),
+    kneeProduct2: cldImg("knee-product-2"),
+    kneeOpen: cldImg("knee-open"),
+    kneeHingeSingle: cldImg("knee-hinge-single"),
 };
