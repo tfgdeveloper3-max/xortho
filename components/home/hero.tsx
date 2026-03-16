@@ -189,15 +189,14 @@ export default function Hero({ noAnimation = false, playAnimation = false }: Her
             </p>
 
             <div ref={btnRef} className="flex flex-col gap-3" style={{ opacity: 0 }}>
-              <button
-                onClick={scrollToProducts}
+              <a href="/products"
                 className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 relative overflow-hidden">
                 <div className="absolute top-0 left-[5%] group-hover:left-[80%] duration-300 transition-all h-full w-10 bg-[#1651D1]/50 rounded-[200%] blur" />
                 <div className="flex items-center bg-white rounded-full px-3 py-2 md:px-5 md:py-3 relative z-10">
-                  <span className="text-sm md:text-lg font-semibold">View Product Details</span>
+                  <span className="text-sm md:text-lg font-semibold">Explore Our Products</span>
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </div>
-              </button>
+              </a>
 
               <button onClick={() => setActivated((v) => !v)} className="group w-fit flex items-center gap-3 cursor-pointer">
                 <div className="relative flex-shrink-0 transition-all duration-400"

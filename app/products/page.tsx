@@ -439,14 +439,14 @@ function ProductSection({
             <a href={`/products/${product.id}`} className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 relative overflow-hidden">
               <div className="absolute top-0 left-[5%] group-hover:left-[80%] duration-300 transition-all h-full w-10 bg-[#1651D1]/50 rounded-[200%] blur" />
               <div className="flex items-center bg-white rounded-full px-4 py-2 md:px-5 md:py-3 relative z-10">
-                <span className="text-base font-semibold">View Details</span> <ArrowRight className="ml-2 w-4 h-4" />
+                <span className="text-base font-semibold">See Product Details</span> <ArrowRight className="ml-2 w-4 h-4" />
               </div>
             </a>
             <a href="#contact" className="text-[13px] font-semibold uppercase tracking-wider flex items-center gap-1.5"
               style={{ color: "rgba(22,81,209,0.45)", transition: "color 0.25s" }}
               onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = "#1651D1"; }}
               onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(22,81,209,0.45)"; }}>
-              Contact Us <ArrowRight className="w-3.5 h-3.5" />
+              Connect With Us <ArrowRight className="w-3.5 h-3.5" />
             </a>
           </div>
         </div>
@@ -588,11 +588,11 @@ export default function ProductsPage() {
         <div className="relative z-20 flex flex-col gap-3 px-4 sm:px-8 md:px-[100px] pt-20">
           <span className="hero-anim block text-xs sm:text-sm font-bold uppercase"
             style={{ opacity: 0, color: "#7b7bff", letterSpacing: "0.3em" }}>
-            Orthopedic Solutions
+            X-Ortho Product Line
           </span>
           <h1 className="hero-anim font-nexa uppercase text-2xl sm:text-3xl md:text-4xl lg:text-5xl"
             style={{ opacity: 0, fontWeight: 800, letterSpacing: "-0.5px", lineHeight: 1.1 }}>
-            <span className="block" style={{ color: "#f0f4ff" }}>Our Complete</span>
+            <span className="block" style={{ color: "#f0f4ff" }}>X-Ortho</span>
             <span className="block" style={{ color: "#7b7bff" }}>Product Range</span>
             <span className="block" style={{ color: "#f0f4ff" }}>&amp; Solutions</span>
           </h1>
@@ -640,7 +640,7 @@ export default function ProductsPage() {
             <a href="#contact" className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 relative overflow-hidden">
               <div className="absolute top-0 left-[5%] group-hover:left-[80%] duration-300 transition-all h-full w-10 bg-[#1651D1]/50 rounded-[200%] blur" />
               <div className="flex items-center bg-white rounded-full px-4 py-2 md:px-5 md:py-3 relative z-10">
-                <span className="text-base font-semibold">Contact Us</span> <ArrowRight className="ml-2 w-4 h-4" />
+                <span className="text-base font-semibold">Speak With Our Team</span> <ArrowRight className="ml-2 w-4 h-4" />
               </div>
             </a>
             <a href="/" className="text-sm font-semibold uppercase tracking-widest" style={{ color: "rgba(22,81,209,0.38)", transition: "color 0.25s" }}

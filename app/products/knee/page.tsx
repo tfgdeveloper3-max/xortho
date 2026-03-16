@@ -80,8 +80,8 @@ function BeforeAfterSlider() {
         onMouseDown={() => { dragging.current = true; }}
         onTouchStart={() => { dragging.current = true; }}>
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M7 5L3 10L7 15" stroke={P} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M13 5L17 10L13 15" stroke={P} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M7 5L3 10L7 15" stroke={P} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M13 5L17 10L13 15" stroke={P} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
 
@@ -169,15 +169,10 @@ export default function KneeBracePage() {
       {/* ══ HERO ══ */}
       <section ref={heroRef} className="relative w-full flex items-center overflow-hidden" style={{ minHeight: "100vh", background: "#020916" }}>
         <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none" style={{ zIndex: 0 }}>
-          <source src={CLD.heroBg} type="video/mp4" />
+          <source src={CLD.sectionhero} type="video/mp4" />
         </video>
         <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "linear-gradient(135deg,rgba(2,9,22,0.90) 0%,rgba(2,9,22,0.55) 55%,transparent 100%)" }} />
         <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, backgroundImage: `linear-gradient(rgba(17,17,132,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.05) 1px,transparent 1px)`, backgroundSize: "52px 52px" }} />
-
-        <a href="/products" className="hanim absolute flex items-center gap-2 text-xs uppercase tracking-widest font-bold text-white/30 hover:text-white/70 transition-colors"
-          style={{ zIndex: 100001, opacity: 0, top: "max(140px,13vh)", left: "clamp(20px,7vw,100px)" }}>
-          <ArrowLeft className="w-3.5 h-3.5" /> All Products
-        </a>
 
         <div className="relative w-full container mx-auto px-5 md:px-[100px]" style={{ zIndex: 2, paddingTop: "max(140px,14vh)", paddingBottom: 80 }}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
@@ -463,11 +458,11 @@ export default function KneeBracePage() {
           <p className="text-[#3a4a6b] text-base leading-relaxed">Connect with our team to find the right orthopedic solution for your needs.</p>
           <div className="flex items-center gap-4 flex-wrap justify-center">
             <a href="#contact" className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 relative overflow-hidden">
-                  <div className="absolute top-0 left-[5%] group-hover:left-[80%] duration-300 transition-all h-full w-10 bg-[#1651D1]/50 rounded-[200%] blur" />
-                  <div className="flex items-center bg-white rounded-full px-4 py-2 md:px-5 md:py-3 relative z-10">
-                    <span className="text-base font-semibold">Contact Us</span> <ArrowRight className="ml-2 w-4 h-4" />
-                  </div>
-                </a>
+              <div className="absolute top-0 left-[5%] group-hover:left-[80%] duration-300 transition-all h-full w-10 bg-[#1651D1]/50 rounded-[200%] blur" />
+              <div className="flex items-center bg-white rounded-full px-4 py-2 md:px-5 md:py-3 relative z-10">
+                <span className="text-base font-semibold">Contact Us</span> <ArrowRight className="ml-2 w-4 h-4" />
+              </div>
+            </a>
             <a href="/" className="text-sm font-semibold uppercase tracking-widest transition-colors" style={{ color: `rgba(17,17,132,0.38)` }}
               onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = P; }}
               onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = `rgba(17,17,132,0.38)`; }}>

@@ -5,6 +5,7 @@ import Image from "next/image";
 import MyButton from "../my-button";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { ArrowRight } from "lucide-react";
 
 export default function KneeBraceSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -192,7 +193,7 @@ export default function KneeBraceSection() {
             <div ref={healedImgRef} className="absolute inset-0 opacity-0" style={{ zIndex: 3 }}>
               <Image src={CLD.kneeHealed} alt="Healed knee" fill className="object-contain object-center" />
             </div>
-            </div>
+          </div>
 
           {/* Content side */}
           <div
@@ -207,8 +208,8 @@ export default function KneeBraceSection() {
                 textShadow: isPain
                   ? "0 0 12px rgba(239,68,68,0.8), 0 0 24px rgba(239,68,68,0.4)"
                   : isHealing
-                  ? "0 0 12px rgba(34,197,94,0.8), 0 0 24px rgba(34,197,94,0.4)"
-                  : "none",
+                    ? "0 0 12px rgba(34,197,94,0.8), 0 0 24px rgba(34,197,94,0.4)"
+                    : "none",
               }}
             >
               {labelText}
@@ -225,8 +226,8 @@ export default function KneeBraceSection() {
                 textShadow: isPain
                   ? "0 0 8px rgba(239,68,68,0.25)"
                   : isHealing
-                  ? "0 0 8px rgba(34,197,94,0.25)"
-                  : "none",
+                    ? "0 0 8px rgba(34,197,94,0.25)"
+                    : "none",
               }}
             >
               {isPain && (
@@ -248,7 +249,15 @@ export default function KneeBraceSection() {
               <p>Optimal Gel Cryo Pad available for effective cold therapy.</p>
             </div>
 
-            <div className="pt-4"><MyButton /></div>
+            <div className="pt-4">
+              <a href="/products/knee" className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 md:p-2 relative overflow-hidden drop-shadow-2xl inline-block">
+                <div className="absolute top-0 left-[5%] group-hover:left-[80%] duration-300 transition-all h-full w-10 bg-[#1651D1]/50 rounded-[200%] blur" />
+                <div className="flex items-center bg-white rounded-full px-4 py-2 md:px-5 md:py-3 relative z-10">
+                  <span className="text-base md:text-lg font-semibold">See Product Details</span>
+                  <ArrowRight className="ml-2 w-4 h-4 md:w-5 md:h-5" />
+                </div>
+              </a>
+            </div>
 
             <div className="flex flex-col gap-2 mt-2">
               <div className="flex justify-between text-xs text-gray-400 uppercase tracking-widest">

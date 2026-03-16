@@ -169,15 +169,10 @@ export default function BackSupportPage() {
       {/* ══ HERO ══ */}
       <section ref={heroRef} className="relative w-full flex items-center overflow-hidden" style={{ minHeight: "100vh", background: "#020916" }}>
         <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none" style={{ zIndex: 0 }}>
-          <source src={CLD.heroBg} type="video/mp4" />
+          <source src={CLD.sectionhero} type="video/mp4" />
         </video>
         <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "linear-gradient(135deg,rgba(2,9,22,0.90) 0%,rgba(2,9,22,0.55) 55%,transparent 100%)" }} />
         <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, backgroundImage: `linear-gradient(rgba(17,17,132,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.05) 1px,transparent 1px)`, backgroundSize: "52px 52px" }} />
-
-        <a href="/products" className="hanim absolute flex items-center gap-2 text-xs uppercase tracking-widest font-bold text-white/30 hover:text-white/70 transition-colors"
-          style={{ zIndex: 100001, opacity: 0, top: "max(140px,13vh)", left: "clamp(20px,7vw,100px)" }}>
-          <ArrowLeft className="w-3.5 h-3.5" /> All Products
-        </a>
 
         <div className="relative w-full container mx-auto px-5 md:px-[100px]" style={{ zIndex: 2, paddingTop: "max(140px,14vh)", paddingBottom: 80 }}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">

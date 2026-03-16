@@ -5,6 +5,7 @@ import Image from "next/image";
 import MyButton from "../my-button";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { ArrowRight } from "lucide-react";
 
 export default function XbootSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -196,7 +197,15 @@ export default function XbootSection() {
               <p>4-strap system with 360° swivel D-rings and easy grip rubber tips.</p>
             </div>
 
-            <div className="pt-4"><MyButton /></div>
+            <div className="pt-4">
+              <a href="/products/xboot" className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 md:p-2 relative overflow-hidden drop-shadow-2xl inline-block">
+                <div className="absolute top-0 left-[5%] group-hover:left-[80%] duration-300 transition-all h-full w-10 bg-[#1651D1]/50 rounded-[200%] blur" />
+                <div className="flex items-center bg-white rounded-full px-4 py-2 md:px-5 md:py-3 relative z-10">
+                  <span className="text-base md:text-lg font-semibold">See Product Details</span>
+                  <ArrowRight className="ml-2 w-4 h-4 md:w-5 md:h-5" />
+                </div>
+              </a>
+            </div>
 
             <div className="flex flex-col gap-2 mt-2">
               <div className="flex justify-between text-xs text-gray-400 uppercase tracking-widest">
