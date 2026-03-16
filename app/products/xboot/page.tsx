@@ -368,7 +368,7 @@ function PowerStepSection() {
             <a href="/contact" className="ps-info-item cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#111184]/30 hover:bg-[#111184]/50 backdrop-blur-2xl border border-white/30 p-1.5 relative overflow-hidden" style={{ opacity: 0 }}>
               <div className="absolute top-0 left-[5%] group-hover:left-[80%] duration-300 transition-all h-full w-10 bg-[#111184]/50 rounded-[200%] blur" />
               <div className="flex items-center bg-white rounded-full px-5 py-3 relative z-10">
-                <span className="text-base font-semibold">Contact for Pricing</span>
+                <span className="text-base font-semibold">Ask About This Product</span>
                 <ArrowRight className="ml-2 w-4 h-4" />
               </div>
             </a>
