@@ -5,7 +5,7 @@ import Head from "next/head";
 import XOAnimation from "@/components/xoAnimation";
 import Hero from "@/components/home/hero";
 import XbootSection from "@/components/home/xboot-section";
-import BackSupportSection from "@/components/home/back-support-section";
+// import BackSupportSection from "@/components/home/back-support-section";
 import KneeBraceSection from "@/components/home/knee-brace-section";
 import TrustSection from "@/components/home/trust-section";
 import XOSection from "@/components/home/xo-section";
@@ -45,7 +45,7 @@ export default function Home() {
         <SectionTransition onNavbarVisible={() => { }}>
           <Hero playAnimation={xoDone} />
           <XbootSection />
-          <BackSupportSection />
+          {/* <BackSupportSection /> */}
           <KneeBraceSection />
           <TrustSection />
           <XOSection />

@@ -40,12 +40,12 @@ const reviews = [
 ];
 
 const galleryImages = [
-  { src: CLD.xbootBothSide, label: "Both Sides" },
-  { src: CLD.xbootToeGuard, label: "Toe Guard" },
-  { src: CLD.xbootBottom, label: "Bottom View" },
-  { src: CLD.xbootLowRocker, label: "Rocker Sole" },
-  { src: CLD.bootProduct, label: "Product View" },
-  { src: CLD.bootBlueprint, label: "Blueprint" },
+  { src: CLD.xoStraps, label: "Both Sides" },
+  { src: CLD.xoRocker, label: "Toe Guard" },
+  { src: CLD.xoCage, label: "Bottom View" },
+  { src: CLD.xoFrontView, label: "Rocker Sole" },
+  { src: CLD.xoFullBoot, label: "Product View" },
+  { src: CLD.xoShell, label: "Blueprint" },
 ];
 
 const tabContent: Record<string, React.ReactNode> = {
@@ -866,17 +866,18 @@ export default function XbootDetailPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
             <div className="flex flex-col gap-5">
               <div className="hanim" style={{ opacity: 0 }}>
-                <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.38em] font-bold px-3.5 py-1.5 rounded-full bg-[#7b7bff]/10 text-[#7b7bff] border border-[#7b7bff]/20">
-                  <span className="w-1.5 h-1.5 rounded-full animate-pulse bg-[#7b7bff]" />
-                  Pneumatic Walking Boot
+                <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.38em] font-bold px-3.5 py-1.5 rounded-full border"
+                  style={{ background: "rgba(22,81,209,0.12)", border: "1px solid rgba(22,81,209,0.3)" }}>
+                  <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ opacity: 0, background: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.9)) drop-shadow(0 0 16px rgba(22,81,209,0.4))", letterSpacing: "0.3em" }} />
+                  <span style={{ background: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", filter: "drop-shadow(0 1px 3px rgba(0,0,0,0.8))" }}>Pneumatic Walking Boot</span>
                 </span>
               </div>
               <div className="hanim" style={{ opacity: 0 }}>
                 <h1 className="font-nexa uppercase leading-[0.95] text-[#f0f4ff]" style={{ fontSize: "clamp(3rem,7vw,6rem)", fontWeight: 800, letterSpacing: "-3px" }}>
-                  XO Boot<br /><span className="text-[#7b7bff]">Pneumatic</span>
+                  XO Boot<br /><span style={{ background: "linear-gradient(180deg, #e8e8e8 0%, #a8a8a8 30%, #d0d0d0 50%, #787878 65%, #c0c0c0 80%, #8a8a8a 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.9))" }}>Pneumatic</span>
                 </h1>
               </div>
-              <p className="hanim text-xs font-semibold uppercase tracking-widest text-[#7b7bff]" style={{ opacity: 0 }}>Better DME · Better Functionality · Better Outcomes</p>
+              <p className="hanim text-xs font-semibold uppercase tracking-widest" style={{ opacity: 0, background: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", filter: "drop-shadow(0 1px 4px rgba(0,0,0,0.9))", letterSpacing: "0.12em" }}>Better DME · Better Functionality · Better Outcomes</p>
               <p className="hanim text-base leading-relaxed text-white/55 border-l-[3px] border-[#7b7bff]/25 pl-3.5" style={{ opacity: 0 }}>
                 Engineered for superior strength, performance and comfort — strategically crafted to deliver exceptional clinical outcomes. The XO Boot is designed with Biomechanical Engineers and feedback from Orthopedic, Urgent Care and Podiatry clients.
               </p>
@@ -887,7 +888,10 @@ export default function XbootDetailPage() {
                     <span className="text-base font-semibold">Contact for Pricing</span> <ArrowRight className="ml-2 w-4 h-4" />
                   </div>
                 </a>
-                <a href="/products" className="text-sm font-semibold text-[#7b7bff]/45 hover:text-[#7b7bff] transition-colors flex items-center gap-1.5">
+                <a href="/products" className="text-sm font-semibold flex items-center gap-1.5 transition-all duration-300 group/ap"
+                  style={{ background: "linear-gradient(180deg, #e8e8e8 0%, #a8a8a8 30%, #d0d0d0 50%, #787878 65%, #c0c0c0 80%, #8a8a8a 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", filter: "drop-shadow(0 1px 4px rgba(0,0,0,0.9)) opacity(0.7)" }}
+                  onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background = "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)"; el.style.webkitBackgroundClip = "text"; el.style.webkitTextFillColor = "transparent"; el.style.backgroundClip = "text"; el.style.filter = "drop-shadow(0 1px 4px rgba(0,0,0,0.9))"; }}
+                  onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background = "linear-gradient(180deg, #e8e8e8 0%, #a8a8a8 30%, #d0d0d0 50%, #787878 65%, #c0c0c0 80%, #8a8a8a 100%)"; el.style.webkitBackgroundClip = "text"; el.style.webkitTextFillColor = "transparent"; el.style.backgroundClip = "text"; el.style.filter = "drop-shadow(0 1px 4px rgba(0,0,0,0.9)) opacity(0.7)"; }}>
                   All Products <ArrowRight className="w-3.5 h-3.5" />
                 </a>
               </div>
@@ -895,7 +899,7 @@ export default function XbootDetailPage() {
             <div ref={heroImgRef} className="hanim relative flex items-center justify-center" style={{ opacity: 0, height: 580, paddingLeft: 80, paddingBottom: 80 }}>
               <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at center 60%,rgba(17,17,132,0.35) 0%,transparent 65%)", filter: "blur(24px)" }} />
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={CLD.shoe} alt="Orthopedic Xboot"
+              <img src={CLD.XoBootHero} alt="XO Boot Pneumatic"
                 style={{ position: "relative", zIndex: 1, maxHeight: "100%", maxWidth: "90%", objectFit: "contain", filter: "drop-shadow(0 32px 64px rgba(17,17,132,0.50)) drop-shadow(0 4px 16px rgba(0,0,0,0.40))" }} />
             </div>
           </div>
@@ -925,7 +929,7 @@ export default function XbootDetailPage() {
                   <button key={i} onClick={() => setActiveFeature(i)}
                     className="w-full text-left rounded-2xl p-5 flex items-center gap-4 transition-all duration-300"
                     style={{
-                      background: on ? "linear-gradient(135deg,#0f0f7a,#111184)" : "#ffffff",
+                      background: on ? "linear-gradient(135deg,#0f0f7a,#1651D1)" : "#ffffff",
                       boxShadow: on ? "0 8px 28px rgba(17,17,132,0.28)" : "0 2px 12px rgba(0,0,0,0.06)",
                       minHeight: 72,
                     }}>
@@ -1030,16 +1034,14 @@ export default function XbootDetailPage() {
               {/* Component image cards */}
               <div className="grid grid-cols-2 gap-4 mt-2">
                 {[
-                  { img: "CLD.ezBulbValve", label: "EZ Adjust Bulb & Valve", desc: "Larger soft bulb fills air cells faster & easier. Intuitive, easy read inflate-deflate valve." },
-                  { img: "CLD.linerBladder", label: "Liner Compression System", desc: "Micro-fiber soft lining; less sweat retention. Unique air pressure cells for effective medial & lateral malleolar custom compression." },
+                  { img: CLD.xoEzBulb, label: "EZ Adjust Bulb & Valve", desc: "Larger soft bulb fills air cells faster & easier. Intuitive, easy read inflate-deflate valve." },
+                  { img: CLD.xoLiner, label: "Liner Compression System", desc: "Micro-fiber soft lining; less sweat retention. Unique air pressure cells for effective medial & lateral malleolar custom compression." },
                 ].map((c, i) => (
                   <div key={i} className="rounded-2xl overflow-hidden flex flex-col"
                     style={{ border: "1px solid rgba(17,17,132,0.09)", boxShadow: "0 2px 12px rgba(17,17,132,0.06)" }}>
-                    <div className="flex items-center justify-center bg-[#f4f6ff]" style={{ height: 140 }}>
-                      <div className="flex flex-col items-center gap-2 opacity-30">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#111184" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="3" /><circle cx="12" cy="12" r="4" /><line x1="3" y1="9" x2="21" y2="9" /></svg>
-                        <span className="text-[10px] text-[#111184] font-bold uppercase tracking-widest">Image Coming</span>
-                      </div>
+                    <div className="flex items-center justify-center bg-[#f4f6ff]" style={{ height: 140, overflow: "hidden" }}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={c.img} alt={c.label} className="w-full h-full object-contain" />
                     </div>
                     <div className="p-4">
                       <p className="text-xs font-bold text-[#111184] uppercase tracking-widest mb-1">{c.label}</p>
@@ -1053,7 +1055,7 @@ export default function XbootDetailPage() {
               <div className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none"
                 style={{ width: "80%", height: "28%", background: "radial-gradient(ellipse, rgba(17,17,132,0.22) 0%, transparent 70%)", filter: "blur(22px)" }} />
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={CLD.xbootBothSide} alt="Both boots side view"
+              <img src={CLD.xoRevolutionary} alt="Both boots side view"
                 style={{ maxHeight: 600, maxWidth: "110%", objectFit: "contain", position: "relative", zIndex: 1, filter: "drop-shadow(0 18px 48px rgba(17,17,132,0.24)) drop-shadow(0 4px 18px rgba(0,0,0,0.15))" }} />
             </div>
           </div>
@@ -1073,7 +1075,7 @@ export default function XbootDetailPage() {
               <div className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none"
                 style={{ width: "80%", height: "30%", background: "radial-gradient(ellipse, rgba(17,17,132,0.18) 0%, transparent 70%)", filter: "blur(20px)", zIndex: 0 }} />
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={CLD.xbootToeGuard} alt="Boot both sides"
+              <img src={CLD.bootProduct} alt="Boot both sides"
                 style={{ height: 420, maxWidth: "100%", objectFit: "contain", position: "relative", zIndex: 1, filter: "drop-shadow(0 20px 48px rgba(17,17,132,0.25)) drop-shadow(0 4px 18px rgba(0,0,0,0.15))" }} />
             </div>
             <div className="flex flex-col gap-5">
@@ -1087,16 +1089,14 @@ export default function XbootDetailPage() {
               {/* Component image cards */}
               <div className="grid grid-cols-2 gap-4 mt-2">
                 {[
-                  { label: "4 Strap System", desc: "Less straps (4) for easier application and more comfort. Unique full swivel D-rings, less irritation." },
-                  { label: "Easy Grip Tip", desc: "Unique rubber grip tips allow easy adjust for application and for patient re-fitting at home." },
+                  { img: CLD.xoStraps, label: "4 Strap System", desc: "Less straps (4) for easier application and more comfort. Unique full swivel D-rings, less irritation." },
+                  { img: CLD.xoGripTips, label: "Easy Grip Tip", desc: "Unique rubber grip tips allow easy adjust for application and for patient re-fitting at home." },
                 ].map((c, i) => (
                   <div key={i} className="rounded-2xl overflow-hidden flex flex-col"
                     style={{ border: "1px solid rgba(17,17,132,0.09)", boxShadow: "0 2px 12px rgba(17,17,132,0.06)" }}>
-                    <div className="flex items-center justify-center bg-[#f4f6ff]" style={{ height: 140 }}>
-                      <div className="flex flex-col items-center gap-2 opacity-30">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#111184" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="3" /><circle cx="12" cy="12" r="4" /><line x1="3" y1="9" x2="21" y2="9" /></svg>
-                        <span className="text-[10px] text-[#111184] font-bold uppercase tracking-widest">Image Coming</span>
-                      </div>
+                    <div className="flex items-center justify-center bg-[#f4f6ff]" style={{ height: 140, overflow: "hidden" }}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={c.img} alt={c.label} className="w-full h-full object-contain" />
                     </div>
                     <div className="p-4">
                       <p className="text-xs font-bold text-[#111184] uppercase tracking-widest mb-1">{c.label}</p>
@@ -1132,16 +1132,14 @@ export default function XbootDetailPage() {
               {/* Component image cards */}
               <div className="grid grid-cols-2 gap-4 mt-2">
                 {[
-                  { label: "Rocker Sole", desc: "Better absorbs heel shock & allows fluid gait. HQ rubber sole for traction; resists clogging from debris." },
-                  { label: "Inner Sole", desc: "Insole foam rubber composite for softer plantar surface; removable for easy washing." },
+                  { img: CLD.xoRocker, label: "Rocker Sole", desc: "Better absorbs heel shock & allows fluid gait. HQ rubber sole for traction; resists clogging from debris." },
+                  { img: CLD.xoInsole, label: "Inner Sole", desc: "Insole foam rubber composite for softer plantar surface; removable for easy washing." },
                 ].map((c, i) => (
                   <div key={i} className="rounded-2xl overflow-hidden flex flex-col"
                     style={{ border: "1px solid rgba(17,17,132,0.09)", boxShadow: "0 2px 12px rgba(17,17,132,0.06)" }}>
-                    <div className="flex items-center justify-center bg-[#f0f0f8]" style={{ height: 140 }}>
-                      <div className="flex flex-col items-center gap-2 opacity-30">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#111184" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="3" /><circle cx="12" cy="12" r="4" /><line x1="3" y1="9" x2="21" y2="9" /></svg>
-                        <span className="text-[10px] text-[#111184] font-bold uppercase tracking-widest">Image Coming</span>
-                      </div>
+                    <div className="flex items-center justify-center bg-[#f0f0f8]" style={{ height: 140, overflow: "hidden" }}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={c.img} alt={c.label} className="w-full h-full object-contain" />
                     </div>
                     <div className="p-4">
                       <p className="text-xs font-bold text-[#111184] uppercase tracking-widest mb-1">{c.label}</p>
@@ -1171,14 +1169,10 @@ export default function XbootDetailPage() {
             <div className="rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-10"
               style={{ background: "linear-gradient(135deg,rgba(22,81,209,0.18) 0%,rgba(6,10,35,0.9) 100%)", border: "1px solid rgba(91,155,255,0.18)" }}>
               {/* Icon */}
-              <div className="flex-shrink-0 w-20 h-20 rounded-2xl flex items-center justify-center"
-                style={{ background: "linear-gradient(135deg,#1651D1,#5b9bff)", boxShadow: "0 0 40px rgba(91,155,255,0.3)" }}>
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                  <path d="M12 8 C12 8 10 14 10 20 C10 30 16 36 20 36 C24 36 30 30 30 20 C30 14 28 8 28 8" stroke="white" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-                  <path d="M14 12 C14 12 13 17 13 21 C13 28 16 33 20 33 C24 33 27 28 27 21 C27 17 26 12 26 12" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-                  <path d="M10 18 L30 18" stroke="rgba(255,255,255,0.3)" strokeWidth="1" strokeDasharray="3 3" />
-                  <path d="M10 23 L30 23" stroke="rgba(255,255,255,0.3)" strokeWidth="1" strokeDasharray="3 3" />
-                </svg>
+              <div className="flex-shrink-0 w-28 h-28 rounded-2xl overflow-hidden"
+                style={{ boxShadow: "0 0 40px rgba(91,155,255,0.3)" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={CLD.sleeves} alt="AFO Undersleeve" className="w-full h-full object-cover" />
               </div>
               {/* Content */}
               <div className="flex-1 text-center md:text-left">

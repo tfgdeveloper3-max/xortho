@@ -2,7 +2,6 @@
 import { CLD } from "@/lib/cloudinary";
 
 import Image from "next/image";
-import MyButton from "../my-button";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ArrowRight } from "lucide-react";
@@ -130,36 +129,21 @@ export default function XbootSection() {
   const labelText = isPain ? "\u26a0 Pain Phase" : isHealing ? "\u2736 Recovery Phase" : "Pain \u2192 Recovery";
 
   return (
-    <section ref={sectionRef} className="relative w-full min-h-screen flex items-center bg-white" style={{ overflow: "hidden" }}>
-      <div className="absolute bottom-0 w-full h-[55%] md:top-0 md:right-0 md:w-[60%] md:h-full bg-[#F2F4F8] z-0 md:[clip-path:polygon(10%_0,100%_0,100%_100%,0%_100%)]" />
+    <section ref={sectionRef} className="relative w-full min-h-screen flex items-center bg-white overflow-hidden">
+      {/* Diagonal background same as strapping section */}
+      <div className="absolute inset-0 z-0 bg-white" />
+      <div className="absolute inset-0 z-0 bg-[#eeeef6]"
+        style={{ clipPath: "polygon(0 0, 38.5% 0, 54.1% 100%, 0 100%)" }} />
       <div ref={painGlowRef} className="absolute inset-0 pointer-events-none z-0"
         style={{ opacity: 0, background: "radial-gradient(ellipse at 30% 55%, rgba(255,80,0,0.18) 0%, rgba(255,80,0,0.06) 50%, transparent 75%)" }} />
       <div ref={healedGlowRef} className="absolute inset-0 pointer-events-none z-0"
         style={{ opacity: 0, background: "radial-gradient(ellipse at 30% 55%, rgba(34,197,94,0.18) 0%, rgba(34,197,94,0.06) 50%, transparent 75%)" }} />
 
-      <div className="container mx-auto px-5 md:px-[100px] relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-[45%_55%] gap-0 items-center">
-          <div className="relative w-full h-[550px] md:h-[750px]">
-            <div className="absolute inset-0">
-              <div className="absolute inset-0" style={{ zIndex: 0 }}>
-                <Image src={CLD.legNormal} alt="" fill className="object-contain object-bottom" priority />
-              </div>
-              <div ref={normalRef} className="absolute inset-0 opacity-0" style={{ zIndex: 1 }}>
-                <Image src={CLD.legNormal} alt="Normal leg" fill className="object-contain object-bottom" priority />
-              </div>
-              <div ref={painRef} className="absolute inset-0 opacity-0" style={{ zIndex: 2 }}>
-                <Image src={CLD.legPain} alt="Pain leg" fill className="object-contain object-bottom" />
-              </div>
-              <div ref={bootRef} className="absolute inset-0 opacity-0" style={{ zIndex: 4 }}>
-                <Image src={CLD.shoe} alt="XO Boot Pneumatic" fill className="object-contain object-bottom" />
-              </div>
-              <div ref={healedImgRef} className="absolute inset-0 opacity-0" style={{ zIndex: 3 }}>
-                <Image src={CLD.legHealed} alt="Healed leg" fill className="object-contain object-bottom" />
-              </div>
-            </div>
-          </div>
+      <div className="container mx-auto relative z-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
 
-          <div ref={contentRef} className="flex flex-col gap-6 pl-8 md:pl-16 pr-4 md:pr-10 py-16 md:py-20">
+          {/* LEFT — Content */}
+          <div ref={contentRef} className="flex flex-col gap-6 md:pl-10 py-20 relative z-20 px-5 md:pl-25 md:pr-10">
             <span className="text-xs uppercase tracking-widest font-semibold transition-all duration-500"
               style={{
                 color: labelColor,
@@ -168,12 +152,10 @@ export default function XbootSection() {
               }}>
               {labelText}
             </span>
-
             <h2 className="text-4xl md:text-5xl font-bold uppercase text-primary leading-tight">
               XO Boot <br /><span className="text-primary">Pneumatic</span>
             </h2>
-
-            <div className="flex flex-col text-base md:text-lg leading-relaxed gap-1 transition-all duration-500"
+            <div className="flex flex-col text-base md:text-xl leading-relaxed gap-1 transition-all duration-500"
               style={{
                 color: isPain ? "rgba(239,68,68,0.85)" : isHealing ? "rgba(34,197,94,0.85)" : "#4A5568",
                 textShadow: isPain ? "0 0 8px rgba(239,68,68,0.25)" : isHealing ? "0 0 8px rgba(34,197,94,0.25)" : "none",
@@ -194,9 +176,8 @@ export default function XbootSection() {
               <p>Revolutionary compartmentalized pneumatic compression with EZ adjust bulb and intuitive inflate/deflate valve.</p>
               <p>Real rocker sole supports natural gait from heel strike to toe off.</p>
               <p>Seamless micro-fiber liner — T-shirt soft, wicking, designed for patient comfort and compliance.</p>
-              <p>4-strap system with 360° swivel D-rings and easy grip rubber tips.</p>
+              <p>4-strap system with 360\u00b0 swivel D-rings and easy grip rubber tips.</p>
             </div>
-
             <div className="pt-4">
               <a href="/products/xboot" className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 md:p-2 relative overflow-hidden drop-shadow-2xl inline-block">
                 <div className="absolute top-0 left-[5%] group-hover:left-[80%] duration-300 transition-all h-full w-10 bg-[#1651D1]/50 rounded-[200%] blur" />
@@ -206,7 +187,6 @@ export default function XbootSection() {
                 </div>
               </a>
             </div>
-
             <div className="flex flex-col gap-2 mt-2">
               <div className="flex justify-between text-xs text-gray-400 uppercase tracking-widest">
                 <span style={{ color: isPain ? "#ef4444" : "#9ca3af" }}>Pain</span>
@@ -218,6 +198,28 @@ export default function XbootSection() {
               </div>
             </div>
           </div>
+
+          {/* RIGHT — Animated images */}
+          <div className="relative w-[98%] h-[380px] md:h-[620px] mx-auto md:mx-0">
+            <div className="absolute inset-0">
+              <div className="absolute inset-0" style={{ zIndex: 0 }}>
+                <Image src={CLD.legNormal} alt="" fill className="object-contain object-bottom" priority />
+              </div>
+              <div ref={normalRef} className="absolute inset-0 opacity-0" style={{ zIndex: 1 }}>
+                <Image src={CLD.legNormal} alt="Normal leg" fill className="object-contain object-bottom" priority />
+              </div>
+              <div ref={painRef} className="absolute inset-0 opacity-0" style={{ zIndex: 2 }}>
+                <Image src={CLD.legPain} alt="Pain leg" fill className="object-contain object-bottom" />
+              </div>
+              <div ref={bootRef} className="absolute inset-0 opacity-0" style={{ zIndex: 4 }}>
+                <Image src={CLD.shoe} alt="XO Boot Pneumatic" fill className="object-contain object-bottom" />
+              </div>
+              <div ref={healedImgRef} className="absolute inset-0 opacity-0" style={{ zIndex: 3 }}>
+                <Image src={CLD.legHealed} alt="Healed leg" fill className="object-contain object-bottom" />
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>

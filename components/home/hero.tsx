@@ -166,7 +166,7 @@ export default function Hero({ noAnimation = false, playAnimation = false }: Her
           {/* LEFT: Text + Buttons */}
           <div className="flex flex-col gap-3 px-4 sm:px-8 md:px-[100px] pt-20 flex-1 min-w-0">
             <span ref={line1Ref} className="block text-xs sm:text-sm font-bold uppercase"
-              style={{ opacity: 0, color: "#4a8fff", textShadow: "0 1px 3px rgba(200,215,240,0.4), 0 0 20px rgba(91,155,255,0.3)", letterSpacing: "0.3em" }}>
+              style={{ opacity: 0, background: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.9)) drop-shadow(0 0 16px rgba(22,81,209,0.4))", letterSpacing: "0.3em" }}>
               Orthopedic Solutions
             </span>
 
@@ -175,10 +175,10 @@ export default function Hero({ noAnimation = false, playAnimation = false }: Her
               <span ref={line2Ref} className="block" style={{ opacity: 0, color: "#f0f4ff", textShadow: "2px 2px 0px rgba(80,100,160,0.15), 0 4px 16px rgba(60,80,140,0.25)" }}>
                 Tender Loving Care,
               </span>
-              <span ref={line3Ref} className="block" style={{ opacity: 0, color: "#2c6fd4", textShadow: "1px 1px 0px rgba(180,200,240,0.3), 0 3px 12px rgba(40,80,180,0.2), 0 0 30px rgba(91,155,255,0.15)" }}>
+              <span ref={line3Ref} className="block" style={{ opacity: 0, background: "linear-gradient(180deg, #e8e8e8 0%, #a8a8a8 30%, #d0d0d0 50%, #787878 65%, #c0c0c0 80%, #8a8a8a 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.9)) drop-shadow(0 0 10px rgba(160,160,160,0.25))" }}>
                 Trust Loyalty
               </span>
-              <span ref={line4Ref} className="block" style={{ opacity: 0, color: "#f0f4ff", textShadow: "2px 2px 0px rgba(80,100,160,0.15), 0 4px 16px rgba(60,80,140,0.25)" }}>
+              <span ref={line4Ref} className="block" style={{ opacity: 0, background: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.9)) drop-shadow(0 0 16px rgba(22,81,209,0.4))" }}>
                 Commitment
               </span>
             </h1>
@@ -189,14 +189,15 @@ export default function Hero({ noAnimation = false, playAnimation = false }: Her
             </p>
 
             <div ref={btnRef} className="flex flex-col gap-3" style={{ opacity: 0 }}>
-              <a href="/products"
+              <button
+                onClick={scrollToProducts}
                 className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 relative overflow-hidden">
                 <div className="absolute top-0 left-[5%] group-hover:left-[80%] duration-300 transition-all h-full w-10 bg-[#1651D1]/50 rounded-[200%] blur" />
                 <div className="flex items-center bg-white rounded-full px-3 py-2 md:px-5 md:py-3 relative z-10">
-                  <span className="text-sm md:text-lg font-semibold">Explore Our Products</span>
+                  <span className="text-sm md:text-lg font-semibold">Explore Products</span>
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </div>
-              </a>
+              </button>
 
               <button onClick={() => setActivated((v) => !v)} className="group w-fit flex items-center gap-3 cursor-pointer">
                 <div className="relative flex-shrink-0 transition-all duration-400"

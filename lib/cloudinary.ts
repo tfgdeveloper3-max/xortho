@@ -61,4 +61,20 @@ export const CLD = {
     sectionhero: cldVideo("section_hero"),
     trust: cldVideo("Trust"),
     productPreview: cldVideo("Product-Preview"),
+
+
+    // Xboot real product images
+    xoStraps: cldImg("straps"),
+    xoCage: cldImg("cage"),
+    xoEzBulb: cldImg("EZ-Bulb"),
+    xoFrontView: cldImg("Front-View"),
+    xoFullBoot: cldImg("Full-Boot"),
+    xoGripTips: cldImg("Grip-Tips"),
+    xoInsole: cldImg("Insole"),
+    xoLiner: cldImg("Liner"),
+    xoRevolutionary: cldImg("Revolutionary"),
+    xoRocker: cldImg("Rocker"),
+    xoShell: cldImg("Shell"),
+    sleeves: cldImg("sleeves"),
+    XoBootHero: cldImg("XoBoot-Hero"),
 };
