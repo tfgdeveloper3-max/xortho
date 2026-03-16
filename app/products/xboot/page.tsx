@@ -40,12 +40,12 @@ const reviews = [
 ];
 
 const galleryImages = [
-  { src: CLD.xoStraps, label: "Both Sides" },
-  { src: CLD.xoRocker, label: "Toe Guard" },
-  { src: CLD.xoCage, label: "Bottom View" },
-  { src: CLD.xoFrontView, label: "Rocker Sole" },
-  { src: CLD.xoFullBoot, label: "Product View" },
-  { src: CLD.xoShell, label: "Blueprint" },
+  { src: CLD.xoStraps, label: "Straps" },
+  { src: CLD.xoRocker, label: "Rocker Sole" },
+  { src: CLD.xoCage, label: "Outer Cage" },
+  { src: CLD.xoFrontView, label: "Front View" },
+  { src: CLD.XoBootHero, label: "Full Boot" },
+  { src: CLD.xoShell, label: "Shell" },
 ];
 
 const tabContent: Record<string, React.ReactNode> = {
@@ -396,10 +396,43 @@ function PowerStepSection() {
         </div>
       </div>
       {zoom && (
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center" style={{ background: "rgba(0,0,0,0.85)" }} onClick={() => setZoom(false)}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={galleryImages[activeImg].src} alt="" className="max-w-[90vw] max-h-[90vh] object-contain rounded-2xl" />
-          <button className="absolute top-6 right-6 text-white text-3xl font-bold" onClick={() => setZoom(false)}>✕</button>
+        <div className="fixed inset-0 z-[99999] flex items-center justify-center"
+          style={{ background: "rgba(2,9,22,0.85)", backdropFilter: "blur(16px)" }}
+          onClick={() => { setZoom(false); setIsPlaying(false); }}>
+          <div className="relative rounded-3xl overflow-hidden flex items-center justify-center"
+            style={{
+              width: "min(90vw,800px)", height: "70vh",
+              background: "linear-gradient(145deg,rgba(6,10,35,0.96) 0%,rgba(12,22,65,0.92) 100%)",
+              border: "1px solid rgba(91,155,255,0.2)",
+              boxShadow: "0 0 80px rgba(22,81,209,0.3)",
+            }}
+            onClick={e => e.stopPropagation()}>
+            <button onClick={e => { e.stopPropagation(); setActiveImg(p => (p - 1 + TOTAL) % TOTAL); }}
+              className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full flex items-center justify-center"
+              style={{ background: "rgba(255,255,255,0.10)", border: "1px solid rgba(255,255,255,0.2)" }}>
+              <ArrowLeft className="w-4 h-4 text-white" />
+            </button>
+            <button onClick={e => { e.stopPropagation(); setActiveImg(p => (p + 1) % TOTAL); }}
+              className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full flex items-center justify-center"
+              style={{ background: "rgba(255,255,255,0.10)", border: "1px solid rgba(255,255,255,0.2)" }}>
+              <ArrowRight className="w-4 h-4 text-white" />
+            </button>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={galleryImages[activeImg].src} alt={galleryImages[activeImg].label}
+              style={{
+                maxWidth: "85%", maxHeight: "85%", objectFit: "contain",
+                filter: "drop-shadow(0 0 40px rgba(22,81,209,0.35))"
+              }} />
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest"
+              style={{ background: "rgba(22,81,209,0.25)", color: "rgba(255,255,255,0.8)", border: "1px solid rgba(91,155,255,0.2)" }}>
+              {galleryImages[activeImg].label}
+            </div>
+            <button className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center z-20"
+              style={{ background: "rgba(255,255,255,0.10)", border: "1px solid rgba(255,255,255,0.2)" }}
+              onClick={() => { setZoom(false); setIsPlaying(false); }}>
+              <span className="text-white text-sm font-bold">✕</span>
+            </button>
+          </div>
         </div>
       )}
     </section>
