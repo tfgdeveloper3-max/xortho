@@ -14,7 +14,7 @@ gsap.registerPlugin(ScrollTrigger);
 const BASE = "https://res.cloudinary.com/di7znsrrr";
 const CLD = {
     logo: `${BASE}/image/upload/logo`,
-    heroBg: `${BASE}/video/upload/Hero-Bg`,
+    sectionhero: `${BASE}/video/upload/section_hero`,
     XoBootHero: `${BASE}/image/upload/XoBoot-Hero`,
     kneeProduct2: `${BASE}/image/upload/knee-product-2`,
 };
@@ -81,24 +81,10 @@ export default function AboutPage() {
 
             {/* ══ HERO ══ */}
             <section ref={heroRef} className="relative w-full flex items-center overflow-hidden" style={{ minHeight: "100vh", background: "#020916" }}>
-                <video src={CLD.heroBg} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-25 pointer-events-none" style={{ zIndex: 0 }} />
+                <video src={CLD.sectionhero} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-25 pointer-events-none" style={{ zIndex: 0 }} />
                 <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "linear-gradient(135deg,rgba(2,9,22,0.92) 0%,rgba(2,9,22,0.55) 55%,transparent 100%)" }} />
                 <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, backgroundImage: "linear-gradient(rgba(17,17,132,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.04) 1px,transparent 1px)", backgroundSize: "52px 52px" }} />
                 <div className="absolute bottom-0 inset-x-0 h-32 pointer-events-none" style={{ zIndex: 2, background: "linear-gradient(to bottom,transparent,#020916)" }} />
-
-                {/* XO Boot right */}
-                <div className="hero-boot absolute pointer-events-none hidden lg:block" style={{ right: "-2%", bottom: "0%", zIndex: 2, opacity: 0 }}>
-                    <div style={{ position: "absolute", inset: -60, background: "radial-gradient(ellipse at center, rgba(22,81,209,0.3) 0%, transparent 70%)", filter: "blur(40px)" }} />
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={CLD.XoBootHero} alt="" style={{ position: "relative", zIndex: 1, width: 460, height: 460, objectFit: "contain", filter: "drop-shadow(0 0 60px rgba(22,81,209,0.6)) drop-shadow(0 0 20px rgba(91,155,255,0.4)) brightness(1.05)" }} />
-                </div>
-
-                {/* Knee upper center-right */}
-                <div className="hero-knee absolute pointer-events-none hidden xl:block" style={{ left: "36%", top: "10%", zIndex: 2, opacity: 0 }}>
-                    <div style={{ position: "absolute", inset: -40, background: "radial-gradient(ellipse at center, rgba(22,81,209,0.22) 0%, transparent 70%)", filter: "blur(30px)" }} />
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={CLD.kneeProduct2} alt="" style={{ position: "relative", zIndex: 1, width: 200, height: 200, objectFit: "contain", filter: "drop-shadow(0 0 40px rgba(22,81,209,0.5)) drop-shadow(0 0 16px rgba(91,155,255,0.3)) brightness(1.05)" }} />
-                </div>
 
                 <div className="relative z-20 w-full container mx-auto px-5 md:px-[100px]" style={{ paddingTop: "max(140px,14vh)", paddingBottom: 100 }}>
                     <div className="hanim mb-4" style={{ opacity: 0 }}>
