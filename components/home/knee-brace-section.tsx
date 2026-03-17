@@ -173,7 +173,7 @@ export default function KneeBraceSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
 
           {/* Image side */}
-          <div className="relative w-[98%] h-[380px] md:h-[620px] mx-auto md:mx-0">
+          <div className="relative w-[98%] h-[280px] md:h-[440px] mx-auto md:mx-0">
             {/* ✅ Base layer — always visible, prevents white background showing */}
             <div className="absolute inset-0" style={{ zIndex: 0 }}>
               <Image src={CLD.kneeNormal} alt="Normal knee base" fill className="object-contain object-center" priority />

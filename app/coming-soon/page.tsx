@@ -184,7 +184,7 @@ export default function ComingSoon() {
                     </div>
                 </div>
 
-                <div className="flex flex-col items-center gap-2">
+                {/* <div className="flex flex-col items-center gap-2">
                     <p className="text-[10px] uppercase tracking-[0.4em] font-bold" style={{ color: "rgba(255,255,255,0.18)" }}>Available Exclusively Through</p>
                     <div className="flex items-center gap-4 flex-wrap justify-center">
                         <span className="text-xs font-bold uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.35)" }}>TLC DME LLC</span>
@@ -202,7 +202,7 @@ export default function ComingSoon() {
                             tlcdme.com
                         </a>
                     </div>
-                </div>
+                </div> */}
             </div>
 
             <div className="absolute bottom-6 inset-x-0 flex justify-center pointer-events-none" style={{ zIndex: 3 }}>

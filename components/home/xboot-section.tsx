@@ -143,7 +143,7 @@ export default function XbootSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
 
           {/* LEFT — Content */}
-          <div ref={contentRef} className="flex flex-col gap-6 md:pl-10 py-20 relative z-20 px-5 md:pl-16 md:pr-10">
+          <div ref={contentRef} className="flex flex-col gap-6 md:pl-10 py-20 relative z-20 px-5 md:pl-16 md:pr-10" style={{paddingLeft: "100px"}}>
             <span className="text-[10px] uppercase tracking-[0.35em] font-bold block mb-1" style={{ color: "rgba(22,81,209,0.45)" }}>X-Ortho Product</span>
             <span className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-bold px-3 py-1.5 rounded-full transition-all duration-500 w-fit"
               style={{
@@ -151,6 +151,7 @@ export default function XbootSection() {
                 background: "transparent",
                 border: isPain ? "1px solid rgba(239,68,68,0.18)" : isHealing ? "1px solid rgba(34,197,94,0.18)" : "1px solid rgba(239,68,68,0.12)",
                 textShadow: isPain ? "0 0 8px rgba(239,68,68,0.4)" : isHealing ? "0 0 8px rgba(34,197,94,0.4)" : "none",
+                boxShadow: "none",
               }}>
               <span className="w-1.5 h-1.5 rounded-full animate-pulse flex-shrink-0"
                 style={{ background: labelColor, boxShadow: `0 0 8px ${labelColor}` }} />
@@ -206,7 +207,7 @@ export default function XbootSection() {
           </div>
 
           {/* RIGHT — Animated images */}
-          <div className="relative w-[98%] h-[380px] md:h-[620px] mx-auto md:mx-0">
+          <div className="relative w-[98%] h-[280px] md:h-[440px] mx-auto md:mx-0">
             <div className="absolute inset-0">
               <div className="absolute inset-0" style={{ zIndex: 0 }}>
                 <Image src={CLD.legNormal} alt="" fill className="object-contain object-bottom" priority />
