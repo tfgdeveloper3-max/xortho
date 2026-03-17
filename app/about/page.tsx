@@ -166,42 +166,6 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            {/* ══ VALUES ══ */}
-            <section className="relative w-full py-20 md:py-28 overflow-hidden" style={{ background: "#020916" }}>
-                <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.2), transparent)" }} />
-                <div className="container mx-auto px-5 md:px-[100px] relative z-10">
-                    <div className="sr text-center mb-14" style={{ opacity: 0 }}>
-                        <span className="text-[10px] uppercase tracking-[0.4em] font-bold block mb-3"
-                            style={{ backgroundImage: BLUE_GRAD, WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text", filter: BLUE_FILTER }}>
-                            The X-Ortho Standard
-                        </span>
-                        <h2 className="font-nexa uppercase text-[#f0f4ff] leading-tight" style={{ fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 800, letterSpacing: "-1px" }}>
-                            What We{" "}
-                            <span style={{ backgroundImage: BLUE_GRAD, WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text", filter: BLUE_FILTER }}>Stand For</span>
-                        </h2>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                        {values.map((v, i) => (
-                            <div key={i} className="sr group relative rounded-3xl p-8 flex flex-col gap-4 transition-all duration-500 hover:-translate-y-2"
-                                style={{ opacity: 0, background: "linear-gradient(145deg, rgba(8,12,42,0.96) 0%, rgba(14,24,72,0.88) 100%)", border: "1px solid rgba(91,155,255,0.12)", boxShadow: "0 4px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(91,155,255,0.08)" }}
-                                onMouseEnter={e => { const d = e.currentTarget as HTMLDivElement; d.style.boxShadow = "0 20px 60px rgba(22,81,209,0.2), 0 0 0 1px rgba(91,155,255,0.25)"; d.style.borderColor = "rgba(91,155,255,0.28)"; }}
-                                onMouseLeave={e => { const d = e.currentTarget as HTMLDivElement; d.style.boxShadow = "0 4px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(91,155,255,0.08)"; d.style.borderColor = "rgba(91,155,255,0.12)"; }}>
-                                <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                                    style={{ background: "radial-gradient(ellipse at 30% 30%, rgba(22,81,209,0.12) 0%, transparent 65%)" }} />
-                                <span className="text-[10px] uppercase tracking-[0.4em] font-bold" style={{ color: "rgba(91,155,255,0.5)" }}>0{i + 1}</span>
-                                <h3 className="font-nexa font-black uppercase text-white text-xl leading-tight">{v.title}</h3>
-                                <p className="text-white/45 text-sm leading-relaxed">{v.desc}</p>
-                                <div className="absolute bottom-0 left-8 right-8 h-px rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                                    style={{ background: "linear-gradient(90deg, transparent, rgba(22,81,209,0.8), transparent)" }} />
-                                <div className="absolute top-6 right-7 font-black text-[#ffffff04] select-none pointer-events-none" style={{ fontSize: "5rem", lineHeight: 1, fontFamily: "monospace" }}>
-                                    {String(i + 1).padStart(2, "0")}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
             {/* ══ OUR STORY TIMELINE ══ */}
             <section className="relative w-full py-20 md:py-28 overflow-hidden bg-white">
                 <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 30%, rgba(22,81,209,0.04) 0%, transparent 60%)" }} />
@@ -293,8 +257,44 @@ export default function AboutPage() {
                 </div>
             </section>
 
+            {/* ══ VALUES ══ */}
+            <section className="relative w-full mb-30 py-20 md:py-28 overflow-hidden" style={{ background: "#020916" }}>
+                <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.2), transparent)" }} />
+                <div className="container mx-auto px-5 md:px-[100px] relative z-10">
+                    <div className="sr text-center mb-14" style={{ opacity: 0 }}>
+                        <span className="text-[10px] uppercase tracking-[0.4em] font-bold block mb-3"
+                            style={{ backgroundImage: BLUE_GRAD, WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text", filter: BLUE_FILTER }}>
+                            The X-Ortho Standard
+                        </span>
+                        <h2 className="font-nexa uppercase text-[#f0f4ff] leading-tight" style={{ fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 800, letterSpacing: "-1px" }}>
+                            What We{" "}
+                            <span style={{ backgroundImage: BLUE_GRAD, WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text", filter: BLUE_FILTER }}>Stand For</span>
+                        </h2>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        {values.map((v, i) => (
+                            <div key={i} className="sr group relative rounded-3xl p-8 flex flex-col gap-4 transition-all duration-500 hover:-translate-y-2"
+                                style={{ opacity: 0, background: "linear-gradient(145deg, rgba(8,12,42,0.96) 0%, rgba(14,24,72,0.88) 100%)", border: "1px solid rgba(91,155,255,0.12)", boxShadow: "0 4px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(91,155,255,0.08)" }}
+                                onMouseEnter={e => { const d = e.currentTarget as HTMLDivElement; d.style.boxShadow = "0 20px 60px rgba(22,81,209,0.2), 0 0 0 1px rgba(91,155,255,0.25)"; d.style.borderColor = "rgba(91,155,255,0.28)"; }}
+                                onMouseLeave={e => { const d = e.currentTarget as HTMLDivElement; d.style.boxShadow = "0 4px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(91,155,255,0.08)"; d.style.borderColor = "rgba(91,155,255,0.12)"; }}>
+                                <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                                    style={{ background: "radial-gradient(ellipse at 30% 30%, rgba(22,81,209,0.12) 0%, transparent 65%)" }} />
+                                <span className="text-[10px] uppercase tracking-[0.4em] font-bold" style={{ color: "rgba(91,155,255,0.5)" }}>0{i + 1}</span>
+                                <h3 className="font-nexa font-black uppercase text-white text-xl leading-tight">{v.title}</h3>
+                                <p className="text-white/45 text-sm leading-relaxed">{v.desc}</p>
+                                <div className="absolute bottom-0 left-8 right-8 h-px rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                                    style={{ background: "linear-gradient(90deg, transparent, rgba(22,81,209,0.8), transparent)" }} />
+                                <div className="absolute top-6 right-7 font-black text-[#ffffff04] select-none pointer-events-none" style={{ fontSize: "5rem", lineHeight: 1, fontFamily: "monospace" }}>
+                                    {String(i + 1).padStart(2, "0")}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
             {/* ══ TLC DME INFO ══ */}
-            <section className="relative overflow-hidden mx-4 md:mx-8" style={{ background: "#020916", paddingTop: 80, paddingBottom: 80, borderRadius: "3rem", marginTop: 24 }}>
+            <section className="relative overflow-hidden mb-10 mx-4 md:mx-8" style={{ background: "#020916", paddingTop: 80, paddingBottom: 80, borderRadius: "3rem", marginTop: 24 }}>
                 <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(17,17,132,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.04) 1px,transparent 1px)", backgroundSize: "52px 52px" }} />
                 <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(22,81,209,0.10) 0%, transparent 65%)" }} />
                 <div className="container mx-auto px-5 md:px-[100px] relative z-10">
