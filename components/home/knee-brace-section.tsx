@@ -163,7 +163,7 @@ export default function KneeBraceSection() {
       className="relative w-full min-h-screen flex items-center bg-white"
       style={{ overflow: "hidden" }}
     >
-      <div className="absolute bottom-0 w-full h-[55%] md:top-0 md:right-0 md:w-[65%] md:h-full bg-[#F2F4F8] z-10 md:[clip-path:polygon(20%_0,100%_0,100%_100%,0%_100%)] pointer-events-none" />
+      <div className="absolute bottom-0 w-full h-[55%] md:top-0 md:right-0 md:w-[65%] md:h-full bg-[#F2F4F8] z-10 md:[clip-path:polygon(29%_0,100%_0,100%_100%,0%_100%)] pointer-events-none" />
       <div ref={painGlowRef} className="absolute inset-0 pointer-events-none z-0"
         style={{ opacity: 0, background: "radial-gradient(ellipse at 30% 55%, rgba(255,80,0,0.18) 0%, rgba(255,80,0,0.06) 50%, transparent 75%)" }} />
       <div ref={healedGlowRef} className="absolute inset-0 pointer-events-none z-0"
