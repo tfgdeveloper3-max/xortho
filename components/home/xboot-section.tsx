@@ -162,11 +162,7 @@ export default function XbootSection() {
               <br />
               <span style={{ background: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)", WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text", filter: "drop-shadow(0 1px 0 rgba(91,155,255,0.5)) drop-shadow(0 -1px 0 rgba(0,0,30,0.6)) drop-shadow(0 2px 4px rgba(0,0,0,0.3))" }}>Pneumatic</span>
             </h2>
-            <div className="flex flex-col text-base md:text-xl leading-relaxed gap-1 transition-all duration-500"
-              style={{
-                color: isPain ? "rgba(239,68,68,0.85)" : isHealing ? "rgba(34,197,94,0.85)" : "#4A5568",
-                textShadow: "none",
-              }}>
+            <div className="flex flex-col text-base md:text-xl leading-relaxed gap-1 transition-all duration-500">
               {isPain && (
                 <p className="text-sm font-semibold text-red-500 mb-2 flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse inline-block" />

@@ -221,10 +221,6 @@ export default function KneeBraceSection() {
 
             <div
               className="flex flex-col text-base md:text-xl leading-relaxed gap-1 transition-all duration-500"
-              style={{
-                color: isPain ? "rgba(239,68,68,0.85)" : isHealing ? "rgba(34,197,94,0.85)" : "#4A5568",
-                textShadow: "none",
-              }}
             >
               {isPain && (
                 <p className="text-sm font-semibold text-red-500 mb-2 flex items-center gap-2">
