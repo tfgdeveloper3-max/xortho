@@ -68,19 +68,19 @@ export default function WhyXOrtho() {
             {/* Grid */}
             <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(17,17,132,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.04) 1px,transparent 1px)", backgroundSize: "52px 52px" }} />
             {/* Ambient glow */}
-            <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 60%, rgba(22,81,209,0.10) 0%, transparent 65%)" }} />
+            <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 60%, rgba(22,81,209,0.16) 0%, transparent 65%)" }} />
 
             <div className="container mx-auto px-5 md:px-[100px] relative z-10">
                 {/* Header */}
                 <div className="why-header text-center mb-16" style={{ opacity: 0 }}>
                     <span className="text-[10px] uppercase tracking-[0.4em] font-bold block mb-3"
-                        style={{ background: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                        style={{ background: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)", WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text", filter: "drop-shadow(0 1px 0 rgba(91,155,255,0.5)) drop-shadow(0 -1px 0 rgba(0,0,30,0.6)) drop-shadow(0 2px 4px rgba(0,0,0,0.5))" }}>
                         The X-Ortho Standard
                     </span>
                     <h2 className="font-nexa uppercase text-[#f0f4ff] leading-tight"
-                        style={{ fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 800, letterSpacing: "-1px" }}>
+                        style={{ fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 800, letterSpacing: "-1px", filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.5))" }}>
                         Why{" "}
-                        <span style={{ background: "linear-gradient(180deg, #e8e8e8 0%, #a8a8a8 30%, #d0d0d0 50%, #787878 65%, #c0c0c0 80%, #8a8a8a 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                        <span style={{ background: "linear-gradient(180deg, #e8e8e8 0%, #a8a8a8 30%, #d0d0d0 50%, #787878 65%, #c0c0c0 80%, #8a8a8a 100%)", WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text", filter: "drop-shadow(0 1px 0 rgba(255,255,255,0.6)) drop-shadow(0 -1px 0 rgba(0,0,0,0.4)) drop-shadow(0 2px 4px rgba(0,0,0,0.5))" }}>
                             X-Ortho
                         </span>
                     </h2>
@@ -95,9 +95,9 @@ export default function WhyXOrtho() {
                         <div key={i} className="why-card group relative rounded-3xl p-8 flex flex-col gap-5 cursor-default transition-all duration-500 hover:-translate-y-2"
                             style={{
                                 opacity: 0,
-                                background: "linear-gradient(145deg, rgba(6,10,35,0.9) 0%, rgba(12,22,65,0.7) 100%)",
+                                background: "linear-gradient(145deg, rgba(8,12,42,0.96) 0%, rgba(14,24,72,0.88) 100%)",
                                 border: "1px solid rgba(91,155,255,0.12)",
-                                boxShadow: "0 4px 32px rgba(0,0,0,0.3)",
+                                boxShadow: "0 4px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(91,155,255,0.08)",
                             }}
                             onMouseEnter={e => {
                                 (e.currentTarget as HTMLDivElement).style.boxShadow = "0 20px 60px rgba(22,81,209,0.2), 0 0 0 1px rgba(91,155,255,0.25)";
@@ -117,7 +117,7 @@ export default function WhyXOrtho() {
                                 style={{ background: "rgba(22,81,209,0.15)", border: "1px solid rgba(91,155,255,0.2)", color: "#5b9bff" }}>
                                 {p.icon}
                                 <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-400"
-                                    style={{ background: "rgba(22,81,209,0.15)", boxShadow: "0 0 24px rgba(91,155,255,0.3)" }} />
+                                    style={{ background: "rgba(22,81,209,0.25)", boxShadow: "0 0 28px rgba(91,155,255,0.45)" }} />
                             </div>
 
                             {/* Content */}

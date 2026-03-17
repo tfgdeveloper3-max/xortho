@@ -5,7 +5,6 @@ import Image from "next/image";
 import MyButton from "../my-button";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { ArrowRight } from "lucide-react";
 
 export default function KneeBraceSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -164,7 +163,7 @@ export default function KneeBraceSection() {
       className="relative w-full min-h-screen flex items-center bg-white"
       style={{ overflow: "hidden" }}
     >
-      <div className="absolute bottom-0 w-full h-[55%] md:top-0 md:right-0 md:w-[65%] md:h-full bg-[#F2F4F8] z-10 md:[clip-path:polygon(29%_0,100%_0,100%_100%,0%_100%)] pointer-events-none" />
+      <div className="absolute bottom-0 w-full h-[55%] md:top-0 md:right-0 md:w-[65%] md:h-full bg-[#F2F4F8] z-10 md:[clip-path:polygon(20%_0,100%_0,100%_100%,0%_100%)] pointer-events-none" />
       <div ref={painGlowRef} className="absolute inset-0 pointer-events-none z-0"
         style={{ opacity: 0, background: "radial-gradient(ellipse at 30% 55%, rgba(255,80,0,0.18) 0%, rgba(255,80,0,0.06) 50%, transparent 75%)" }} />
       <div ref={healedGlowRef} className="absolute inset-0 pointer-events-none z-0"
@@ -201,33 +200,30 @@ export default function KneeBraceSection() {
             className="flex flex-col gap-6 md:pl-10 py-20 relative z-20 px-5 md:px-[100px]"
             style={{}}
           >
-            <span
-              className="text-xs uppercase tracking-widest font-semibold transition-all duration-500"
+            <span className="text-[10px] uppercase tracking-[0.35em] font-bold block mb-1" style={{ color: "rgba(22,81,209,0.45)" }}>X-Ortho Product</span>
+            <span className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-bold px-3 py-1.5 rounded-full transition-all duration-500 w-fit"
               style={{
                 color: labelColor,
-                textShadow: isPain
-                  ? "0 0 12px rgba(239,68,68,0.8), 0 0 24px rgba(239,68,68,0.4)"
-                  : isHealing
-                    ? "0 0 12px rgba(34,197,94,0.8), 0 0 24px rgba(34,197,94,0.4)"
-                    : "none",
-              }}
-            >
+                background: "transparent",
+                border: isPain ? "1px solid rgba(239,68,68,0.18)" : isHealing ? "1px solid rgba(34,197,94,0.18)" : "1px solid rgba(239,68,68,0.12)",
+                textShadow: isPain ? "0 0 8px rgba(239,68,68,0.4)" : isHealing ? "0 0 8px rgba(34,197,94,0.4)" : "none",
+              }}>
+              <span className="w-1.5 h-1.5 rounded-full animate-pulse flex-shrink-0"
+                style={{ background: labelColor }} />
               {labelText}
             </span>
 
-            <h2 className="text-4xl md:text-5xl font-bold uppercase text-primary leading-tight">
-              Knee Brace <br /><span className="text-primary">Osteoarthritis</span>
+            <h2 className="text-4xl md:text-5xl font-bold uppercase leading-tight font-nexa">
+              <span style={{ background: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)", WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text", filter: "drop-shadow(0 1px 0 rgba(91,155,255,0.5)) drop-shadow(0 -1px 0 rgba(0,0,30,0.6)) drop-shadow(0 2px 4px rgba(0,0,0,0.3))" }}>Knee Brace</span>
+              <br />
+              <span style={{ background: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)", WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text", filter: "drop-shadow(0 1px 0 rgba(91,155,255,0.5)) drop-shadow(0 -1px 0 rgba(0,0,30,0.6)) drop-shadow(0 2px 4px rgba(0,0,0,0.3))" }}>Osteoarthritis</span>
             </h2>
 
             <div
               className="flex flex-col text-base md:text-xl leading-relaxed gap-1 transition-all duration-500"
               style={{
                 color: isPain ? "rgba(239,68,68,0.85)" : isHealing ? "rgba(34,197,94,0.85)" : "#4A5568",
-                textShadow: isPain
-                  ? "0 0 8px rgba(239,68,68,0.25)"
-                  : isHealing
-                    ? "0 0 8px rgba(34,197,94,0.25)"
-                    : "none",
+                textShadow: "none",
               }}
             >
               {isPain && (
@@ -249,22 +245,14 @@ export default function KneeBraceSection() {
               <p>Optimal Gel Cryo Pad available for effective cold therapy.</p>
             </div>
 
-            <div className="pt-4">
-              <a href="/products/knee" className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 md:p-2 relative overflow-hidden drop-shadow-2xl inline-block">
-                <div className="absolute top-0 left-[5%] group-hover:left-[80%] duration-300 transition-all h-full w-10 bg-[#1651D1]/50 rounded-[200%] blur" />
-                <div className="flex items-center bg-white rounded-full px-4 py-2 md:px-5 md:py-3 relative z-10">
-                  <span className="text-base md:text-lg font-semibold">See Product Details</span>
-                  <ArrowRight className="ml-2 w-4 h-4 md:w-5 md:h-5" />
-                </div>
-              </a>
-            </div>
+            <div className="pt-4"><MyButton /></div>
 
             <div className="flex flex-col gap-2 mt-2">
               <div className="flex justify-between text-xs text-gray-400 uppercase tracking-widest">
                 <span style={{ color: isPain ? "#ef4444" : "#9ca3af" }}>Pain</span>
                 <span style={{ color: isHealing ? "#22c55e" : "#9ca3af" }}>Recovery</span>
               </div>
-              <div className="w-full h-1 bg-gray-200 rounded-full overflow-hidden">
+              <div className="w-full h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(17,17,132,0.08)" }}>
                 <div ref={indicatorRef} className="h-full rounded-full"
                   style={{ width: "0%", background: "linear-gradient(to right, #ef4444, #f97316, #eab308, #22c55e)" }} />
               </div>

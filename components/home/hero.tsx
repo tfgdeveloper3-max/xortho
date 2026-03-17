@@ -14,7 +14,7 @@ interface HeroProps {
 const products = [
   {
     id: "xboot", label: "Orthopedic\nXboot", abbr: "XB", short: "Boot", tag: "Orthopedic Boot",
-    image: CLD.XoBootHero, title: "Orthopedic XO Boot", subtitle: "Advanced Recovery Boot",
+    image: CLD.xoFullBoot, title: "Orthopedic Xboot", subtitle: "Advanced Recovery Boot",
     href: "/products/xboot",
     description: "An advanced pulley system allows for tailored compression. Low profile design fits comfortably under clothing — ideal for active patients or lifestyles.",
     features: ["Tailored compression pulley system", "Vertical stays for structural integrity", "Universal strap design", "Optimal Gel Cryo Pad for cold therapy"],
@@ -176,11 +176,27 @@ export default function Hero({ noAnimation = false, playAnimation = false }: Her
               <span ref={line2Ref} className="block" style={{ opacity: 0, color: "#f0f4ff", textShadow: "2px 2px 0px rgba(80,100,160,0.15), 0 4px 16px rgba(60,80,140,0.25)" }}>
                 Tender Loving Care,
               </span>
-              <span ref={line3Ref} className="block" style={{ background: "linear-gradient(180deg, #e8e8e8 0%, #a8a8a8 30%, #d0d0d0 50%, #787878 65%, #c0c0c0 80%, #8a8a8a 100%)", WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text", filter: "drop-shadow(0 1px 0 rgba(255,255,255,0.6)) drop-shadow(0 -1px 0 rgba(0,0,0,0.4)) drop-shadow(0 2px 4px rgba(0,0,0,0.5))" }}>
-                Trust Loyalty
+              <span ref={line3Ref} className="block" style={{ opacity: 0 }}>
+                <span style={{
+                  backgroundImage: "linear-gradient(180deg, #f0f0f0 0%, #b8b8b8 20%, #e8e8e8 35%, #787878 50%, #d0d0d0 65%, #909090 80%, #c8c8c8 100%)",
+                  WebkitBackgroundClip: "text" as string,
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  filter: "drop-shadow(0 1px 0 rgba(255,255,255,0.9)) drop-shadow(0 -1px 0 rgba(0,0,0,0.6)) drop-shadow(1px 0 0 rgba(255,255,255,0.3)) drop-shadow(-1px 0 0 rgba(0,0,0,0.3)) drop-shadow(0 2px 6px rgba(0,0,0,0.8))"
+                }}>
+                  Trust Loyalty
+                </span>
               </span>
-              <span ref={line4Ref} className="block" style={{ opacity: 0, background: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)", WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.9)) drop-shadow(0 0 16px rgba(22,81,209,0.4))" }}>
-                Commitment
+              <span ref={line4Ref} className="block" style={{ opacity: 0 }}>
+                <span style={{
+                  backgroundImage: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)",
+                  WebkitBackgroundClip: "text" as string,
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  filter: "drop-shadow(0 1px 0 rgba(91,155,255,0.5)) drop-shadow(0 -1px 0 rgba(0,0,30,0.6)) drop-shadow(0 2px 4px rgba(0,0,0,0.5))"
+                }}>
+                  Commitment
+                </span>
               </span>
             </h1>
 

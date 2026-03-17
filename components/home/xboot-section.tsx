@@ -130,10 +130,10 @@ export default function XbootSection() {
 
   return (
     <section ref={sectionRef} className="relative w-full min-h-screen flex items-center bg-white overflow-hidden">
-      {/* Diagonal background same as strapping section */}
       <div className="absolute inset-0 z-0 bg-white" />
       <div className="absolute inset-0 z-0 bg-[#eeeef6]"
         style={{ clipPath: "polygon(0 0, 38.5% 0, 54.1% 100%, 0 100%)" }} />
+      <div className="absolute inset-0 pointer-events-none z-1" style={{ background: "radial-gradient(ellipse at 20% 50%, rgba(22,81,209,0.04) 0%, transparent 55%)" }} />
       <div ref={painGlowRef} className="absolute inset-0 pointer-events-none z-0"
         style={{ opacity: 0, background: "radial-gradient(ellipse at 30% 55%, rgba(255,80,0,0.18) 0%, rgba(255,80,0,0.06) 50%, transparent 75%)" }} />
       <div ref={healedGlowRef} className="absolute inset-0 pointer-events-none z-0"
@@ -143,22 +143,28 @@ export default function XbootSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
 
           {/* LEFT — Content */}
-          <div ref={contentRef} className="flex flex-col gap-6 md:pl-10 py-20 relative z-20 px-5 md:pl-25 md:pr-10">
-            <span className="text-xs uppercase tracking-widest font-semibold transition-all duration-500"
+          <div ref={contentRef} className="flex flex-col gap-6 md:pl-10 py-20 relative z-20 px-5 md:pl-16 md:pr-10">
+            <span className="text-[10px] uppercase tracking-[0.35em] font-bold block mb-1" style={{ color: "rgba(22,81,209,0.45)" }}>X-Ortho Product</span>
+            <span className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-bold px-3 py-1.5 rounded-full transition-all duration-500 w-fit"
               style={{
                 color: labelColor,
-                textShadow: isPain ? "0 0 12px rgba(239,68,68,0.8), 0 0 24px rgba(239,68,68,0.4)"
-                  : isHealing ? "0 0 12px rgba(34,197,94,0.8), 0 0 24px rgba(34,197,94,0.4)" : "none",
+                background: "transparent",
+                border: isPain ? "1px solid rgba(239,68,68,0.18)" : isHealing ? "1px solid rgba(34,197,94,0.18)" : "1px solid rgba(239,68,68,0.12)",
+                textShadow: isPain ? "0 0 8px rgba(239,68,68,0.4)" : isHealing ? "0 0 8px rgba(34,197,94,0.4)" : "none",
               }}>
+              <span className="w-1.5 h-1.5 rounded-full animate-pulse flex-shrink-0"
+                style={{ background: labelColor, boxShadow: `0 0 8px ${labelColor}` }} />
               {labelText}
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold uppercase text-primary leading-tight">
-              XO Boot <br /><span className="text-primary">Pneumatic</span>
+            <h2 className="text-4xl md:text-5xl font-bold uppercase leading-tight font-nexa">
+              <span style={{ background: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)", WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text", filter: "drop-shadow(0 1px 0 rgba(91,155,255,0.5)) drop-shadow(0 -1px 0 rgba(0,0,30,0.6)) drop-shadow(0 2px 4px rgba(0,0,0,0.3))" }}>XO Boot</span>
+              <br />
+              <span style={{ background: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)", WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text", filter: "drop-shadow(0 1px 0 rgba(91,155,255,0.5)) drop-shadow(0 -1px 0 rgba(0,0,30,0.6)) drop-shadow(0 2px 4px rgba(0,0,0,0.3))" }}>Pneumatic</span>
             </h2>
             <div className="flex flex-col text-base md:text-xl leading-relaxed gap-1 transition-all duration-500"
               style={{
                 color: isPain ? "rgba(239,68,68,0.85)" : isHealing ? "rgba(34,197,94,0.85)" : "#4A5568",
-                textShadow: isPain ? "0 0 8px rgba(239,68,68,0.25)" : isHealing ? "0 0 8px rgba(34,197,94,0.25)" : "none",
+                textShadow: "none",
               }}>
               {isPain && (
                 <p className="text-sm font-semibold text-red-500 mb-2 flex items-center gap-2">
@@ -192,7 +198,7 @@ export default function XbootSection() {
                 <span style={{ color: isPain ? "#ef4444" : "#9ca3af" }}>Pain</span>
                 <span style={{ color: isHealing ? "#22c55e" : "#9ca3af" }}>Recovery</span>
               </div>
-              <div className="w-full h-1 bg-gray-200 rounded-full overflow-hidden">
+              <div className="w-full h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(17,17,132,0.08)" }}>
                 <div ref={indicatorRef} className="h-full rounded-full"
                   style={{ width: "0%", background: "linear-gradient(to right, #ef4444, #f97316, #eab308, #22c55e)" }} />
               </div>

@@ -4,7 +4,7 @@ import { CLD } from "@/lib/cloudinary";
 
 export default function Footer() {
     return (
-        <div className="px-3 pb-3">
+        <div className="px-3 pb-3 pt-10">
             <footer className="w-full bg-primary text-white py-20 rounded-2xl rounded-tr-[80px] md:rounded-tr-[150px]">
                 <div className="container mx-auto px-5 md:px-[100px]">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">

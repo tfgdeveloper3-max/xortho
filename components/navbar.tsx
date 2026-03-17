@@ -81,9 +81,9 @@ export default function Navbar() {
 
   const navLinks = [
     { label: "Home", href: "/", hasDropdown: false },
-    { label: "About", href: "#about", hasDropdown: false },
-    { label: "Products", href: "#products", hasDropdown: true },
-    { label: "Contact", href: "#contact", hasDropdown: false },
+    { label: "About", href: "/about", hasDropdown: false },
+    { label: "Products", href: "/products", hasDropdown: true },
+    { label: "Contact", href: "/contact", hasDropdown: false },
   ]
 
   return (
