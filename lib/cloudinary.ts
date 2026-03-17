@@ -31,7 +31,7 @@ export const CLD = {
     backHealed: cldImg("back-healed"),
 
     // Knee brace
-    kneeBrace: cldImg("knee-brace"),
+    kneeBrace: cldImg("knee-brace?_v=2"),
     kneeNormal: cldImg("knee-normal"),
     kneePain: cldImg("knee-pain"),
     kneeHealed: cldImg("knee-healed"),
