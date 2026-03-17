@@ -4,6 +4,8 @@ import { useState } from "react";
 import Head from "next/head";
 import XOAnimation from "@/components/xoAnimation";
 import Hero from "@/components/home/hero";
+import StatsStrip from "@/components/home/stats-strip";
+import WhyXOrtho from "@/components/home/why-xortho";
 import XbootSection from "@/components/home/xboot-section";
 // import BackSupportSection from "@/components/home/back-support-section";
 import KneeBraceSection from "@/components/home/knee-brace-section";
@@ -44,6 +46,13 @@ export default function Home() {
         </div>
         <SectionTransition onNavbarVisible={() => { }}>
           <Hero playAnimation={xoDone} />
+
+          {/* Stats strip — immediately after hero, dark bg */}
+          <StatsStrip />
+
+          {/* Why X-Ortho — dark section */}
+          <WhyXOrtho />
+
           <XbootSection />
           {/* <BackSupportSection /> */}
           <KneeBraceSection />
