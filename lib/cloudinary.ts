@@ -18,6 +18,11 @@ export const CLD = {
     logo: cldImg("logo"),
     footerLogo: cldImg("footer-logo"),
 
+    xoBootShort: cldImg("xo-boot-short"),
+    xoBootTall: cldImg("xo-boot-tall"),
+    xoBackSupport: cldImg("xo-back"),
+    xoKneeHinged: cldImg("xo-knee-hinged"),
+
     // Leg / Xboot
     shoe: cldImg("shoe"),
     legNormal: cldImg("leg-normal"),
