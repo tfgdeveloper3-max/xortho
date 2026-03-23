@@ -20,7 +20,6 @@ export default function ComingSoon() {
     const [submitted, setSubmitted] = useState(false);
 
     useEffect(() => {
-        // Scanline
         const scan = scanRef.current;
         if (scan) {
             gsap.fromTo(scan,
@@ -32,43 +31,39 @@ export default function ComingSoon() {
             );
         }
 
-        // Entrance animations
-        const tl = gsap.timeline({ delay: 0.2 });
+        const tl = gsap.timeline({ delay: 0.05 });
         tl.fromTo(".cs-logo",
-            { opacity: 0, y: -30, filter: "blur(10px)" },
-            { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.0, ease: "expo.out" }
+            { opacity: 0, y: -20, filter: "blur(6px)" },
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.4, ease: "expo.out" }
         );
         tl.fromTo(".cs-anim",
-            { opacity: 0, y: 30, filter: "blur(6px)" },
-            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9, ease: "expo.out", stagger: 0.1 },
-            "-=0.5"
+            { opacity: 0, y: 16, filter: "blur(4px)" },
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.35, ease: "expo.out", stagger: 0.04 },
+            "-=0.3"
         );
 
-        // Product images — slide in from sides
-        gsap.fromTo(".img-boot-short",
-            { opacity: 0, x: -60 },
-            { opacity: 1, x: 0, duration: 1.4, ease: "expo.out", delay: 0.8 }
-        );
-        gsap.fromTo(".img-boot-tall",
-            { opacity: 0, x: -60 },
-            { opacity: 1, x: 0, duration: 1.4, ease: "expo.out", delay: 1.1 }
-        );
-        gsap.fromTo(".img-back",
-            { opacity: 0, x: 60 },
-            { opacity: 1, x: 0, duration: 1.4, ease: "expo.out", delay: 0.9 }
-        );
-        gsap.fromTo(".img-knee",
-            { opacity: 0, x: 60 },
-            { opacity: 1, x: 0, duration: 1.4, ease: "expo.out", delay: 1.2 }
-        );
+        // Preload images first then animate
+        const imgSrcs = [CLD.xoBootShort, CLD.xoBootTall, CLD.xoBackSupport, CLD.xoKneeHinged];
+        let loaded = 0;
+        imgSrcs.forEach(src => {
+            const img = new window.Image();
+            img.onload = () => {
+                loaded++;
+                if (loaded === imgSrcs.length) {
+                    gsap.fromTo(".img-boot-short", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.4, ease: "power2.out", delay: 0 });
+                    gsap.fromTo(".img-boot-tall", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.4, ease: "power2.out", delay: 0.08 });
+                    gsap.fromTo(".img-back", { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 0.4, ease: "power2.out", delay: 0 });
+                    gsap.fromTo(".img-knee", { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 0.4, ease: "power2.out", delay: 0.08 });
+                }
+            };
+            img.src = src;
+        });
 
-        // Float animations
-        gsap.to(".img-boot-short", { y: -12, duration: 3.8, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 1.8 });
-        gsap.to(".img-boot-tall", { y: -10, duration: 4.2, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 2.2 });
-        gsap.to(".img-back", { y: -14, duration: 4.0, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 2.0 });
-        gsap.to(".img-knee", { y: -11, duration: 3.6, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 2.4 });
+        gsap.to(".img-boot-short", { y: -12, duration: 3.8, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 1.5 });
+        gsap.to(".img-boot-tall", { y: -10, duration: 4.2, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 1.8 });
+        gsap.to(".img-back", { y: -14, duration: 4.0, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 1.6 });
+        gsap.to(".img-knee", { y: -11, duration: 3.6, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 2.0 });
 
-        // Center glow pulse
         gsap.to(".center-glow", { opacity: 0.30, duration: 2.5, ease: "sine.inOut", yoyo: true, repeat: -1 });
         gsap.to(".bracket", { opacity: 0.7, duration: 1.8, ease: "sine.inOut", yoyo: true, repeat: -1, stagger: 0.4 });
     }, []);
@@ -81,41 +76,21 @@ export default function ComingSoon() {
     return (
         <main className="relative w-full min-h-screen flex flex-col overflow-hidden" style={{ background: "#020916" }}>
 
-            {/* ── Video bg ── */}
             <video src={CLD.heroBg} autoPlay loop muted playsInline
                 className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                 style={{ opacity: 0.20, zIndex: 0 }} />
 
-            {/* ── Grid ── */}
-            <div className="absolute inset-0 pointer-events-none" style={{
-                zIndex: 1,
-                backgroundImage: "linear-gradient(rgba(17,17,132,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.06) 1px,transparent 1px)",
-                backgroundSize: "52px 52px"
-            }} />
-
-            {/* ── Vignette ── */}
+            <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, backgroundImage: "linear-gradient(rgba(17,17,132,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.06) 1px,transparent 1px)", backgroundSize: "52px 52px" }} />
             <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "radial-gradient(ellipse at 50% 40%, transparent 18%, rgba(2,9,22,0.88) 100%)" }} />
             <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "linear-gradient(to bottom, rgba(2,9,22,0.5) 0%, transparent 20%, transparent 75%, rgba(2,9,22,0.7) 100%)" }} />
             <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "linear-gradient(to right, rgba(2,9,22,0.65) 0%, transparent 20%, transparent 80%, rgba(2,9,22,0.65) 100%)" }} />
+            <div className="center-glow absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "radial-gradient(ellipse at 50% 50%, rgba(22,81,209,0.38) 0%, rgba(91,155,255,0.10) 40%, transparent 65%)", opacity: 0.20 }} />
 
-            {/* ── Center glow ── */}
-            <div className="center-glow absolute inset-0 pointer-events-none" style={{
-                zIndex: 1,
-                background: "radial-gradient(ellipse at 50% 50%, rgba(22,81,209,0.38) 0%, rgba(91,155,255,0.10) 40%, transparent 65%)", opacity: 0.20
-            }} />
+            <div ref={scanRef} className="absolute inset-x-0 pointer-events-none" style={{ zIndex: 2, height: 1, background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.6) 30%, rgba(91,155,255,0.9) 50%, rgba(91,155,255,0.6) 70%, transparent)", boxShadow: "0 0 12px rgba(91,155,255,0.5)", opacity: 0 }} />
 
-            {/* ── Scanline ── */}
-            <div ref={scanRef} className="absolute inset-x-0 pointer-events-none" style={{
-                zIndex: 2, height: 1,
-                background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.6) 30%, rgba(91,155,255,0.9) 50%, rgba(91,155,255,0.6) 70%, transparent)",
-                boxShadow: "0 0 12px rgba(91,155,255,0.5)", opacity: 0
-            }} />
-
-            {/* ── Edge lines ── */}
             <div className="absolute top-0 inset-x-0 h-px pointer-events-none" style={{ zIndex: 3, background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.6), transparent)" }} />
             <div className="absolute bottom-0 inset-x-0 h-px pointer-events-none" style={{ zIndex: 3, background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.3), transparent)" }} />
 
-            {/* ── Corner brackets ── */}
             {(["tl", "tr", "bl", "br"] as const).map(c => (
                 <div key={c} className="bracket absolute pointer-events-none" style={{
                     zIndex: 3, width: 48, height: 48, opacity: 0.5,
@@ -129,50 +104,32 @@ export default function ComingSoon() {
                 }} />
             ))}
 
-            {/* ══ PRODUCT IMAGES — positioned absolutely ══ */}
-
             {/* Boot Short — upper left */}
-            <div className="img-boot-short absolute pointer-events-none hidden lg:block"
-                style={{ left: "3%", top: "8%", zIndex: 4, opacity: 0, width: 220 }}>
+            <div className="img-boot-short absolute pointer-events-none hidden lg:block" style={{ left: "3%", top: "8%", zIndex: 4, opacity: 0, width: 220 }}>
                 <div style={{ position: "absolute", inset: -40, background: "radial-gradient(ellipse at center, rgba(22,81,209,0.30) 0%, transparent 70%)", filter: "blur(30px)" }} />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={CLD.xoBootShort} alt="XO Boot Short" style={{
-                    position: "relative", zIndex: 1, width: "100%", objectFit: "contain",
-                    filter: "drop-shadow(0 0 40px rgba(22,81,209,0.7)) drop-shadow(0 0 16px rgba(91,155,255,0.5)) brightness(1.08)"
-                }} />
+                <img src={CLD.xoBootShort} alt="XO Boot Short" style={{ position: "relative", zIndex: 1, width: "100%", objectFit: "contain", filter: "drop-shadow(0 0 40px rgba(22,81,209,0.7)) drop-shadow(0 0 16px rgba(91,155,255,0.5)) brightness(1.08)" }} />
             </div>
 
             {/* Boot Tall — lower left */}
-            <div className="img-boot-tall absolute pointer-events-none hidden lg:block"
-                style={{ left: "1%", bottom: "5%", zIndex: 4, opacity: 0, width: 200 }}>
+            <div className="img-boot-tall absolute pointer-events-none hidden lg:block" style={{ left: "1%", bottom: "5%", zIndex: 4, opacity: 0, width: 200 }}>
                 <div style={{ position: "absolute", inset: -40, background: "radial-gradient(ellipse at center, rgba(22,81,209,0.28) 0%, transparent 70%)", filter: "blur(30px)" }} />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={CLD.xoBootTall} alt="XO Boot Tall" style={{
-                    position: "relative", zIndex: 1, width: "100%", objectFit: "contain",
-                    filter: "drop-shadow(0 0 40px rgba(22,81,209,0.65)) drop-shadow(0 0 16px rgba(91,155,255,0.45)) brightness(1.08)"
-                }} />
+                <img src={CLD.xoBootTall} alt="XO Boot Tall" style={{ position: "relative", zIndex: 1, width: "100%", objectFit: "contain", filter: "drop-shadow(0 0 40px rgba(22,81,209,0.65)) drop-shadow(0 0 16px rgba(91,155,255,0.45)) brightness(1.08)" }} />
             </div>
 
             {/* Back Support — upper right */}
-            <div className="img-back absolute pointer-events-none hidden lg:block"
-                style={{ right: "2%", top: "10%", zIndex: 4, opacity: 0, width: 240 }}>
+            <div className="img-back absolute pointer-events-none hidden lg:block" style={{ right: "2%", top: "10%", zIndex: 4, opacity: 0, width: 240 }}>
                 <div style={{ position: "absolute", inset: -40, background: "radial-gradient(ellipse at center, rgba(22,81,209,0.28) 0%, transparent 70%)", filter: "blur(30px)" }} />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={CLD.xoBackSupport} alt="XO Back Support" style={{
-                    position: "relative", zIndex: 1, width: "100%", objectFit: "contain",
-                    filter: "drop-shadow(0 0 40px rgba(22,81,209,0.65)) drop-shadow(0 0 16px rgba(91,155,255,0.45)) brightness(1.08)"
-                }} />
+                <img src={CLD.xoBackSupport} alt="XO Back Support" style={{ position: "relative", zIndex: 1, width: "100%", objectFit: "contain", filter: "drop-shadow(0 0 40px rgba(22,81,209,0.65)) drop-shadow(0 0 16px rgba(91,155,255,0.45)) brightness(1.08)" }} />
             </div>
 
             {/* Knee Support — lower right */}
-            <div className="img-knee absolute pointer-events-none hidden lg:block"
-                style={{ right: "3%", bottom: "6%", zIndex: 4, opacity: 0, width: 200 }}>
+            <div className="img-knee absolute pointer-events-none hidden lg:block" style={{ right: "3%", bottom: "6%", zIndex: 4, opacity: 0, width: 200 }}>
                 <div style={{ position: "absolute", inset: -40, background: "radial-gradient(ellipse at center, rgba(22,81,209,0.28) 0%, transparent 70%)", filter: "blur(30px)" }} />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={CLD.xoKneeHinged} alt="XO Knee Support" style={{
-                    position: "relative", zIndex: 1, width: "100%", objectFit: "contain",
-                    filter: "drop-shadow(0 0 40px rgba(22,81,209,0.65)) drop-shadow(0 0 16px rgba(91,155,255,0.45)) brightness(1.08)"
-                }} />
+                <img src={CLD.xoKneeHinged} alt="XO Knee Support" style={{ position: "relative", zIndex: 1, width: "100%", objectFit: "contain", filter: "drop-shadow(0 0 40px rgba(22,81,209,0.65)) drop-shadow(0 0 16px rgba(91,155,255,0.45)) brightness(1.08)" }} />
             </div>
 
             {/* ══ MAIN CENTER CONTENT ══ */}
@@ -189,11 +146,7 @@ export default function ComingSoon() {
 
                 {/* Badge */}
                 <div className="cs-anim inline-flex items-center gap-2.5 text-[10px] uppercase tracking-[0.45em] font-bold px-5 py-2 rounded-full"
-                    style={{
-                        opacity: 0, background: "linear-gradient(135deg, rgba(22,81,209,0.2), rgba(91,155,255,0.1))",
-                        border: "1px solid rgba(91,155,255,0.3)", color: "#5b9bff",
-                        boxShadow: "0 0 20px rgba(22,81,209,0.2), inset 0 1px 0 rgba(255,255,255,0.06)"
-                    }}>
+                    style={{ opacity: 0, background: "linear-gradient(135deg, rgba(22,81,209,0.2), rgba(91,155,255,0.1))", border: "1px solid rgba(91,155,255,0.3)", color: "#5b9bff", boxShadow: "0 0 20px rgba(22,81,209,0.2), inset 0 1px 0 rgba(255,255,255,0.06)" }}>
                     <span className="w-1.5 h-1.5 rounded-full bg-[#5b9bff] animate-pulse" style={{ boxShadow: "0 0 8px rgba(91,155,255,0.8)" }} />
                     X-Ortho · Coming Soon
                     <span className="w-1.5 h-1.5 rounded-full bg-[#5b9bff] animate-pulse" style={{ boxShadow: "0 0 8px rgba(91,155,255,0.8)" }} />
@@ -205,15 +158,13 @@ export default function ComingSoon() {
                     <span className="block" style={{
                         backgroundImage: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)",
                         WebkitBackgroundClip: "text" as const, WebkitTextFillColor: "transparent", backgroundClip: "text",
-                        filter: "drop-shadow(0 1px 0 rgba(91,155,255,0.5)) drop-shadow(0 -1px 0 rgba(0,0,30,0.6)) drop-shadow(0 2px 4px rgba(0,0,0,0.5))", paddingTop: "10px"
+                        filter: "drop-shadow(0 1px 0 rgba(91,155,255,0.5)) drop-shadow(0 -1px 0 rgba(0,0,30,0.6)) drop-shadow(0 2px 4px rgba(0,0,0,0.5))"
                     }}>X-Ortho</span>
                     <span className="block text-[#f0f4ff]" style={{ fontSize: "45%", letterSpacing: "-0.10px", fontWeight: 700, opacity: 0.85 }}>
                         <span className="block" style={{ marginBottom: "8px" }}>The Most Advanced.</span>
                         <span className="block" style={{
                             backgroundImage: "linear-gradient(180deg, #f0f0f0 0%, #b8b8b8 20%, #e8e8e8 35%, #787878 50%, #d0d0d0 65%, #909090 80%, #c8c8c8 100%)",
-                            WebkitBackgroundClip: "text" as string,
-                            WebkitTextFillColor: "transparent",
-                            backgroundClip: "text",
+                            WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text",
                             filter: "drop-shadow(0 1px 0 rgba(255,255,255,0.9)) drop-shadow(0 -1px 0 rgba(0,0,0,0.6)) drop-shadow(1px 0 0 rgba(255,255,255,0.3)) drop-shadow(-1px 0 0 rgba(0,0,0,0.3)) drop-shadow(0 2px 6px rgba(0,0,0,0.8))",
                             marginBottom: "8px"
                         }}>Most Sophisticated.</span>
@@ -248,7 +199,13 @@ export default function ComingSoon() {
                     ].map((item, i) => (
                         <div key={i} className="flex flex-col items-center gap-1.5 px-3 py-3.5 rounded-2xl relative overflow-hidden"
                             style={{ background: "linear-gradient(145deg, rgba(22,81,209,0.18) 0%, rgba(6,10,35,0.7) 100%)", border: "1px solid rgba(91,155,255,0.22)", boxShadow: "0 4px 20px rgba(22,81,209,0.15), inset 0 1px 0 rgba(91,155,255,0.12)", backdropFilter: "blur(12px)" }}>
-                            <span className="text-lg" style={{ filter: "drop-shadow(0 0 8px rgba(91,155,255,0.6))" }}>{item.icon}</span>
+                            <span className="text-lg" style={{
+                                backgroundImage: "linear-gradient(180deg, #f0f0f0 0%, #b8b8b8 20%, #e8e8e8 35%, #787878 50%, #d0d0d0 65%, #909090 80%, #c8c8c8 100%)",
+                                WebkitBackgroundClip: "text",
+                                WebkitTextFillColor: "transparent",
+                                backgroundClip: "text",
+                                filter: "drop-shadow(0 1px 0 rgba(255,255,255,0.9)) drop-shadow(0 -1px 0 rgba(0,0,0,0.6)) drop-shadow(1px 0 0 rgba(255,255,255,0.3)) drop-shadow(-1px 0 0 rgba(0,0,0,0.3)) drop-shadow(0 2px 6px rgba(0,0,0,0.8))"
+                            }}>{item.icon}</span>
                             <span className="text-[10px] uppercase tracking-wider font-bold text-white/60 leading-tight text-center">{item.t}</span>
                         </div>
                     ))}
@@ -276,15 +233,14 @@ export default function ComingSoon() {
                 </div>
             </div>
 
-            {/* ── Copyright ── */}
+            {/* Copyright */}
             <div className="absolute bottom-5 inset-x-0 flex justify-center pointer-events-none" style={{ zIndex: 3 }}>
                 <p className="text-[10px] uppercase tracking-[0.4em] font-bold" style={{
                     backgroundImage: "linear-gradient(180deg, #f0f0f0 0%, #b8b8b8 20%, #e8e8e8 35%, #787878 50%, #d0d0d0 65%, #909090 80%, #c8c8c8 100%)",
                     WebkitBackgroundClip: "text" as string,
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",
-                    filter: "drop-shadow(0 1px 0 rgba(255,255,255,0.9)) drop-shadow(0 -1px 0 rgba(0,0,0,0.6)) drop-shadow(1px 0 0 rgba(255,255,255,0.3)) drop-shadow(-1px 0 0 rgba(0,0,0,0.3)) drop-shadow(0 2px 6px rgba(0,0,0,0.8))",
-                    marginBottom: "8px"
+                    filter: "drop-shadow(0 1px 0 rgba(255,255,255,0.9)) drop-shadow(0 -1px 0 rgba(0,0,0,0.6)) drop-shadow(1px 0 0 rgba(255,255,255,0.3)) drop-shadow(-1px 0 0 rgba(0,0,0,0.3)) drop-shadow(0 2px 6px rgba(0,0,0,0.8))"
                 }}>
                     © {new Date().getFullYear()} X-Ortho · TLC DME LLC · Better DME · Better Outcomes
                 </p>
