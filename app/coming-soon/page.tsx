@@ -158,7 +158,7 @@ export default function ComingSoon() {
                     <span className="block" style={{
                         backgroundImage: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)",
                         WebkitBackgroundClip: "text" as const, WebkitTextFillColor: "transparent", backgroundClip: "text",
-                        filter: "drop-shadow(0 1px 0 rgba(91,155,255,0.5)) drop-shadow(0 -1px 0 rgba(0,0,30,0.6)) drop-shadow(0 2px 4px rgba(0,0,0,0.5))"
+                        filter: "drop-shadow(0 1px 0 rgba(91,155,255,0.5)) drop-shadow(0 -1px 0 rgba(0,0,30,0.6)) drop-shadow(0 2px 4px rgba(0,0,0,0.5))", paddingTop: "10px"
                     }}>X-Ortho</span>
                     <span className="block text-[#f0f4ff]" style={{ fontSize: "45%", letterSpacing: "-0.10px", fontWeight: 700, opacity: 0.85 }}>
                         <span className="block" style={{ marginBottom: "8px" }}>The Most Advanced.</span>
