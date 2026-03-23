@@ -7,7 +7,7 @@ import Image from "next/image";
 const BASE = "https://res.cloudinary.com/di7znsrrr";
 const CLD = {
     logo: `${BASE}/image/upload/logo`,
-    sectionhero: `${BASE}/video/upload/section_hero`,
+    heroBg: `${BASE}/video/upload/Hero-Bg`,
     xoBootShort: `${BASE}/image/upload/xo-boot-short`,
     xoBootTall: `${BASE}/image/upload/xo-boot-tall`,
     xoBackSupport: `${BASE}/image/upload/xo-back`,
@@ -16,7 +16,8 @@ const CLD = {
 
 export default function ComingSoon() {
     const scanRef = useRef<HTMLDivElement>(null);
-
+    const [email, setEmail] = useState("");
+    const [submitted, setSubmitted] = useState(false);
 
     useEffect(() => {
         // Scanline
@@ -72,11 +73,16 @@ export default function ComingSoon() {
         gsap.to(".bracket", { opacity: 0.7, duration: 1.8, ease: "sine.inOut", yoyo: true, repeat: -1, stagger: 0.4 });
     }, []);
 
+    const handleSubmit = () => {
+        if (!email) return;
+        setSubmitted(true);
+    };
+
     return (
         <main className="relative w-full min-h-screen flex flex-col overflow-hidden" style={{ background: "#020916" }}>
 
             {/* ── Video bg ── */}
-            <video src={CLD.sectionhero} autoPlay loop muted playsInline
+            <video src={CLD.heroBg} autoPlay loop muted playsInline
                 className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                 style={{ opacity: 0.20, zIndex: 0 }} />
 
@@ -194,35 +200,59 @@ export default function ComingSoon() {
                 </div>
 
                 {/* Headline */}
-                <h1 className="cs-anim font-nexa uppercase leading-[0.88]"
-                    style={{ opacity: 0, fontSize: "clamp(3rem,9vw,7rem)", fontWeight: 800, letterSpacing: "-3px" }}>
-                    <span className="block text-[#f0f4ff]"
-                        style={{ filter: "drop-shadow(0 4px 16px rgba(0,0,0,0.6))" }}>
-                        Something
-                    </span>
-                    <span className="block" style={{
-                        backgroundImage: "linear-gradient(180deg, #f0f0f0 0%, #b8b8b8 20%, #e8e8e8 35%, #787878 50%, #d0d0d0 65%, #909090 80%, #c8c8c8 100%)",
-                        WebkitBackgroundClip: "text" as const, WebkitTextFillColor: "transparent", backgroundClip: "text",
-                        filter: "drop-shadow(0 1px 0 rgba(255,255,255,0.6)) drop-shadow(0 -1px 0 rgba(0,0,0,0.5)) drop-shadow(0 4px 12px rgba(0,0,0,0.7))", paddingTop: "10px"
-                    }}>Big</span>
+                <h1 className="cs-anim font-nexa uppercase leading-[0.9]"
+                    style={{ opacity: 0, fontSize: "clamp(2.2rem,6vw,5rem)", fontWeight: 800, letterSpacing: "-2px" }}>
                     <span className="block" style={{
                         backgroundImage: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)",
                         WebkitBackgroundClip: "text" as const, WebkitTextFillColor: "transparent", backgroundClip: "text",
-                        filter: "drop-shadow(0 1px 0 rgba(91,155,255,0.6)) drop-shadow(0 -1px 0 rgba(0,0,30,0.7)) drop-shadow(0 4px 12px rgba(0,0,0,0.7))", paddingTop: "10px"
-                    }}>Is Coming.</span>
+                        filter: "drop-shadow(0 1px 0 rgba(91,155,255,0.5)) drop-shadow(0 -1px 0 rgba(0,0,30,0.6)) drop-shadow(0 2px 4px rgba(0,0,0,0.5))", paddingTop: "10px"
+                    }}>X-Ortho</span>
+                    <span className="block text-[#f0f4ff]" style={{ fontSize: "45%", letterSpacing: "-0.10px", fontWeight: 700, opacity: 0.85 }}>
+                        <span className="block" style={{ marginBottom: "8px" }}>The Most Advanced.</span>
+                        <span className="block" style={{
+                            backgroundImage: "linear-gradient(180deg, #f0f0f0 0%, #b8b8b8 20%, #e8e8e8 35%, #787878 50%, #d0d0d0 65%, #909090 80%, #c8c8c8 100%)",
+                            WebkitBackgroundClip: "text" as string,
+                            WebkitTextFillColor: "transparent",
+                            backgroundClip: "text",
+                            filter: "drop-shadow(0 1px 0 rgba(255,255,255,0.9)) drop-shadow(0 -1px 0 rgba(0,0,0,0.6)) drop-shadow(1px 0 0 rgba(255,255,255,0.3)) drop-shadow(-1px 0 0 rgba(0,0,0,0.3)) drop-shadow(0 2px 6px rgba(0,0,0,0.8))",
+                            marginBottom: "8px"
+                        }}>Most Sophisticated.</span>
+                        <span className="block">Most Anticipated.</span>
+                    </span>
                 </h1>
 
-                {/* Sean's tagline */}
-                <p className="cs-anim text-white/55 text-sm md:text-base leading-relaxed max-w-xl" style={{ opacity: 0 }}>
-                    <span className="text-white/75 font-semibold">Better Design. Better Quality. Better Functionality.<br />
-                        Better DME. Better Clinical &amp; Better Financial Outcomes.</span>
+                {/* Tagline pills */}
+                <div className="cs-anim flex flex-wrap justify-center gap-2 max-w-lg" style={{ opacity: 0 }}>
+                    {["Better Design", "Better Quality", "Better Functionality", "Better Clinical Outcomes", "Better Financial Outcomes", "Better DME"].map((t, i) => (
+                        <span key={i} className="text-[10px] uppercase tracking-wider font-bold px-3 py-1.5 rounded-full"
+                            style={{ background: "linear-gradient(135deg, rgba(22,81,209,0.20), rgba(6,10,35,0.7))", border: "1px solid rgba(91,155,255,0.22)", color: "rgba(91,155,255,0.85)", backdropFilter: "blur(8px)" }}>
+                            {t}
+                        </span>
+                    ))}
+                </div>
+
+                {/* Description */}
+                <p className="cs-anim text-white/50 text-sm leading-relaxed max-w-lg border-l-[3px] pl-4 text-left"
+                    style={{ opacity: 0, borderColor: "rgba(91,155,255,0.3)" }}>
+                    XO products were purposefully and intentionally crafted by Biomechanical Engineers with feedback from{" "}
+                    <span className="text-white/70 font-semibold">Orthopedic, Podiatric, and Urgent Care</span>{" "}
+                    Medical Professionals.
                 </p>
 
-                {/* Sean's description */}
-                <p className="cs-anim text-white/40 text-sm leading-relaxed max-w-lg border-l-[3px] pl-4 text-left"
-                    style={{ opacity: 0, borderColor: "rgba(91,155,255,0.3)" }}>
-                    Crafted on behalf of TLC DME with feedback from Orthopedic, Podiatric, Urgent Care, and Biomechanical Engineers. The most anticipated orthopedic products coming soon.
-                </p>
+                {/* 3 Value props */}
+                <div className="cs-anim grid grid-cols-3 gap-3 w-full max-w-lg" style={{ opacity: 0 }}>
+                    {[
+                        { icon: "⚕", t: "Improve Clinical Care" },
+                        { icon: "★", t: "Enhance Patient Satisfaction" },
+                        { icon: "↑", t: "Increase Ancillary Revenue" },
+                    ].map((item, i) => (
+                        <div key={i} className="flex flex-col items-center gap-1.5 px-3 py-3.5 rounded-2xl relative overflow-hidden"
+                            style={{ background: "linear-gradient(145deg, rgba(22,81,209,0.18) 0%, rgba(6,10,35,0.7) 100%)", border: "1px solid rgba(91,155,255,0.22)", boxShadow: "0 4px 20px rgba(22,81,209,0.15), inset 0 1px 0 rgba(91,155,255,0.12)", backdropFilter: "blur(12px)" }}>
+                            <span className="text-lg" style={{ filter: "drop-shadow(0 0 8px rgba(91,155,255,0.6))" }}>{item.icon}</span>
+                            <span className="text-[10px] uppercase tracking-wider font-bold text-white/60 leading-tight text-center">{item.t}</span>
+                        </div>
+                    ))}
+                </div>
 
                 {/* Divider */}
                 <div className="cs-anim w-full flex items-center gap-3 max-w-lg" style={{ opacity: 0 }}>
@@ -231,14 +261,30 @@ export default function ComingSoon() {
                     <div className="flex-1 h-px" style={{ background: "linear-gradient(to left, transparent, rgba(91,155,255,0.25))" }} />
                 </div>
 
+                {/* Contact CTA */}
+                <div className="cs-anim flex flex-col items-center gap-3 w-full max-w-lg" style={{ opacity: 0 }}>
+                    <p className="text-white/35 text-xs leading-relaxed text-center">
+                        Email <a href="mailto:info@xortho.com" className="text-[#5b9bff] hover:text-white transition-colors font-semibold">info@xortho.com</a>{" "}
+                        or call{" "}
+                        <a href="tel:8559678461" className="text-[#5b9bff] hover:text-white transition-colors font-semibold">855.XORTHO1</a>{" "}
+                        to receive a customized proposal including HCPCS coding, pricing, profit index, and samples.
+                    </p>
+                    <div className="flex items-center gap-4 flex-wrap justify-center">
+                        <span className="text-[10px] uppercase tracking-[0.35em] font-bold" style={{ color: "rgba(255,255,255,0.20)" }}>Available Exclusively Through</span>
+                        <span className="text-xs font-bold uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.35)" }}>TLC DME LLC</span>
+                    </div>
+                </div>
             </div>
 
             {/* ── Copyright ── */}
             <div className="absolute bottom-5 inset-x-0 flex justify-center pointer-events-none" style={{ zIndex: 3 }}>
                 <p className="text-[10px] uppercase tracking-[0.4em] font-bold" style={{
                     backgroundImage: "linear-gradient(180deg, #f0f0f0 0%, #b8b8b8 20%, #e8e8e8 35%, #787878 50%, #d0d0d0 65%, #909090 80%, #c8c8c8 100%)",
-                    WebkitBackgroundClip: "text" as const, WebkitTextFillColor: "transparent", backgroundClip: "text",
-                    filter: "drop-shadow(0 1px 0 rgba(255,255,255,0.6)) drop-shadow(0 -1px 0 rgba(0,0,0,0.5)) drop-shadow(0 4px 12px rgba(0,0,0,0.7))"
+                    WebkitBackgroundClip: "text" as string,
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                    filter: "drop-shadow(0 1px 0 rgba(255,255,255,0.9)) drop-shadow(0 -1px 0 rgba(0,0,0,0.6)) drop-shadow(1px 0 0 rgba(255,255,255,0.3)) drop-shadow(-1px 0 0 rgba(0,0,0,0.3)) drop-shadow(0 2px 6px rgba(0,0,0,0.8))",
+                    marginBottom: "8px"
                 }}>
                     © {new Date().getFullYear()} X-Ortho · TLC DME LLC · Better DME · Better Outcomes
                 </p>
