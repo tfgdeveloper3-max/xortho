@@ -246,7 +246,7 @@ export default function ComingSoon() {
 
                     {/* Logo big */}
                     <div className="cs-logo" style={{ opacity: 0 }}>
-                        <Image src={CLD.footerLogo} alt="X-Ortho" width={460} height={460} className="object-contain"
+                        <Image src={CLD.footerLogo} alt="X-Ortho" width={600} height={460} className="object-contain"
                             style={{ filter: "drop-shadow(0 0 50px rgba(91,155,255,0.6)) drop-shadow(0 0 100px rgba(22,81,209,0.35))" }} />
                     </div>
 
@@ -258,14 +258,14 @@ export default function ComingSoon() {
                     </div>
 
                     {/* Headline — "Most" lines */}
-                    <h1 className="cs-anim font-nexa uppercase text-center leading-tight"
+                    <h1 className="cs-anim font-nexa uppercase text-left leading-tight"
                         style={{ opacity: 0, fontSize: "clamp(1.6rem,4vw,3.5rem)", fontWeight: 800, letterSpacing: "-1.5px" }}>
-                        <span className="block text-white/90">The Most</span>
+                        <span className="block text-white/90">The </span>
                         <span className="block" style={{
                             backgroundImage: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)",
                             WebkitBackgroundClip: "text" as const, WebkitTextFillColor: "transparent", backgroundClip: "text",
                             filter: "drop-shadow(0 1px 0 rgba(91,155,255,0.5)) drop-shadow(0 -1px 0 rgba(0,0,30,0.6))"
-                        }}>Advanced.</span>
+                        }}>Most Advanced.</span>
                         <span className="block" style={{
                             backgroundImage: "linear-gradient(180deg, #f0f0f0 0%, #b8b8b8 20%, #e8e8e8 35%, #787878 50%, #d0d0d0 65%, #909090 80%, #c8c8c8 100%)",
                             WebkitBackgroundClip: "text" as const, WebkitTextFillColor: "transparent", backgroundClip: "text",
