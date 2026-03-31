@@ -1,18 +1,171 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import gsap from "gsap";
 import Image from "next/image";
 
 const BASE = "https://res.cloudinary.com/di7znsrrr";
 const CLD = {
-    logo: `${BASE}/image/upload/logo`,
-    heroBg: `${BASE}/video/upload/Hero-Bg`,
+    footerLogo: `${BASE}/image/upload/footer-logo`,
+    sectionhero: `${BASE}/video/upload/section_hero`,
     xoBootShort: `${BASE}/image/upload/xo-boot-short`,
     xoBootTall: `${BASE}/image/upload/xo-boot-tall`,
     xoBackSupport: `${BASE}/image/upload/xo-back`,
     xoKneeHinged: `${BASE}/image/upload/xo-knee-hinged`,
 };
+
+// Left side morphing images
+const MORPH_IMAGES = [
+    { src: CLD.xoBootShort, label: "XO Boot Short" },
+    { src: CLD.xoBootTall, label: "XO Boot Tall" },
+    { src: CLD.xoKneeHinged, label: "XO Knee Support" },
+    { src: CLD.xoBackSupport, label: "XO Back Support" },
+];
+
+// 3D Viewer for right side
+function Viewer3D() {
+    const imgRef = useRef<HTMLImageElement>(null);
+    const stageRef = useRef<HTMLDivElement>(null);
+    const rotX = useRef(0);
+    const rotY = useRef(0);
+    const velX = useRef(0);
+    const velY = useRef(0);
+    const dragging = useRef(false);
+    const lastPos = useRef({ x: 0, y: 0 });
+    const rafRef = useRef<number>(0);
+
+    const applyTransform = useCallback(() => {
+        if (!imgRef.current) return;
+        imgRef.current.style.transform = `rotateX(${rotX.current.toFixed(2)}deg) rotateY(${rotY.current.toFixed(2)}deg)`;
+    }, []);
+
+    const inertia = useCallback(() => {
+        velX.current *= 0.88;
+        velY.current *= 0.88;
+        rotY.current += velX.current;
+        rotX.current = Math.max(-40, Math.min(40, rotX.current + velY.current));
+        applyTransform();
+        if (Math.abs(velX.current) > 0.01 || Math.abs(velY.current) > 0.01)
+            rafRef.current = requestAnimationFrame(inertia);
+    }, [applyTransform]);
+
+    const startDrag = (x: number, y: number) => {
+        dragging.current = true;
+        lastPos.current = { x, y };
+        velX.current = 0; velY.current = 0;
+        cancelAnimationFrame(rafRef.current);
+        if (stageRef.current) stageRef.current.style.cursor = "grabbing";
+    };
+    const moveDrag = (x: number, y: number) => {
+        if (!dragging.current) return;
+        velX.current = (x - lastPos.current.x) * 0.4;
+        velY.current = -(y - lastPos.current.y) * 0.4;
+        rotY.current += velX.current;
+        rotX.current = Math.max(-40, Math.min(40, rotX.current + velY.current));
+        lastPos.current = { x, y };
+        applyTransform();
+    };
+    const endDrag = () => {
+        dragging.current = false;
+        if (stageRef.current) stageRef.current.style.cursor = "grab";
+        rafRef.current = requestAnimationFrame(inertia);
+    };
+
+    // Auto slow rotate
+    useEffect(() => {
+        let id: number;
+        const autoRotate = () => {
+            if (!dragging.current) {
+                rotY.current += 0.3;
+                applyTransform();
+            }
+            id = requestAnimationFrame(autoRotate);
+        };
+        id = requestAnimationFrame(autoRotate);
+        return () => { cancelAnimationFrame(id); cancelAnimationFrame(rafRef.current); };
+    }, [applyTransform]);
+
+    return (
+        <div ref={stageRef}
+            className="relative w-full h-full flex items-center justify-center rounded-3xl overflow-hidden select-none"
+            style={{
+                cursor: "grab", perspective: "900px",
+                background: "linear-gradient(145deg, rgba(6,10,35,0.8) 0%, rgba(12,22,65,0.6) 100%)",
+                border: "1px solid rgba(91,155,255,0.15)",
+                boxShadow: "0 0 60px rgba(22,81,209,0.15), inset 0 1px 0 rgba(255,255,255,0.04)"
+            }}
+            onMouseDown={e => startDrag(e.clientX, e.clientY)}
+            onMouseMove={e => moveDrag(e.clientX, e.clientY)}
+            onMouseUp={endDrag} onMouseLeave={endDrag}
+            onTouchStart={e => startDrag(e.touches[0].clientX, e.touches[0].clientY)}
+            onTouchMove={e => moveDrag(e.touches[0].clientX, e.touches[0].clientY)}
+            onTouchEnd={endDrag}>
+            {/* Glow */}
+            <div className="absolute inset-0 pointer-events-none"
+                style={{ background: "radial-gradient(ellipse at center bottom, rgba(22,81,209,0.25) 0%, transparent 65%)" }} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img ref={imgRef} src={CLD.xoBootTall} alt="XO Boot Tall 3D"
+                draggable={false}
+                style={{
+                    width: "82%", maxHeight: "82%", objectFit: "contain",
+                    transformStyle: "preserve-3d", willChange: "transform",
+                    filter: "drop-shadow(0 20px 60px rgba(22,81,209,0.55)) drop-shadow(0 4px 20px rgba(0,0,0,0.5))"
+                }} />
+            <div className="absolute bottom-4 inset-x-0 text-center pointer-events-none">
+                <span className="text-[10px] uppercase tracking-widest font-bold" style={{ color: "rgba(91,155,255,0.4)" }}>
+                    Drag to rotate
+                </span>
+            </div>
+        </div>
+    );
+}
+
+// Left morphing carousel
+function MorphCarousel() {
+    const [current, setCurrent] = useState(0);
+    const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+    useEffect(() => {
+        intervalRef.current = setInterval(() => {
+            setCurrent(p => (p + 1) % MORPH_IMAGES.length);
+        }, 2500);
+        return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+    }, []);
+
+    return (
+        <div className="relative w-full h-full flex flex-col items-center justify-center gap-5">
+            {/* Image display */}
+            <div className="relative w-full flex-1 flex items-center justify-center" style={{ minHeight: 0 }}>
+                {MORPH_IMAGES.map((img, i) => (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img key={i} src={img.src} alt={img.label}
+                        style={{
+                            position: "absolute", width: "85%", maxHeight: "85%", objectFit: "contain",
+                            opacity: current === i ? 1 : 0,
+                            transform: current === i ? "scale(1) translateY(0)" : "scale(0.92) translateY(16px)",
+                            transition: "opacity 0.6s ease, transform 0.6s ease",
+                            filter: "drop-shadow(0 20px 50px rgba(22,81,209,0.5)) drop-shadow(0 4px 16px rgba(0,0,0,0.4))",
+                        }} />
+                ))}
+            </div>
+            {/* Label */}
+            <p className="text-[11px] uppercase tracking-[0.35em] font-bold" style={{ color: "rgba(91,155,255,0.6)" }}>
+                {MORPH_IMAGES[current].label}
+            </p>
+            {/* Dots */}
+            <div className="flex items-center gap-2">
+                {MORPH_IMAGES.map((_, i) => (
+                    <button key={i} onClick={() => setCurrent(i)}
+                        className="rounded-full transition-all duration-300"
+                        style={{
+                            width: current === i ? 20 : 6, height: 6,
+                            background: current === i ? "linear-gradient(90deg,#1651D1,#5b9bff)" : "rgba(255,255,255,0.2)"
+                        }} />
+                ))}
+            </div>
+        </div>
+    );
+}
 
 export default function ComingSoon() {
     const scanRef = useRef<HTMLDivElement>(null);
@@ -30,63 +183,44 @@ export default function ComingSoon() {
                 }
             );
         }
-
         const tl = gsap.timeline({ delay: 0.05 });
-        tl.fromTo(".cs-logo",
-            { opacity: 0, y: -20, filter: "blur(6px)" },
-            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.4, ease: "expo.out" }
-        );
-        tl.fromTo(".cs-anim",
-            { opacity: 0, y: 16, filter: "blur(4px)" },
-            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.35, ease: "expo.out", stagger: 0.04 },
-            "-=0.3"
-        );
-
-        // Preload images first then animate
-        const imgSrcs = [CLD.xoBootShort, CLD.xoBootTall, CLD.xoBackSupport, CLD.xoKneeHinged];
-        let loaded = 0;
-        imgSrcs.forEach(src => {
-            const img = new window.Image();
-            img.onload = () => {
-                loaded++;
-                if (loaded === imgSrcs.length) {
-                    gsap.fromTo(".img-boot-short", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.4, ease: "power2.out", delay: 0 });
-                    gsap.fromTo(".img-boot-tall", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.4, ease: "power2.out", delay: 0.08 });
-                    gsap.fromTo(".img-back", { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 0.4, ease: "power2.out", delay: 0 });
-                    gsap.fromTo(".img-knee", { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 0.4, ease: "power2.out", delay: 0.08 });
-                }
-            };
-            img.src = src;
-        });
-
-        gsap.to(".img-boot-short", { y: -12, duration: 3.8, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 1.5 });
-        gsap.to(".img-boot-tall", { y: -10, duration: 4.2, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 1.8 });
-        gsap.to(".img-back", { y: -14, duration: 4.0, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 1.6 });
-        gsap.to(".img-knee", { y: -11, duration: 3.6, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 2.0 });
+        tl.fromTo(".cs-logo", { opacity: 0, y: -20, filter: "blur(6px)" },
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.4, ease: "expo.out" });
+        tl.fromTo(".cs-anim", { opacity: 0, y: 16, filter: "blur(4px)" },
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.35, ease: "expo.out", stagger: 0.04 }, "-=0.3");
+        tl.fromTo(".cs-panels", { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, "-=0.2");
 
         gsap.to(".center-glow", { opacity: 0.30, duration: 2.5, ease: "sine.inOut", yoyo: true, repeat: -1 });
         gsap.to(".bracket", { opacity: 0.7, duration: 1.8, ease: "sine.inOut", yoyo: true, repeat: -1, stagger: 0.4 });
     }, []);
 
-    const handleSubmit = () => {
-        if (!email) return;
-        setSubmitted(true);
-    };
-
     return (
         <main className="relative w-full min-h-screen flex flex-col overflow-hidden" style={{ background: "#020916" }}>
 
-            <video src={CLD.heroBg} autoPlay loop muted playsInline
+            <video src={CLD.sectionhero} autoPlay loop muted playsInline
                 className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-                style={{ opacity: 0.20, zIndex: 0 }} />
+                style={{ opacity: 0.15, zIndex: 0 }} />
 
-            <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, backgroundImage: "linear-gradient(rgba(17,17,132,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.06) 1px,transparent 1px)", backgroundSize: "52px 52px" }} />
-            <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "radial-gradient(ellipse at 50% 40%, transparent 18%, rgba(2,9,22,0.88) 100%)" }} />
-            <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "linear-gradient(to bottom, rgba(2,9,22,0.5) 0%, transparent 20%, transparent 75%, rgba(2,9,22,0.7) 100%)" }} />
-            <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "linear-gradient(to right, rgba(2,9,22,0.65) 0%, transparent 20%, transparent 80%, rgba(2,9,22,0.65) 100%)" }} />
-            <div className="center-glow absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "radial-gradient(ellipse at 50% 50%, rgba(22,81,209,0.38) 0%, rgba(91,155,255,0.10) 40%, transparent 65%)", opacity: 0.20 }} />
+            <div className="absolute inset-0 pointer-events-none" style={{
+                zIndex: 1,
+                backgroundImage: "linear-gradient(rgba(17,17,132,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.05) 1px,transparent 1px)",
+                backgroundSize: "52px 52px"
+            }} />
+            <div className="absolute inset-0 pointer-events-none" style={{
+                zIndex: 1,
+                background: "radial-gradient(ellipse at 50% 40%, transparent 25%, rgba(2,9,22,0.85) 100%)"
+            }} />
+            <div className="center-glow absolute inset-0 pointer-events-none" style={{
+                zIndex: 1,
+                background: "radial-gradient(ellipse at 50% 50%, rgba(22,81,209,0.30) 0%, transparent 60%)", opacity: 0.18
+            }} />
 
-            <div ref={scanRef} className="absolute inset-x-0 pointer-events-none" style={{ zIndex: 2, height: 1, background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.6) 30%, rgba(91,155,255,0.9) 50%, rgba(91,155,255,0.6) 70%, transparent)", boxShadow: "0 0 12px rgba(91,155,255,0.5)", opacity: 0 }} />
+            <div ref={scanRef} className="absolute inset-x-0 pointer-events-none" style={{
+                zIndex: 2, height: 1,
+                background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.6) 30%, rgba(91,155,255,0.9) 50%, rgba(91,155,255,0.6) 70%, transparent)",
+                boxShadow: "0 0 12px rgba(91,155,255,0.5)", opacity: 0
+            }} />
 
             <div className="absolute top-0 inset-x-0 h-px pointer-events-none" style={{ zIndex: 3, background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.6), transparent)" }} />
             <div className="absolute bottom-0 inset-x-0 h-px pointer-events-none" style={{ zIndex: 3, background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.3), transparent)" }} />
@@ -104,146 +238,135 @@ export default function ComingSoon() {
                 }} />
             ))}
 
-            {/* Boot Short — upper left */}
-            <div className="img-boot-short absolute pointer-events-none hidden lg:block" style={{ left: "3%", top: "8%", zIndex: 4, opacity: 0, width: 220 }}>
-                <div style={{ position: "absolute", inset: -40, background: "radial-gradient(ellipse at center, rgba(22,81,209,0.30) 0%, transparent 70%)", filter: "blur(30px)" }} />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={CLD.xoBootShort} alt="XO Boot Short" style={{ position: "relative", zIndex: 1, width: "100%", objectFit: "contain", filter: "drop-shadow(0 0 40px rgba(22,81,209,0.7)) drop-shadow(0 0 16px rgba(91,155,255,0.5)) brightness(1.08)" }} />
-            </div>
+            {/* ══ LAYOUT ══ */}
+            <div className="relative z-10 flex flex-col w-full flex-1 px-6 md:px-12 py-8 gap-6" style={{ minHeight: "100vh" }}>
 
-            {/* Boot Tall — lower left */}
-            <div className="img-boot-tall absolute pointer-events-none hidden lg:block" style={{ left: "1%", bottom: "5%", zIndex: 4, opacity: 0, width: 200 }}>
-                <div style={{ position: "absolute", inset: -40, background: "radial-gradient(ellipse at center, rgba(22,81,209,0.28) 0%, transparent 70%)", filter: "blur(30px)" }} />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={CLD.xoBootTall} alt="XO Boot Tall" style={{ position: "relative", zIndex: 1, width: "100%", objectFit: "contain", filter: "drop-shadow(0 0 40px rgba(22,81,209,0.65)) drop-shadow(0 0 16px rgba(91,155,255,0.45)) brightness(1.08)" }} />
-            </div>
+                {/* TOP — Logo + Text center */}
+                <div className="flex flex-col items-center gap-4 pt-4">
 
-            {/* Back Support — upper right */}
-            <div className="img-back absolute pointer-events-none hidden lg:block" style={{ right: "2%", top: "10%", zIndex: 4, opacity: 0, width: 240 }}>
-                <div style={{ position: "absolute", inset: -40, background: "radial-gradient(ellipse at center, rgba(22,81,209,0.28) 0%, transparent 70%)", filter: "blur(30px)" }} />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={CLD.xoBackSupport} alt="XO Back Support" style={{ position: "relative", zIndex: 1, width: "100%", objectFit: "contain", filter: "drop-shadow(0 0 40px rgba(22,81,209,0.65)) drop-shadow(0 0 16px rgba(91,155,255,0.45)) brightness(1.08)" }} />
-            </div>
+                    {/* Logo big */}
+                    <div className="cs-logo" style={{ opacity: 0 }}>
+                        <Image src={CLD.footerLogo} alt="X-Ortho" width={460} height={460} className="object-contain"
+                            style={{ filter: "drop-shadow(0 0 50px rgba(91,155,255,0.6)) drop-shadow(0 0 100px rgba(22,81,209,0.35))" }} />
+                    </div>
 
-            {/* Knee Support — lower right */}
-            <div className="img-knee absolute pointer-events-none hidden lg:block" style={{ right: "3%", bottom: "6%", zIndex: 4, opacity: 0, width: 200 }}>
-                <div style={{ position: "absolute", inset: -40, background: "radial-gradient(ellipse at center, rgba(22,81,209,0.28) 0%, transparent 70%)", filter: "blur(30px)" }} />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={CLD.xoKneeHinged} alt="XO Knee Support" style={{ position: "relative", zIndex: 1, width: "100%", objectFit: "contain", filter: "drop-shadow(0 0 40px rgba(22,81,209,0.65)) drop-shadow(0 0 16px rgba(91,155,255,0.45)) brightness(1.08)" }} />
-            </div>
+                    {/* Badge */}
+                    <div className="cs-anim inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] font-bold px-4 py-1.5 rounded-full"
+                        style={{ opacity: 0, background: "rgba(22,81,209,0.15)", border: "1px solid rgba(91,155,255,0.28)", color: "#5b9bff" }}>
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#5b9bff] animate-pulse" />
+                        Coming Soon
+                    </div>
 
-            {/* ══ MAIN CENTER CONTENT ══ */}
-            <div className="relative z-10 flex flex-col items-center justify-center flex-1 text-center px-5 py-16 max-w-2xl mx-auto w-full gap-5">
-
-                {/* Logo + Tagline */}
-                <div className="cs-logo flex flex-col items-center gap-3" style={{ opacity: 0 }}>
-                    <Image src={CLD.logo} alt="X-Ortho" width={110} height={110} className="object-contain"
-                        style={{ filter: "drop-shadow(0 0 40px rgba(91,155,255,0.55)) drop-shadow(0 0 80px rgba(22,81,209,0.3))" }} />
-                    <p className="text-[11px] uppercase tracking-[0.4em] font-bold" style={{ color: "rgba(91,155,255,0.7)" }}>
-                        Better DME. Better Outcomes.
-                    </p>
-                </div>
-
-                {/* Badge */}
-                <div className="cs-anim inline-flex items-center gap-2.5 text-[10px] uppercase tracking-[0.45em] font-bold px-5 py-2 rounded-full"
-                    style={{ opacity: 0, background: "linear-gradient(135deg, rgba(22,81,209,0.2), rgba(91,155,255,0.1))", border: "1px solid rgba(91,155,255,0.3)", color: "#5b9bff", boxShadow: "0 0 20px rgba(22,81,209,0.2), inset 0 1px 0 rgba(255,255,255,0.06)" }}>
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#5b9bff] animate-pulse" style={{ boxShadow: "0 0 8px rgba(91,155,255,0.8)" }} />
-                    X-Ortho · Coming Soon
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#5b9bff] animate-pulse" style={{ boxShadow: "0 0 8px rgba(91,155,255,0.8)" }} />
-                </div>
-
-                {/* Headline */}
-                <h1 className="cs-anim font-nexa uppercase leading-[0.9]"
-                    style={{ opacity: 0, fontSize: "clamp(2.2rem,6vw,5rem)", fontWeight: 800, letterSpacing: "-2px" }}>
-                    <span className="block" style={{
-                        backgroundImage: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)",
-                        WebkitBackgroundClip: "text" as const, WebkitTextFillColor: "transparent", backgroundClip: "text",
-                        filter: "drop-shadow(0 1px 0 rgba(91,155,255,0.5)) drop-shadow(0 -1px 0 rgba(0,0,30,0.6)) drop-shadow(0 2px 4px rgba(0,0,0,0.5))", paddingTop: "10px"
-                    }}>X-Ortho</span>
-                    <span className="block text-[#f0f4ff]" style={{ fontSize: "45%", letterSpacing: "-0.10px", fontWeight: 700, opacity: 0.85 }}>
-                        <span className="block" style={{ marginBottom: "8px" }}>The Most Advanced.</span>
+                    {/* Headline — "Most" lines */}
+                    <h1 className="cs-anim font-nexa uppercase text-center leading-tight"
+                        style={{ opacity: 0, fontSize: "clamp(1.6rem,4vw,3.5rem)", fontWeight: 800, letterSpacing: "-1.5px" }}>
+                        <span className="block text-white/90">The Most</span>
+                        <span className="block" style={{
+                            backgroundImage: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)",
+                            WebkitBackgroundClip: "text" as const, WebkitTextFillColor: "transparent", backgroundClip: "text",
+                            filter: "drop-shadow(0 1px 0 rgba(91,155,255,0.5)) drop-shadow(0 -1px 0 rgba(0,0,30,0.6))"
+                        }}>Advanced.</span>
                         <span className="block" style={{
                             backgroundImage: "linear-gradient(180deg, #f0f0f0 0%, #b8b8b8 20%, #e8e8e8 35%, #787878 50%, #d0d0d0 65%, #909090 80%, #c8c8c8 100%)",
-                            WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text",
-                            filter: "drop-shadow(0 1px 0 rgba(255,255,255,0.9)) drop-shadow(0 -1px 0 rgba(0,0,0,0.6)) drop-shadow(1px 0 0 rgba(255,255,255,0.3)) drop-shadow(-1px 0 0 rgba(0,0,0,0.3)) drop-shadow(0 2px 6px rgba(0,0,0,0.8))",
-                            marginBottom: "8px"
+                            WebkitBackgroundClip: "text" as const, WebkitTextFillColor: "transparent", backgroundClip: "text",
+                            filter: "drop-shadow(0 1px 0 rgba(255,255,255,0.6)) drop-shadow(0 -1px 0 rgba(0,0,0,0.5)) drop-shadow(0 2px 6px rgba(0,0,0,0.8))"
                         }}>Most Sophisticated.</span>
-                        <span className="block">Most Anticipated.</span>
-                    </span>
-                </h1>
+                        <span className="block" style={{
+                            backgroundImage: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)",
+                            WebkitBackgroundClip: "text" as const, WebkitTextFillColor: "transparent", backgroundClip: "text",
+                            filter: "drop-shadow(0 1px 0 rgba(91,155,255,0.5)) drop-shadow(0 -1px 0 rgba(0,0,30,0.6))"
+                        }}>Most Anticipated.</span>
+                    </h1>
 
-                {/* Tagline pills */}
-                <div className="cs-anim flex flex-wrap justify-center gap-2 max-w-lg" style={{ opacity: 0 }}>
-                    {["Better Design", "Better Quality", "Better Functionality", "Better Clinical Outcomes", "Better Financial Outcomes", "Better DME"].map((t, i) => (
-                        <span key={i} className="text-[10px] uppercase tracking-wider font-bold px-3 py-1.5 rounded-full"
-                            style={{ background: "linear-gradient(135deg, rgba(22,81,209,0.20), rgba(6,10,35,0.7))", border: "1px solid rgba(91,155,255,0.22)", color: "rgba(91,155,255,0.85)", backdropFilter: "blur(8px)" }}>
-                            {t}
-                        </span>
-                    ))}
-                </div>
-
-                {/* Description */}
-                <p className="cs-anim text-white/50 text-sm leading-relaxed max-w-lg border-l-[3px] pl-4 text-left"
-                    style={{ opacity: 0, borderColor: "rgba(91,155,255,0.3)" }}>
-                    XO products were purposefully and intentionally crafted by Biomechanical Engineers with feedback from{" "}
-                    <span className="text-white/70 font-semibold">Orthopedic, Podiatric, and Urgent Care</span>{" "}
-                    Medical Professionals.
-                </p>
-
-                {/* 3 Value props */}
-                <div className="cs-anim grid grid-cols-3 gap-3 w-full max-w-lg" style={{ opacity: 0 }}>
-                    {[
-                        { icon: "⚕", t: "Improve Clinical Care" },
-                        { icon: "★", t: "Enhance Patient Satisfaction" },
-                        { icon: "↑", t: "Increase Ancillary Revenue" },
-                    ].map((item, i) => (
-                        <div key={i} className="flex flex-col items-center gap-1.5 px-3 py-3.5 rounded-2xl relative overflow-hidden"
-                            style={{ background: "linear-gradient(145deg, rgba(22,81,209,0.18) 0%, rgba(6,10,35,0.7) 100%)", border: "1px solid rgba(91,155,255,0.22)", boxShadow: "0 4px 20px rgba(22,81,209,0.15), inset 0 1px 0 rgba(91,155,255,0.12)", backdropFilter: "blur(12px)" }}>
-                            <span className="text-lg" style={{
-                                backgroundImage: "linear-gradient(180deg, #f0f0f0 0%, #b8b8b8 20%, #e8e8e8 35%, #787878 50%, #d0d0d0 65%, #909090 80%, #c8c8c8 100%)",
-                                WebkitBackgroundClip: "text",
-                                WebkitTextFillColor: "transparent",
-                                backgroundClip: "text",
-                                filter: "drop-shadow(0 1px 0 rgba(255,255,255,0.9)) drop-shadow(0 -1px 0 rgba(0,0,0,0.6)) drop-shadow(1px 0 0 rgba(255,255,255,0.3)) drop-shadow(-1px 0 0 rgba(0,0,0,0.3)) drop-shadow(0 2px 6px rgba(0,0,0,0.8))"
-                            }}>{item.icon}</span>
-                            <span className="text-[10px] uppercase tracking-wider font-bold text-white/60 leading-tight text-center">{item.t}</span>
-                        </div>
-                    ))}
-                </div>
-
-                {/* Divider */}
-                <div className="cs-anim w-full flex items-center gap-3 max-w-lg" style={{ opacity: 0 }}>
-                    <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, transparent, rgba(91,155,255,0.25))" }} />
-                    <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "rgba(91,155,255,0.5)" }} />
-                    <div className="flex-1 h-px" style={{ background: "linear-gradient(to left, transparent, rgba(91,155,255,0.25))" }} />
-                </div>
-
-                {/* Contact CTA */}
-                <div className="cs-anim flex flex-col items-center gap-3 w-full max-w-lg" style={{ opacity: 0 }}>
-                    <p className="text-white/35 text-xs leading-relaxed text-center">
-                        Email <a href="mailto:info@xortho.com" className="text-[#5b9bff] hover:text-white transition-colors font-semibold">info@xortho.com</a>{" "}
-                        or call{" "}
-                        <a href="tel:8559678461" className="text-[#5b9bff] hover:text-white transition-colors font-semibold">855.XORTHO1</a>{" "}
-                        to receive a customized proposal including HCPCS coding, pricing, profit index, and samples.
-                    </p>
-                    <div className="flex items-center gap-4 flex-wrap justify-center">
-                        <span className="text-[10px] uppercase tracking-[0.35em] font-bold" style={{ color: "rgba(255,255,255,0.20)" }}>Available Exclusively Through</span>
-                        <span className="text-xs font-bold uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.35)" }}>TLC DME LLC</span>
+                    {/* Better pills */}
+                    <div className="cs-anim flex flex-wrap justify-center gap-2 max-w-2xl" style={{ opacity: 0 }}>
+                        {["Better Design", "Better Quality", "Better Functionality", "Better Clinical Outcomes", "Better Financial Outcomes", "Better DME"].map((t, i) => (
+                            <span key={i} className="text-[10px] uppercase tracking-wider font-bold px-3 py-1.5 rounded-full"
+                                style={{
+                                    background: "linear-gradient(135deg, rgba(22,81,209,0.20), rgba(6,10,35,0.7))",
+                                    border: "1px solid rgba(91,155,255,0.22)", color: "rgba(91,155,255,0.85)", backdropFilter: "blur(8px)"
+                                }}>
+                                {t}
+                            </span>
+                        ))}
                     </div>
                 </div>
-            </div>
 
-            {/* Copyright */}
-            <div className="absolute bottom-5 inset-x-0 flex justify-center pointer-events-none" style={{ zIndex: 3 }}>
-                <p className="text-[10px] uppercase tracking-[0.4em] font-bold" style={{
-                    backgroundImage: "linear-gradient(180deg, #f0f0f0 0%, #b8b8b8 20%, #e8e8e8 35%, #787878 50%, #d0d0d0 65%, #909090 80%, #c8c8c8 100%)",
-                    WebkitBackgroundClip: "text" as string,
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                    filter: "drop-shadow(0 1px 0 rgba(255,255,255,0.9)) drop-shadow(0 -1px 0 rgba(0,0,0,0.6)) drop-shadow(1px 0 0 rgba(255,255,255,0.3)) drop-shadow(-1px 0 0 rgba(0,0,0,0.3)) drop-shadow(0 2px 6px rgba(0,0,0,0.8))"
-                }}>
-                    © {new Date().getFullYear()} X-Ortho · TLC DME LLC · Better DME · Better Outcomes
-                </p>
+                {/* MIDDLE — Two panels */}
+                <div className="cs-panels flex-1 grid grid-cols-1 lg:grid-cols-2 gap-5" style={{ opacity: 0, minHeight: 360 }}>
+
+                    {/* LEFT — Morphing images */}
+                    <div className="relative rounded-3xl overflow-hidden"
+                        style={{
+                            background: "linear-gradient(145deg, rgba(6,10,35,0.85) 0%, rgba(12,22,65,0.65) 100%)",
+                            border: "1px solid rgba(91,155,255,0.14)", boxShadow: "0 8px 40px rgba(22,81,209,0.12)"
+                        }}>
+                        <div className="absolute top-4 left-5 z-10">
+                            <span className="text-[10px] uppercase tracking-[0.35em] font-bold" style={{ color: "rgba(91,155,255,0.5)" }}>
+                                X-Ortho Products
+                            </span>
+                        </div>
+                        <MorphCarousel />
+                    </div>
+
+                    {/* RIGHT — 3D Viewer */}
+                    <div className="relative" style={{ minHeight: 360 }}>
+                        <div className="absolute top-4 left-5 z-10">
+                            <span className="text-[10px] uppercase tracking-[0.35em] font-bold" style={{ color: "rgba(91,155,255,0.5)" }}>
+                                XO Boot · Interactive 3D
+                            </span>
+                        </div>
+                        <Viewer3D />
+                    </div>
+                </div>
+
+                {/* BOTTOM — Contact */}
+                <div className="flex flex-col items-center gap-3 pb-4">
+                    {/* <div className="cs-anim w-full max-w-md" style={{ opacity: 0 }}>
+                        {!submitted ? (
+                            <div className="rounded-2xl p-1"
+                                style={{
+                                    background: "linear-gradient(135deg, rgba(91,155,255,0.2), rgba(22,81,209,0.1))",
+                                    boxShadow: "0 4px 24px rgba(22,81,209,0.15)"
+                                }}>
+                                <div className="rounded-xl p-3 flex flex-col sm:flex-row gap-2"
+                                    style={{ background: "rgba(3,8,24,0.9)", backdropFilter: "blur(16px)" }}>
+                                    <input type="email" value={email} onChange={e => setEmail(e.target.value)}
+                                        placeholder="Enter your email address"
+                                        className="flex-1 px-4 py-2.5 rounded-full text-sm font-semibold outline-none placeholder:text-white/25"
+                                        style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(91,155,255,0.18)", color: "#f0f4ff" }}
+                                        onFocus={e => { (e.target as HTMLInputElement).style.borderColor = "rgba(91,155,255,0.5)"; }}
+                                        onBlur={e => { (e.target as HTMLInputElement).style.borderColor = "rgba(91,155,255,0.18)"; }} />
+                                    <button onClick={() => { if (email) setSubmitted(true); }}
+                                        className="cursor-pointer group duration-200 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 border border-white/25 p-1 relative overflow-hidden flex-shrink-0">
+                                        <div className="absolute top-0 left-[5%] group-hover:left-[80%] duration-300 h-full w-8 bg-[#1651D1]/50 rounded-[200%] blur" />
+                                        <div className="flex items-center bg-white rounded-full px-5 py-2 relative z-10">
+                                            <span className="text-sm font-bold">Notify Me</span>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="flex items-center justify-center gap-3 px-6 py-4 rounded-2xl"
+                                style={{ background: "rgba(22,81,209,0.15)", border: "1px solid rgba(91,155,255,0.25)" }}>
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#5b9bff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                                <p className="text-white/80 text-sm font-semibold">You&apos;re on the list!</p>
+                            </div>
+                        )}
+                    </div> */}
+
+                    <p className="text-white/30 text-xs text-center">
+                        Email{" "}
+                        <a href="mailto:info@xortho.com" className="text-[#5b9bff]/70 hover:text-[#5b9bff] transition-colors font-semibold">info@xortho.com</a>
+                        {" "}or call{" "}
+                        <a href="tel:8559678461" className="text-[#5b9bff]/70 hover:text-[#5b9bff] transition-colors font-semibold">855.XORTHO1</a>
+                        {" "}for a customized proposal · HCPCS coding · pricing · samples
+                    </p>
+
+                    <p className="text-[10px] uppercase tracking-[0.35em] font-bold" style={{ color: "rgba(255,255,255,0.12)" }}>
+                        © {new Date().getFullYear()} X-Ortho · TLC DME LLC · Better DME · Better Outcomes
+                    </p>
+                </div>
             </div>
         </main>
     );
