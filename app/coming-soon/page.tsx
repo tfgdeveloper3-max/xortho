@@ -196,7 +196,7 @@ export default function ComingSoon() {
     }, []);
 
     return (
-        <main className="relative w-full min-h-screen flex flex-col overflow-hidden" style={{ background: "#020916" }}>
+        <main className="relative w-full h-screen h-[100dvh] overflow-y-auto lg:overflow-hidden bg-[#020916]">
 
             <video src={CLD.sectionhero} autoPlay loop muted playsInline
                 className="absolute inset-0 w-full h-full object-cover pointer-events-none"
@@ -239,134 +239,103 @@ export default function ComingSoon() {
             ))}
 
             {/* ══ LAYOUT ══ */}
-            <div className="relative z-10 flex flex-col w-full flex-1 px-6 md:px-12 py-8 gap-6" style={{ minHeight: "100vh" }}>
-
-                {/* TOP — Logo + Text center */}
-                <div className="flex flex-col items-center gap-4 pt-4">
-
-                    {/* Logo big */}
-                    <div className="cs-logo" style={{ opacity: 0 }}>
-                        <Image src={CLD.footerLogo} alt="X-Ortho" width={600} height={460} className="object-contain"
-                            style={{ filter: "drop-shadow(0 0 50px rgba(91,155,255,0.6)) drop-shadow(0 0 100px rgba(22,81,209,0.35))" }} />
+            <div className="relative z-10 flex flex-col lg:flex-row w-full h-full px-4 md:px-8 py-6 gap-6 items-center justify-between">
+                
+                {/* LEFT — Morphing images */}
+                <div className="cs-panels relative w-full lg:w-[28%] h-[35vh] lg:h-full rounded-3xl overflow-hidden shrink-0"
+                    style={{
+                        opacity: 0,
+                        background: "linear-gradient(145deg, rgba(6,10,35,0.85) 0%, rgba(12,22,65,0.65) 100%)",
+                        border: "1px solid rgba(91,155,255,0.14)", boxShadow: "0 8px 40px rgba(22,81,209,0.12)"
+                    }}>
+                    <div className="absolute top-4 left-5 z-10 pointer-events-none">
+                        <span className="text-[10px] uppercase tracking-[0.35em] font-bold" style={{ color: "rgba(91,155,255,0.5)" }}>
+                            X-Ortho Products
+                        </span>
                     </div>
-
-                    {/* Badge */}
-                    <div className="cs-anim inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] font-bold px-4 py-1.5 rounded-full"
-                        style={{ opacity: 0, background: "rgba(22,81,209,0.15)", border: "1px solid rgba(91,155,255,0.28)", color: "#5b9bff" }}>
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#5b9bff] animate-pulse" />
-                        Coming Soon
-                    </div>
-
-                    {/* Headline — "Most" lines */}
-                    <h1 className="cs-anim font-nexa uppercase text-left leading-tight"
-                        style={{ opacity: 0, fontSize: "clamp(1.6rem,4vw,3.5rem)", fontWeight: 800, letterSpacing: "-1.5px" }}>
-                        <span className="block text-white/90">The </span>
-                        <span className="block" style={{
-                            backgroundImage: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)",
-                            WebkitBackgroundClip: "text" as const, WebkitTextFillColor: "transparent", backgroundClip: "text",
-                            filter: "drop-shadow(0 1px 0 rgba(91,155,255,0.5)) drop-shadow(0 -1px 0 rgba(0,0,30,0.6))"
-                        }}>Most Advanced.</span>
-                        <span className="block" style={{
-                            backgroundImage: "linear-gradient(180deg, #f0f0f0 0%, #b8b8b8 20%, #e8e8e8 35%, #787878 50%, #d0d0d0 65%, #909090 80%, #c8c8c8 100%)",
-                            WebkitBackgroundClip: "text" as const, WebkitTextFillColor: "transparent", backgroundClip: "text",
-                            filter: "drop-shadow(0 1px 0 rgba(255,255,255,0.6)) drop-shadow(0 -1px 0 rgba(0,0,0,0.5)) drop-shadow(0 2px 6px rgba(0,0,0,0.8))"
-                        }}>Most Sophisticated.</span>
-                        <span className="block" style={{
-                            backgroundImage: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)",
-                            WebkitBackgroundClip: "text" as const, WebkitTextFillColor: "transparent", backgroundClip: "text",
-                            filter: "drop-shadow(0 1px 0 rgba(91,155,255,0.5)) drop-shadow(0 -1px 0 rgba(0,0,30,0.6))"
-                        }}>Most Anticipated.</span>
-                    </h1>
-
-                    {/* Better pills */}
-                    <div className="cs-anim flex flex-wrap justify-center gap-2 max-w-2xl" style={{ opacity: 0 }}>
-                        {["Better Design", "Better Quality", "Better Functionality", "Better Clinical Outcomes", "Better Financial Outcomes", "Better DME"].map((t, i) => (
-                            <span key={i} className="text-[10px] uppercase tracking-wider font-bold px-3 py-1.5 rounded-full"
-                                style={{
-                                    background: "linear-gradient(135deg, rgba(22,81,209,0.20), rgba(6,10,35,0.7))",
-                                    border: "1px solid rgba(91,155,255,0.22)", color: "rgba(91,155,255,0.85)", backdropFilter: "blur(8px)"
-                                }}>
-                                {t}
-                            </span>
-                        ))}
-                    </div>
+                    <MorphCarousel />
                 </div>
 
-                {/* MIDDLE — Two panels */}
-                <div className="cs-panels flex-1 grid grid-cols-1 lg:grid-cols-2 gap-5" style={{ opacity: 0, minHeight: 360 }}>
+                {/* CENTER — Text and Logo */}
+                <div className="flex flex-col items-center justify-between flex-1 h-full py-2 min-w-0">
+                    
+                    {/* Top half center (Logo, text) */}
+                    <div className="flex flex-col items-center gap-4 pt-4 lg:pt-8 w-full">
 
-                    {/* LEFT — Morphing images */}
-                    <div className="relative rounded-3xl overflow-hidden"
-                        style={{
-                            background: "linear-gradient(145deg, rgba(6,10,35,0.85) 0%, rgba(12,22,65,0.65) 100%)",
-                            border: "1px solid rgba(91,155,255,0.14)", boxShadow: "0 8px 40px rgba(22,81,209,0.12)"
-                        }}>
-                        <div className="absolute top-4 left-5 z-10">
-                            <span className="text-[10px] uppercase tracking-[0.35em] font-bold" style={{ color: "rgba(91,155,255,0.5)" }}>
-                                X-Ortho Products
-                            </span>
+                        {/* Logo big */}
+                        <div className="cs-logo" style={{ opacity: 0 }}>
+                            <Image src={CLD.footerLogo} alt="X-Ortho" width={380} height={280} className="object-contain"
+                                style={{ filter: "drop-shadow(0 0 50px rgba(91,155,255,0.6)) drop-shadow(0 0 100px rgba(22,81,209,0.35))" }} />
                         </div>
-                        <MorphCarousel />
-                    </div>
 
-                    {/* RIGHT — 3D Viewer */}
-                    <div className="relative" style={{ minHeight: 360 }}>
-                        <div className="absolute top-4 left-5 z-10">
-                            <span className="text-[10px] uppercase tracking-[0.35em] font-bold" style={{ color: "rgba(91,155,255,0.5)" }}>
-                                XO Boot · Interactive 3D
-                            </span>
+                        {/* Badge */}
+                        <div className="cs-anim inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] font-bold px-4 py-1.5 rounded-full"
+                            style={{ opacity: 0, background: "rgba(22,81,209,0.15)", border: "1px solid rgba(91,155,255,0.28)", color: "#5b9bff" }}>
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#5b9bff] animate-pulse" />
+                            Coming Soon
                         </div>
-                        <Viewer3D />
+
+                        {/* Headline — "Most" lines */}
+                        <h1 className="cs-anim font-nexa uppercase text-left leading-tight"
+                            style={{ opacity: 0, fontSize: "clamp(1.2rem, 2.5vw, 2.8rem)", fontWeight: 800, letterSpacing: "-1px" }}>
+                            <span className="block text-white/90">The </span>
+                            <span className="block" style={{
+                                backgroundImage: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)",
+                                WebkitBackgroundClip: "text" as const, WebkitTextFillColor: "transparent", backgroundClip: "text",
+                                filter: "drop-shadow(0 1px 0 rgba(91,155,255,0.5)) drop-shadow(0 -1px 0 rgba(0,0,30,0.6))"
+                            }}>Most Advanced.</span>
+                            <span className="block" style={{
+                                backgroundImage: "linear-gradient(180deg, #f0f0f0 0%, #b8b8b8 20%, #e8e8e8 35%, #787878 50%, #d0d0d0 65%, #909090 80%, #c8c8c8 100%)",
+                                WebkitBackgroundClip: "text" as const, WebkitTextFillColor: "transparent", backgroundClip: "text",
+                                filter: "drop-shadow(0 1px 0 rgba(255,255,255,0.6)) drop-shadow(0 -1px 0 rgba(0,0,0,0.5)) drop-shadow(0 2px 6px rgba(0,0,0,0.8))"
+                            }}>Most Sophisticated.</span>
+                            <span className="block" style={{
+                                backgroundImage: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)",
+                                WebkitBackgroundClip: "text" as const, WebkitTextFillColor: "transparent", backgroundClip: "text",
+                                filter: "drop-shadow(0 1px 0 rgba(91,155,255,0.5)) drop-shadow(0 -1px 0 rgba(0,0,30,0.6))"
+                            }}>Most Anticipated.</span>
+                        </h1>
+
+                        {/* Better pills */}
+                        <div className="cs-anim flex flex-wrap justify-center gap-2 max-w-lg mt-2" style={{ opacity: 0 }}>
+                            {["Better Design", "Better Quality", "Better Functionality", "Better Clinical Outcomes", "Better Financial Outcomes", "Better DME"].map((t, i) => (
+                                <span key={i} className="text-[9px] uppercase tracking-wider font-bold px-3 py-1.5 rounded-full"
+                                    style={{
+                                        background: "linear-gradient(135deg, rgba(22,81,209,0.20), rgba(6,10,35,0.7))",
+                                        border: "1px solid rgba(91,155,255,0.22)", color: "rgba(91,155,255,0.85)", backdropFilter: "blur(8px)"
+                                    }}>
+                                    {t}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* BOTTOM — Contact */}
+                    <div className="flex flex-col items-center gap-3 pb-2 pt-6">
+                        <p className="text-white/30 text-[11px] text-center max-w-md">
+                            Email{" "}
+                            <a href="mailto:info@xortho.com" className="text-[#5b9bff]/70 hover:text-[#5b9bff] transition-colors font-semibold">info@xortho.com</a>
+                            {" "}or call{" "}
+                            <a href="tel:8559678461" className="text-[#5b9bff]/70 hover:text-[#5b9bff] transition-colors font-semibold">855.XORTHO1</a>
+                            <br className="hidden md:block"/> for a customized proposal · HCPCS coding · pricing · samples
+                        </p>
+
+                        <p className="text-[9px] uppercase tracking-[0.35em] font-bold mt-2" style={{ color: "rgba(255,255,255,0.12)" }}>
+                            © {new Date().getFullYear()} X-Ortho · TLC DME LLC
+                        </p>
                     </div>
                 </div>
 
-                {/* BOTTOM — Contact */}
-                <div className="flex flex-col items-center gap-3 pb-4">
-                    {/* <div className="cs-anim w-full max-w-md" style={{ opacity: 0 }}>
-                        {!submitted ? (
-                            <div className="rounded-2xl p-1"
-                                style={{
-                                    background: "linear-gradient(135deg, rgba(91,155,255,0.2), rgba(22,81,209,0.1))",
-                                    boxShadow: "0 4px 24px rgba(22,81,209,0.15)"
-                                }}>
-                                <div className="rounded-xl p-3 flex flex-col sm:flex-row gap-2"
-                                    style={{ background: "rgba(3,8,24,0.9)", backdropFilter: "blur(16px)" }}>
-                                    <input type="email" value={email} onChange={e => setEmail(e.target.value)}
-                                        placeholder="Enter your email address"
-                                        className="flex-1 px-4 py-2.5 rounded-full text-sm font-semibold outline-none placeholder:text-white/25"
-                                        style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(91,155,255,0.18)", color: "#f0f4ff" }}
-                                        onFocus={e => { (e.target as HTMLInputElement).style.borderColor = "rgba(91,155,255,0.5)"; }}
-                                        onBlur={e => { (e.target as HTMLInputElement).style.borderColor = "rgba(91,155,255,0.18)"; }} />
-                                    <button onClick={() => { if (email) setSubmitted(true); }}
-                                        className="cursor-pointer group duration-200 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 border border-white/25 p-1 relative overflow-hidden flex-shrink-0">
-                                        <div className="absolute top-0 left-[5%] group-hover:left-[80%] duration-300 h-full w-8 bg-[#1651D1]/50 rounded-[200%] blur" />
-                                        <div className="flex items-center bg-white rounded-full px-5 py-2 relative z-10">
-                                            <span className="text-sm font-bold">Notify Me</span>
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
-                        ) : (
-                            <div className="flex items-center justify-center gap-3 px-6 py-4 rounded-2xl"
-                                style={{ background: "rgba(22,81,209,0.15)", border: "1px solid rgba(91,155,255,0.25)" }}>
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#5b9bff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                                <p className="text-white/80 text-sm font-semibold">You&apos;re on the list!</p>
-                            </div>
-                        )}
-                    </div> */}
-
-                    <p className="text-white/30 text-xs text-center">
-                        Email{" "}
-                        <a href="mailto:info@xortho.com" className="text-[#5b9bff]/70 hover:text-[#5b9bff] transition-colors font-semibold">info@xortho.com</a>
-                        {" "}or call{" "}
-                        <a href="tel:8559678461" className="text-[#5b9bff]/70 hover:text-[#5b9bff] transition-colors font-semibold">855.XORTHO1</a>
-                        {" "}for a customized proposal · HCPCS coding · pricing · samples
-                    </p>
-
-                    <p className="text-[10px] uppercase tracking-[0.35em] font-bold" style={{ color: "rgba(255,255,255,0.12)" }}>
-                        © {new Date().getFullYear()} X-Ortho · TLC DME LLC · Better DME · Better Outcomes
-                    </p>
+                {/* RIGHT — 3D Viewer */}
+                <div className="cs-panels relative w-full lg:w-[28%] h-[35vh] lg:h-full rounded-3xl overflow-hidden shrink-0" style={{ opacity: 0 }}>
+                    <div className="absolute top-4 left-5 z-10 pointer-events-none">
+                        <span className="text-[10px] uppercase tracking-[0.35em] font-bold" style={{ color: "rgba(91,155,255,0.5)" }}>
+                            XO Boot · Interactive 3D
+                        </span>
+                    </div>
+                    <Viewer3D />
                 </div>
+
             </div>
         </main>
     );
