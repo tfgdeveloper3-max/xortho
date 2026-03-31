@@ -87,12 +87,9 @@ function Viewer3D() {
 
     return (
         <div ref={stageRef}
-            className="relative w-full h-full flex items-center justify-center rounded-3xl overflow-hidden select-none"
+            className="relative w-full h-full flex items-center justify-center select-none"
             style={{
-                cursor: "grab", perspective: "900px",
-                background: "linear-gradient(145deg, rgba(6,10,35,0.8) 0%, rgba(12,22,65,0.6) 100%)",
-                border: "1px solid rgba(91,155,255,0.15)",
-                boxShadow: "0 0 60px rgba(22,81,209,0.15), inset 0 1px 0 rgba(255,255,255,0.04)"
+                cursor: "grab", perspective: "900px"
             }}
             onMouseDown={e => startDrag(e.clientX, e.clientY)}
             onMouseMove={e => moveDrag(e.clientX, e.clientY)}
@@ -242,12 +239,8 @@ export default function ComingSoon() {
             <div className="relative z-10 flex flex-col lg:flex-row w-full h-full px-4 md:px-8 py-6 gap-6 items-center justify-between">
                 
                 {/* LEFT — Morphing images */}
-                <div className="cs-panels relative w-full lg:w-[28%] h-[35vh] lg:h-full rounded-3xl overflow-hidden shrink-0"
-                    style={{
-                        opacity: 0,
-                        background: "linear-gradient(145deg, rgba(6,10,35,0.85) 0%, rgba(12,22,65,0.65) 100%)",
-                        border: "1px solid rgba(91,155,255,0.14)", boxShadow: "0 8px 40px rgba(22,81,209,0.12)"
-                    }}>
+                <div className="cs-panels relative w-full lg:w-[28%] h-[35vh] lg:h-full shrink-0"
+                    style={{ opacity: 0 }}>
                     <div className="absolute top-4 left-5 z-10 pointer-events-none">
                         <span className="text-[10px] uppercase tracking-[0.35em] font-bold" style={{ color: "rgba(91,155,255,0.5)" }}>
                             X-Ortho Products
@@ -285,9 +278,8 @@ export default function ComingSoon() {
                                 filter: "drop-shadow(0 1px 0 rgba(91,155,255,0.5)) drop-shadow(0 -1px 0 rgba(0,0,30,0.6))"
                             }}>Most Advanced.</span>
                             <span className="block" style={{
-                                backgroundImage: "linear-gradient(180deg, #f0f0f0 0%, #b8b8b8 20%, #e8e8e8 35%, #787878 50%, #d0d0d0 65%, #909090 80%, #c8c8c8 100%)",
+                                backgroundImage: "linear-gradient(180deg, #f0f0f0 0%, #ffffffff 20%, #e8e8e8 35%, #ffffffff 50%, #d0d0d0 65%, #e1e1e1ff 80%, #c8c8c8 100%)",
                                 WebkitBackgroundClip: "text" as const, WebkitTextFillColor: "transparent", backgroundClip: "text",
-                                filter: "drop-shadow(0 1px 0 rgba(255,255,255,0.6)) drop-shadow(0 -1px 0 rgba(0,0,0,0.5)) drop-shadow(0 2px 6px rgba(0,0,0,0.8))"
                             }}>Most Sophisticated.</span>
                             <span className="block" style={{
                                 backgroundImage: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)",
@@ -327,7 +319,7 @@ export default function ComingSoon() {
                 </div>
 
                 {/* RIGHT — 3D Viewer */}
-                <div className="cs-panels relative w-full lg:w-[28%] h-[35vh] lg:h-full rounded-3xl overflow-hidden shrink-0" style={{ opacity: 0 }}>
+                <div className="cs-panels relative w-full lg:w-[28%] h-[35vh] lg:h-full shrink-0" style={{ opacity: 0 }}>
                     <div className="absolute top-4 left-5 z-10 pointer-events-none">
                         <span className="text-[10px] uppercase tracking-[0.35em] font-bold" style={{ color: "rgba(91,155,255,0.5)" }}>
                             XO Boot · Interactive 3D
