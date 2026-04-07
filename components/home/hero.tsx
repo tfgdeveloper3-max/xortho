@@ -157,8 +157,6 @@ export default function Hero({ noAnimation = false, playAnimation = false }: Her
         className="relative w-full min-h-screen flex items-center bg-black overflow-hidden"
         style={{ opacity: 1 }}
       >
-        <video src={CLD.heroBg} autoPlay loop muted playsInline
-          className="absolute inset-0 w-full h-full object-cover opacity-80" />
         <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/20 to-transparent z-10 pointer-events-none" />
         {/* Strong dark overlay */}
         <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 9, background: "rgba(2,9,22,0.65)" }} />
