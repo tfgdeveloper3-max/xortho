@@ -127,51 +127,29 @@
 
 :root {
   --radius: 0.625rem;
-
-  /* Light background from the design */
   --background: #FFFFFF;
   --foreground: #0D0F1A;
-
-  /* Cards – white with subtle lift */
   --card: #FFFFFF;
   --card-foreground: #0D0F1A;
-
-  /* Popover */
   --popover: #FFFFFF;
   --popover-foreground: #0D0F1A;
-
-  /* Primary – vibrant indigo blue from design "blue" style */
   --primary: #04006D;
   --primary-foreground: #FFFFFF;
-
-  /* Secondary – "piano blue" from the design */
   --secondary: #2C2895;
   --secondary-foreground: #FFFFFF;
-
-  /* Muted – soft gray surface */
   --muted: #F1F1F5;
   --muted-foreground: #5C5F73;
-
-  /* Accent – slightly lighter blue for highlights */
   --accent: #EEECff;
   --accent-foreground: #3D31D8;
-
-  /* Destructive */
   --destructive: #FF4C6E;
-
-  /* Borders and inputs */
   --border: #E4E4EC;
   --input: #E4E4EC;
   --ring: #4A3AFF;
-
-  /* Chart palette – blue/indigo spectrum */
   --chart-1: #4A3AFF;
   --chart-2: #6C5CE7;
   --chart-3: #3D31D8;
   --chart-4: #8B7CFF;
   --chart-5: #A29BFE;
-
-  /* Sidebar */
   --sidebar: #F8F8FC;
   --sidebar-foreground: #0D0F1A;
   --sidebar-primary: #4A3AFF;
@@ -189,6 +167,8 @@
 
   body {
     @apply bg-background text-foreground;
+    /* Dark background like coming soon page */
+    background: #020916;
   }
 
   h1,
@@ -214,5 +194,3 @@
 .logo-spin {
   animation: spinLogo 5s linear infinite;
 }
-
-/* ADD THIS TO globals.css — prevents any white flash on load/refresh */

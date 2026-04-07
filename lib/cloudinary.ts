@@ -10,6 +10,10 @@ export function cldVideo(path: string) {
     return `${BASE}/video/upload/${path}`;
 }
 
+export function cldImgComingSoon(path: string) {
+    return `${BASE}/image/upload/${path}`;
+}
+
 // ── Pre-built URLs ─────────────────────────────────────────
 export const CLD = {
     // Root images
@@ -82,6 +86,12 @@ export const CLD = {
     xoShell: cldImg("Shell"),
     sleeves: cldImg("sleeves"),
     XoBootHero: cldImg("XoBoot-Hero"),
+
+    // Coming Soon folder images
+    xoBootShortComingSoon: cldImgComingSoon("xo-boot-short?_v=2"),
+    xoBootTallComingSoon: cldImgComingSoon("xo-boot-tall?_v=2"),
+    xoBackComingSoon: cldImgComingSoon("xo-back?_v=2"),
+    xoKneeHingedComingSoon: cldImgComingSoon("xo-knee-hinged?_v=3"),
 
     // Knee support real product images
     kneeSleeve: cldImg("knee-sleeve"),

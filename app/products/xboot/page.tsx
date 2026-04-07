@@ -44,7 +44,7 @@ const galleryImages = [
   { src: CLD.xoRocker, label: "Rocker Sole" },
   { src: CLD.xoCage, label: "Outer Cage" },
   { src: CLD.xoFrontView, label: "Front View" },
-  { src: CLD.XoBootHero, label: "Full Boot" },
+  { src: CLD.xoFullBoot, label: "Full Boot" },
   { src: CLD.xoShell, label: "Shell" },
 ];
 

@@ -90,7 +90,6 @@ import MyButton from "../my-button";
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowRight } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -122,29 +121,30 @@ export default function CTASection() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full min-h-[80vh] flex items-center justify-center bg-gradient-to-b from-[#F8F9FC] to-[#E8E9EB] overflow-hidden"
+      className="relative w-full min-h-[80vh] flex items-center justify-center overflow-hidden" style={{ background: "#020916" }}
     >
+      {/* Grid */}
+      <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(17,17,132,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.05) 1px,transparent 1px)", backgroundSize: "52px 52px", zIndex: 0 }} />
+      {/* Center glow */}
+      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(22,81,209,0.22) 0%, transparent 65%)", zIndex: 0 }} />
+      {/* Top edge */}
+      <div className="absolute top-0 inset-x-0 h-px pointer-events-none" style={{ background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.5), transparent)", zIndex: 1 }} />
+      {/* Bottom edge */}
+      <div className="absolute bottom-0 inset-x-0 h-px pointer-events-none" style={{ background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.2), transparent)", zIndex: 1 }} />
+
       <div
         ref={textRef}
         className="flex flex-col gap-8 text-center items-center relative z-20 opacity-0 px-5"
       >
-        <h2 className="text-4xl md:text-6xl font-bold uppercase text-primary">
+        <h2 className="text-4xl md:text-6xl font-bold uppercase font-nexa" style={{ color: "#f0f4ff", letterSpacing: "-1px" }}>
           See The Future <br />
-          <span className="text-primary">In Action</span>
+          <span style={{
+            backgroundImage: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)",
+            WebkitBackgroundClip: "text" as const, WebkitTextFillColor: "transparent", backgroundClip: "text",
+            filter: "drop-shadow(0 1px 0 rgba(91,155,255,0.5)) drop-shadow(0 -1px 0 rgba(0,0,30,0.6))"
+          }}>In Action</span>
         </h2>
-        <div className="flex items-center gap-4 flex-wrap justify-center">
-          <a href="#contact" className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 relative overflow-hidden">
-            <div className="absolute top-0 left-[5%] group-hover:left-[80%] duration-300 transition-all h-full w-10 bg-[#1651D1]/50 rounded-[200%] blur" />
-            <div className="flex items-center bg-white rounded-full px-4 py-2 md:px-5 md:py-3 relative z-10">
-              <span className="text-base font-semibold">Speak With Specialist</span> <ArrowRight className="ml-2 w-4 h-4" />
-            </div>
-          </a>
-          <a href="/" className="text-sm font-semibold uppercase tracking-widest" style={{ color: "rgba(17,17,132,0.38)", transition: "color 0.25s" }}
-            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = "#111184"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(17,17,132,0.38)"; }}>
-            Back to Home
-          </a>
-        </div>
+        <MyButton />
       </div>
     </section>
   );

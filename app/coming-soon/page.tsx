@@ -1,155 +1,92 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import Image from "next/image";
 
-const BASE = "https://res.cloudinary.com/di7znsrrr";
-const CLD = {
-    footerLogo: `${BASE}/image/upload/footer-logo`,
-    sectionhero: `${BASE}/video/upload/section_hero`,
-    xoBootShort: `${BASE}/image/upload/xo-boot-short`,
-    xoBootTall: `${BASE}/image/upload/xo-boot-tall`,
-    xoBackSupport: `${BASE}/image/upload/xo-back`,
-    xoKneeHinged: `${BASE}/image/upload/xo-knee-hinged`,
-};
+import { CLD } from "@/lib/cloudinary";
 
-// Left side morphing images
 const MORPH_IMAGES = [
-    { src: CLD.xoBootShort, label: "XO Boot Short" },
-    { src: CLD.xoBootTall, label: "XO Boot Tall" },
-    { src: CLD.xoKneeHinged, label: "XO Knee Support" },
-    { src: CLD.xoBackSupport, label: "XO Back Support" },
+    { src: CLD.xoBootShortComingSoon, label: "XO Boot Short" },
+    { src: CLD.xoBootTallComingSoon, label: "XO Boot Tall" },
+    { src: CLD.xoKneeHingedComingSoon, label: "XO Knee Support" },
+    { src: CLD.xoBackComingSoon, label: "XO Back Support" },
 ];
 
-// 3D Viewer for right side
-function Viewer3D() {
-    const imgRef = useRef<HTMLImageElement>(null);
-    const stageRef = useRef<HTMLDivElement>(null);
-    const rotX = useRef(0);
-    const rotY = useRef(0);
-    const velX = useRef(0);
-    const velY = useRef(0);
-    const dragging = useRef(false);
-    const lastPos = useRef({ x: 0, y: 0 });
-    const rafRef = useRef<number>(0);
-
-    const applyTransform = useCallback(() => {
-        if (!imgRef.current) return;
-        imgRef.current.style.transform = `rotateX(${rotX.current.toFixed(2)}deg) rotateY(${rotY.current.toFixed(2)}deg)`;
-    }, []);
-
-    const inertia = useCallback(() => {
-        velX.current *= 0.88;
-        velY.current *= 0.88;
-        rotY.current += velX.current;
-        rotX.current = Math.max(-40, Math.min(40, rotX.current + velY.current));
-        applyTransform();
-        if (Math.abs(velX.current) > 0.01 || Math.abs(velY.current) > 0.01)
-            rafRef.current = requestAnimationFrame(inertia);
-    }, [applyTransform]);
-
-    const startDrag = (x: number, y: number) => {
-        dragging.current = true;
-        lastPos.current = { x, y };
-        velX.current = 0; velY.current = 0;
-        cancelAnimationFrame(rafRef.current);
-        if (stageRef.current) stageRef.current.style.cursor = "grabbing";
-    };
-    const moveDrag = (x: number, y: number) => {
-        if (!dragging.current) return;
-        velX.current = (x - lastPos.current.x) * 0.4;
-        velY.current = -(y - lastPos.current.y) * 0.4;
-        rotY.current += velX.current;
-        rotX.current = Math.max(-40, Math.min(40, rotX.current + velY.current));
-        lastPos.current = { x, y };
-        applyTransform();
-    };
-    const endDrag = () => {
-        dragging.current = false;
-        if (stageRef.current) stageRef.current.style.cursor = "grab";
-        rafRef.current = requestAnimationFrame(inertia);
-    };
-
-    // Auto slow rotate
-    useEffect(() => {
-        let id: number;
-        const autoRotate = () => {
-            if (!dragging.current) {
-                rotY.current += 0.3;
-                applyTransform();
-            }
-            id = requestAnimationFrame(autoRotate);
-        };
-        id = requestAnimationFrame(autoRotate);
-        return () => { cancelAnimationFrame(id); cancelAnimationFrame(rafRef.current); };
-    }, [applyTransform]);
-
-    return (
-        <div ref={stageRef}
-            className="relative w-full h-full flex items-center justify-center select-none"
-            style={{
-                cursor: "grab", perspective: "900px"
-            }}
-            onMouseDown={e => startDrag(e.clientX, e.clientY)}
-            onMouseMove={e => moveDrag(e.clientX, e.clientY)}
-            onMouseUp={endDrag} onMouseLeave={endDrag}
-            onTouchStart={e => startDrag(e.touches[0].clientX, e.touches[0].clientY)}
-            onTouchMove={e => moveDrag(e.touches[0].clientX, e.touches[0].clientY)}
-            onTouchEnd={endDrag}>
-            {/* Glow */}
-            <div className="absolute inset-0 pointer-events-none"
-                style={{ background: "radial-gradient(ellipse at center bottom, rgba(22,81,209,0.25) 0%, transparent 65%)" }} />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img ref={imgRef} src={CLD.xoBootTall} alt="XO Boot Tall 3D"
-                draggable={false}
-                style={{
-                    width: "82%", maxHeight: "82%", objectFit: "contain",
-                    transformStyle: "preserve-3d", willChange: "transform",
-                    filter: "drop-shadow(0 20px 60px rgba(22,81,209,0.55)) drop-shadow(0 4px 20px rgba(0,0,0,0.5))"
-                }} />
-            <div className="absolute bottom-4 inset-x-0 text-center pointer-events-none">
-                <span className="text-[10px] uppercase tracking-widest font-bold" style={{ color: "rgba(91,155,255,0.4)" }}>
-                    Drag to rotate
-                </span>
-            </div>
-        </div>
-    );
-}
-
-// Left morphing carousel
 function MorphCarousel() {
     const [current, setCurrent] = useState(0);
-    const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+    const imgRefs = useRef<(HTMLImageElement | null)[]>([]);
+    const labelRef = useRef<HTMLParagraphElement>(null);
+
+    // Preload all images first
+    useEffect(() => {
+        MORPH_IMAGES.forEach(img => {
+            const i = new window.Image();
+            i.src = img.src;
+        });
+    }, []);
+
+    // GSAP morph on current change
+    useEffect(() => {
+        imgRefs.current.forEach((el, i) => {
+            if (!el) return;
+            if (i === current) {
+                gsap.to(el, { opacity: 1, scale: 1, y: 0, duration: 0.7, ease: "power2.out" });
+            } else {
+                gsap.to(el, { opacity: 0, scale: 0.88, y: 14, duration: 0.5, ease: "power2.in" });
+            }
+        });
+        if (labelRef.current) {
+            gsap.fromTo(labelRef.current,
+                { opacity: 0, y: 6 },
+                { opacity: 1, y: 0, duration: 0.4, ease: "power2.out", delay: 0.3 }
+            );
+        }
+    }, [current]);
 
     useEffect(() => {
-        intervalRef.current = setInterval(() => {
+        const id = setInterval(() => {
             setCurrent(p => (p + 1) % MORPH_IMAGES.length);
         }, 2500);
-        return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+        return () => clearInterval(id);
     }, []);
 
     return (
         <div className="relative w-full h-full flex flex-col items-center justify-center gap-5">
-            {/* Image display */}
             <div className="relative w-full flex-1 flex items-center justify-center" style={{ minHeight: 0 }}>
+                <style>{`
+                    @keyframes jelly {
+                        0%   { transform: scale(1, 1); }
+                        25%  { transform: scale(0.97, 1.03); }
+                        50%  { transform: scale(1.03, 0.97); }
+                        75%  { transform: scale(0.99, 1.01); }
+                        100% { transform: scale(1, 1); }
+                    }
+                    .glow-jelly { animation: jelly 2.8s ease-in-out infinite; }
+                `}</style>
+                {/* Jelly glow orb behind product */}
+                <div className="glow-jelly" style={{
+                    position: "absolute", width: "55%", height: "55%", borderRadius: "50%",
+                    background: "radial-gradient(ellipse at center, rgba(91,155,255,0.38) 0%, rgba(22,81,209,0.22) 45%, transparent 70%)",
+                    filter: "blur(32px)", zIndex: 0,
+                }} />
                 {MORPH_IMAGES.map((img, i) => (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img key={i} src={img.src} alt={img.label}
+                    <img key={i}
+                        ref={el => { imgRefs.current[i] = el; }}
+                        src={img.src} alt={img.label}
                         style={{
                             position: "absolute", width: "85%", maxHeight: "85%", objectFit: "contain",
-                            opacity: current === i ? 1 : 0,
-                            transform: current === i ? "scale(1) translateY(0)" : "scale(0.92) translateY(16px)",
-                            transition: "opacity 0.6s ease, transform 0.6s ease",
-                            filter: "drop-shadow(0 20px 50px rgba(22,81,209,0.5)) drop-shadow(0 4px 16px rgba(0,0,0,0.4))",
+                            opacity: i === 0 ? 1 : 0,
+                            willChange: "transform, opacity",
+                            zIndex: 1,
+                            filter: "drop-shadow(0 0 40px rgba(91,155,255,0.8)) drop-shadow(0 20px 60px rgba(22,81,209,0.7)) drop-shadow(0 4px 20px rgba(0,0,0,0.5))",
                         }} />
                 ))}
             </div>
-            {/* Label */}
-            <p className="text-[11px] uppercase tracking-[0.35em] font-bold" style={{ color: "rgba(91,155,255,0.6)" }}>
+            <p ref={labelRef} className="text-[11px] uppercase tracking-[0.35em] font-bold" style={{ color: "rgba(91,155,255,0.6)" }}>
                 {MORPH_IMAGES[current].label}
             </p>
-            {/* Dots */}
             <div className="flex items-center gap-2">
                 {MORPH_IMAGES.map((_, i) => (
                     <button key={i} onClick={() => setCurrent(i)}
@@ -166,8 +103,10 @@ function MorphCarousel() {
 
 export default function ComingSoon() {
     const scanRef = useRef<HTMLDivElement>(null);
-    const [email, setEmail] = useState("");
-    const [submitted, setSubmitted] = useState(false);
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+    // FIX 1: mounted state for hydration-safe year rendering
+    const [mounted, setMounted] = useState(false);
+    useEffect(() => { setMounted(true); }, []);
 
     useEffect(() => {
         const scan = scanRef.current;
@@ -192,25 +131,96 @@ export default function ComingSoon() {
         gsap.to(".bracket", { opacity: 0.7, duration: 1.8, ease: "sine.inOut", yoyo: true, repeat: -1, stagger: 0.4 });
     }, []);
 
+    // ── Canvas animated background ──
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+
+        let W = canvas.width = window.innerWidth;
+        let H = canvas.height = window.innerHeight;
+        const resize = () => { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; };
+        window.addEventListener("resize", resize);
+
+        const orbs = Array.from({ length: 6 }, (_, i) => ({
+            x: Math.random() * W, y: Math.random() * H,
+            r: 180 + Math.random() * 220,
+            vx: (Math.random() - 0.5) * 0.3,
+            vy: (Math.random() - 0.5) * 0.3,
+            hue: i % 2 === 0 ? 220 : 210,
+            alpha: 0.04 + Math.random() * 0.05,
+        }));
+
+        const stars = Array.from({ length: 120 }, () => ({
+            x: Math.random() * W, y: Math.random() * H,
+            r: Math.random() * 1.2,
+            alpha: 0.2 + Math.random() * 0.6,
+            speed: 0.002 + Math.random() * 0.006,
+            offset: Math.random() * Math.PI * 2,
+        }));
+
+        let frame = 0;
+        let rafId: number;
+
+        const draw = () => {
+            rafId = requestAnimationFrame(draw);
+            ctx.clearRect(0, 0, W, H);
+            ctx.fillStyle = "#03102a";
+            ctx.fillRect(0, 0, W, H);
+
+            orbs.forEach(o => {
+                o.x += o.vx; o.y += o.vy;
+                if (o.x < -o.r) o.x = W + o.r;
+                if (o.x > W + o.r) o.x = -o.r;
+                if (o.y < -o.r) o.y = H + o.r;
+                if (o.y > H + o.r) o.y = -o.r;
+                const g = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r);
+                // FIX 2: missing closing ) in hsla
+                g.addColorStop(0, `hsla(${o.hue},70%,60%,${o.alpha * 0.7})`);
+                g.addColorStop(1, `hsla(${o.hue},80%,55%,0)`);
+                ctx.beginPath();
+                ctx.arc(o.x, o.y, o.r, 0, Math.PI * 2);
+                ctx.fillStyle = g;
+                ctx.fill();
+            });
+
+            frame++;
+            stars.forEach(st => {
+                const a = st.alpha * (0.5 + 0.5 * Math.sin(frame * st.speed + st.offset));
+                ctx.beginPath();
+                ctx.arc(st.x, st.y, st.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(180,210,255,${a})`;
+                ctx.fill();
+            });
+
+            ctx.strokeStyle = "rgba(17,17,132,0.06)";
+            ctx.lineWidth = 1;
+            for (let x = 0; x < W; x += 52) {
+                ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+            }
+            for (let y = 0; y < H; y += 52) {
+                ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+            }
+        };
+
+        draw();
+        return () => { cancelAnimationFrame(rafId); window.removeEventListener("resize", resize); };
+    }, []);
+
     return (
-        <main className="relative w-full h-screen h-[100dvh] overflow-y-auto lg:overflow-hidden bg-[#020916]">
+        // FIX 3: h-screen h-[100dvh] → style height:100dvh to avoid hydration mismatch
+        <main className="relative w-full overflow-hidden bg-[#020916]" style={{ height: "100dvh" }}>
 
-            <video src={CLD.sectionhero} autoPlay loop muted playsInline
-                className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-                style={{ opacity: 0.15, zIndex: 0 }} />
+            <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" style={{ zIndex: 0, width: "100%", height: "100%" }} />
 
             <div className="absolute inset-0 pointer-events-none" style={{
                 zIndex: 1,
-                backgroundImage: "linear-gradient(rgba(17,17,132,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.05) 1px,transparent 1px)",
-                backgroundSize: "52px 52px"
-            }} />
-            <div className="absolute inset-0 pointer-events-none" style={{
-                zIndex: 1,
-                background: "radial-gradient(ellipse at 50% 40%, transparent 25%, rgba(2,9,22,0.85) 100%)"
+                background: "radial-gradient(ellipse at 50% 40%, transparent 35%, rgba(2,9,22,0.65) 100%)"
             }} />
             <div className="center-glow absolute inset-0 pointer-events-none" style={{
                 zIndex: 1,
-                background: "radial-gradient(ellipse at 50% 50%, rgba(22,81,209,0.30) 0%, transparent 60%)", opacity: 0.18
+                background: "radial-gradient(ellipse at 50% 50%, rgba(22,81,209,0.22) 0%, transparent 60%)", opacity: 0.15
             }} />
 
             <div ref={scanRef} className="absolute inset-x-0 pointer-events-none" style={{
@@ -236,50 +246,31 @@ export default function ComingSoon() {
             ))}
 
             {/* ══ LAYOUT ══ */}
-            <div className="relative z-10 flex flex-col lg:flex-row w-full h-full px-4 md:px-8 py-6 gap-6 items-center justify-between">
-                
-                {/* LEFT — Morphing images */}
-                <div className="cs-panels relative w-full lg:w-[28%] h-[35vh] lg:h-full shrink-0"
-                    style={{ opacity: 0 }}>
-                    <div className="absolute top-4 left-5 z-10 pointer-events-none">
-                        <span className="text-[10px] uppercase tracking-[0.35em] font-bold" style={{ color: "rgba(91,155,255,0.5)" }}>
-                            X-Ortho Products
-                        </span>
-                    </div>
-                    <MorphCarousel />
-                </div>
+            <div className="relative z-10 flex flex-col lg:flex-row w-full h-full px-4 sm:px-6 md:px-12 pt-4 pb-20 lg:pt-6 lg:pb-6 gap-2 sm:gap-4 lg:gap-8 items-center">
 
-                {/* CENTER — Text and Logo */}
-                <div className="flex flex-col items-center justify-between flex-1 h-full py-2 min-w-0">
-                    
-                    {/* Top half center (Logo, text) */}
-                    <div className="flex flex-col items-center gap-4 pt-4 lg:pt-8 w-full">
+                {/* LEFT — Logo + Content */}
+                <div className="flex flex-col justify-center flex-none lg:flex-1 h-auto lg:h-full py-1 lg:py-2 min-w-0 w-full pl-5">
 
-                        {/* Logo big */}
-                        <div className="cs-logo" style={{ opacity: 0 }}>
-                            <Image src={CLD.footerLogo} alt="X-Ortho" width={380} height={280} className="object-contain"
-                                style={{ filter: "drop-shadow(0 0 50px rgba(91,155,255,0.6)) drop-shadow(0 0 100px rgba(22,81,209,0.35))" }} />
+                    <div className="flex flex-col gap-3 sm:gap-4 lg:gap-5 pt-2 lg:pt-8 items-center lg:items-start text-center lg:text-left w-full">
+
+                        {/* Logo */}
+                        <div className="cs-logo w-full max-w-[280px] sm:max-w-[340px] md:max-w-[650px] mx-auto lg:mx-0 -mt-[10px] lg:-mt-[80px]" style={{ opacity: 0 }}>
+                            <Image src={CLD.footerLogo} alt="X-Ortho" width={660} height={220} className="object-contain w-full h-auto"
+                                style={{ filter: "drop-shadow(0 0 40px rgba(91,155,255,0.5)) drop-shadow(0 0 80px rgba(22,81,209,0.3))" }} />
                         </div>
 
-                        {/* Badge */}
-                        <div className="cs-anim inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] font-bold px-4 py-1.5 rounded-full"
-                            style={{ opacity: 0, background: "rgba(22,81,209,0.15)", border: "1px solid rgba(91,155,255,0.28)", color: "#5b9bff" }}>
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#5b9bff] animate-pulse" />
-                            Coming Soon
-                        </div>
-
-                        {/* Headline — "Most" lines */}
-                        <h1 className="cs-anim font-nexa uppercase text-left leading-tight"
-                            style={{ opacity: 0, fontSize: "clamp(1.2rem, 2.5vw, 2.8rem)", fontWeight: 800, letterSpacing: "-1px" }}>
-                            <span className="block text-white/90">The </span>
+                        {/* Headline */}
+                        <h1 className="cs-anim font-nexa uppercase text-center lg:text-left leading-tight pt-2 lg:pt-10"
+                            style={{ opacity: 0, fontSize: "clamp(1.15rem, 4vw, 3.2rem)", fontWeight: 800, letterSpacing: "-1px" }}>
                             <span className="block" style={{
                                 backgroundImage: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)",
                                 WebkitBackgroundClip: "text" as const, WebkitTextFillColor: "transparent", backgroundClip: "text",
                                 filter: "drop-shadow(0 1px 0 rgba(91,155,255,0.5)) drop-shadow(0 -1px 0 rgba(0,0,30,0.6))"
                             }}>Most Advanced.</span>
                             <span className="block" style={{
-                                backgroundImage: "linear-gradient(180deg, #f0f0f0 0%, #ffffffff 20%, #e8e8e8 35%, #ffffffff 50%, #d0d0d0 65%, #e1e1e1ff 80%, #c8c8c8 100%)",
+                                backgroundImage: "linear-gradient(180deg, #f0f0f0 0%, #ffffff 20%, #e8e8e8 35%, #ffffff 50%, #d0d0d0 65%, #e1e1e1 80%, #c8c8c8 100%)",
                                 WebkitBackgroundClip: "text" as const, WebkitTextFillColor: "transparent", backgroundClip: "text",
+                                filter: "drop-shadow(0 1px 0 rgba(255,255,255,0.6)) drop-shadow(0 -1px 0 rgba(0,0,0,0.5))"
                             }}>Most Sophisticated.</span>
                             <span className="block" style={{
                                 backgroundImage: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)",
@@ -288,46 +279,53 @@ export default function ComingSoon() {
                             }}>Most Anticipated.</span>
                         </h1>
 
-                        {/* Better pills */}
-                        <div className="cs-anim flex flex-wrap justify-center gap-2 max-w-lg mt-2" style={{ opacity: 0 }}>
+                        {/* Pills */}
+                        <div className="cs-anim flex flex-wrap justify-center lg:justify-start gap-1.5 lg:gap-2 max-w-md mx-auto lg:mx-0 mt-1 lg:mt-2" style={{ opacity: 0 }}>
                             {["Better Design", "Better Quality", "Better Functionality", "Better Clinical Outcomes", "Better Financial Outcomes", "Better DME"].map((t, i) => (
-                                <span key={i} className="text-[9px] uppercase tracking-wider font-bold px-3 py-1.5 rounded-full"
+                                <span key={i} className="text-[11px] lg:text-[12px] uppercase tracking-wider font-bold px-3 py-1.5 lg:px-4 lg:py-2 rounded-full"
                                     style={{
                                         background: "linear-gradient(135deg, rgba(22,81,209,0.20), rgba(6,10,35,0.7))",
-                                        border: "1px solid rgba(91,155,255,0.22)", color: "rgba(91,155,255,0.85)", backdropFilter: "blur(8px)"
+                                        border: "1px solid rgba(91,155,255,0.22)", color: "rgba(91,155,255,0.9)", backdropFilter: "blur(8px)"
                                     }}>
                                     {t}
                                 </span>
                             ))}
                         </div>
                     </div>
-
-                    {/* BOTTOM — Contact */}
-                    <div className="flex flex-col items-center gap-3 pb-2 pt-6">
-                        <p className="text-white/30 text-[11px] text-center max-w-md">
-                            Email{" "}
-                            <a href="mailto:info@xortho.com" className="text-[#5b9bff]/70 hover:text-[#5b9bff] transition-colors font-semibold">info@xortho.com</a>
-                            {" "}or call{" "}
-                            <a href="tel:8559678461" className="text-[#5b9bff]/70 hover:text-[#5b9bff] transition-colors font-semibold">855.XORTHO1</a>
-                            <br className="hidden md:block"/> for a customized proposal · HCPCS coding · pricing · samples
-                        </p>
-
-                        <p className="text-[9px] uppercase tracking-[0.35em] font-bold mt-2" style={{ color: "rgba(255,255,255,0.12)" }}>
-                            © {new Date().getFullYear()} X-Ortho · TLC DME LLC
-                        </p>
-                    </div>
                 </div>
 
-                {/* RIGHT — 3D Viewer */}
-                <div className="cs-panels relative w-full lg:w-[28%] h-[35vh] lg:h-full shrink-0" style={{ opacity: 0 }}>
-                    <div className="absolute top-4 left-5 z-10 pointer-events-none">
-                        <span className="text-[10px] uppercase tracking-[0.35em] font-bold" style={{ color: "rgba(91,155,255,0.5)" }}>
-                            XO Boot · Interactive 3D
+                {/* RIGHT — Morphing carousel */}
+                <div className="cs-panels relative w-full flex-1 lg:w-[42%] lg:h-[85vh] min-h-0 shrink-0 pr-0 lg:pr-[30px] mt-2 lg:mt-0" style={{ opacity: 0 }}>
+                    <div className="absolute top-0 lg:top-4 left-0 lg:left-5 w-full lg:w-auto text-center lg:text-left z-10 pointer-events-none">
+                        <span className="text-[10px] uppercase tracking-[0.35em] font-bold pl-0 lg:pl-[240px]" style={{ color: "rgba(91,155,255,0.5)" }}>
+                            X-Ortho Products
                         </span>
                     </div>
-                    <Viewer3D />
+                    <MorphCarousel />
                 </div>
 
+            </div>
+
+            {/* Contact bottom */}
+            <div className="absolute bottom-4 left-0 right-0 z-20 flex flex-col items-center justify-center gap-1.5 w-full text-center pointer-events-auto pb-2 px-4">
+                <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-white/40 text-[10px] sm:text-[11px] px-2">
+                    <span className="whitespace-nowrap">
+                        Email <a href="mailto:info@xortho.com" className="text-[#5b9bff]/80 hover:text-[#5b9bff] transition-colors font-semibold">info@xortho.com</a>
+                    </span>
+                    <span className="hidden sm:inline">or call</span>
+                    <span className="sm:hidden text-white/20">|</span>
+                    <span className="whitespace-nowrap">
+                        <a href="tel:8559678461" className="text-[#5b9bff]/80 hover:text-[#5b9bff] transition-colors font-semibold">855.XORTHO1</a>
+                    </span>
+                    <span className="hidden sm:inline">·</span>
+                    <span className="sm:hidden text-white/20">|</span>
+                    <span className="whitespace-nowrap">HCPCS coding · pricing · samples</span>
+                </div>
+                {mounted && (
+                    <p className="text-[8px] sm:text-[9px] uppercase tracking-[0.35em] font-bold mt-1" style={{ color: "rgba(255,255,255,0.15)" }}>
+                        © {new Date().getFullYear()} X-Ortho · TLC DME LLC
+                    </p>
+                )}
             </div>
         </main>
     );

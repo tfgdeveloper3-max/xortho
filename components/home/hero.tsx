@@ -157,9 +157,19 @@ export default function Hero({ noAnimation = false, playAnimation = false }: Her
         className="relative w-full min-h-screen flex items-center bg-black overflow-hidden"
         style={{ opacity: 1 }}
       >
-        <video src={CLD.sectionhero} autoPlay loop muted playsInline
+        <video src={CLD.heroBg} autoPlay loop muted playsInline
           className="absolute inset-0 w-full h-full object-cover opacity-80" />
         <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/20 to-transparent z-10 pointer-events-none" />
+        {/* Strong dark overlay */}
+        <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 9, background: "rgba(2,9,22,0.65)" }} />
+        {/* Left side stronger dark */}
+        <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 9, background: "linear-gradient(to right, rgba(2,9,22,0.85) 0%, rgba(2,9,22,0.4) 50%, rgba(2,9,22,0.2) 100%)" }} />
+        {/* Grid */}
+        <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 10, backgroundImage: "linear-gradient(rgba(17,17,132,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.04) 1px,transparent 1px)", backgroundSize: "52px 52px" }} />
+        {/* Blue glow center */}
+        <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 10, background: "radial-gradient(ellipse at 50% 50%, rgba(22,81,209,0.12) 0%, transparent 65%)" }} />
+        {/* Top edge */}
+        <div className="absolute top-0 inset-x-0 h-px pointer-events-none" style={{ zIndex: 11, background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.4), transparent)" }} />
 
         {/* MAIN LAYOUT */}
         <div className="relative z-20 w-full flex items-center justify-between">
@@ -187,16 +197,8 @@ export default function Hero({ noAnimation = false, playAnimation = false }: Her
                   Trust Loyalty
                 </span>
               </span>
-              <span ref={line4Ref} className="block" style={{ opacity: 0 }}>
-                <span style={{
-                  backgroundImage: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)",
-                  WebkitBackgroundClip: "text" as string,
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                  filter: "drop-shadow(0 1px 0 rgba(91,155,255,0.5)) drop-shadow(0 -1px 0 rgba(0,0,30,0.6)) drop-shadow(0 2px 4px rgba(0,0,0,0.5))"
-                }}>
-                  Commitment
-                </span>
+              <span ref={line4Ref} className="block" style={{ opacity: 0, background: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)", WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.9)) drop-shadow(0 0 16px rgba(22,81,209,0.4))" }}>
+                Commitment
               </span>
             </h1>
 

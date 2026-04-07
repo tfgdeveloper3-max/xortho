@@ -160,10 +160,16 @@ export default function KneeBraceSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full min-h-screen flex items-center bg-white"
-      style={{ overflow: "hidden" }}
+      className="relative w-full min-h-screen flex items-center"
+      style={{ overflow: "hidden", background: "#020916" }}
     >
-      <div className="absolute bottom-0 w-full h-[55%] md:top-0 md:right-0 md:w-[65%] md:h-full bg-[#F2F4F8] z-10 md:[clip-path:polygon(29%_0,100%_0,100%_100%,0%_100%)] pointer-events-none" />
+      <div className="absolute bottom-0 w-full h-[55%] md:top-0 md:right-0 md:w-[65%] md:h-full z-10 md:[clip-path:polygon(29.3%_0,100%_0,100%_100%,0%_100%)] pointer-events-none"
+        style={{ background: "linear-gradient(135deg, rgba(6,14,50,0.95) 0%, rgba(12,26,82,0.90) 100%)" }} />
+      {/* Grid */}
+      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, backgroundImage: "linear-gradient(rgba(17,17,132,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.05) 1px,transparent 1px)", backgroundSize: "52px 52px" }} />
+      {/* Blue center glow */}
+      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "radial-gradient(ellipse at 65% 50%, rgba(22,81,209,0.18) 0%, transparent 60%)" }} />
+
       <div ref={painGlowRef} className="absolute inset-0 pointer-events-none z-0"
         style={{ opacity: 0, background: "radial-gradient(ellipse at 30% 55%, rgba(255,80,0,0.18) 0%, rgba(255,80,0,0.06) 50%, transparent 75%)" }} />
       <div ref={healedGlowRef} className="absolute inset-0 pointer-events-none z-0"
@@ -200,7 +206,12 @@ export default function KneeBraceSection() {
             className="flex flex-col gap-6 md:pl-10 py-20 relative z-20 px-5 md:px-[100px]"
             style={{}}
           >
-            <span className="text-[10px] uppercase tracking-[0.35em] font-bold block mb-1" style={{ color: "rgba(22,81,209,0.45)" }}>X-Ortho Product</span>
+            <span className="text-[10px] uppercase tracking-[0.35em] font-bold block mb-1" style={{
+              opacity: 0,
+              background: "linear-gradient(145deg, rgba(8,12,42,0.96) 0%, rgba(14,24,72,0.88) 100%)",
+              border: "1px solid rgba(91,155,255,0.12)",
+              boxShadow: "0 4px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(91,155,255,0.08)",
+            }}>X-Ortho Product</span>
             <span className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-bold px-3 py-1.5 rounded-full transition-all duration-500 w-fit"
               style={{
                 color: labelColor,
@@ -221,6 +232,10 @@ export default function KneeBraceSection() {
 
             <div
               className="flex flex-col text-base md:text-xl leading-relaxed gap-1 transition-all duration-500"
+              style={{
+                color: isPain ? "rgba(239,68,68,0.85)" : isHealing ? "rgba(34,197,94,0.85)" : "#4A5568",
+                textShadow: "none",
+              }}
             >
               {isPain && (
                 <p className="text-sm font-semibold text-red-500 mb-2 flex items-center gap-2">
@@ -234,21 +249,21 @@ export default function KneeBraceSection() {
                   Recovery in progress — brace applied
                 </p>
               )}
-              <p>An advanced pulley system allows for tailored compression.</p>
-              <p>Low profile design allows support to fit comfortably under clothing.</p>
-              <p>Vertical stays provide structural integrity while allowing flexibility.</p>
-              <p>A simple strap design allows for a universal fit.</p>
-              <p>Optimal Gel Cryo Pad available for effective cold therapy.</p>
+              <p className="text-white/70">An advanced pulley system allows for tailored compression.</p>
+              <p className="text-white/70">Low profile design allows support to fit comfortably under clothing.</p>
+              <p className="text-white/70">Vertical stays provide structural integrity while allowing flexibility.</p>
+              <p className="text-white/70">A simple strap design allows for a universal fit.</p>
+              <p className="text-white/70">Optimal Gel Cryo Pad available for effective cold therapy.</p>
             </div>
 
             <div className="pt-4"><MyButton /></div>
 
             <div className="flex flex-col gap-2 mt-2">
               <div className="flex justify-between text-xs text-gray-400 uppercase tracking-widest">
-                <span style={{ color: isPain ? "#ef4444" : "#9ca3af" }}>Pain</span>
-                <span style={{ color: isHealing ? "#22c55e" : "#9ca3af" }}>Recovery</span>
+                <span style={{ color: isPain ? "#ef4444" : "rgba(255,255,255,0.3)" }}>Pain</span>
+                <span style={{ color: isHealing ? "#22c55e" : "rgba(255,255,255,0.3)" }}>Recovery</span>
               </div>
-              <div className="w-full h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(17,17,132,0.08)" }}>
+              <div className="w-full h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(91,155,255,0.12)" }}>
                 <div ref={indicatorRef} className="h-full rounded-full"
                   style={{ width: "0%", background: "linear-gradient(to right, #ef4444, #f97316, #eab308, #22c55e)" }} />
               </div>

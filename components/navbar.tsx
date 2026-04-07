@@ -11,7 +11,7 @@ const productLinks = [
     id: "xboot",
     title: "XO Boot Pneumatic",
     subtitle: "Better DME. Better Functionality. Better Outcomes.",
-    image: CLD.XoBootHero,
+    image: CLD.shoe,
     href: "/products/xboot",
     tag: "Pneumatic Walking Boot",
     description: "World class aerodynamic shell — short leg cast-like stability. Revolutionary pneumatic compression with real rocker sole.",
@@ -20,7 +20,7 @@ const productLinks = [
     id: "knee",
     title: "XO Knee Support ROM Cryo",
     subtitle: "Better DME. Better Functionality. Better Outcomes.",
-    image: CLD.kneeProduct2,
+    image: CLD.kneeFront,
     href: "/products/knee",
     tag: "Knee Support ROM Cryo",
     description: "Dual-Axis hinge mirrors natural knee movement. Removable Cryo Gel Pad — PDAC approved, HCPCS L1832 & L1833.",
@@ -81,9 +81,9 @@ export default function Navbar() {
 
   const navLinks = [
     { label: "Home", href: "/", hasDropdown: false },
-    { label: "About", href: "/about", hasDropdown: false },
-    { label: "Products", href: "/products", hasDropdown: true },
-    { label: "Contact", href: "/contact", hasDropdown: false },
+    { label: "About", href: "#about", hasDropdown: false },
+    { label: "Products", href: "#products", hasDropdown: true },
+    { label: "Contact", href: "#contact", hasDropdown: false },
   ]
 
   return (
@@ -215,9 +215,13 @@ export default function Navbar() {
       </div>
 
       {/* NAVBAR */}
-      <div id="main-navbar" className={`fixed top-0 left-0 w-full z-50 transition-all duration-400 ${isScrolled && !productsOpen ? "bg-white/95 backdrop-blur-md shadow-md py-4" : "bg-transparent py-3"
+      <div id="main-navbar" className={`fixed top-0 left-0 w-full z-50 transition-all duration-400 ${"bg-transparent py-0"
         }`}>
-        <div className="w-full px-20 sm:px-24 md:px-28 lg:px-32 flex items-center justify-between gap-4">
+        <div className="w-full px-20 sm:px-24 md:px-28 lg:px-32 flex items-center justify-between gap-4 py-3"
+          style={isScrolled && !productsOpen ? {
+            background: "#020916",
+            borderBottom: "1px solid rgba(91,155,255,0.25)",
+          } : {}}>
 
           {/* Logo */}
           <button onClick={() => router.push("/")}
@@ -233,14 +237,7 @@ export default function Navbar() {
                 alt="Xortho Logo"
                 width={160} height={160}
                 className="w-full h-auto object-contain transition-all duration-300"
-                style={{ opacity: isScrolled && !productsOpen ? 0 : 1, position: isScrolled && !productsOpen ? "absolute" : "relative" }}
-              />
-              <Image
-                src={CLD.xo}
-                alt="XO"
-                width={80} height={80}
-                className="w-full h-auto object-contain transition-all duration-300"
-                style={{ opacity: isScrolled && !productsOpen ? 1 : 0, position: isScrolled && !productsOpen ? "relative" : "absolute", top: 0, left: 0 }}
+                style={{ filter: "drop-shadow(0 0 40px rgba(91,155,255,0.7)) drop-shadow(0 0 80px rgba(22,81,209,0.45))" }}
               />
             </div>
           </button>
@@ -253,7 +250,7 @@ export default function Navbar() {
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}>
                   <button onClick={handleProductsClick} className={`relative flex items-center gap-1.5 px-4 py-2 text-sm font-semibold tracking-wide uppercase transition-all duration-300 cursor-pointer
-                    ${productsOpen ? "text-[#5b9bff]" : isScrolled ? "text-[#1a1a2e] hover:text-[#1651D1]" : "text-white/90 hover:text-white"}`}>
+                    ${productsOpen ? "text-[#5b9bff]" : isScrolled ? "text-white/80 hover:text-white" : "text-white/90 hover:text-white"}`}>
                     {link.label}
                     <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${productsOpen ? "rotate-180" : ""}`} />
                     <span className="absolute bottom-1 left-4 right-8 h-[2px] rounded-full transition-transform duration-300 origin-left"
@@ -264,10 +261,10 @@ export default function Navbar() {
                 <button key={link.label}
                   onClick={() => handleNavClick(link.href)}
                   className={`relative px-4 py-2 text-sm font-semibold tracking-wide uppercase transition-all duration-300 group
-                    ${productsOpen ? "text-white/40 hover:text-white" : isScrolled ? "text-[#1a1a2e] hover:text-[#1651D1]" : "text-white/90 hover:text-white"}`}>
+                    ${productsOpen ? "text-white/40 hover:text-white" : isScrolled ? "text-white/80 hover:text-white" : "text-white/90 hover:text-white"}`}>
                   {link.label}
                   <span className="absolute bottom-1 left-4 right-4 h-[2px] rounded-full scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"
-                    style={{ background: isScrolled && !productsOpen ? "#1651D1" : "white" }} />
+                    style={{ background: "#5b9bff" }} />
                 </button>
               )
             )}
@@ -277,12 +274,12 @@ export default function Navbar() {
           <button onClick={() => setMobileOpen(!mobileOpen)}
             className="md:hidden flex items-center justify-center w-9 h-9 rounded-full transition-all duration-300"
             style={{
-              background: isScrolled ? "rgba(22,81,209,0.1)" : "rgba(255,255,255,0.15)",
-              border: isScrolled ? "1px solid rgba(22,81,209,0.3)" : "1px solid rgba(255,255,255,0.3)"
+              background: "rgba(22,81,209,0.15)",
+              border: "1px solid rgba(91,155,255,0.3)"
             }}>
             {mobileOpen
-              ? <X className="w-4 h-4" style={{ color: isScrolled ? "#1651D1" : "white" }} />
-              : <Menu className="w-4 h-4" style={{ color: isScrolled ? "#1651D1" : "white" }} />}
+              ? <X className="w-4 h-4" style={{ color: "#5b9bff" }} />
+              : <Menu className="w-4 h-4" style={{ color: "#5b9bff" }} />}
           </button>
         </div>
       </div>
@@ -337,4 +334,4 @@ export default function Navbar() {
       </div>
     </>
   )
-} 
+}

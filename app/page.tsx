@@ -8,7 +8,7 @@ import StatsStrip from "@/components/home/stats-strip";
 import WhyXOrtho from "@/components/home/why-xortho";
 import XbootSection from "@/components/home/xboot-section";
 import KneeBraceSection from "@/components/home/knee-brace-section";
-import XOSection from "@/components/home/xo-section";
+// import XOSection from "@/components/home/xo-section";
 import CTASection from "@/components/home/cta-section";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
@@ -46,7 +46,7 @@ export default function Home() {
           <KneeBraceSection />
           <StatsStrip />
           <WhyXOrtho />
-          <XOSection />
+          {/* <XOSection /> */}
           <div className="bg-white" style={{ minHeight: "100vh" }}>
             <CTASection />
             <Footer />
