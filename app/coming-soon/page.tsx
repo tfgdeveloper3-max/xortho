@@ -263,23 +263,39 @@ export default function ComingSoon() {
         gsap.to(".bracket", { opacity: 0.7, duration: 1.8, ease: "sine.inOut", yoyo: true, repeat: -1, stagger: 0.4 });
 
         // ── SEQUENTIAL TOP-TO-BOTTOM SILVER SWEEP ──
-        gsap.set(".better-pill-sweep", { top: "-100%" });
         gsap.set(".better-pill-text", { color: "rgba(147, 197, 253, 0.9)" });
 
-        const pillTl = gsap.timeline({ repeat: -1, repeatDelay: 2.5 });
+        const pillTl = gsap.timeline({ repeat: -1, repeatDelay: 3.5 });
 
+        gsap.set(".better-pill-sweep", { top: "-200%" });
         const pills = gsap.utils.toArray<Element>(".better-pill");
         const sweeps = gsap.utils.toArray<Element>(".better-pill-sweep");
         const texts = gsap.utils.toArray<Element>(".better-pill-text");
 
         pills.forEach((pill, i) => {
             const subTl = gsap.timeline();
-            subTl.to(sweeps[i], { top: "100%", duration: 0.8, ease: "power2.inOut" });
-            subTl.to(texts[i], { color: "rgba(255, 255, 255, 1)", duration: 0.2 }, "<0.2");
-            subTl.to(texts[i], { color: "rgba(147, 197, 253, 0.9)", duration: 0.4 }, ">0.1");
-            subTl.set(sweeps[i], { top: "-100%" });
-
-            pillTl.add(subTl, i > 0 ? "+=0.2" : "0");
+            // Sweep top to bottom
+            subTl.to(sweeps[i], { top: "200%", duration: 1.2, ease: "sine.inOut" });
+            // After sweep: pill turns silver, text white
+            subTl.to(pills[i], {
+                background: "linear-gradient(135deg, rgba(180,180,180,0.30) 0%, rgba(120,120,120,0.20) 100%)",
+                border: "1px solid rgba(200,200,200,0.45)",
+                boxShadow: "inset 0 1px 0 rgba(255,255,255,0.12)",
+                duration: 0.4,
+                ease: "power2.out",
+            }, "-=0.3");
+            subTl.to(texts[i], { color: "#dde6f0", duration: 0.4 }, "<");
+            subTl.set(sweeps[i], { top: "-200%" });
+            pillTl.add(subTl, i > 0 ? "+=0.35" : "0");
+        });
+        // On repeat: reset all pills back to default state
+        pillTl.eventCallback("onRepeat", () => {
+            (pills as Element[]).forEach((p) => gsap.set(p, {
+                background: "linear-gradient(135deg, rgba(22,81,209,0.15), rgba(6,10,35,0.6))",
+                border: "1px solid rgba(91,155,255,0.3)",
+                boxShadow: "none",
+            }));
+            (texts as Element[]).forEach((t) => gsap.set(t, { color: "rgba(147, 197, 253, 0.9)" }));
         });
 
     }, []);
@@ -318,7 +334,6 @@ export default function ComingSoon() {
             <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" style={{ zIndex: 0, width: "100%", height: "100%" }} />
             <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "radial-gradient(ellipse at 50% 40%, transparent 35%, rgba(2,9,22,0.65) 100%)" }} />
             <div className="center-glow absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "radial-gradient(ellipse at 50% 50%, rgba(22,81,209,0.22) 0%, transparent 60%)", opacity: 0.15 }} />
-            <div ref={scanRef} className="absolute inset-x-0 pointer-events-none" style={{ zIndex: 2, height: 1, background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.6) 30%, rgba(91,155,255,0.9) 50%, rgba(91,155,255,0.6) 70%, transparent)", boxShadow: "0 0 12px rgba(91,155,255,0.5)", opacity: 0 }} />
             <div className="absolute top-0 inset-x-0 h-px pointer-events-none" style={{ zIndex: 3, background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.6), transparent)" }} />
             <div className="absolute bottom-0 inset-x-0 h-px pointer-events-none" style={{ zIndex: 3, background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.3), transparent)" }} />
 
@@ -332,19 +347,20 @@ export default function ComingSoon() {
 
             <CornerImages onProductClick={setActiveProduct} />
 
-            <div className="absolute top-[58%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-[10] text-center cs-anim pointer-events-none select-none" style={{ opacity: 0 }}>
-                <div className="flex flex-col items-center gap-2 sm:gap-3 md:gap-4">
+            <div className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-[10] text-center cs-anim pointer-events-none select-none" style={{ opacity: 0 }}>
+                <div className="grid grid-cols-2 gap-2 sm:gap-3" style={{ maxWidth: "min(90vw, 600px)" }}>
                     {["Better Design", "Better Quality", "Better Functionality", "Better Clinical Outcomes", "Better Financial Outcomes", "Better DME"].map((t, i) => (
-                        <span key={i} className="better-pill relative overflow-hidden text-[20px] sm:text-xs md:text-lg uppercase tracking-[0.15em] font-bold px-5 py-2 rounded-full whitespace-nowrap"
+                        <span key={i} className="better-pill relative overflow-hidden uppercase tracking-[0.1em] font-bold px-4 py-4 sm:px-5 sm:py-2.5 rounded-full text-center"
                             style={{
-                                background: "linear-gradient(135deg, rgba(22,81,209,0.15), rgba(6,10,35,0.6))",
-                                border: "1px solid rgba(91, 155, 255, 0.6)",
-                                boxShadow: "0 0 15px rgba(91,155,255, 0.5), 0 0 30px rgba(91,155,255, 0.2), inset 0 0 15px rgba(91,155,255, 0.1)",
-                                backdropFilter: "blur(10px)",
-                                color: "rgba(147, 197, 253, 0.9)",
+                                background: "linear-gradient(135deg, rgba(22,81,209,0.18) 0%, rgba(6,10,35,0.55) 100%)",
+                                border: "1px solid rgba(91,155,255,0.45)",
+                                boxShadow: "0 0 12px rgba(91,155,255,0.25), inset 0 1px 0 rgba(255,255,255,0.08)",
+                                backdropFilter: "blur(14px)",
+                                color: "rgba(147,197,253,0.95)",
+                                whiteSpace: "nowrap" as const,
                             }}>
-                            <span className="better-pill-text relative z-10">{t}</span>
-                            <span className="better-pill-sweep absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(180deg, transparent 0%, rgba(192,192,192,0.4) 35%, rgba(255,255,255,0.9) 50%, rgba(192,192,192,0.4) 65%, transparent 100%)", top: "-100%" }}></span>
+                            <span className="better-pill-text relative z-10" style={{ fontSize: "clamp(14px,1.1vw,11px)", letterSpacing: "0.12em" }}>{t}</span>
+                            <span className="better-pill-sweep absolute inset-x-0 pointer-events-none" style={{ height: "200%", top: "-200%", background: "linear-gradient(180deg, transparent 0%, rgba(180,180,180,0.15) 20%, rgba(220,220,220,0.55) 40%, rgba(255,255,255,0.85) 50%, rgba(220,220,220,0.55) 60%, rgba(180,180,180,0.15) 80%, transparent 100%)" }}></span>
                         </span>
                     ))}
                 </div>
