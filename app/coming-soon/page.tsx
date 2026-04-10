@@ -244,7 +244,6 @@ function CornerImages({ onProductClick }: { onProductClick: (id: ProductId) => v
 
 // ── MAIN COMING SOON ──
 export default function ComingSoon() {
-    const scanRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [mounted, setMounted] = useState(false);
     const [activeProduct, setActiveProduct] = useState<ProductId | null>(null);
@@ -252,10 +251,6 @@ export default function ComingSoon() {
     useEffect(() => { setMounted(true); }, []);
 
     useEffect(() => {
-        const scan = scanRef.current;
-        if (scan) {
-            gsap.fromTo(scan, { top: "0%", opacity: 0 }, { top: "100%", opacity: 0.5, duration: 4, ease: "none", repeat: -1, repeatDelay: 2, onRepeat: () => { gsap.set(scan, { top: "0%", opacity: 0 }); } });
-        }
         const tl = gsap.timeline({ delay: 0.05 });
         tl.fromTo(".cs-logo", { opacity: 0, y: -20, filter: "blur(6px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.4, ease: "expo.out" });
         tl.fromTo(".cs-anim", { opacity: 0, y: 16, filter: "blur(4px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.35, ease: "expo.out", stagger: 0.04 }, "-=0.3");
@@ -347,10 +342,10 @@ export default function ComingSoon() {
 
             <CornerImages onProductClick={setActiveProduct} />
 
-            <div className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-[10] text-center cs-anim pointer-events-none select-none" style={{ opacity: 0 }}>
-                <div className="grid grid-cols-2 gap-2 sm:gap-3" style={{ maxWidth: "min(90vw, 600px)" }}>
+            <div className="absolute top-[34%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-[10] text-center cs-anim pointer-events-none select-none" style={{ opacity: 0 }}>
+                <div className="grid grid-cols-2 gap-2 sm:gap-3" style={{ maxWidth: "min(90vw, 560px)" }}>
                     {["Better Design", "Better Quality", "Better Functionality", "Better Clinical Outcomes", "Better Financial Outcomes", "Better DME"].map((t, i) => (
-                        <span key={i} className="better-pill relative overflow-hidden uppercase tracking-[0.1em] font-bold px-4 py-4 sm:px-5 sm:py-2.5 rounded-full text-center"
+                        <span key={i} className="better-pill relative overflow-hidden uppercase tracking-[0.1em] font-bold px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-center"
                             style={{
                                 background: "linear-gradient(135deg, rgba(22,81,209,0.18) 0%, rgba(6,10,35,0.55) 100%)",
                                 border: "1px solid rgba(91,155,255,0.45)",
@@ -359,28 +354,43 @@ export default function ComingSoon() {
                                 color: "rgba(147,197,253,0.95)",
                                 whiteSpace: "nowrap" as const,
                             }}>
-                            <span className="better-pill-text relative z-10" style={{ fontSize: "clamp(14px,1.1vw,11px)", letterSpacing: "0.12em" }}>{t}</span>
+                            <span className="better-pill-text relative z-10" style={{ fontSize: "clamp(7px,1.1vw,10px)", letterSpacing: "0.12em" }}>{t}</span>
                             <span className="better-pill-sweep absolute inset-x-0 pointer-events-none" style={{ height: "200%", top: "-200%", background: "linear-gradient(180deg, transparent 0%, rgba(180,180,180,0.15) 20%, rgba(220,220,220,0.55) 40%, rgba(255,255,255,0.85) 50%, rgba(220,220,220,0.55) 60%, rgba(180,180,180,0.15) 80%, transparent 100%)" }}></span>
                         </span>
                     ))}
                 </div>
-            </div>
 
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center justify-center gap-1.5 w-auto text-center pointer-events-auto pb-2 px-4">
-                <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-white/40 text-[10px] sm:text-[11px] px-2">
-                    <span className="whitespace-nowrap">Email <a href="mailto:info@xortho.com" className="text-[#5b9bff]/80 hover:text-[#5b9bff] transition-colors font-semibold">info@xortho.com</a></span>
-                    <span className="hidden sm:inline">or call</span>
-                    <span className="sm:hidden text-white/20">|</span>
-                    <span className="whitespace-nowrap"><a href="tel:8559678461" className="text-[#5b9bff]/80 hover:text-[#5b9bff] transition-colors font-semibold">855.XORTHO1</a></span>
-                    <span className="hidden sm:inline">·</span>
-                    <span className="sm:hidden text-white/20">|</span>
-                    <span className="whitespace-nowrap">HCPCS coding · pricing · samples</span>
+                {/* Video below pills — fits inside 100dvh */}
+                <div className="absolute left-1/2 -translate-x-1/2 z-[10]" style={{ top: "calc(44% + 100px)", width: "min(70vw, 460px)" }}>
+                    <div className="relative w-full rounded-xl overflow-hidden"
+                        style={{
+                            border: "1px solid rgba(91,155,255,0.20)",
+                            boxShadow: "0 0 24px rgba(22,81,209,0.18), 0 0 48px rgba(22,81,209,0.08)",
+                            height: "min(32vh, 260px)",
+                        }}>
+                        <video src={CLD.comingsoonpreview} autoPlay loop muted playsInline
+                            className="w-full h-full object-cover" />
+                        <div className="absolute inset-0 pointer-events-none"
+                            style={{ background: "linear-gradient(to bottom, rgba(2,9,22,0.1) 0%, transparent 30%, transparent 70%, rgba(2,9,22,0.3) 100%)" }} />
+                    </div>
                 </div>
-                {mounted && (
-                    <p className="text-[8px] sm:text-[9px] uppercase tracking-[0.35em] font-bold mt-1" style={{ color: "rgba(255,255,255,0.15)" }}>
-                        © {new Date().getFullYear()} X-Ortho · TLC DME LLC
-                    </p>
-                )}
+
+                <div className="absolute top-[270%] bottom-0 left-0 right-0 z-20 flex flex-col items-center justify-center gap-1 w-full text-center pointer-events-auto py-3 px-4">
+                    <div className="flex w-full overflow-visible items-center justify-center gap-x-1 sm:gap-x-2 text-white/40 text-[8px] min-[400px]:text-[9px] sm:text-[11px] whitespace-nowrap">
+                        <span>Email <a href="mailto:info@xortho.com" className="text-[#5b9bff]/80 hover:text-[#5b9bff] transition-colors font-semibold">info@xortho.com</a></span>
+                        <span className="hidden sm:inline">or call</span>
+                        <span className="sm:hidden text-white/20">|</span>
+                        <span><a href="tel:8559678461" className="text-[#5b9bff]/80 hover:text-[#5b9bff] transition-colors font-semibold">855.XORTHO1</a></span>
+                        <span className="hidden sm:inline">·</span>
+                        <span className="sm:hidden text-white/20">|</span>
+                        <span>HCPCS coding · pricing · samples</span>
+                    </div>
+                    {mounted && (
+                        <p className="text-[8px] sm:text-[9px] uppercase tracking-[0.35em] font-bold mt-1" style={{ color: "rgba(255,255,255,0.15)" }}>
+                            © {new Date().getFullYear()} X-Ortho · TLC DME LLC
+                        </p>
+                    )}
+                </div>
             </div>
         </main>
     );

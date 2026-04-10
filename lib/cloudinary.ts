@@ -71,6 +71,8 @@ export const CLD = {
     trust: cldVideo("Trust"),
     productPreview: cldVideo("Product-Preview"),
 
+    comingsoonpreview: cldVideo("comingsoonpreview"),
+
 
     // Xboot real product images
     xoStraps: cldImg("straps"),
