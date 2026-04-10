@@ -5,20 +5,18 @@ import gsap from "gsap";
 import Image from "next/image";
 import { CLD } from "@/lib/cloudinary";
 
-// ── PDF-exact product data ──
 const PRODUCTS = {
     "boot-short": {
-        name: "XO Boot Pneumatic",
-        sub: "Short Walker",
-        image: CLD.xoBootShort,
+        name: "XO Boot Pneumatic", sub: "Short Walker", image: CLD.xoBootShort,
         tagline: "Better Design. Better Engineering. Better Quality.\nBetter Functionality. Better Patient Experience.\nBetter Outcomes. Better DME.",
+
         section1: {
             title: "World Class Aerodynamic Structure",
             body: "Technologically advanced aerodynamic & ergonomic engineering enhances structural integrity generating cast like stability & protection. Crafted with innovative materials to reduce weight & allow struts to flex, combined with a calf adjustment function to adapt to various anatomical differences. Safe step rocker absorbs shock & offloads pressure generating a fluid natural gait with increased traction control.",
             features: [
-                { img: CLD.xoShell, title: "Flex Strut Armor", desc: "Flexible Lightweight\nDurable Protection" },
-                { img: CLD.xoFrontView, title: "Anterior Shield", desc: "Removeable Pliable\nDorsal Protection" },
-                { img: CLD.xoCage, title: "Posterior Calf Adjustment", desc: "Accommodates Larger\nWider Lower Legs" },
+                { img: CLD.xoCage, title: "Flex Strut Armor", desc: "Flexible Lightweight\nDurable Protection" },
+                { img: CLD.xoLiner, title: "Air Chamber System", desc: "Compartmentalized\nCustomization" },
+                { img: CLD.xoFrontView, title: "Calf Adjustment", desc: "Accommodates Larger\nWider Lower Legs" },
                 { img: CLD.xoRocker, title: "Safe Step Rocker", desc: "Shock Absorption\nFluid Heel Toe Gait" },
             ],
         },
@@ -34,17 +32,15 @@ const PRODUCTS = {
         },
     },
     "boot-tall": {
-        name: "XO Boot Pneumatic",
-        sub: "Tall Walker",
-        image: CLD.xoBootTall,
+        name: "XO Boot Pneumatic", sub: "Tall Walker", image: CLD.xoBootTall,
         tagline: "Better Design. Better Engineering. Better Quality.\nBetter Functionality. Better Patient Experience.\nBetter Outcomes. Better DME.",
         section1: {
             title: "World Class Aerodynamic Structure",
             body: "Technologically advanced aerodynamic & ergonomic engineering enhances structural integrity generating cast like stability & protection. Crafted with innovative materials to reduce weight & allow struts to flex, combined with a calf adjustment function to adapt to various anatomical differences. Safe step rocker absorbs shock & offloads pressure generating a fluid natural gait with increased traction control.",
             features: [
-                { img: CLD.xoShell, title: "Flex Strut Armor", desc: "Flexible Lightweight\nDurable Protection" },
-                { img: CLD.xoFrontView, title: "Anterior Shield", desc: "Removeable Pliable\nDorsal Protection" },
-                { img: CLD.xoCage, title: "Posterior Calf Adjustment", desc: "Accommodates Larger\nWider Lower Legs" },
+                { img: CLD.xoCage, title: "Flex Strut Armor", desc: "Flexible Lightweight\nDurable Protection" },
+                { img: CLD.xoLiner, title: "Air Chamber System", desc: "Compartmentalized\nCustomization" },
+                { img: CLD.xoFrontView, title: "Calf Adjustment", desc: "Accommodates Larger\nWider Lower Legs" },
                 { img: CLD.xoRocker, title: "Safe Step Rocker", desc: "Shock Absorption\nFluid Heel Toe Gait" },
             ],
         },
@@ -59,61 +55,9 @@ const PRODUCTS = {
             ],
         },
     },
-    "knee": {
-        name: "XO Knee Support",
-        sub: "ROM Cryo",
-        image: CLD.xoKneeHinged,
-        tagline: "Better Design. Better Engineering. Better Quality.\nBetter Functionality. Better Patient Experience.\nBetter Outcomes. Better DME.",
-        section1: {
-            title: "Dual-Axis Hinge System",
-            body: "The XO Knee Support ROM Cryo features a dual-axis hinge that mirrors the natural movement of the knee joint. PDAC approved with HCPCS codes L1832 & L1833. Engineered for Osteoarthritis support with removable Cryo Gel Pad for effective cold therapy. Low profile design fits comfortably under clothing for all-day wear.",
-            features: [
-                { img: CLD.kneeHinge1, title: "Dual-Axis Hinge", desc: "Mirrors Natural\nKnee Movement" },
-                { img: CLD.kneeFront, title: "ROM Adjustment", desc: "Flexion & Extension\nAngle Control" },
-                { img: CLD.kneeOpen, title: "Open Patella", desc: "Reduced Pressure\non Kneecap" },
-                { img: CLD.kneeCryoPad, title: "Cryo Gel Pad", desc: "Integrated\nCold Therapy" },
-            ],
-        },
-        section2: {
-            title: "Advanced Support System",
-            body: "An advanced pulley system allows for tailored compression. Low profile design allows support to fit comfortably under clothing. Vertical stays provide structural integrity while allowing the flexibility needed. A simple strap design allows for a universal fit.",
-            features: [
-                { img: CLD.kneeSleeve, title: "Compression Sleeve", desc: "Graduated\nCompression Support" },
-                { img: CLD.kneeStrap1, title: "Strap System", desc: "Universal\nFit Design" },
-                { img: CLD.kneeProduct2, title: "Full Assembly", desc: "PDAC Approved\nL1832 & L1833" },
-                { img: CLD.kneeBlueprint, title: "Blueprint Design", desc: "Clinically\nEngineered Structure" },
-            ],
-        },
-    },
-    "back": {
-        name: "XO Back Support",
-        sub: "Lumbar Belt",
-        image: CLD.xoBackSupport,
-        tagline: "Better Design. Better Engineering. Better Quality.\nBetter Functionality. Better Patient Experience.\nBetter Outcomes. Better DME.",
-        section1: {
-            title: "Advanced Lumbar Support",
-            body: "Low profile design allows support to fit comfortably under clothing. Vertical stays provide structural integrity while allowing the flexibility needed for daily activities. Advanced pulley compression system delivers precise, customizable support exactly where patients need it most.",
-            features: [
-                { img: CLD.backBelt, title: "Lumbar Support", desc: "Full Posterior\nCoverage" },
-                { img: CLD.backBeltSide, title: "Side Panels", desc: "Lateral\nCompression Support" },
-                { img: CLD.backBeltFront, title: "Front Closure", desc: "Easy Donning\n& Doffing" },
-                { img: CLD.backBeltWorn, title: "Worn View", desc: "Low Profile\nUnder Clothing" },
-            ],
-        },
-        section2: {
-            title: "Compression & Fit System",
-            body: "Advanced pulley compression system with universal fit strap design. Lumbar support stays provide structural integrity. Compatible with Gel Cryo Pad for effective cold therapy. Designed for all-day comfort and compliance.",
-            features: [
-                { img: CLD.backBeltBlueprint, title: "Blueprint Design", desc: "Engineered\nLumbar Support" },
-                { img: CLD.backBelt, title: "Pulley System", desc: "Advanced\nCompression Control" },
-                { img: CLD.backBeltSide, title: "Vertical Stays", desc: "Structural\nIntegrity Support" },
-                { img: CLD.backBeltFront, title: "Universal Fit", desc: "Adjustable\nStrap System" },
-            ],
-        },
-    },
 };
 
-type ProductId = keyof typeof PRODUCTS;
+type ProductId = "boot-short" | "boot-tall";
 
 const blueMetallic: React.CSSProperties = {
     backgroundImage: "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)",
@@ -121,12 +65,11 @@ const blueMetallic: React.CSSProperties = {
     filter: "drop-shadow(0 1px 0 rgba(91,155,255,0.5)) drop-shadow(0 -1px 0 rgba(0,0,30,0.6))",
 };
 const silverMetallic: React.CSSProperties = {
-    backgroundImage: "linear-gradient(180deg, #f0f0f0 0%, #b8b8b8 20%, #e8e8e8 35%, #787878 50%, #d0d0d0 65%, #909090 80%, #c8c8c8 100%)",
+    backgroundImage: "linear-gradient(180deg, #f0f0f0 0%, #b8b8b8 20%, #e8e8e8 35%, #e8e8e8ff 50%, #d0d0d0 65%, #909090 80%, #c8c8c8 100%)",
     WebkitBackgroundClip: "text" as const, WebkitTextFillColor: "transparent", backgroundClip: "text",
-    filter: "drop-shadow(0 1px 0 rgba(255,255,255,0.9)) drop-shadow(0 -1px 0 rgba(0,0,0,0.6))",
 };
 
-// ── PDF-EXACT PRODUCT DETAIL ──
+// ── PRODUCT DETAIL PAGE ──
 function ProductDetail({ id, onBack }: { id: ProductId; onBack: () => void }) {
     const p = PRODUCTS[id];
     return (
@@ -135,61 +78,100 @@ function ProductDetail({ id, onBack }: { id: ProductId; onBack: () => void }) {
             <div className="fixed inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 30%, rgba(22,81,209,0.18) 0%, transparent 65%)" }} />
             <div className="fixed top-0 inset-x-0 h-px pointer-events-none" style={{ background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.6), transparent)", zIndex: 60 }} />
 
-            <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 py-8">
-                <div className="flex items-center justify-between mb-10">
-                    <Image src={CLD.footerLogo} alt="X-ORTHO" width={220} height={80} style={{ height: 70, width: "auto", filter: "drop-shadow(0 0 30px rgba(91,155,255,0.6))" }} />
-                    <button onClick={onBack} className="text-sm uppercase tracking-[0.3em] font-bold px-6 py-3 rounded-full transition-all" style={{ border: "1px solid rgba(91,155,255,0.3)", color: "rgba(91,155,255,0.8)", background: "transparent" }}
+            <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12 py-6 sm:py-8">
+                {/* Header */}
+                <div className="flex items-center justify-between mb-6 sm:mb-10">
+                    <Image src={CLD.footerLogo} alt="X-ORTHO" width={220} height={80}
+                        className="h-10 sm:h-14 md:h-16 w-auto object-contain"
+                        style={{ filter: "drop-shadow(0 0 30px rgba(91,155,255,0.6))" }} />
+                    <button onClick={onBack}
+                        className="text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] font-bold px-4 sm:px-6 py-2 sm:py-3 rounded-full transition-all"
+                        style={{ border: "1px solid rgba(91,155,255,0.3)", color: "rgba(91,155,255,0.8)", background: "transparent" }}
                         onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(22,81,209,0.2)"; }}
                         onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}>
                         ← Back
                     </button>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                    <div className="flex flex-col items-center justify-start pt-4 pb-6 px-4 relative">
-                        <div style={{ position: "absolute", top: "20%", left: "50%", transform: "translate(-50%,-50%)", width: 450, height: 450, borderRadius: "50%", background: "radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(91,155,255,0.08) 45%, transparent 70%)", filter: "blur(40px)", pointerEvents: "none" }} />
+                {/* Main grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+
+                    {/* LEFT — product image + tagline */}
+                    <div className="flex flex-col items-center justify-start pb-6 px-2 sm:px-4 relative">
+                        <div style={{ position: "absolute", top: "30%", left: "50%", transform: "translate(-50%,-50%)", width: "min(500px,90vw)", height: "min(500px,90vw)", borderRadius: "50%", background: "radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(91,155,255,0.08) 45%, transparent 70%)", filter: "blur(40px)", pointerEvents: "none" }} />
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={p.image} alt={p.name} style={{ width: "90%", maxWidth: 500, height: "auto", objectFit: "contain", position: "relative", filter: "drop-shadow(0 0 60px rgba(91,155,255,0.85)) drop-shadow(0 40px 100px rgba(22,81,209,0.6))" }} />
-                        <div className="text-center mt-6 relative">
-                            <h2 className="font-nexa font-black uppercase" style={{ fontSize: "clamp(2.5rem,5vw,4rem)", letterSpacing: "-1px" }}>
+                        <img src={p.image} alt={p.name} className="w-full relative"
+                            style={{
+                                /* BIGGER product image in detail page */
+                                maxWidth: "min(580px,92vw)",
+                                height: "auto",
+                                objectFit: "contain",
+                                filter: "drop-shadow(0 0 60px rgba(91,155,255,0.85)) drop-shadow(0 40px 100px rgba(22,81,209,0.6))"
+                            }} />
+                        <div className="text-center mt-4 sm:mt-6 relative">
+                            <h2 className="font-nexa font-black uppercase" style={{ fontSize: "clamp(1.6rem,4vw,3.5rem)", letterSpacing: "-1px" }}>
                                 <span style={blueMetallic}>{p.name}</span>
                             </h2>
-                            <p className="mt-5 text-lg leading-relaxed whitespace-pre-line" style={{ color: "rgba(255,255,255,0.65)" }}>{p.tagline}</p>
+                            <p className="mt-3 sm:mt-5 text-sm sm:text-base md:text-lg leading-relaxed whitespace-pre-line" style={{ color: "rgba(255,255,255,0.65)" }}>{p.tagline}</p>
                         </div>
                     </div>
 
-                    <div className="flex flex-col gap-10 py-4" style={{ borderLeft: "1px solid rgba(91,155,255,0.15)" }}>
-                        <div className="px-6 md:px-8">
-                            <h3 className="font-nexa font-black uppercase text-center mb-5" style={{ fontSize: "1.85rem", ...blueMetallic }}>{p.section1.title}</h3>
-                            <p className="text-[15px] text-center leading-relaxed mb-8" style={{ color: "rgba(255,255,255,0.60)" }}>{p.section1.body}</p>
-                            <div className="grid grid-cols-2 gap-6">
+                    {/* RIGHT — features */}
+                    <div className="flex flex-col gap-6 md:gap-10 py-2 md:py-4" style={{ borderTop: "1px solid rgba(91,155,255,0.10)" }}>
+
+                        {/* Section 1 */}
+                        <div className="px-0 sm:px-4 md:px-6">
+                            <h3 className="font-nexa font-black uppercase text-center mb-3 sm:mb-5"
+                                style={{ fontSize: "clamp(1rem,2.5vw,1.75rem)", ...blueMetallic }}>
+                                {p.section1.title}
+                            </h3>
+                            <p className="text-xs sm:text-sm md:text-[15px] text-center leading-relaxed mb-4 sm:mb-8"
+                                style={{ color: "rgba(255,255,255,0.60)" }}>
+                                {p.section1.body}
+                            </p>
+                            <div className="grid grid-cols-2 gap-3 sm:gap-5 md:gap-6">
                                 {p.section1.features.map((f, i) => (
-                                    <div key={i} className="flex flex-col items-center gap-4 p-6 rounded-2xl" style={{ background: "rgba(8,12,42,0.7)", border: "1px solid rgba(91,155,255,0.15)" }}>
-                                        <div className="relative flex items-center justify-center" style={{ width: 100, height: 100 }}>
-                                            <div style={{ position: "absolute", width: 90, height: 90, borderRadius: "50%", background: "radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%)", filter: "blur(8px)" }} />
+                                    <div key={i} className="flex flex-col items-center gap-2 sm:gap-4 p-3 sm:p-5 md:p-6 rounded-2xl"
+                                        style={{ background: "rgba(8,12,42,0.7)", border: "1px solid rgba(91,155,255,0.15)" }}>
+                                        {/* BIGGER feature images in detail cards */}
+                                        <div className="relative flex items-center justify-center" style={{ width: "clamp(90px,14vw,150px)", height: "clamp(90px,14vw,150px)" }}>
+                                            <div style={{ position: "absolute", inset: 0, borderRadius: "50%", background: "radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%)", filter: "blur(8px)" }} />
                                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                                            <img src={f.img} alt={f.title} style={{ width: 80, height: 80, objectFit: "contain", position: "relative", filter: "drop-shadow(0 0 15px rgba(91,155,255,0.5))" }} />
+                                            <img src={f.img} alt={f.title} className="relative"
+                                                style={{ width: "85%", height: "85%", objectFit: "contain", filter: "drop-shadow(0 0 15px rgba(91,155,255,0.5))" }} />
                                         </div>
-                                        <p className="font-bold text-center text-base uppercase tracking-wide text-white leading-tight">{f.title}</p>
-                                        <p className="text-center text-sm leading-snug whitespace-pre-line" style={{ color: "rgba(255,255,255,0.55)" }}>{f.desc}</p>
+                                        <p className="font-bold text-center text-xs sm:text-sm uppercase tracking-wide text-white leading-tight">{f.title}</p>
+                                        <p className="text-center text-[10px] sm:text-xs leading-snug whitespace-pre-line" style={{ color: "rgba(255,255,255,0.55)" }}>{f.desc}</p>
                                     </div>
                                 ))}
                             </div>
                         </div>
-                        <div className="mx-6 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.3), transparent)" }} />
-                        <div className="px-6 md:px-8">
-                            <h3 className="font-nexa font-black uppercase text-center mb-5" style={{ fontSize: "1.85rem", ...blueMetallic }}>{p.section2.title}</h3>
-                            <p className="text-[15px] text-center leading-relaxed mb-8" style={{ color: "rgba(255,255,255,0.60)" }}>{p.section2.body}</p>
-                            <div className="grid grid-cols-2 gap-6">
+
+                        <div className="h-px mx-0 sm:mx-4 md:mx-6" style={{ background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.3), transparent)" }} />
+
+                        {/* Section 2 */}
+                        <div className="px-0 sm:px-4 md:px-6">
+                            <h3 className="font-nexa font-black uppercase text-center mb-3 sm:mb-5"
+                                style={{ fontSize: "clamp(1rem,2.5vw,1.75rem)", ...blueMetallic }}>
+                                {p.section2.title}
+                            </h3>
+                            <p className="text-xs sm:text-sm md:text-[15px] text-center leading-relaxed mb-4 sm:mb-8"
+                                style={{ color: "rgba(255,255,255,0.60)" }}>
+                                {p.section2.body}
+                            </p>
+                            <div className="grid grid-cols-2 gap-3 sm:gap-5 md:gap-6">
                                 {p.section2.features.map((f, i) => (
-                                    <div key={i} className="flex flex-col items-center gap-4 p-6 rounded-2xl" style={{ background: "rgba(8,12,42,0.7)", border: "1px solid rgba(91,155,255,0.15)" }}>
-                                        <div className="relative flex items-center justify-center" style={{ width: 100, height: 100 }}>
-                                            <div style={{ position: "absolute", width: 90, height: 90, borderRadius: "50%", background: "radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%)", filter: "blur(8px)" }} />
+                                    <div key={i} className="flex flex-col items-center gap-2 sm:gap-4 p-3 sm:p-5 md:p-6 rounded-2xl"
+                                        style={{ background: "rgba(8,12,42,0.7)", border: "1px solid rgba(91,155,255,0.15)" }}>
+                                        {/* BIGGER feature images in detail cards */}
+                                        <div className="relative flex items-center justify-center" style={{ width: "clamp(90px,14vw,150px)", height: "clamp(90px,14vw,150px)" }}>
+                                            <div style={{ position: "absolute", inset: 0, borderRadius: "50%", background: "radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%)", filter: "blur(8px)" }} />
                                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                                            <img src={f.img} alt={f.title} style={{ width: 80, height: 80, objectFit: "contain", position: "relative", filter: "drop-shadow(0 0 15px rgba(91,155,255,0.5))" }} />
+                                            <img src={f.img} alt={f.title} className="relative"
+                                                style={{ width: "85%", height: "85%", objectFit: "contain", filter: "drop-shadow(0 0 15px rgba(91,155,255,0.5))" }} />
                                         </div>
-                                        <p className="font-bold text-center text-base uppercase tracking-wide text-white leading-tight">{f.title}</p>
-                                        <p className="text-center text-sm leading-snug whitespace-pre-line" style={{ color: "rgba(255,255,255,0.55)" }}>{f.desc}</p>
+                                        <p className="font-bold text-center text-xs sm:text-sm uppercase tracking-wide text-white leading-tight">{f.title}</p>
+                                        <p className="text-center text-[10px] sm:text-xs leading-snug whitespace-pre-line" style={{ color: "rgba(255,255,255,0.55)" }}>{f.desc}</p>
                                     </div>
                                 ))}
                             </div>
@@ -197,17 +179,20 @@ function ProductDetail({ id, onBack }: { id: ProductId; onBack: () => void }) {
                     </div>
                 </div>
 
-                <div className="mt-12 pt-8 text-center" style={{ borderTop: "1px solid rgba(91,155,255,0.15)" }}>
-                    <p className="font-nexa font-black uppercase text-xl" style={silverMetallic}>Better Design. Better Engineering. Better Quality.</p>
-                    <p className="font-nexa font-black uppercase text-xl mt-2" style={blueMetallic}>Better Functionality. Better Patient Experience. Better Outcomes. Better DME.</p>
-                    <p className="text-xs uppercase tracking-[0.35em] mt-5" style={{ color: "rgba(255,255,255,0.20)" }}>© {new Date().getFullYear()} X-Ortho · TLC DME LLC · info@xortho.com · 855.XORTHO1</p>
+                {/* Bottom tagline */}
+                <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 text-center" style={{ borderTop: "1px solid rgba(91,155,255,0.15)" }}>
+                    <p className="font-nexa font-black uppercase text-base sm:text-xl" style={silverMetallic}>Better Design. Better Engineering. Better Quality.</p>
+                    <p className="font-nexa font-black uppercase text-base sm:text-xl mt-1 sm:mt-2" style={blueMetallic}>Better Functionality. Better Patient Experience. Better Outcomes. Better DME.</p>
+                    <p className="text-[9px] sm:text-xs uppercase tracking-[0.35em] mt-3 sm:mt-5" style={{ color: "rgba(255,255,255,0.20)" }}>
+                        © {new Date().getFullYear()} X-Ortho · TLC DME LLC · info@xortho.com · 855.XORTHO1
+                    </p>
                 </div>
             </div>
         </div>
     );
 }
 
-// ── CORNER IMAGES COMPONENT ──
+// ── CORNER IMAGES ──
 function CornerImages({ onProductClick }: { onProductClick: (id: ProductId) => void }) {
     const imgRef = useRef<(HTMLDivElement | null)[]>([]);
     const [hovered, setHovered] = useState<number | null>(null);
@@ -220,21 +205,62 @@ function CornerImages({ onProductClick }: { onProductClick: (id: ProductId) => v
     }, []);
 
     const corners = [
-        { id: "boot-tall" as ProductId, src: CLD.xoBootTall, label: "Boot Tall", top: "6%", left: "2%", right: "auto", bottom: "auto" },
-        { id: "boot-short" as ProductId, src: CLD.xoBootShort, label: "Boot Short", top: "auto", left: "2%", right: "auto", bottom: "14%" },
-        { id: "back" as ProductId, src: CLD.xoBackComingSoon, label: "Back Belt", top: "6%", left: "auto", right: "2%", bottom: "auto" },
-        { id: "knee" as ProductId, src: CLD.xoKneeHingedComingSoon, label: "Knee Support", top: "auto", left: "auto", right: "2%", bottom: "14%" },
+        { id: "boot-tall" as ProductId, src: CLD.xoBootTall, label: "Boot Tall", clickable: true, pos: { top: "3%", left: "0.5%", right: "auto", bottom: "auto" } },
+        { id: "boot-short" as ProductId, src: CLD.xoBootShort, label: "Boot Short", clickable: true, pos: { top: "auto", left: "0.5%", right: "auto", bottom: "8%" } },
+        { id: "back" as ProductId, src: CLD.xoBackComingSoon, label: "Back Support", clickable: false, pos: { top: "3%", left: "auto", right: "0.5%", bottom: "auto" } },
+        { id: "knee" as ProductId, src: CLD.xoKneeHingedComingSoon, label: "Knee Support", clickable: false, pos: { top: "auto", left: "auto", right: "0.5%", bottom: "8%" } },
     ];
 
     return (
         <>
             {corners.map((c, i) => (
-                <div key={c.id} ref={el => { imgRef.current[i] = el; }} onClick={() => onProductClick(c.id)} onMouseEnter={() => setHovered(i)} onMouseLeave={() => setHovered(null)} className="absolute cursor-pointer group" style={{ top: c.top, left: c.left, right: c.right, bottom: c.bottom, zIndex: 5 }}>
-                    <div className="relative w-[200px] h-[200px] sm:w-[250px] sm:h-[250px] md:w-[280px] md:h-[280px] lg:w-[280px] lg:h-[280px]">
-                        <div style={{ position: "absolute", inset: 0, borderRadius: "22px", background: "linear-gradient(135deg, rgba(22,81,209,0.1), rgba(6,10,35,0.6))", border: `1px solid ${hovered === i ? "rgba(91,155,255,0.9)" : "rgba(91,155,255,0.3)"}`, backdropFilter: "blur(10px)", transition: "all 0.4s ease", boxShadow: hovered === i ? "0 0 15px rgba(91,155,255,0.6), 0 0 30px rgba(91,155,255,0.4), inset 0 0 15px rgba(91,155,255,0.1)" : "0 0 10px rgba(91,155,255,0.15), 0 0 20px rgba(22,81,209,0.1)" }} />
+                <div
+                    key={c.id + i}
+                    ref={el => { imgRef.current[i] = el; }}
+                    onClick={() => c.clickable && onProductClick(c.id)}
+                    onMouseEnter={() => c.clickable && setHovered(i)}
+                    onMouseLeave={() => setHovered(null)}
+                    className="absolute"
+                    style={{ ...c.pos, zIndex: 5, cursor: c.clickable ? "pointer" : "default" }}
+                >
+                    {/*
+                     * KEY FIX: much larger clamp range for corner images
+                     * was: clamp(100px,14vw,240px) → now: clamp(130px,18vw,300px)
+                     * This makes them visibly bigger on every breakpoint including mobile
+                     */}
+                    <div className="relative"
+                        style={{ width: "clamp(130px,18vw,300px)", height: "clamp(130px,18vw,300px)" }}>
+                        <div style={{
+                            position: "absolute", inset: 0, borderRadius: "18px",
+                            background: "linear-gradient(135deg, rgba(22,81,209,0.1), rgba(6,10,35,0.6))",
+                            border: `1px solid ${hovered === i && c.clickable ? "rgba(91,155,255,0.9)" : "rgba(91,155,255,0.3)"}`,
+                            backdropFilter: "blur(10px)", transition: "all 0.4s ease",
+                            boxShadow: hovered === i && c.clickable
+                                ? "0 0 15px rgba(91,155,255,0.6), 0 0 30px rgba(91,155,255,0.4)"
+                                : "0 0 10px rgba(91,155,255,0.15)",
+                        }} />
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={c.src} alt={c.label} style={{ width: "100%", height: "100%", objectFit: "contain", padding: 12, position: "relative", zIndex: 1, filter: `drop-shadow(0 0 20px rgba(91,155,255,${hovered === i ? 1 : 0.6})) drop-shadow(0 0 40px rgba(22,81,209,${hovered === i ? 0.8 : 0.4}))`, transition: "all 0.4s ease", transform: hovered === i ? "scale(1.05)" : "scale(1)" }} />
-                        <p className="absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs sm:text-sm md:text-base uppercase tracking-[0.2em] font-bold" style={{ color: `rgba(91,155,255,${hovered === i ? 1 : 0.6})`, transition: "color 0.3s ease", textShadow: `0 0 10px rgba(91,155,255,${hovered === i ? 0.8 : 0})` }}>{c.label}</p>
+                        <img src={c.src} alt={c.label} style={{
+                            width: "100%", height: "100%", objectFit: "contain",
+                            /* more padding so image fills the box better */
+                            padding: 8,
+                            position: "relative", zIndex: 1,
+                            filter: `drop-shadow(0 0 20px rgba(91,155,255,${hovered === i && c.clickable ? 1 : 0.5})) drop-shadow(0 0 40px rgba(22,81,209,${hovered === i && c.clickable ? 0.8 : 0.3}))`,
+                            transition: "all 0.4s ease",
+                            transform: hovered === i && c.clickable ? "scale(1.05)" : "scale(1)",
+                            opacity: c.clickable ? 1 : 0.7,
+                        }} />
+                        {/*
+                         * Label: pushed further below the card so it never overlaps
+                         * and slightly bigger text on larger screens
+                         */}
+                        <p style={{
+                            position: "absolute", bottom: "-26px", left: "50%", transform: "translateX(-50%)",
+                            whiteSpace: "nowrap", fontSize: "clamp(9px,1.1vw,14px)",
+                            textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 700,
+                            color: `rgba(91,155,255,${hovered === i && c.clickable ? 1 : 0.55})`,
+                            transition: "color 0.3s ease",
+                        }}>{c.label}</p>
                     </div>
                 </div>
             ))}
@@ -257,42 +283,24 @@ export default function ComingSoon() {
         gsap.to(".center-glow", { opacity: 0.30, duration: 2.5, ease: "sine.inOut", yoyo: true, repeat: -1 });
         gsap.to(".bracket", { opacity: 0.7, duration: 1.8, ease: "sine.inOut", yoyo: true, repeat: -1, stagger: 0.4 });
 
-        // ── SEQUENTIAL TOP-TO-BOTTOM SILVER SWEEP ──
-        gsap.set(".better-pill-text", { color: "rgba(147, 197, 253, 0.9)" });
-
-        const pillTl = gsap.timeline({ repeat: -1, repeatDelay: 3.5 });
-
+        gsap.set(".better-pill-text", { color: "rgba(147,197,253,0.9)" });
         gsap.set(".better-pill-sweep", { top: "-200%" });
+        const pillTl = gsap.timeline({ repeat: -1, repeatDelay: 3.5 });
         const pills = gsap.utils.toArray<Element>(".better-pill");
         const sweeps = gsap.utils.toArray<Element>(".better-pill-sweep");
         const texts = gsap.utils.toArray<Element>(".better-pill-text");
-
-        pills.forEach((pill, i) => {
+        pills.forEach((_, i) => {
             const subTl = gsap.timeline();
-            // Sweep top to bottom
             subTl.to(sweeps[i], { top: "200%", duration: 1.2, ease: "sine.inOut" });
-            // After sweep: pill turns silver, text white
-            subTl.to(pills[i], {
-                background: "linear-gradient(135deg, rgba(180,180,180,0.30) 0%, rgba(120,120,120,0.20) 100%)",
-                border: "1px solid rgba(200,200,200,0.45)",
-                boxShadow: "inset 0 1px 0 rgba(255,255,255,0.12)",
-                duration: 0.4,
-                ease: "power2.out",
-            }, "-=0.3");
+            subTl.to(pills[i], { background: "linear-gradient(135deg,rgba(180,180,180,0.30),rgba(120,120,120,0.20))", border: "1px solid rgba(200,200,200,0.45)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.12)", duration: 0.4, ease: "power2.out" }, "-=0.3");
             subTl.to(texts[i], { color: "#dde6f0", duration: 0.4 }, "<");
             subTl.set(sweeps[i], { top: "-200%" });
             pillTl.add(subTl, i > 0 ? "+=0.35" : "0");
         });
-        // On repeat: reset all pills back to default state
         pillTl.eventCallback("onRepeat", () => {
-            (pills as Element[]).forEach((p) => gsap.set(p, {
-                background: "linear-gradient(135deg, rgba(22,81,209,0.15), rgba(6,10,35,0.6))",
-                border: "1px solid rgba(91,155,255,0.3)",
-                boxShadow: "none",
-            }));
-            (texts as Element[]).forEach((t) => gsap.set(t, { color: "rgba(147, 197, 253, 0.9)" }));
+            (pills as Element[]).forEach(p => gsap.set(p, { background: "linear-gradient(135deg,rgba(22,81,209,0.18),rgba(6,10,35,0.55))", border: "1px solid rgba(91,155,255,0.45)", boxShadow: "0 0 12px rgba(91,155,255,0.25),inset 0 1px 0 rgba(255,255,255,0.08)" }));
+            (texts as Element[]).forEach(t => gsap.set(t, { color: "rgba(147,197,253,0.9)" }));
         });
-
     }, []);
 
     useEffect(() => {
@@ -304,13 +312,12 @@ export default function ComingSoon() {
         let H = canvas.height = window.innerHeight;
         const resize = () => { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; };
         window.addEventListener("resize", resize);
-        const orbs = Array.from({ length: 6 }, (_, i) => ({ x: Math.random() * W, y: Math.random() * H, r: 180 + Math.random() * 220, vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3, hue: i % 2 === 0 ? 220 : 210, alpha: 0.04 + Math.random() * 0.05, }));
-        const stars = Array.from({ length: 120 }, () => ({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.2, alpha: 0.2 + Math.random() * 0.6, speed: 0.002 + Math.random() * 0.006, offset: Math.random() * Math.PI * 2, }));
+        const orbs = Array.from({ length: 6 }, (_, i) => ({ x: Math.random() * W, y: Math.random() * H, r: 180 + Math.random() * 220, vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3, hue: i % 2 === 0 ? 220 : 210, alpha: 0.04 + Math.random() * 0.05 }));
+        const stars = Array.from({ length: 120 }, () => ({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.2, alpha: 0.2 + Math.random() * 0.6, speed: 0.002 + Math.random() * 0.006, offset: Math.random() * Math.PI * 2 }));
         let frame = 0; let rafId: number;
         const draw = () => {
             rafId = requestAnimationFrame(draw);
-            ctx.clearRect(0, 0, W, H);
-            ctx.fillStyle = "#03102a"; ctx.fillRect(0, 0, W, H);
+            ctx.clearRect(0, 0, W, H); ctx.fillStyle = "#03102a"; ctx.fillRect(0, 0, W, H);
             orbs.forEach(o => { o.x += o.vx; o.y += o.vy; if (o.x < -o.r) o.x = W + o.r; if (o.x > W + o.r) o.x = -o.r; if (o.y < -o.r) o.y = H + o.r; if (o.y > H + o.r) o.y = -o.r; const g = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r); g.addColorStop(0, `hsla(${o.hue},70%,60%,${o.alpha * 0.7})`); g.addColorStop(1, `hsla(${o.hue},80%,55%,0)`); ctx.beginPath(); ctx.arc(o.x, o.y, o.r, 0, Math.PI * 2); ctx.fillStyle = g; ctx.fill(); });
             frame++;
             stars.forEach(st => { const a = st.alpha * (0.5 + 0.5 * Math.sin(frame * st.speed + st.offset)); ctx.beginPath(); ctx.arc(st.x, st.y, st.r, 0, Math.PI * 2); ctx.fillStyle = `rgba(180,210,255,${a})`; ctx.fill(); });
@@ -331,66 +338,107 @@ export default function ComingSoon() {
             <div className="center-glow absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "radial-gradient(ellipse at 50% 50%, rgba(22,81,209,0.22) 0%, transparent 60%)", opacity: 0.15 }} />
             <div className="absolute top-0 inset-x-0 h-px pointer-events-none" style={{ zIndex: 3, background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.6), transparent)" }} />
             <div className="absolute bottom-0 inset-x-0 h-px pointer-events-none" style={{ zIndex: 3, background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.3), transparent)" }} />
-
             {(["tl", "tr", "bl", "br"] as const).map(c => (
-                <div key={c} className="bracket absolute pointer-events-none" style={{ zIndex: 3, width: 48, height: 48, opacity: 0.5, top: c.startsWith("t") ? 20 : "auto", bottom: c.startsWith("b") ? 20 : "auto", left: c.endsWith("l") ? 20 : "auto", right: c.endsWith("r") ? 20 : "auto", borderTop: c.startsWith("t") ? "2px solid rgba(91,155,255,0.7)" : "none", borderBottom: c.startsWith("b") ? "2px solid rgba(91,155,255,0.7)" : "none", borderLeft: c.endsWith("l") ? "2px solid rgba(91,155,255,0.7)" : "none", borderRight: c.endsWith("r") ? "2px solid rgba(91,155,255,0.7)" : "none", borderRadius: c === "tl" ? "14px 0 0 0" : c === "tr" ? "0 14px 0 0" : c === "bl" ? "0 0 0 14px" : "0 0 14px 0" }} />
+                <div key={c} className="bracket absolute pointer-events-none" style={{ zIndex: 3, width: 40, height: 40, opacity: 0.5, top: c.startsWith("t") ? 16 : "auto", bottom: c.startsWith("b") ? 16 : "auto", left: c.endsWith("l") ? 16 : "auto", right: c.endsWith("r") ? 16 : "auto", borderTop: c.startsWith("t") ? "2px solid rgba(91,155,255,0.7)" : "none", borderBottom: c.startsWith("b") ? "2px solid rgba(91,155,255,0.7)" : "none", borderLeft: c.endsWith("l") ? "2px solid rgba(91,155,255,0.7)" : "none", borderRight: c.endsWith("r") ? "2px solid rgba(91,155,255,0.7)" : "none", borderRadius: c === "tl" ? "12px 0 0 0" : c === "tr" ? "0 12px 0 0" : c === "bl" ? "0 0 0 12px" : "0 0 12px 0" }} />
             ))}
 
-            <div className="absolute top-4 left-1/2 -translate-x-1/2 z-20 cs-logo pt-5" style={{ opacity: 0 }}>
-                <Image src={CLD.footerLogo} alt="X-Ortho" width={660} height={220} className="object-contain w-[250px] sm:w-[300px] md:w-[600px] h-auto" style={{ filter: "drop-shadow(0 0 40px rgba(91,155,255,0.5)) drop-shadow(0 0 80px rgba(22,81,209,0.3))" }} />
+            {/*
+             * LOGO FIX
+             * — moved slightly lower so it's not cut by the very top edge on small screens
+             * — wider clamp so it's readable at 320px
+             */}
+            <div className="absolute top-2 sm:top-3 md:top-4 left-1/2 -translate-x-1/2 z-20 cs-logo" style={{ opacity: 0 }}>
+                <Image src={CLD.footerLogo} alt="X-Ortho" width={500} height={200}
+                    className="object-contain h-auto"
+                    style={{
+                        /* was: clamp(180px,30vw,520px) — too small on mobile */
+                        width: "clamp(200px,42vw,440px)",
+                        filter: "drop-shadow(0 0 40px rgba(91,155,255,0.5)) drop-shadow(0 0 80px rgba(22,81,209,0.3))"
+                    }} />
             </div>
 
+            {/* 4 corner product images */}
             <CornerImages onProductClick={setActiveProduct} />
 
-            <div className="absolute top-[34%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-[10] text-center cs-anim pointer-events-none select-none" style={{ opacity: 0 }}>
-                <div className="grid grid-cols-2 gap-2 sm:gap-3" style={{ maxWidth: "min(90vw, 560px)" }}>
-                    {["Better Design", "Better Quality", "Better Functionality", "Better Clinical Outcomes", "Better Financial Outcomes", "Better DME"].map((t, i) => (
-                        <span key={i} className="better-pill relative overflow-hidden uppercase tracking-[0.1em] font-bold px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-center"
-                            style={{
-                                background: "linear-gradient(135deg, rgba(22,81,209,0.18) 0%, rgba(6,10,35,0.55) 100%)",
-                                border: "1px solid rgba(91,155,255,0.45)",
-                                boxShadow: "0 0 12px rgba(91,155,255,0.25), inset 0 1px 0 rgba(255,255,255,0.08)",
-                                backdropFilter: "blur(14px)",
-                                color: "rgba(147,197,253,0.95)",
-                                whiteSpace: "nowrap" as const,
-                            }}>
-                            <span className="better-pill-text relative z-10" style={{ fontSize: "clamp(7px,1.1vw,10px)", letterSpacing: "0.12em" }}>{t}</span>
-                            <span className="better-pill-sweep absolute inset-x-0 pointer-events-none" style={{ height: "200%", top: "-200%", background: "linear-gradient(180deg, transparent 0%, rgba(180,180,180,0.15) 20%, rgba(220,220,220,0.55) 40%, rgba(255,255,255,0.85) 50%, rgba(220,220,220,0.55) 60%, rgba(180,180,180,0.15) 80%, transparent 100%)" }}></span>
-                        </span>
-                    ))}
+            {/* Center — pills + video */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center z-10 pointer-events-none select-none"
+                style={{
+                    /*
+                     * PADDING FIX
+                     * — top padding accounts for the logo height so pills never sit behind it
+                     * — bottom padding accounts for the footer + corner label
+                     */
+                    paddingTop: "clamp(100px,18vh,180px)",
+                    paddingBottom: "clamp(60px,10vh,100px)",
+                }}>
+
+                {/* Pills grid */}
+                <div className="cs-anim w-full flex justify-center" style={{ opacity: 0 }}>
+                    {/*
+                     * PILLS FIX
+                     * — wider on small screens: clamp(260px,72vw,540px)
+                     *   was clamp(240px,38vw,520px) which made them too narrow on mobile
+                     */}
+                    <div className="grid grid-cols-2 gap-1.5 sm:gap-2 md:gap-3"
+                        style={{ width: "clamp(260px,72vw,540px)" }}>
+                        {["Better Design", "Better Quality", "Better Functionality", "Better Clinical Outcomes", "Better Financial Outcomes", "Better DME"].map((t, i) => (
+                            <span key={i} className="better-pill relative overflow-hidden uppercase font-bold rounded-full text-center"
+                                style={{
+                                    padding: "clamp(6px,1vh,10px) clamp(8px,1.5vw,18px)",
+                                    background: "linear-gradient(135deg,rgba(22,81,209,0.18),rgba(6,10,35,0.55))",
+                                    border: "1px solid rgba(91,155,255,0.45)",
+                                    boxShadow: "0 0 12px rgba(91,155,255,0.25),inset 0 1px 0 rgba(255,255,255,0.08)",
+                                    backdropFilter: "blur(14px)",
+                                    color: "rgba(147,197,253,0.95)",
+                                }}>
+                                <span className="better-pill-text relative z-10 block"
+                                    style={{ fontSize: "clamp(8px,1vw,11px)", letterSpacing: "0.1em" }}>{t}</span>
+                                <span className="better-pill-sweep absolute inset-x-0 pointer-events-none"
+                                    style={{ height: "200%", top: "-200%", background: "linear-gradient(180deg,transparent 0%,rgba(180,180,180,0.15) 20%,rgba(220,220,220,0.55) 40%,rgba(255,255,255,0.85) 50%,rgba(220,220,220,0.55) 60%,rgba(180,180,180,0.15) 80%,transparent 100%)" }} />
+                            </span>
+                        ))}
+                    </div>
                 </div>
 
-                {/* Video below pills — fits inside 100dvh */}
-                <div className="absolute left-1/2 -translate-x-1/2 z-[10]" style={{ top: "calc(44% + 100px)", width: "min(70vw, 460px)" }}>
+                {/*
+                 * VIDEO FIX
+                 * — taller container: clamp(120px,18vh,220px)  was clamp(80px,12vh,160px)
+                 * — wider container:  clamp(240px,50vw,600px)  was clamp(200px,36vw,500px)
+                 * — object-cover keeps the full video visible inside the taller box
+                 */}
+                {/* <div className="cs-anim mt-3 sm:mt-4 pointer-events-auto" style={{ opacity: 0, width: "clamp(240px,50vw,600px)" }}>
                     <div className="relative w-full rounded-xl overflow-hidden"
                         style={{
+                            height: "clamp(260px,18vh,220px)",
                             border: "1px solid rgba(91,155,255,0.20)",
-                            boxShadow: "0 0 24px rgba(22,81,209,0.18), 0 0 48px rgba(22,81,209,0.08)",
-                            height: "min(32vh, 260px)",
+                            boxShadow: "0 0 24px rgba(22,81,209,0.18)",
                         }}>
-                        <video src={CLD.comingsoonpreview} autoPlay loop muted playsInline
-                            className="w-full h-full object-cover" />
+                        <video
+                            src={CLD.comingsoonpreview}
+                            autoPlay loop muted playsInline
+                            className="w-full h-full"
+                            style={{ objectFit: "cover", objectPosition: "center" }}
+                        />
                         <div className="absolute inset-0 pointer-events-none"
-                            style={{ background: "linear-gradient(to bottom, rgba(2,9,22,0.1) 0%, transparent 30%, transparent 70%, rgba(2,9,22,0.3) 100%)" }} />
+                            style={{ background: "linear-gradient(to bottom,rgba(2,9,22,0.1) 0%,transparent 30%,transparent 70%,rgba(2,9,22,0.3) 100%)" }} />
                     </div>
-                </div>
+                </div> */}
+            </div>
 
-                <div className="absolute top-[270%] bottom-0 left-0 right-0 z-20 flex flex-col items-center justify-center gap-1 w-full text-center pointer-events-auto py-3 px-4">
-                    <div className="flex w-full overflow-visible items-center justify-center gap-x-1 sm:gap-x-2 text-white/40 text-[8px] min-[400px]:text-[9px] sm:text-[11px] whitespace-nowrap">
-                        <span>Email <a href="mailto:info@xortho.com" className="text-[#5b9bff]/80 hover:text-[#5b9bff] transition-colors font-semibold">info@xortho.com</a></span>
-                        <span className="hidden sm:inline">or call</span>
-                        <span className="sm:hidden text-white/20">|</span>
-                        <span><a href="tel:8559678461" className="text-[#5b9bff]/80 hover:text-[#5b9bff] transition-colors font-semibold">855.XORTHO1</a></span>
-                        <span className="hidden sm:inline">·</span>
-                        <span className="sm:hidden text-white/20">|</span>
-                        <span>HCPCS coding · pricing · samples</span>
-                    </div>
-                    {mounted && (
-                        <p className="text-[8px] sm:text-[9px] uppercase tracking-[0.35em] font-bold mt-1" style={{ color: "rgba(255,255,255,0.15)" }}>
-                            © {new Date().getFullYear()} X-Ortho · TLC DME LLC
-                        </p>
-                    )}
+            {/* Contact — absolute bottom */}
+            <div className="absolute bottom-0 left-0 right-0 z-20 flex flex-col items-center gap-1 py-2 sm:py-3 px-4 text-center pointer-events-auto">
+                <div className="flex flex-wrap items-center justify-center gap-x-1.5 sm:gap-x-2 gap-y-0.5 text-white/40 text-[9px] sm:text-[11px]">
+                    <span>Email <a href="mailto:info@xortho.com" className="text-[#5b9bff]/80 hover:text-[#5b9bff] transition-colors font-semibold">info@xortho.com</a></span>
+                    <span className="text-white/20">·</span>
+                    <span><a href="tel:8559678461" className="text-[#5b9bff]/80 hover:text-[#5b9bff] transition-colors font-semibold">855.XORTHO1</a></span>
+                    <span className="text-white/20">·</span>
+                    <span>HCPCS coding · pricing · samples</span>
                 </div>
+                {mounted && (
+                    <p className="text-[8px] uppercase tracking-[0.3em] font-bold" style={{ color: "rgba(255,255,255,0.12)" }}>
+                        © {new Date().getFullYear()} X-Ortho · TLC DME LLC
+                    </p>
+                )}
             </div>
         </main>
     );
