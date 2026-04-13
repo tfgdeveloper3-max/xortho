@@ -217,10 +217,10 @@ function CornerImages({ onProductClick }: { onProductClick: (id: ProductId) => v
      * tucked into the corner on desktop (12% of 900px = 108px, still fine).
      */
     const corners = [
-        { id: "boot-tall" as ProductId, src: CLD.xoBootTall, label: "Boot Tall", clickable: true, pos: { top: "5%", left: "2%", right: "auto", bottom: "auto" } },
-        { id: "boot-short" as ProductId, src: CLD.xoBootShort, label: "Boot Short", clickable: true, pos: { top: "auto", left: "2%", right: "auto", bottom: "12%" } },
-        { id: "back" as ProductId, src: CLD.xoBackComingSoon, label: "Back Support", clickable: false, pos: { top: "5%", left: "auto", right: "2%", bottom: "auto" } },
-        { id: "knee" as ProductId, src: CLD.xoKneeHingedComingSoon, label: "Knee Support", clickable: false, pos: { top: "auto", left: "auto", right: "2%", bottom: "12%" } },
+        { id: "boot-tall" as ProductId, src: CLD.xoBootTall, label: "Boot Tall", clickable: true, pos: { top: "5%", left: "4%", right: "auto", bottom: "auto" } },
+        { id: "boot-short" as ProductId, src: CLD.xoBootShort, label: "Boot Short", clickable: true, pos: { top: "auto", left: "4%", right: "auto", bottom: "8%" } },
+        { id: "back" as ProductId, src: CLD.xoBackComingSoon, label: "Back Support", clickable: false, pos: { top: "5%", left: "auto", right: "4%", bottom: "auto" } },
+        { id: "knee" as ProductId, src: CLD.xoKneeHingedComingSoon, label: "Knee Support", clickable: false, pos: { top: "auto", left: "auto", right: "4%", bottom: "8%" } },
     ];
 
     return (
@@ -235,19 +235,9 @@ function CornerImages({ onProductClick }: { onProductClick: (id: ProductId) => v
                     className="absolute"
                     style={{ ...c.pos, zIndex: 5, cursor: c.clickable ? "pointer" : "default" }}
                 >
-                    {/*
-                     * FIX: image box size
-                     * Was clamp(72px,22vw,300px) — 22vw on a 320px phone = 70px which
-                     * is too small to see clearly, but on 425px was fine.
-                     *
-                     * New: clamp(68px,20vw,280px)
-                     * — slightly tighter vw (20 vs 22) so on wider phones the box
-                     *   doesn't eat into center space as much
-                     * — min 68px keeps it visible on the smallest screens
-                     * — max 280px is plenty on desktop
-                     */}
+                    {/* Reduced size by 20px from original */}
                     <div className="relative"
-                        style={{ width: "clamp(68px,20vw,280px)", height: "clamp(68px,20vw,280px)" }}>
+                        style={{ width: "clamp(48px,18vw,260px)", height: "clamp(48px,18vw,260px)" }}>
                         <div style={{
                             position: "absolute", inset: 0, borderRadius: "18px",
                             background: "linear-gradient(135deg, rgba(22,81,209,0.1), rgba(6,10,35,0.6))",
