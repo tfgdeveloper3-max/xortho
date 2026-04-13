@@ -15,8 +15,8 @@ const PRODUCTS = {
             body: "Technologically advanced aerodynamic & ergonomic engineering enhances structural integrity generating cast like stability & protection. Crafted with innovative materials to reduce weight & allow struts to flex, combined with a calf adjustment function to adapt to various anatomical differences. Safe step rocker absorbs shock & offloads pressure generating a fluid natural gait with increased traction control.",
             features: [
                 { img: CLD.xoCage, title: "Flex Strut Armor", desc: "Flexible Lightweight\nDurable Protection" },
-                { img: CLD.xoLiner, title: "Air Chamber System", desc: "Compartmentalized\nCustomization" },
-                { img: CLD.xoFrontView, title: "Calf Adjustment", desc: "Accommodates Larger\nWider Lower Legs" },
+                { img: CLD.xoShell, title: "Anterior Shield", desc: "Removeable Pliable\nDorsal Protection" },
+                { img: CLD.xoFrontView, title: "Posterior Calf Adjustment", desc: "Accommodates Larger\nWider Lower Legs" },
                 { img: CLD.xoRocker, title: "Safe Step Rocker", desc: "Shock Absorption\nFluid Heel Toe Gait" },
             ],
         },
@@ -24,8 +24,8 @@ const PRODUCTS = {
             title: "Revolutionary Compression System",
             body: "Purposefully placed compartmentalized air cells provide greater surface area contact, combined with a low force bulb & intuitive inflation deflation valve allows for controlled customization of compression. T-shirt soft interior liner regulates temperature & enhances comfort. EZ grip strapping system has textured tips with a hybrid hook loop strap & 360 swivel d-rings for quicker donning & doffing.",
             features: [
-                { img: CLD.xoInsole, title: "Air Chamber System", desc: "Compartmentalized\nCustomization" },
-                { img: CLD.xoEzBulb, title: "Pneumatic System", desc: "Effortless & Rapid\nInflate & Deflate" },
+                { img: CLD.xoLiner, title: "Air Chamber System", desc: "Compartmentalized\nCustomization" },
+                { img: CLD.xoRevolutionary, title: "Pneumatic System", desc: "Effortless & Rapid\nInflate & Deflate" },
                 { img: CLD.xoStraps, title: "Strapping System", desc: "EZ Grip Textured\nTips & 360 Swivel" },
                 { img: CLD.sleeves, title: "AFO Undersleeve", desc: "Gentle Compression\nSkin Barrier & Hygiene" },
             ],
@@ -39,8 +39,8 @@ const PRODUCTS = {
             body: "Technologically advanced aerodynamic & ergonomic engineering enhances structural integrity generating cast like stability & protection. Crafted with innovative materials to reduce weight & allow struts to flex, combined with a calf adjustment function to adapt to various anatomical differences. Safe step rocker absorbs shock & offloads pressure generating a fluid natural gait with increased traction control.",
             features: [
                 { img: CLD.xoCage, title: "Flex Strut Armor", desc: "Flexible Lightweight\nDurable Protection" },
-                { img: CLD.xoLiner, title: "Air Chamber System", desc: "Compartmentalized\nCustomization" },
-                { img: CLD.xoFrontView, title: "Calf Adjustment", desc: "Accommodates Larger\nWider Lower Legs" },
+                { img: CLD.xoShell, title: "Anterior Shield", desc: "Removeable Pliable\nDorsal Protection" },
+                { img: CLD.xoFrontView, title: "Posterior Calf Adjustment", desc: "Accommodates Larger\nWider Lower Legs" },
                 { img: CLD.xoRocker, title: "Safe Step Rocker", desc: "Shock Absorption\nFluid Heel Toe Gait" },
             ],
         },
@@ -48,8 +48,8 @@ const PRODUCTS = {
             title: "Revolutionary Compression System",
             body: "Purposefully placed compartmentalized air cells provide greater surface area contact, combined with a low force bulb & intuitive inflation deflation valve allows for controlled customization of compression. T-shirt soft interior liner regulates temperature & enhances comfort. EZ grip strapping system has textured tips with a hybrid hook loop strap & 360 swivel d-rings for quicker donning & doffing.",
             features: [
-                { img: CLD.xoInsole, title: "Air Chamber System", desc: "Compartmentalized\nCustomization" },
-                { img: CLD.xoEzBulb, title: "Pneumatic System", desc: "Effortless & Rapid\nInflate & Deflate" },
+                { img: CLD.xoLiner, title: "Air Chamber System", desc: "Compartmentalized\nCustomization" },
+                { img: CLD.xoRevolutionary, title: "Pneumatic System", desc: "Effortless & Rapid\nInflate & Deflate" },
                 { img: CLD.xoStraps, title: "Strapping System", desc: "EZ Grip Textured\nTips & 360 Swivel" },
                 { img: CLD.sleeves, title: "AFO Undersleeve", desc: "Gentle Compression\nSkin Barrier & Hygiene" },
             ],
@@ -81,8 +81,13 @@ function ProductDetail({ id, onBack }: { id: ProductId; onBack: () => void }) {
             <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12 py-6 sm:py-8">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-6 sm:mb-10">
+                    {/* Desktop Logo */}
                     <Image src={CLD.footerLogo} alt="X-ORTHO" width={220} height={80}
-                        className="h-10 sm:h-14 md:h-16 w-auto object-contain"
+                        className="h-10 sm:h-14 md:h-16 w-auto object-contain hidden sm:block"
+                        style={{ filter: "drop-shadow(0 0 30px rgba(91,155,255,0.6))" }} />
+                    {/* Mobile Logo */}
+                    <Image src={CLD.logo} alt="X-ORTHO" width={80} height={80}
+                        className="h-10 w-auto object-contain block sm:hidden"
                         style={{ filter: "drop-shadow(0 0 30px rgba(91,155,255,0.6))" }} />
                     <button onClick={onBack}
                         className="text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] font-bold px-4 sm:px-6 py-2 sm:py-3 rounded-full transition-all"
@@ -102,7 +107,6 @@ function ProductDetail({ id, onBack }: { id: ProductId; onBack: () => void }) {
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={p.image} alt={p.name} className="w-full relative"
                             style={{
-                                /* BIGGER product image in detail page */
                                 maxWidth: "min(580px,92vw)",
                                 height: "auto",
                                 objectFit: "contain",
@@ -133,7 +137,6 @@ function ProductDetail({ id, onBack }: { id: ProductId; onBack: () => void }) {
                                 {p.section1.features.map((f, i) => (
                                     <div key={i} className="flex flex-col items-center gap-2 sm:gap-4 p-3 sm:p-5 md:p-6 rounded-2xl"
                                         style={{ background: "rgba(8,12,42,0.7)", border: "1px solid rgba(91,155,255,0.15)" }}>
-                                        {/* BIGGER feature images in detail cards */}
                                         <div className="relative flex items-center justify-center" style={{ width: "clamp(90px,14vw,150px)", height: "clamp(90px,14vw,150px)" }}>
                                             <div style={{ position: "absolute", inset: 0, borderRadius: "50%", background: "radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%)", filter: "blur(8px)" }} />
                                             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -163,7 +166,6 @@ function ProductDetail({ id, onBack }: { id: ProductId; onBack: () => void }) {
                                 {p.section2.features.map((f, i) => (
                                     <div key={i} className="flex flex-col items-center gap-2 sm:gap-4 p-3 sm:p-5 md:p-6 rounded-2xl"
                                         style={{ background: "rgba(8,12,42,0.7)", border: "1px solid rgba(91,155,255,0.15)" }}>
-                                        {/* BIGGER feature images in detail cards */}
                                         <div className="relative flex items-center justify-center" style={{ width: "clamp(90px,14vw,150px)", height: "clamp(90px,14vw,150px)" }}>
                                             <div style={{ position: "absolute", inset: 0, borderRadius: "50%", background: "radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%)", filter: "blur(8px)" }} />
                                             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -204,11 +206,21 @@ function CornerImages({ onProductClick }: { onProductClick: (id: ProductId) => v
         });
     }, []);
 
+    /*
+     * FIX: bottom corners were at bottom:5% which on a 650px tall mobile viewport
+     * = 32px from bottom. The label hangs -26px below the box, so the label sits
+     * right on top of the footer text.
+     *
+     * Solution: push bottom corners up enough so label clears the footer.
+     * Footer height ≈ 44px  +  label height 26px  +  4px gap  = 74px from bottom.
+     * Using bottom:12% keeps them clear at every mobile height while still looking
+     * tucked into the corner on desktop (12% of 900px = 108px, still fine).
+     */
     const corners = [
         { id: "boot-tall" as ProductId, src: CLD.xoBootTall, label: "Boot Tall", clickable: true, pos: { top: "5%", left: "2%", right: "auto", bottom: "auto" } },
-        { id: "boot-short" as ProductId, src: CLD.xoBootShort, label: "Boot Short", clickable: true, pos: { top: "auto", left: "2%", right: "auto", bottom: "5%" } },
+        { id: "boot-short" as ProductId, src: CLD.xoBootShort, label: "Boot Short", clickable: true, pos: { top: "auto", left: "2%", right: "auto", bottom: "12%" } },
         { id: "back" as ProductId, src: CLD.xoBackComingSoon, label: "Back Support", clickable: false, pos: { top: "5%", left: "auto", right: "2%", bottom: "auto" } },
-        { id: "knee" as ProductId, src: CLD.xoKneeHingedComingSoon, label: "Knee Support", clickable: false, pos: { top: "auto", left: "auto", right: "2%", bottom: "5%" } },
+        { id: "knee" as ProductId, src: CLD.xoKneeHingedComingSoon, label: "Knee Support", clickable: false, pos: { top: "auto", left: "auto", right: "2%", bottom: "12%" } },
     ];
 
     return (
@@ -224,12 +236,18 @@ function CornerImages({ onProductClick }: { onProductClick: (id: ProductId) => v
                     style={{ ...c.pos, zIndex: 5, cursor: c.clickable ? "pointer" : "default" }}
                 >
                     {/*
-                     * KEY FIX: much larger clamp range for corner images
-                     * was: clamp(100px,14vw,240px) → now: clamp(130px,18vw,300px)
-                     * This makes them visibly bigger on every breakpoint including mobile
+                     * FIX: image box size
+                     * Was clamp(72px,22vw,300px) — 22vw on a 320px phone = 70px which
+                     * is too small to see clearly, but on 425px was fine.
+                     *
+                     * New: clamp(68px,20vw,280px)
+                     * — slightly tighter vw (20 vs 22) so on wider phones the box
+                     *   doesn't eat into center space as much
+                     * — min 68px keeps it visible on the smallest screens
+                     * — max 280px is plenty on desktop
                      */}
                     <div className="relative"
-                        style={{ width: "clamp(130px,18vw,300px)", height: "clamp(130px,18vw,300px)" }}>
+                        style={{ width: "clamp(68px,20vw,280px)", height: "clamp(68px,20vw,280px)" }}>
                         <div style={{
                             position: "absolute", inset: 0, borderRadius: "18px",
                             background: "linear-gradient(135deg, rgba(22,81,209,0.1), rgba(6,10,35,0.6))",
@@ -242,7 +260,6 @@ function CornerImages({ onProductClick }: { onProductClick: (id: ProductId) => v
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={c.src} alt={c.label} style={{
                             width: "100%", height: "100%", objectFit: "contain",
-                            /* more padding so image fills the box better */
                             padding: 8,
                             position: "relative", zIndex: 1,
                             filter: `drop-shadow(0 0 20px rgba(91,155,255,${hovered === i && c.clickable ? 1 : 0.5})) drop-shadow(0 0 40px rgba(22,81,209,${hovered === i && c.clickable ? 0.8 : 0.3}))`,
@@ -250,10 +267,6 @@ function CornerImages({ onProductClick }: { onProductClick: (id: ProductId) => v
                             transform: hovered === i && c.clickable ? "scale(1.05)" : "scale(1)",
                             opacity: c.clickable ? 1 : 0.7,
                         }} />
-                        {/*
-                         * Label: pushed further below the card so it never overlaps
-                         * and slightly bigger text on larger screens
-                         */}
                         <p style={{
                             position: "absolute", bottom: "-26px", left: "50%", transform: "translateX(-50%)",
                             whiteSpace: "nowrap", fontSize: "clamp(9px,1.1vw,14px)",
@@ -342,17 +355,19 @@ export default function ComingSoon() {
                 <div key={c} className="bracket absolute pointer-events-none" style={{ zIndex: 3, width: 40, height: 40, opacity: 0.5, top: c.startsWith("t") ? 16 : "auto", bottom: c.startsWith("b") ? 16 : "auto", left: c.endsWith("l") ? 16 : "auto", right: c.endsWith("r") ? 16 : "auto", borderTop: c.startsWith("t") ? "2px solid rgba(91,155,255,0.7)" : "none", borderBottom: c.startsWith("b") ? "2px solid rgba(91,155,255,0.7)" : "none", borderLeft: c.endsWith("l") ? "2px solid rgba(91,155,255,0.7)" : "none", borderRight: c.endsWith("r") ? "2px solid rgba(91,155,255,0.7)" : "none", borderRadius: c === "tl" ? "12px 0 0 0" : c === "tr" ? "0 12px 0 0" : c === "bl" ? "0 0 0 12px" : "0 0 12px 0" }} />
             ))}
 
-            {/*
-             * LOGO FIX
-             * — moved slightly lower so it's not cut by the very top edge on small screens
-             * — wider clamp so it's readable at 320px
-             */}
             <div className="absolute top-2 sm:top-3 md:top-4 left-1/2 -translate-x-1/2 z-20 cs-logo" style={{ opacity: 0 }}>
+                {/* Desktop Logo */}
                 <Image src={CLD.footerLogo} alt="X-Ortho" width={500} height={200}
-                    className="object-contain h-auto"
+                    className="object-contain h-auto hidden sm:block"
                     style={{
-                        /* was: clamp(180px,30vw,520px) — too small on mobile */
                         width: "clamp(200px,42vw,440px)",
+                        filter: "drop-shadow(0 0 40px rgba(91,155,255,0.5)) drop-shadow(0 0 80px rgba(22,81,209,0.3))"
+                    }} />
+                {/* Mobile Logo — compact icon so it doesn't fight the corner images */}
+                <Image src={CLD.logo} alt="X-Ortho" width={160} height={160}
+                    className="object-contain h-auto block sm:hidden"
+                    style={{
+                        width: "clamp(60px,18vw,100px)",
                         filter: "drop-shadow(0 0 40px rgba(91,155,255,0.5)) drop-shadow(0 0 80px rgba(22,81,209,0.3))"
                     }} />
             </div>
@@ -363,25 +378,15 @@ export default function ComingSoon() {
             {/* Center — pills + video */}
             <div className="absolute inset-0 flex flex-col items-center justify-center z-10 pointer-events-none select-none"
                 style={{
-                    /*
-                     * PADDING FIX
-                     * — top padding accounts for the logo height so pills never sit behind it
-                     * — bottom padding accounts for the footer + corner label
-                     */
                     paddingTop: "clamp(100px,18vh,180px)",
                     paddingBottom: "clamp(60px,10vh,100px)",
                 }}>
 
                 {/* Pills grid */}
                 <div className="cs-anim w-full flex justify-center" style={{ opacity: 0 }}>
-                    {/*
-                     * PILLS FIX
-                     * — wider on small screens: clamp(260px,72vw,540px)
-                     *   was clamp(240px,38vw,520px) which made them too narrow on mobile
-                     */}
                     <div className="grid grid-cols-2 gap-1.5 sm:gap-2 md:gap-3"
-                        style={{ width: "clamp(260px,72vw,540px)" }}>
-                        {["Better Design", "Better Engineering","Better Quality" , "Better Functionality","Better Patient Experience", "Better Outcomes", "Better DME"].map((t, i) => (
+                        style={{ width: "clamp(180px,50vw,540px)" }}>
+                        {["Better Design", "Better Engineering", "Better Quality", "Better Functionality", "Better Patient Experience", "Better Outcomes", "Better DME"].map((t, i) => (
                             <span key={i} className={`better-pill relative overflow-hidden uppercase font-bold rounded-full text-center ${i >= 4 ? "col-span-2" : ""}`}
                                 style={{
                                     padding: "clamp(6px,1vh,10px) clamp(8px,1.5vw,18px)",
@@ -400,12 +405,8 @@ export default function ComingSoon() {
                     </div>
                 </div>
 
-                {/*
-                 * VIDEO FIX
-                 * — taller container: clamp(120px,18vh,220px)  was clamp(80px,12vh,160px)
-                 * — wider container:  clamp(240px,50vw,600px)  was clamp(200px,36vw,500px)
-                 * — object-cover keeps the full video visible inside the taller box
-                 */}
+                {/* Video Section  */}
+
                 {/* <div className="cs-anim mt-3 sm:mt-4 pointer-events-auto" style={{ opacity: 0, width: "clamp(240px,50vw,600px)" }}>
                     <div className="relative w-full rounded-xl overflow-hidden"
                         style={{
