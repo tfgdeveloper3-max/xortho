@@ -5,19 +5,6 @@ import gsap from "gsap";
 import Image from "next/image";
 import { CLD } from "@/lib/cloudinary";
 
-// ─────────────────────────────────────────────
-// CLIENT CHANGE: correct product names (capital letters, proper model names)
-// CLIENT CHANGE: corner labels updated to match product names
-// CLIENT CHANGE: Boot Short top-left, Boot Tall bottom-left (swapped per client)
-// CLIENT CHANGE: Back = "XO Back LSO Cryo", Knee = "XO Knee ROM Cryo"
-// CLIENT CHANGE: detail page — "back button" fix (onBack restores full page via key)
-// CLIENT CHANGE: font sizes in detail page pills/better words increased
-// CLIENT CHANGE: section titles forced single line
-// CLIENT CHANGE: feature card headers blue, desc white
-// CLIENT CHANGE: feature images corrected per client notes
-// CLIENT CHANGE: better pills on main page — larger, more spaced
-// ─────────────────────────────────────────────
-
 const PRODUCTS = {
     "boot-short": {
         name: "XO Boot Pneumatic Short",
@@ -28,7 +15,6 @@ const PRODUCTS = {
             title: "World Class Aerodynamic Structure",
             body: "Technologically advanced aerodynamic & ergonomic engineering enhances structural integrity generating cast like stability & protection. Crafted with innovative materials to reduce weight & allow struts to flex, combined with a calf adjustment function to adapt to various anatomical differences. Safe step rocker absorbs shock & offloads pressure generating a fluid natural gait with increased traction control.",
             features: [
-                // CLIENT: only Safe Step Rocker was correct; others corrected per client
                 { img: CLD.xoCage, title: "Flex Strut Armor", desc: "Flexible Lightweight\nDurable Protection" },
                 { img: CLD.xoShell, title: "Anterior Shield", desc: "Removeable Pliable\nDorsal Protection" },
                 { img: CLD.xoFrontView, title: "Posterior Calf Adjustment", desc: "Accommodates Larger\nWider Lower Legs" },
@@ -39,8 +25,6 @@ const PRODUCTS = {
             title: "Revolutionary Compression System",
             body: "Purposefully placed compartmentalized air cells provide greater surface area contact, combined with a low force bulb & intuitive inflation deflation valve allows for controlled customization of compression. T-shirt soft interior liner regulates temperature & enhances comfort. EZ grip strapping system has textured tips with a hybrid hook loop strap & 360 swivel d-rings for quicker donning & doffing.",
             features: [
-                // CLIENT: Air Chamber = inside soft good housing air chamber; Pneumatic = bulb/valve
-                // Strapping and AFO Undersleeve are correct
                 { img: CLD.xoLiner, title: "Air Chamber System", desc: "Compartmentalized\nCustomization" },
                 { img: CLD.xoRevolutionary, title: "Pneumatic System", desc: "Effortless & Rapid\nInflate & Deflate" },
                 { img: CLD.xoStraps, title: "Strapping System", desc: "EZ Grip Textured\nTips & 360 Swivel" },
@@ -91,8 +75,6 @@ const silverMetallic: React.CSSProperties = {
 // ── PRODUCT DETAIL PAGE ──
 function ProductDetail({ id, onBack }: { id: ProductId; onBack: () => void }) {
     const p = PRODUCTS[id];
-
-    // CLIENT FIX: back button — scroll to top on mount so page always starts fresh
     useEffect(() => { window.scrollTo(0, 0); }, []);
 
     return (
@@ -102,7 +84,6 @@ function ProductDetail({ id, onBack }: { id: ProductId; onBack: () => void }) {
             <div className="fixed top-0 inset-x-0 h-px pointer-events-none" style={{ background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.6), transparent)", zIndex: 60 }} />
 
             <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12 py-6 sm:py-8">
-                {/* Header */}
                 <div className="flex items-center justify-between mb-6 sm:mb-10">
                     <Image src={CLD.footerLogo} alt="X-ORTHO" width={220} height={80}
                         className="h-10 sm:h-14 md:h-16 w-auto object-contain hidden sm:block"
@@ -110,7 +91,6 @@ function ProductDetail({ id, onBack }: { id: ProductId; onBack: () => void }) {
                     <Image src={CLD.logo} alt="X-ORTHO" width={80} height={80}
                         className="h-10 w-auto object-contain block sm:hidden"
                         style={{ filter: "drop-shadow(0 0 30px rgba(91,155,255,0.6))" }} />
-                    {/* CLIENT FIX: back button works correctly — onBack unmounts this component */}
                     <button onClick={onBack}
                         className="font-nexa text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] font-bold px-4 sm:px-6 py-2 sm:py-3 rounded-full transition-all"
                         style={{ border: "1px solid rgba(91,155,255,0.3)", color: "rgba(91,155,255,0.8)", background: "transparent" }}
@@ -120,37 +100,27 @@ function ProductDetail({ id, onBack }: { id: ProductId; onBack: () => void }) {
                     </button>
                 </div>
 
-                {/* Main grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
-
-                    {/* LEFT — product image + tagline */}
                     <div className="flex flex-col items-center justify-start pb-6 px-2 sm:px-4 relative">
                         <div style={{ position: "absolute", top: "30%", left: "50%", transform: "translate(-50%,-50%)", width: "min(500px,90vw)", height: "min(500px,90vw)", borderRadius: "50%", background: "radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(91,155,255,0.08) 45%, transparent 70%)", filter: "blur(40px)", pointerEvents: "none" }} />
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={p.image} alt={p.name} className="w-full relative"
                             style={{ maxWidth: "min(580px,92vw)", height: "auto", objectFit: "contain", filter: "drop-shadow(0 0 60px rgba(91,155,255,0.85)) drop-shadow(0 40px 100px rgba(22,81,209,0.6))" }} />
                         <div className="text-center mt-4 sm:mt-6 relative">
-                            {/* CLIENT: product name font size — uses nexa, blue metallic */}
                             <h2 className="font-nexa font-black uppercase" style={{ fontSize: "clamp(1.4rem,3.5vw,3rem)", letterSpacing: "-1px" }}>
                                 <span style={blueMetallic}>{p.name}</span>
                             </h2>
-                            {/* CLIENT: tagline/better phrases — white, larger font */}
                             <p className="font-nexa mt-3 sm:mt-5 text-sm sm:text-base md:text-lg leading-relaxed whitespace-pre-line font-bold" style={{ color: "rgba(255,255,255,0.85)" }}>{p.tagline}</p>
                         </div>
                     </div>
 
-                    {/* RIGHT — features */}
                     <div className="flex flex-col gap-6 md:gap-10 py-2 md:py-4" style={{ borderTop: "1px solid rgba(91,155,255,0.10)" }}>
-
-                        {/* Section 1 */}
                         <div className="px-0 sm:px-4 md:px-6">
-                            {/* CLIENT: section title — single line (nowrap), blue metallic, nexa font */}
                             <h3 className="font-nexa font-black uppercase text-center mb-3 sm:mb-5 whitespace-nowrap overflow-hidden text-ellipsis"
                                 style={{ fontSize: "clamp(0.8rem,2vw,1.6rem)", ...blueMetallic }}>
                                 {p.section1.title}
                             </h3>
-                            <p className="font-nexa text-xs sm:text-sm md:text-[15px] text-center leading-relaxed mb-4 sm:mb-8"
-                                style={{ color: "rgba(255,255,255,0.60)" }}>
+                            <p className="font-nexa text-xs sm:text-sm md:text-[15px] text-center leading-relaxed mb-4 sm:mb-8" style={{ color: "rgba(255,255,255,0.60)" }}>
                                 {p.section1.body}
                             </p>
                             <div className="grid grid-cols-2 gap-3 sm:gap-5 md:gap-6">
@@ -163,9 +133,7 @@ function ProductDetail({ id, onBack }: { id: ProductId; onBack: () => void }) {
                                             <img src={f.img} alt={f.title} className="relative"
                                                 style={{ width: "85%", height: "85%", objectFit: "contain", filter: "drop-shadow(0 0 15px rgba(91,155,255,0.5))" }} />
                                         </div>
-                                        {/* CLIENT: feature card title — BLUE (matches product name / category) */}
                                         <p className="font-nexa font-black text-center text-xs sm:text-sm uppercase tracking-wide leading-tight" style={blueMetallic}>{f.title}</p>
-                                        {/* CLIENT: feature desc — WHITE */}
                                         <p className="font-nexa text-center text-[10px] sm:text-xs leading-snug whitespace-pre-line" style={{ color: "rgba(255,255,255,0.85)" }}>{f.desc}</p>
                                     </div>
                                 ))}
@@ -174,15 +142,12 @@ function ProductDetail({ id, onBack }: { id: ProductId; onBack: () => void }) {
 
                         <div className="h-px mx-0 sm:mx-4 md:mx-6" style={{ background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.3), transparent)" }} />
 
-                        {/* Section 2 */}
                         <div className="px-0 sm:px-4 md:px-6">
-                            {/* CLIENT: single line title */}
                             <h3 className="font-nexa font-black uppercase text-center mb-3 sm:mb-5 whitespace-nowrap overflow-hidden text-ellipsis"
                                 style={{ fontSize: "clamp(0.8rem,2vw,1.6rem)", ...blueMetallic }}>
                                 {p.section2.title}
                             </h3>
-                            <p className="font-nexa text-xs sm:text-sm md:text-[15px] text-center leading-relaxed mb-4 sm:mb-8"
-                                style={{ color: "rgba(255,255,255,0.60)" }}>
+                            <p className="font-nexa text-xs sm:text-sm md:text-[15px] text-center leading-relaxed mb-4 sm:mb-8" style={{ color: "rgba(255,255,255,0.60)" }}>
                                 {p.section2.body}
                             </p>
                             <div className="grid grid-cols-2 gap-3 sm:gap-5 md:gap-6">
@@ -195,7 +160,6 @@ function ProductDetail({ id, onBack }: { id: ProductId; onBack: () => void }) {
                                             <img src={f.img} alt={f.title} className="relative"
                                                 style={{ width: "85%", height: "85%", objectFit: "contain", filter: "drop-shadow(0 0 15px rgba(91,155,255,0.5))" }} />
                                         </div>
-                                        {/* CLIENT: blue title, white desc */}
                                         <p className="font-nexa font-black text-center text-xs sm:text-sm uppercase tracking-wide leading-tight" style={blueMetallic}>{f.title}</p>
                                         <p className="font-nexa text-center text-[10px] sm:text-xs leading-snug whitespace-pre-line" style={{ color: "rgba(255,255,255,0.85)" }}>{f.desc}</p>
                                     </div>
@@ -205,7 +169,6 @@ function ProductDetail({ id, onBack }: { id: ProductId; onBack: () => void }) {
                     </div>
                 </div>
 
-                {/* Bottom tagline — CLIENT: larger font */}
                 <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 text-center" style={{ borderTop: "1px solid rgba(91,155,255,0.15)" }}>
                     <p className="font-nexa font-black uppercase text-lg sm:text-2xl md:text-3xl" style={silverMetallic}>Better Design. Better Engineering. Better Quality.</p>
                     <p className="font-nexa font-black uppercase text-lg sm:text-2xl md:text-3xl mt-1 sm:mt-2" style={blueMetallic}>Better Functionality. Better Patient Experience. Better Outcomes. Better DME.</p>
@@ -230,14 +193,6 @@ function CornerImages({ onProductClick }: { onProductClick: (id: ProductId) => v
         });
     }, []);
 
-    /*
-     * CLIENT CHANGES:
-     * - Top-left:     XO Boot Pneumatic Short  (was Boot Tall)
-     * - Bottom-left:  XO Boot Pneumatic Tall   (was Boot Short)
-     * - Top-right:    XO Back LSO Cryo         (was Back Support)
-     * - Bottom-right: XO Knee ROM Cryo         (was Knee Support)
-     * - Labels use proper product names, Capital Letters
-     */
     const corners = [
         { id: "boot-short" as ProductId, src: CLD.xoBootShort, label: "XO Boot Pneumatic Short", clickable: true, pos: { top: "5%", left: "4%", right: "auto", bottom: "auto" } },
         { id: "boot-tall" as ProductId, src: CLD.xoBootTall, label: "XO Boot Pneumatic Tall", clickable: true, pos: { top: "auto", left: "4%", right: "auto", bottom: "8%" } },
@@ -247,47 +202,70 @@ function CornerImages({ onProductClick }: { onProductClick: (id: ProductId) => v
 
     return (
         <>
-            {corners.map((c, i) => (
-                <div
-                    key={c.id + i}
-                    ref={el => { imgRef.current[i] = el; }}
-                    onClick={() => c.clickable && onProductClick(c.id)}
-                    onMouseEnter={() => c.clickable && setHovered(i)}
-                    onMouseLeave={() => setHovered(null)}
-                    className="absolute"
-                    style={{ ...c.pos, zIndex: 5, cursor: c.clickable ? "pointer" : "default" }}
-                >
-                    <div className="relative"
-                        style={{ width: "clamp(48px,18vw,260px)", height: "clamp(48px,18vw,260px)" }}>
-                        <div style={{
-                            position: "absolute", inset: 0, borderRadius: "18px",
-                            background: "linear-gradient(135deg, rgba(22,81,209,0.1), rgba(6,10,35,0.6))",
-                            border: `1px solid ${hovered === i && c.clickable ? "rgba(91,155,255,0.9)" : "rgba(91,155,255,0.3)"}`,
-                            backdropFilter: "blur(10px)", transition: "all 0.4s ease",
-                            boxShadow: hovered === i && c.clickable
-                                ? "0 0 15px rgba(91,155,255,0.6), 0 0 30px rgba(91,155,255,0.4)"
-                                : "0 0 10px rgba(91,155,255,0.15)",
-                        }} />
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={c.src} alt={c.label} style={{
-                            width: "100%", height: "100%", objectFit: "contain", padding: 8,
-                            position: "relative", zIndex: 1,
-                            filter: `drop-shadow(0 0 20px rgba(91,155,255,${hovered === i && c.clickable ? 1 : 0.5})) drop-shadow(0 0 40px rgba(22,81,209,${hovered === i && c.clickable ? 0.8 : 0.3}))`,
-                            transition: "all 0.4s ease",
-                            transform: hovered === i && c.clickable ? "scale(1.05)" : "scale(1)",
-                            opacity: c.clickable ? 1 : 0.7,
-                        }} />
-                        {/* CLIENT: proper product name labels, nexa font */}
-                        <p className="font-nexa" style={{
-                            position: "absolute", bottom: "-26px", left: "50%", transform: "translateX(-50%)",
-                            whiteSpace: "nowrap", fontSize: "clamp(7px,0.9vw,12px)",
-                            textTransform: "uppercase", letterSpacing: "0.15em", fontWeight: 700,
-                            color: `rgba(91,155,255,${hovered === i && c.clickable ? 1 : 0.55})`,
-                            transition: "color 0.3s ease",
-                        }}>{c.label}</p>
+            {corners.map((c, i) => {
+                const isHovered = hovered === i;
+
+                return (
+                    <div
+                        key={c.id + i}
+                        ref={el => { imgRef.current[i] = el; }}
+                        onClick={() => c.clickable && onProductClick(c.id)}
+                        onMouseEnter={() => setHovered(i)}
+                        onMouseLeave={() => setHovered(null)}
+                        className="absolute"
+                        style={{ ...c.pos, zIndex: 5, cursor: c.clickable ? "pointer" : "default" }}
+                    >
+                        <div className="relative" style={{ width: "clamp(48px,18vw,260px)", height: "clamp(48px,18vw,260px)" }}>
+
+                            {/*
+                             * DEFAULT: box invisible (opacity 0, no border, no bg)
+                             * HOVER:   box fades in with border + bg + glow
+                             * All 4 corners get this effect — only 2 shoes are clickable
+                             */}
+                            <div style={{
+                                position: "absolute", inset: 0, borderRadius: "18px",
+                                background: isHovered
+                                    ? "linear-gradient(135deg, rgba(22,81,209,0.15), rgba(6,10,35,0.7))"
+                                    : "transparent",
+                                border: isHovered
+                                    ? "1px solid rgba(91,155,255,0.85)"
+                                    : "1px solid transparent",
+                                backdropFilter: isHovered ? "blur(10px)" : "none",
+                                boxShadow: isHovered
+                                    ? "0 0 20px rgba(91,155,255,0.55), 0 0 40px rgba(91,155,255,0.25), inset 0 1px 0 rgba(255,255,255,0.08)"
+                                    : "none",
+                                transition: "all 0.35s ease",
+                            }} />
+
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={c.src} alt={c.label} style={{
+                                width: "100%", height: "100%", objectFit: "contain",
+                                padding: 8,
+                                position: "relative", zIndex: 1,
+                                /*
+                                 * DEFAULT: strong ambient glow (image always visible & glowing)
+                                 * HOVER:   glow intensifies + slight scale up
+                                 */
+                                filter: isHovered
+                                    ? "drop-shadow(0 0 28px rgba(91,155,255,1)) drop-shadow(0 0 55px rgba(22,81,209,0.9))"
+                                    : "drop-shadow(0 0 18px rgba(91,155,255,0.75)) drop-shadow(0 0 36px rgba(22,81,209,0.5))",
+                                transform: isHovered ? "scale(1.07)" : "scale(1)",
+                                opacity: c.clickable ? 1 : 0.72,
+                                transition: "filter 0.35s ease, transform 0.35s ease, opacity 0.35s ease",
+                            }} />
+
+                            {/* Label — always subtly visible, brighten on hover */}
+                            <p className="font-nexa" style={{
+                                position: "absolute", bottom: "-26px", left: "50%", transform: "translateX(-50%)",
+                                whiteSpace: "nowrap", fontSize: "clamp(7px,0.9vw,12px)",
+                                textTransform: "uppercase", letterSpacing: "0.15em", fontWeight: 700,
+                                color: isHovered ? "rgba(91,155,255,1)" : "rgba(91,155,255,0.45)",
+                                transition: "color 0.35s ease",
+                            }}>{c.label}</p>
+                        </div>
                     </div>
-                </div>
-            ))}
+                );
+            })}
         </>
     );
 }
@@ -296,24 +274,22 @@ function CornerImages({ onProductClick }: { onProductClick: (id: ProductId) => v
 export default function ComingSoon() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [mounted, setMounted] = useState(false);
-    // CLIENT FIX: use a key to force full remount of main page when back is pressed
     const [activeProduct, setActiveProduct] = useState<ProductId | null>(null);
     const [mainKey, setMainKey] = useState(0);
 
     const handleBack = () => {
         setActiveProduct(null);
-        setMainKey(k => k + 1); // force GSAP animations to re-run on main page
+        setMainKey(k => k + 1);
     };
 
     useEffect(() => { setMounted(true); }, []);
 
     useEffect(() => {
-        if (activeProduct) return; // don't run when on product page
+        if (activeProduct) return;
         const tl = gsap.timeline({ delay: 0.05 });
         tl.fromTo(".cs-logo", { opacity: 0, y: -20, filter: "blur(6px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.4, ease: "expo.out" });
         tl.fromTo(".cs-anim", { opacity: 0, y: 16, filter: "blur(4px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.35, ease: "expo.out", stagger: 0.04 }, "-=0.3");
         gsap.to(".center-glow", { opacity: 0.30, duration: 2.5, ease: "sine.inOut", yoyo: true, repeat: -1 });
-        // CLIENT: brackets removed — no bracket animation
 
         gsap.set(".better-pill-text", { color: "rgba(147,197,253,0.9)" });
         gsap.set(".better-pill-sweep", { top: "-200%" });
@@ -364,15 +340,12 @@ export default function ComingSoon() {
     if (activeProduct) return <ProductDetail id={activeProduct} onBack={handleBack} />;
 
     return (
-        // CLIENT FIX: key prop forces full re-render + animation replay when returning from product page
         <main key={mainKey} className="relative w-full overflow-hidden bg-[#020916]" style={{ height: "100dvh" }}>
             <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" style={{ zIndex: 0, width: "100%", height: "100%" }} />
             <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "radial-gradient(ellipse at 50% 40%, transparent 35%, rgba(2,9,22,0.65) 100%)" }} />
             <div className="center-glow absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "radial-gradient(ellipse at 50% 50%, rgba(22,81,209,0.22) 0%, transparent 60%)", opacity: 0.15 }} />
             <div className="absolute top-0 inset-x-0 h-px pointer-events-none" style={{ zIndex: 3, background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.6), transparent)" }} />
             <div className="absolute bottom-0 inset-x-0 h-px pointer-events-none" style={{ zIndex: 3, background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.3), transparent)" }} />
-
-            {/* CLIENT: BRACKETS REMOVED — the bracket divs are gone */}
 
             {/* Logo */}
             <div className="absolute top-2 sm:top-3 md:top-4 left-1/2 -translate-x-1/2 z-20 cs-logo" style={{ opacity: 0 }}>
@@ -392,11 +365,6 @@ export default function ComingSoon() {
                 style={{ paddingTop: "clamp(100px,18vh,180px)", paddingBottom: "clamp(60px,10vh,100px)" }}>
 
                 <div className="cs-anim w-full flex justify-center" style={{ opacity: 0 }}>
-                    {/*
-                     * CLIENT: pills larger, more spaced out, use full available space
-                     * Width increased, gap increased, font size increased, padding increased
-                     * 8 pills in correct order (was 7 — "Better Engineering" added)
-                     */}
                     <div className="grid grid-cols-2 gap-2.5 sm:gap-3 md:gap-4"
                         style={{ width: "clamp(200px,52vw,560px)" }}>
                         {[
@@ -412,7 +380,6 @@ export default function ComingSoon() {
                             <span key={i}
                                 className={`better-pill relative overflow-hidden uppercase font-nexa font-black rounded-full text-center ${i >= 4 ? "col-span-2" : ""}`}
                                 style={{
-                                    /* CLIENT: significantly bigger padding + font */
                                     padding: "clamp(8px,1.4vh,14px) clamp(10px,2vw,22px)",
                                     background: "linear-gradient(135deg,rgba(22,81,209,0.18),rgba(6,10,35,0.55))",
                                     border: "1px solid rgba(91,155,255,0.45)",
