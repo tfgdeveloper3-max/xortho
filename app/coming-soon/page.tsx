@@ -205,10 +205,10 @@ function CornerImages({ onProductClick }: { onProductClick: (id: ProductId) => v
     }, []);
 
     const corners = [
-        { id: "boot-tall" as ProductId, src: CLD.xoBootTall, label: "Boot Tall", clickable: true, pos: { top: "3%", left: "0.5%", right: "auto", bottom: "auto" } },
-        { id: "boot-short" as ProductId, src: CLD.xoBootShort, label: "Boot Short", clickable: true, pos: { top: "auto", left: "0.5%", right: "auto", bottom: "8%" } },
-        { id: "back" as ProductId, src: CLD.xoBackComingSoon, label: "Back Support", clickable: false, pos: { top: "3%", left: "auto", right: "0.5%", bottom: "auto" } },
-        { id: "knee" as ProductId, src: CLD.xoKneeHingedComingSoon, label: "Knee Support", clickable: false, pos: { top: "auto", left: "auto", right: "0.5%", bottom: "8%" } },
+        { id: "boot-tall" as ProductId, src: CLD.xoBootTall, label: "Boot Tall", clickable: true, pos: { top: "5%", left: "2%", right: "auto", bottom: "auto" } },
+        { id: "boot-short" as ProductId, src: CLD.xoBootShort, label: "Boot Short", clickable: true, pos: { top: "auto", left: "2%", right: "auto", bottom: "5%" } },
+        { id: "back" as ProductId, src: CLD.xoBackComingSoon, label: "Back Support", clickable: false, pos: { top: "5%", left: "auto", right: "2%", bottom: "auto" } },
+        { id: "knee" as ProductId, src: CLD.xoKneeHingedComingSoon, label: "Knee Support", clickable: false, pos: { top: "auto", left: "auto", right: "2%", bottom: "5%" } },
     ];
 
     return (
