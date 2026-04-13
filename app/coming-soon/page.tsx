@@ -381,8 +381,8 @@ export default function ComingSoon() {
                      */}
                     <div className="grid grid-cols-2 gap-1.5 sm:gap-2 md:gap-3"
                         style={{ width: "clamp(260px,72vw,540px)" }}>
-                        {["Better Design", "Better Quality", "Better Functionality", "Better Clinical Outcomes", "Better Financial Outcomes", "Better DME"].map((t, i) => (
-                            <span key={i} className="better-pill relative overflow-hidden uppercase font-bold rounded-full text-center"
+                        {["Better Design", "Better Engineering","Better Quality" , "Better Functionality","Better Patient Experience", "Better Outcomes", "Better DME"].map((t, i) => (
+                            <span key={i} className={`better-pill relative overflow-hidden uppercase font-bold rounded-full text-center ${i >= 4 ? "col-span-2" : ""}`}
                                 style={{
                                     padding: "clamp(6px,1vh,10px) clamp(8px,1.5vw,18px)",
                                     background: "linear-gradient(135deg,rgba(22,81,209,0.18),rgba(6,10,35,0.55))",
