@@ -199,10 +199,8 @@ export default function AboutPage() {
                                         }}
                                         onMouseEnter={e => {
                                             const d = e.currentTarget as HTMLDivElement;
-                                            d.style.boxShadow = i % 2 === 0
-                                                ? "0 8px 40px rgba(22,81,209,0.20), -12px 0 48px rgba(22,81,209,0.16)"
-                                                : "0 8px 40px rgba(22,81,209,0.20), 12px 0 48px rgba(22,81,209,0.16)";
-                                            d.style.borderColor = "rgba(91,155,255,0.28)";
+                                            d.style.boxShadow = "0 0 20px rgba(91,155,255,0.55), 0 0 40px rgba(91,155,255,0.25), inset 0 1px 0 rgba(255,255,255,0.08)";
+                                            d.style.borderColor = "rgba(91,155,255,0.85)";
                                         }}
                                         onMouseLeave={e => {
                                             const d = e.currentTarget as HTMLDivElement;

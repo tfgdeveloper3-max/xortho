@@ -140,38 +140,44 @@ const tabContent: Record<string, React.ReactNode> = {
     </ol>
   ),
   FAQ: (
-    <div className="flex flex-col gap-3">
-      {[
-        { q: "What sizes does the XO Knee Support come in?", a: "Two sizes only: SM–2XL and 3XL–7XL. This covers the full range of patients for a comfortable, customizable fit." },
-        { q: "What HCPCS codes does this brace qualify for?", a: "The XO Knee Support ROM Cryo is PDAC approved and can be billed with HCPCS codes L1832 and L1833." },
-        { q: "Can the hinge be removed?", a: "Yes. The Dual-Axis hinge is easily removed when preferred, allowing the support to provide comfortable effective support during treatment and advanced stages of recovery." },
-        { q: "How does the Cryo Gel Pad work?", a: "The removable gel pad can be cooled for cryotherapy to reduce swelling and pain, or heated for soothing heat therapy. It seamlessly attaches and removes from the support." },
-        { q: "Is the KO Undersleeve included?", a: "Yes. Every XO Knee Support comes with a KO Undersleeve. The proprietary microfiber material creates lite even compression, eliminates hot spots, and wicks away perspiration." },
-        { q: "Where can I get the XO Knee Support ROM Cryo?", a: "The XO Knee Support ROM Cryo is available exclusively through TLC DME LLC. Contact us at (888) 521-8522 or visit tlcdme.com." },
-      ].map((item, i) => (
-        <FAQItem key={i} q={item.q} a={item.a} />
-      ))}
-    </div>
+    <FAQWrapper items={[
+      { q: "What sizes does the XO Knee Support come in?", a: "Two sizes only: SM–2XL and 3XL–7XL. This covers the full range of patients for a comfortable, customizable fit." },
+      { q: "What HCPCS codes does this brace qualify for?", a: "The XO Knee Support ROM Cryo is PDAC approved and can be billed with HCPCS codes L1832 and L1833." },
+      { q: "Can the hinge be removed?", a: "Yes. The Dual-Axis hinge is easily removed when preferred, allowing the support to provide comfortable effective support during treatment and advanced stages of recovery." },
+      { q: "How does the Cryo Gel Pad work?", a: "The removable gel pad can be cooled for cryotherapy to reduce swelling and pain, or heated for soothing heat therapy. It seamlessly attaches and removes from the support." },
+      { q: "Is the KO Undersleeve included?", a: "Yes. Every XO Knee Support comes with a KO Undersleeve. The proprietary microfiber material creates lite even compression, eliminates hot spots, and wicks away perspiration." },
+      { q: "Where can I get the XO Knee Support ROM Cryo?", a: "The XO Knee Support ROM Cryo is available exclusively through TLC DME LLC. Contact us at (888) 521-8522 or visit tlcdme.com." },
+    ]} />
   ),
 };
 
 // ── Dark FAQ accordion ────────────────────────────────────────────────────────
-function FAQItem({ q, a }: { q: string; a: string }) {
-  const [open, setOpen] = useState(false);
+function FAQWrapper({ items }: { items: { q: string; a: string }[] }) {
+  const [openIdx, setOpenIdx] = useState<number | null>(null);
+  return (
+    <div className="flex flex-col gap-3">
+      {items.map((item, i) => (
+        <FAQItem key={i} q={item.q} a={item.a} isOpen={openIdx === i} onToggle={() => setOpenIdx(openIdx === i ? null : i)} />
+      ))}
+    </div>
+  );
+}
+
+function FAQItem({ q, a, isOpen, onToggle }: { q: string; a: string; isOpen: boolean; onToggle: () => void }) {
   const answerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const el = answerRef.current;
     if (!el) return;
-    if (open) gsap.fromTo(el, { height: 0, opacity: 0 }, { height: "auto", opacity: 1, duration: 0.38, ease: "power3.out" });
+    if (isOpen) gsap.fromTo(el, { height: 0, opacity: 0 }, { height: "auto", opacity: 1, duration: 0.38, ease: "power3.out" });
     else gsap.to(el, { height: 0, opacity: 0, duration: 0.28, ease: "power2.in" });
-  }, [open]);
+  }, [isOpen]);
   return (
-    <div className="rounded-2xl overflow-hidden" style={{ border: open ? `1px solid ${DARK_BORDER_H}` : `1px solid ${DARK_BORDER}`, boxShadow: open ? "0 8px 32px rgba(22,81,209,0.18)" : "none", transition: "box-shadow 0.3s ease, border 0.3s ease" }}>
-      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between px-5 py-4 text-left group"
-        style={{ background: open ? "linear-gradient(135deg,rgba(22,81,209,0.22),rgba(91,155,255,0.10))" : "rgba(8,12,42,0.8)", transition: "background 0.3s ease" }}>
+    <div className="rounded-2xl overflow-hidden" style={{ border: isOpen ? `1px solid ${DARK_BORDER_H}` : `1px solid ${DARK_BORDER}`, boxShadow: isOpen ? "0 8px 32px rgba(22,81,209,0.18)" : "none", transition: "box-shadow 0.3s ease, border 0.3s ease" }}>
+      <button onClick={onToggle} className="w-full flex items-center justify-between px-5 py-4 text-left group"
+        style={{ background: isOpen ? "linear-gradient(135deg,rgba(22,81,209,0.22),rgba(91,155,255,0.10))" : "rgba(8,12,42,0.8)", transition: "background 0.3s ease" }}>
         <span className="font-bold text-sm text-[#f0f4ff] group-hover:text-[#5b9bff] transition-colors duration-200">{q}</span>
         <div className="flex-shrink-0 ml-4 w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300"
-          style={{ background: open ? "linear-gradient(135deg,#1651D1,#5b9bff)" : "rgba(91,155,255,0.12)", boxShadow: open ? "0 0 16px rgba(91,155,255,0.4)" : "none", transform: open ? "rotate(45deg)" : "rotate(0deg)" }}>
+          style={{ background: isOpen ? "linear-gradient(135deg,#1651D1,#5b9bff)" : "rgba(91,155,255,0.12)", boxShadow: isOpen ? "0 0 16px rgba(91,155,255,0.4)" : "none", transform: isOpen ? "rotate(45deg)" : "rotate(0deg)" }}>
           <span className="text-sm font-bold leading-none text-white">+</span>
         </div>
       </button>
@@ -347,7 +353,7 @@ function ProductInfoSection() {
           <div className="flex gap-1 flex-wrap mb-0">
             {tabs.map((tab) => (
               <button key={tab} onClick={() => setActiveTab(tab)} className="px-5 py-3 text-sm font-bold uppercase tracking-wider transition-all duration-200"
-                style={{ background: activeTab === tab ? "linear-gradient(135deg,#1651D1,#5b9bff)" : "rgba(8,12,42,0.8)", color: activeTab === tab ? "#fff" : "rgba(255,255,255,0.40)", borderRadius: "8px 8px 0 0", border: activeTab === tab ? "none" : `1px solid ${DARK_BORDER}`, borderBottom: "none", boxShadow: activeTab === tab ? "0 -4px 16px rgba(22,81,209,0.30)" : "none" }}>
+                style={{ background: activeTab === tab ? "linear-gradient(135deg,#1651D1,#5b9bff)" : "rgba(8,12,42,0.8)", color: activeTab === tab ? "#fff" : "rgba(255,255,255,0.40)", borderRadius: "8px 8px 0 0", borderTop: activeTab === tab ? "none" : `1px solid ${DARK_BORDER}`, borderLeft: activeTab === tab ? "none" : `1px solid ${DARK_BORDER}`, borderRight: activeTab === tab ? "none" : `1px solid ${DARK_BORDER}`, borderBottom: "none", boxShadow: activeTab === tab ? "0 -4px 16px rgba(22,81,209,0.30)" : "none" }}>
                 {tab}
               </button>
             ))}

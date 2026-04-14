@@ -30,7 +30,7 @@ const products = [
   {
     id: "knee", label: "Knee\nBrace", abbr: "KB", short: "Knee", tag: "Osteoarthritis",
     image: CLD.kneeProduct2, title: "Knee Brace OA", subtitle: "Osteoarthritis Support",
-    href: "/products/knee-brace",
+    href: "/products/knee",
     description: "An advanced pulley system allows for tailored compression. Low profile design allows support to fit comfortably under clothing for all-day wear.",
     features: ["Tailored compression control", "Low-profile under-clothing fit", "Vertical structural stays", "Gel Cryo cold therapy pad"],
   },

@@ -141,45 +141,51 @@ const tabContent: Record<string, React.ReactNode> = {
     </ol>
   ),
   FAQ: (
-    <div className="flex flex-col gap-3">
-      {[
-        { q: "Is the XO Boot available in Tall and Short versions?", a: "Yes. The XO Boot Pneumatic is available in both Tall and Short styles, each in Small, Medium, and Large sizing for men and women." },
-        { q: "Where can I get the XO Boot?", a: "The XO Boot Pneumatic is available exclusively through TLC DME LLC. Contact us at (888) 521-8522 or visit tlcdme.com." },
-        { q: "How does the pneumatic compression system work?", a: "A larger soft bulb fills the air cells faster and easier. The intuitive inflate/deflate valve allows quick, focused compression. Air cells provide circumferential pressure with effective medial & lateral malleolar custom compression." },
-        { q: "What is the AFO Undersleeve?", a: "Two AFO undersleeves are included with each boot. They increase patient comfort by eliminating hot spots due to friction, wick away perspiration, and help keep skin clean." },
-        { q: "Can I adjust the straps myself at home?", a: "Yes. The Easy Grip rubber strap tips allow easy adjustment for application and for patient re-fitting at home. The 360° swivel D-rings provide smooth, customized strap movement." },
-        { q: "How do I clean the boot?", a: "Wipe the shell with a damp cloth. The liner is removable and can be hand-washed — allow to air dry completely. The removable insole can also be washed separately." },
-      ].map((item, i) => (
-        <FAQItem key={i} q={item.q} a={item.a} />
-      ))}
-    </div>
+    <FAQWrapper items={[
+      { q: "Is the XO Boot available in Tall and Short versions?", a: "Yes. The XO Boot Pneumatic is available in both Tall and Short styles, each in Small, Medium, and Large sizing for men and women." },
+      { q: "Where can I get the XO Boot?", a: "The XO Boot Pneumatic is available exclusively through TLC DME LLC. Contact us at (888) 521-8522 or visit tlcdme.com." },
+      { q: "How does the pneumatic compression system work?", a: "A larger soft bulb fills the air cells faster and easier. The intuitive inflate/deflate valve allows quick, focused compression. Air cells provide circumferential pressure with effective medial & lateral malleolar custom compression." },
+      { q: "What is the AFO Undersleeve?", a: "Two AFO undersleeves are included with each boot. They increase patient comfort by eliminating hot spots due to friction, wick away perspiration, and help keep skin clean." },
+      { q: "Can I adjust the straps myself at home?", a: "Yes. The Easy Grip rubber strap tips allow easy adjustment for application and for patient re-fitting at home. The 360° swivel D-rings provide smooth, customized strap movement." },
+      { q: "How do I clean the boot?", a: "Wipe the shell with a damp cloth. The liner is removable and can be hand-washed — allow to air dry completely. The removable insole can also be washed separately." },
+    ]} />
   ),
 };
 
 // ── Dark FAQ accordion ────────────────────────────────────────────────────────
-function FAQItem({ q, a }: { q: string; a: string }) {
-  const [open, setOpen] = useState(false);
+function FAQWrapper({ items }: { items: { q: string; a: string }[] }) {
+  const [openIdx, setOpenIdx] = useState<number | null>(null);
+  return (
+    <div className="flex flex-col gap-3">
+      {items.map((item, i) => (
+        <FAQItem key={i} q={item.q} a={item.a} isOpen={openIdx === i} onToggle={() => setOpenIdx(openIdx === i ? null : i)} />
+      ))}
+    </div>
+  );
+}
+
+function FAQItem({ q, a, isOpen, onToggle }: { q: string; a: string; isOpen: boolean; onToggle: () => void }) {
   const answerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const el = answerRef.current;
     if (!el) return;
-    if (open) gsap.fromTo(el, { height: 0, opacity: 0 }, { height: "auto", opacity: 1, duration: 0.38, ease: "power3.out" });
+    if (isOpen) gsap.fromTo(el, { height: 0, opacity: 0 }, { height: "auto", opacity: 1, duration: 0.38, ease: "power3.out" });
     else gsap.to(el, { height: 0, opacity: 0, duration: 0.28, ease: "power2.in" });
-  }, [open]);
+  }, [isOpen]);
 
   return (
     <div className="rounded-2xl overflow-hidden transition-all duration-300"
       style={{
-        border: open ? `1px solid ${DARK_BORDER_H}` : `1px solid ${DARK_BORDER}`,
-        boxShadow: open ? "0 8px 32px rgba(22,81,209,0.18)" : "none",
+        border: isOpen ? `1px solid ${DARK_BORDER_H}` : `1px solid ${DARK_BORDER}`,
+        boxShadow: isOpen ? "0 8px 32px rgba(22,81,209,0.18)" : "none",
       }}>
-      <button onClick={() => setOpen(!open)}
+      <button onClick={onToggle}
         className="w-full flex items-center justify-between px-5 py-4 text-left group"
-        style={{ background: open ? "linear-gradient(135deg,rgba(22,81,209,0.22),rgba(91,155,255,0.10))" : "rgba(8,12,42,0.8)", transition: "background 0.3s ease" }}>
+        style={{ background: isOpen ? "linear-gradient(135deg,rgba(22,81,209,0.22),rgba(91,155,255,0.10))" : "rgba(8,12,42,0.8)", transition: "background 0.3s ease" }}>
         <span className="font-bold text-sm text-[#f0f4ff] group-hover:text-[#5b9bff] transition-colors duration-200">{q}</span>
         <div className="flex-shrink-0 ml-4 w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300"
-          style={{ background: open ? "linear-gradient(135deg,#1651D1,#5b9bff)" : "rgba(91,155,255,0.12)", boxShadow: open ? "0 0 16px rgba(91,155,255,0.4)" : "none", transform: open ? "rotate(45deg)" : "rotate(0deg)" }}>
+          style={{ background: isOpen ? "linear-gradient(135deg,#1651D1,#5b9bff)" : "rgba(91,155,255,0.12)", boxShadow: isOpen ? "0 0 16px rgba(91,155,255,0.4)" : "none", transform: isOpen ? "rotate(45deg)" : "rotate(0deg)" }}>
           <span className="text-sm font-bold leading-none text-white">+</span>
         </div>
       </button>
@@ -371,7 +377,9 @@ function PowerStepSection() {
                   background: activeTab === tab ? "linear-gradient(135deg,#1651D1,#5b9bff)" : "rgba(8,12,42,0.8)",
                   color: activeTab === tab ? "#fff" : "rgba(255,255,255,0.40)",
                   borderRadius: "8px 8px 0 0",
-                  border: activeTab === tab ? "none" : `1px solid ${DARK_BORDER}`,
+                  borderTop: activeTab === tab ? "none" : `1px solid ${DARK_BORDER}`,
+                  borderLeft: activeTab === tab ? "none" : `1px solid ${DARK_BORDER}`,
+                  borderRight: activeTab === tab ? "none" : `1px solid ${DARK_BORDER}`,
                   borderBottom: "none",
                   boxShadow: activeTab === tab ? "0 -4px 16px rgba(22,81,209,0.30)" : "none",
                 }}>
@@ -474,7 +482,7 @@ function BeforeAfterSlider() {
 export default function XbootDetailPage() {
   const heroRef = useRef<HTMLElement>(null);
   const heroImgRef = useRef<HTMLDivElement>(null);
-  const [activeFeature, setActiveFeature] = useState(1);
+  const [activeFeature, setActiveFeature] = useState(0);
   const [activeBenefit, setActiveBenefit] = useState(0);
 
   useEffect(() => {
