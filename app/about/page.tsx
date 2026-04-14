@@ -46,6 +46,18 @@ const products = [
 const BLUE_GRAD = "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)";
 const BLUE_FILTER = "drop-shadow(0 1px 0 rgba(91,155,255,0.5)) drop-shadow(0 -1px 0 rgba(0,0,30,0.6)) drop-shadow(0 2px 4px rgba(0,0,0,0.5))";
 
+// Shared dark section divider line
+const SectionDivider = () => (
+    <div className="absolute top-0 inset-x-0 h-px pointer-events-none"
+        style={{ background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.2), transparent)" }} />
+);
+
+// Shared dark grid overlay
+const GridOverlay = () => (
+    <div className="absolute inset-0 pointer-events-none"
+        style={{ backgroundImage: "linear-gradient(rgba(17,17,132,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.04) 1px,transparent 1px)", backgroundSize: "52px 52px" }} />
+);
+
 export default function AboutPage() {
     const heroRef = useRef<HTMLElement>(null);
 
@@ -116,7 +128,6 @@ export default function AboutPage() {
                             Contact Us <ArrowRight className="w-3.5 h-3.5" />
                         </a>
                     </div>
-                    {/* Stats inline */}
                     <div className="hanim flex items-center gap-8 mt-10 flex-wrap" style={{ opacity: 0 }}>
                         {[{ val: "2", label: "Products" }, { val: "PDAC", label: "Approved" }, { val: "L1832 & L1833", label: "HCPCS Codes" }].map((s, i) => (
                             <div key={i} className="flex flex-col gap-0.5">
@@ -130,9 +141,9 @@ export default function AboutPage() {
 
             {/* ══ MISSION QUOTE ══ */}
             <section className="relative w-full py-20 md:py-24 overflow-hidden" style={{ background: "#020916" }}>
-                <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(17,17,132,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.04) 1px,transparent 1px)", backgroundSize: "52px 52px" }} />
+                <GridOverlay />
                 <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(22,81,209,0.12) 0%, transparent 65%)" }} />
-                <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.3), transparent)" }} />
+                <SectionDivider />
                 <div className="container mx-auto px-5 md:px-[100px] relative z-10">
                     <div className="sr max-w-4xl mx-auto text-center" style={{ opacity: 0 }}>
                         <div className="inline-flex items-center gap-3 mb-6">
@@ -153,35 +164,60 @@ export default function AboutPage() {
             </section>
 
             {/* ══ OUR STORY TIMELINE ══ */}
-            <section className="relative w-full py-20 md:py-28 overflow-hidden bg-white">
-                <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 30%, rgba(22,81,209,0.04) 0%, transparent 60%)" }} />
+            {/* CHANGED: bg-white → #020916 dark. Card backgrounds updated to dark glass. Text colors updated. */}
+            <section className="relative w-full py-20 md:py-28 overflow-hidden" style={{ background: "#020916" }}>
+                <GridOverlay />
+                <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 30%, rgba(22,81,209,0.10) 0%, transparent 60%)" }} />
+                <SectionDivider />
                 <div className="container mx-auto px-5 md:px-[100px] relative z-10">
                     <div className="sr text-center mb-16" style={{ opacity: 0 }}>
                         <span className="text-[10px] uppercase tracking-[0.4em] font-bold block mb-3" style={{ backgroundImage: BLUE_GRAD, WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
                             Our Journey
                         </span>
-                        <h2 className="font-nexa uppercase leading-tight text-[#0d1535]" style={{ fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 800, letterSpacing: "-1px" }}>
+                        <h2 className="font-nexa uppercase leading-tight text-[#f0f4ff]" style={{ fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 800, letterSpacing: "-1px" }}>
                             The{" "}
                             <span style={{ backgroundImage: BLUE_GRAD, WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text", filter: BLUE_FILTER }}>X-Ortho Story</span>
                         </h2>
                     </div>
                     <div className="relative max-w-4xl mx-auto">
+                        {/* Timeline vertical line */}
                         <div className="absolute left-[18px] md:left-1/2 top-0 bottom-0 w-px md:-translate-x-1/2 pointer-events-none"
-                            style={{ background: "linear-gradient(to bottom, transparent, rgba(22,81,209,0.25) 10%, rgba(22,81,209,0.25) 90%, transparent)" }} />
+                            style={{ background: "linear-gradient(to bottom, transparent, rgba(91,155,255,0.25) 10%, rgba(91,155,255,0.25) 90%, transparent)" }} />
                         {timeline.map((t, i) => (
                             <div key={i} className={`sr relative flex gap-8 md:gap-0 mb-12 ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`} style={{ opacity: 0 }}>
+                                {/* Dot */}
                                 <div className="absolute left-[10px] md:left-1/2 md:-translate-x-1/2 top-6 w-4 h-4 rounded-full flex-shrink-0 z-10"
-                                    style={{ background: "linear-gradient(135deg,#1651D1,#5b9bff)", boxShadow: "0 0 16px rgba(22,81,209,0.5)" }} />
+                                    style={{ background: "linear-gradient(135deg,#1651D1,#5b9bff)", boxShadow: "0 0 16px rgba(22,81,209,0.6)" }} />
                                 <div className={`ml-10 md:ml-0 flex-1 ${i % 2 === 0 ? "md:pr-12 md:text-right" : "md:pl-12"}`}>
+                                    {/* Card — dark glass matching Values section */}
                                     <div className="rounded-2xl p-6 transition-all duration-300"
-                                        style={{ background: "linear-gradient(145deg,#f4f6ff,#eef0ff)", border: "1px solid rgba(22,81,209,0.08)", boxShadow: i % 2 === 0 ? "0 4px 20px rgba(22,81,209,0.06), -8px 0 32px rgba(22,81,209,0.08)" : "0 4px 20px rgba(22,81,209,0.06), 8px 0 32px rgba(22,81,209,0.08)" }}
-                                        onMouseEnter={e => { const d = e.currentTarget as HTMLDivElement; d.style.boxShadow = i % 2 === 0 ? "0 8px 40px rgba(22,81,209,0.14), -12px 0 48px rgba(22,81,209,0.16)" : "0 8px 40px rgba(22,81,209,0.14), 12px 0 48px rgba(22,81,209,0.16)"; d.style.borderColor = "rgba(22,81,209,0.18)"; }}
-                                        onMouseLeave={e => { const d = e.currentTarget as HTMLDivElement; d.style.boxShadow = i % 2 === 0 ? "0 4px 20px rgba(22,81,209,0.06), -8px 0 32px rgba(22,81,209,0.08)" : "0 4px 20px rgba(22,81,209,0.06), 8px 0 32px rgba(22,81,209,0.08)"; d.style.borderColor = "rgba(22,81,209,0.08)"; }}>
-                                        <span className="text-[10px] uppercase tracking-[0.4em] font-bold block mb-2" style={{ backgroundImage: BLUE_GRAD, WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                                        style={{
+                                            background: "linear-gradient(145deg, rgba(8,12,42,0.96) 0%, rgba(14,24,72,0.88) 100%)",
+                                            border: "1px solid rgba(91,155,255,0.12)",
+                                            boxShadow: i % 2 === 0
+                                                ? "0 4px 20px rgba(0,0,0,0.4), -8px 0 32px rgba(22,81,209,0.08)"
+                                                : "0 4px 20px rgba(0,0,0,0.4), 8px 0 32px rgba(22,81,209,0.08)",
+                                        }}
+                                        onMouseEnter={e => {
+                                            const d = e.currentTarget as HTMLDivElement;
+                                            d.style.boxShadow = i % 2 === 0
+                                                ? "0 8px 40px rgba(22,81,209,0.20), -12px 0 48px rgba(22,81,209,0.16)"
+                                                : "0 8px 40px rgba(22,81,209,0.20), 12px 0 48px rgba(22,81,209,0.16)";
+                                            d.style.borderColor = "rgba(91,155,255,0.28)";
+                                        }}
+                                        onMouseLeave={e => {
+                                            const d = e.currentTarget as HTMLDivElement;
+                                            d.style.boxShadow = i % 2 === 0
+                                                ? "0 4px 20px rgba(0,0,0,0.4), -8px 0 32px rgba(22,81,209,0.08)"
+                                                : "0 4px 20px rgba(0,0,0,0.4), 8px 0 32px rgba(22,81,209,0.08)";
+                                            d.style.borderColor = "rgba(91,155,255,0.12)";
+                                        }}>
+                                        <span className="text-[10px] uppercase tracking-[0.4em] font-bold block mb-2"
+                                            style={{ backgroundImage: BLUE_GRAD, WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
                                             {t.label}
                                         </span>
-                                        <h3 className="font-bold text-[#0d1535] text-lg mb-2 leading-tight">{t.title}</h3>
-                                        <p className="text-[#6b7fa8] text-sm leading-relaxed">{t.desc}</p>
+                                        <h3 className="font-bold text-[#f0f4ff] text-lg mb-2 leading-tight">{t.title}</h3>
+                                        <p className="text-white/45 text-sm leading-relaxed">{t.desc}</p>
                                     </div>
                                 </div>
                                 <div className="hidden md:block flex-1" />
@@ -192,13 +228,16 @@ export default function AboutPage() {
             </section>
 
             {/* ══ PRODUCTS OVERVIEW ══ */}
-            <section className="relative w-full py-20 md:py-28 overflow-hidden bg-white" style={{ borderTop: "1px solid rgba(17,17,132,0.06)" }}>
+            {/* CHANGED: bg-white → #020916 dark. Product cards updated to dark glass. Text colors updated. */}
+            <section className="relative w-full py-20 md:py-28 overflow-hidden" style={{ background: "#020916", borderTop: "1px solid rgba(91,155,255,0.08)" }}>
+                <GridOverlay />
+                <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(22,81,209,0.08) 0%, transparent 65%)" }} />
                 <div className="container mx-auto px-5 md:px-[100px] relative z-10">
                     <div className="sr text-center mb-14" style={{ opacity: 0 }}>
                         <span className="text-[10px] uppercase tracking-[0.4em] font-bold block mb-3" style={{ backgroundImage: BLUE_GRAD, WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
                             X-Ortho Product Line
                         </span>
-                        <h2 className="font-nexa uppercase text-[#0d1535] leading-tight" style={{ fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 800, letterSpacing: "-1px" }}>
+                        <h2 className="font-nexa uppercase text-[#f0f4ff] leading-tight" style={{ fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 800, letterSpacing: "-1px" }}>
                             Our{" "}
                             <span style={{ backgroundImage: BLUE_GRAD, WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text", filter: BLUE_FILTER }}>Products</span>
                         </h2>
@@ -206,30 +245,37 @@ export default function AboutPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {products.map((p, i) => (
                             <div key={i} className="sr group rounded-3xl overflow-hidden transition-all duration-500 hover:-translate-y-2"
-                                style={{ opacity: 0, border: "1px solid rgba(17,17,132,0.08)", boxShadow: "0 4px 24px rgba(17,17,132,0.06)" }}
-                                onMouseEnter={e => { const d = e.currentTarget as HTMLDivElement; d.style.boxShadow = "0 20px 56px rgba(17,17,132,0.14)"; d.style.borderColor = "rgba(22,81,209,0.22)"; }}
-                                onMouseLeave={e => { const d = e.currentTarget as HTMLDivElement; d.style.boxShadow = "0 4px 24px rgba(17,17,132,0.06)"; d.style.borderColor = "rgba(17,17,132,0.08)"; }}>
-                                <div className="relative flex items-center justify-center" style={{ height: 240, background: "linear-gradient(145deg,#f4f6ff,#eef0ff)" }}>
-                                    <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(22,81,209,0.09) 0%, transparent 70%)" }} />
+                                style={{
+                                    opacity: 0,
+                                    background: "linear-gradient(145deg, rgba(8,12,42,0.96) 0%, rgba(14,24,72,0.88) 100%)",
+                                    border: "1px solid rgba(91,155,255,0.12)",
+                                    boxShadow: "0 4px 24px rgba(0,0,0,0.4)",
+                                }}
+                                onMouseEnter={e => { const d = e.currentTarget as HTMLDivElement; d.style.boxShadow = "0 20px 56px rgba(22,81,209,0.22)"; d.style.borderColor = "rgba(91,155,255,0.30)"; }}
+                                onMouseLeave={e => { const d = e.currentTarget as HTMLDivElement; d.style.boxShadow = "0 4px 24px rgba(0,0,0,0.4)"; d.style.borderColor = "rgba(91,155,255,0.12)"; }}>
+                                {/* Product image area — dark with subtle blue glow */}
+                                <div className="relative flex items-center justify-center" style={{ height: 240, background: "linear-gradient(145deg, rgba(6,10,35,0.9), rgba(14,24,72,0.7))" }}>
+                                    <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(22,81,209,0.14) 0%, transparent 70%)" }} />
                                     {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img src={p.img} alt={p.name} className="transition-transform duration-500 group-hover:scale-105"
-                                        style={{ maxHeight: "88%", maxWidth: "65%", objectFit: "contain", filter: "drop-shadow(0 16px 40px rgba(22,81,209,0.22))" }} />
+                                        style={{ maxHeight: "88%", maxWidth: "65%", objectFit: "contain", filter: "drop-shadow(0 16px 40px rgba(22,81,209,0.35))" }} />
                                     <div className="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest"
-                                        style={{ background: "rgba(22,81,209,0.12)", border: "1px solid rgba(22,81,209,0.18)", color: "#1651D1" }}>
+                                        style={{ background: "rgba(22,81,209,0.20)", border: "1px solid rgba(91,155,255,0.30)", color: "#5b9bff" }}>
                                         {p.tag}
                                     </div>
                                 </div>
-                                <div className="p-7 flex flex-col gap-4" style={{ background: "#fff" }}>
-                                    <h3 className="font-nexa font-black uppercase text-[#0d1535] text-xl leading-tight">{p.name}</h3>
+                                {/* Card body */}
+                                <div className="p-7 flex flex-col gap-4" style={{ background: "transparent" }}>
+                                    <h3 className="font-nexa font-black uppercase text-[#f0f4ff] text-xl leading-tight">{p.name}</h3>
                                     <ul className="flex flex-col gap-2">
                                         {p.bullets.map((b, j) => (
-                                            <li key={j} className="flex items-start gap-2.5 text-sm text-[#6b7fa8]">
-                                                <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5" style={{ background: "#1651D1" }} />
+                                            <li key={j} className="flex items-start gap-2.5 text-sm text-white/50">
+                                                <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5" style={{ background: "#5b9bff" }} />
                                                 {b}
                                             </li>
                                         ))}
                                     </ul>
-                                    <a href={p.href} className="cursor-pointer group/btn duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/30 p-1.5 relative overflow-hidden mt-2">
+                                    <a href={p.href} className="cursor-pointer group/btn duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/20 p-1.5 relative overflow-hidden mt-2">
                                         <div className="absolute top-0 left-[5%] group-hover/btn:left-[80%] duration-300 transition-all h-full w-10 bg-[#1651D1]/50 rounded-[200%] blur" />
                                         <div className="flex items-center bg-white rounded-full px-5 py-2.5 relative z-10">
                                             <span className="text-sm font-semibold">See Product Details</span>
@@ -243,7 +289,7 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            {/* ══ VALUES ══ */}
+            {/* ══ VALUES ══ — unchanged, already dark */}
             <section className="relative w-full mb-30 py-20 md:py-28 overflow-hidden" style={{ background: "#020916" }}>
                 <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.2), transparent)" }} />
                 <div className="container mx-auto px-5 md:px-[100px] relative z-10">
@@ -279,7 +325,7 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            {/* ══ TLC DME INFO ══ */}
+            {/* ══ TLC DME INFO ══ — unchanged, already dark */}
             <section className="relative overflow-hidden mb-10 mx-4 md:mx-8" style={{ background: "#020916", paddingTop: 80, paddingBottom: 80, borderRadius: "3rem", marginTop: 24 }}>
                 <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(17,17,132,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.04) 1px,transparent 1px)", backgroundSize: "52px 52px" }} />
                 <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(22,81,209,0.10) 0%, transparent 65%)" }} />

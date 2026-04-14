@@ -3,6 +3,7 @@
 import Image from "next/image"
 import { useEffect, useState, useRef } from "react"
 import { useRouter, usePathname } from "next/navigation"
+import Link from "next/link"
 import { Menu, X, ChevronDown, ArrowRight } from "lucide-react"
 import { CLD } from "@/lib/cloudinary"
 
@@ -81,9 +82,9 @@ export default function Navbar() {
 
   const navLinks = [
     { label: "Home", href: "/", hasDropdown: false },
-    { label: "About", href: "#about", hasDropdown: false },
-    { label: "Products", href: "#products", hasDropdown: true },
-    { label: "Contact", href: "#contact", hasDropdown: false },
+    { label: "About", href: "/about", hasDropdown: false },
+    { label: "Products", href: "/products", hasDropdown: true },
+    { label: "Contact", href: "/contact", hasDropdown: false },
   ]
 
   return (
@@ -258,14 +259,15 @@ export default function Navbar() {
                   </button>
                 </div>
               ) : (
-                <button key={link.label}
-                  onClick={() => handleNavClick(link.href)}
+                <Link key={link.label}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
                   className={`relative px-4 py-2 text-sm font-semibold tracking-wide uppercase transition-all duration-300 group
                     ${productsOpen ? "text-white/40 hover:text-white" : isScrolled ? "text-white/80 hover:text-white" : "text-white/90 hover:text-white"}`}>
                   {link.label}
                   <span className="absolute bottom-1 left-4 right-4 h-[2px] rounded-full scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"
                     style={{ background: "#5b9bff" }} />
-                </button>
+                </Link>
               )
             )}
           </nav>
@@ -321,12 +323,13 @@ export default function Navbar() {
                   </div>
                 </div>
               ) : (
-                <button key={link.label}
-                  onClick={() => handleNavClick(link.href)}
-                  className="w-full text-left px-6 py-3.5 text-sm font-bold uppercase tracking-widest text-white/80 hover:text-white hover:bg-white/5 transition-all duration-200"
+                <Link key={link.label}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="block w-full text-left px-6 py-3.5 text-sm font-bold uppercase tracking-widest text-white/80 hover:text-white hover:bg-white/5 transition-all duration-200"
                   style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
                   {link.label}
-                </button>
+                </Link>
               )
             )}
           </nav>
