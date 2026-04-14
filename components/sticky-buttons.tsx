@@ -93,7 +93,7 @@ export default function StickyButtons() {
           <div className="btn-icon"><MessageCircle className="w-4 h-4 md:w-5 md:h-5 text-white" /></div>
         </a>
 
-        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="sticky-btn"
+        <button onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); window.dispatchEvent(new CustomEvent('scrollToTop')); }} className="sticky-btn"
           style={{ background: "linear-gradient(135deg, rgba(22,81,209,0.2), rgba(12,47,138,0.5))", borderLeft: "1px solid rgba(91,155,255,0.3)", borderTop: "1px solid rgba(91,155,255,0.3)", borderBottom: "1px solid rgba(91,155,255,0.3)", boxShadow: "-4px 4px 24px rgba(22,81,209,0.15)", backdropFilter: "blur(8px)", outline: "none" }}>
           <span className="btn-label">Back To Top</span>
           <div className="btn-icon"><ArrowUp className="w-4 h-4 md:w-5 md:h-5 text-white" /></div>

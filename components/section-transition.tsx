@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 interface Props {
     children: React.ReactNode[];
@@ -9,7 +9,7 @@ interface Props {
 
 export default function SectionTransition({ children, onNavbarVisible }: Props) {
     const sectionsRef = useRef<HTMLDivElement[]>([]);
-    const [showBackToTop, setShowBackToTop] = useState(false);
+
     const targetYRef = useRef(0);
 
     useEffect(() => {
@@ -45,22 +45,28 @@ export default function SectionTransition({ children, onNavbarVisible }: Props) 
             targetYRef.current = Math.max(0, Math.min(targetYRef.current + delta, maxY));
         }
 
+        function onScrollToTop() {
+            targetYRef.current = 0;
+            currentY = 0;
+        }
+
         rafId = requestAnimationFrame(loop);
         window.addEventListener("wheel", onWheel, { passive: false });
         window.addEventListener("touchstart", onTouchStart, { passive: true });
         window.addEventListener("touchmove", onTouchMove, { passive: false });
+        window.addEventListener("scrollToTop", onScrollToTop);
 
         return () => {
             cancelAnimationFrame(rafId);
             window.removeEventListener("wheel", onWheel);
             window.removeEventListener("touchstart", onTouchStart);
             window.removeEventListener("touchmove", onTouchMove);
+            window.removeEventListener("scrollToTop", onScrollToTop);
         };
     }, []);
 
     useEffect(() => {
         function onScroll() {
-            setShowBackToTop(window.scrollY > window.innerHeight * 0.5);
             onNavbarVisible?.(window.scrollY < 80);
         }
         window.addEventListener("scroll", onScroll, { passive: true });
@@ -106,32 +112,7 @@ export default function SectionTransition({ children, onNavbarVisible }: Props) 
                     ))}
             </div>
 
-            {showBackToTop && (
-                <button
-                    onClick={() => { targetYRef.current = 0; }}
-                    style={{
-                        position: "fixed", bottom: "32px", right: "32px", zIndex: 9999,
-                        width: "48px", height: "48px", borderRadius: "50%",
-                        background: "linear-gradient(135deg,#2C2895 0%,#4340c4 100%)",
-                        border: "1px solid rgba(255,255,255,0.15)", cursor: "pointer",
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        boxShadow: "0 4px 24px rgba(44,40,149,0.35)",
-                        transition: "transform 0.2s ease, box-shadow 0.2s ease",
-                    }}
-                    onMouseEnter={e => {
-                        (e.currentTarget as HTMLButtonElement).style.transform = "scale(1.12)";
-                        (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 6px 32px rgba(44,40,149,0.55)";
-                    }}
-                    onMouseLeave={e => {
-                        (e.currentTarget as HTMLButtonElement).style.transform = "scale(1)";
-                        (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 4px 24px rgba(44,40,149,0.35)";
-                    }}
-                >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round">
-                        <path d="M12 19V5M5 12l7-7 7 7" />
-                    </svg>
-                </button>
-            )}
+
         </>
     );
 }

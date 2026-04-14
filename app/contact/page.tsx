@@ -30,42 +30,7 @@ const subjects = [
 
 const BLUE_GRAD = "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)";
 
-/* ── Back To Top ── */
-function BackToTop() {
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.5);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-  if (!visible) return null;
-  return (
-    <button
-      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      style={{
-        position: "fixed", bottom: "32px", right: "32px", zIndex: 9999,
-        width: "48px", height: "48px", borderRadius: "50%",
-        background: "linear-gradient(135deg,#1651D1 0%,#5b9bff 100%)",
-        border: "1px solid rgba(91,155,255,0.3)", cursor: "pointer",
-        display: "flex", alignItems: "center", justifyContent: "center",
-        boxShadow: "0 4px 24px rgba(22,81,209,0.45)",
-        transition: "transform 0.2s ease, box-shadow 0.2s ease",
-      }}
-      onMouseEnter={e => {
-        (e.currentTarget as HTMLButtonElement).style.transform = "scale(1.12)";
-        (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 6px 32px rgba(22,81,209,0.65)";
-      }}
-      onMouseLeave={e => {
-        (e.currentTarget as HTMLButtonElement).style.transform = "scale(1)";
-        (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 4px 24px rgba(22,81,209,0.45)";
-      }}
-    >
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round">
-        <path d="M12 19V5M5 12l7-7 7 7" />
-      </svg>
-    </button>
-  );
-}
+
 
 /* ── Main Page ── */
 export default function ContactPage() {
