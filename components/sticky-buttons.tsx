@@ -1,6 +1,6 @@
 "use client"
 
-import { Calendar, MessageCircle } from "lucide-react"
+import { Calendar, MessageCircle, ArrowUp } from "lucide-react"
 import { useEffect, useState } from "react"
 
 export default function StickyButtons() {
@@ -81,17 +81,23 @@ export default function StickyButtons() {
         className={`fixed right-0 z-[9998] flex flex-col gap-2 sticky-wrap ${visible ? "shown-btn" : "hidden-btn"}`}
         style={{ bottom: "96px" }}
       >
-        <a href="#contact" className="sticky-btn"
+        <a href="/contact" className="sticky-btn"
           style={{ background: "linear-gradient(135deg, #1651D1, #3b82f6)", boxShadow: "-4px 4px 24px rgba(22,81,209,0.45)" }}>
           <span className="btn-label">Schedule a Demo</span>
           <div className="btn-icon"><Calendar className="w-4 h-4 md:w-5 md:h-5 text-white" /></div>
         </a>
 
-        <a href="#contact" className="sticky-btn"
+        <a href="/contact" className="sticky-btn"
           style={{ background: "linear-gradient(135deg, #0c2f8a, #1651D1)", boxShadow: "-4px 4px 24px rgba(22,81,209,0.35)" }}>
           <span className="btn-label">Contact Us</span>
           <div className="btn-icon"><MessageCircle className="w-4 h-4 md:w-5 md:h-5 text-white" /></div>
         </a>
+
+        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="sticky-btn"
+          style={{ background: "linear-gradient(135deg, rgba(22,81,209,0.2), rgba(12,47,138,0.5))", borderLeft: "1px solid rgba(91,155,255,0.3)", borderTop: "1px solid rgba(91,155,255,0.3)", borderBottom: "1px solid rgba(91,155,255,0.3)", boxShadow: "-4px 4px 24px rgba(22,81,209,0.15)", backdropFilter: "blur(8px)", outline: "none" }}>
+          <span className="btn-label">Back To Top</span>
+          <div className="btn-icon"><ArrowUp className="w-4 h-4 md:w-5 md:h-5 text-white" /></div>
+        </button>
       </div>
     </>
   )

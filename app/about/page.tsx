@@ -93,7 +93,6 @@ export default function AboutPage() {
 
             {/* ══ HERO ══ */}
             <section ref={heroRef} className="relative w-full flex items-center overflow-hidden" style={{ minHeight: "100vh", background: "#020916" }}>
-                <video src={CLD.sectionhero} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-25 pointer-events-none" style={{ zIndex: 0 }} />
                 <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "linear-gradient(135deg,rgba(2,9,22,0.92) 0%,rgba(2,9,22,0.55) 55%,transparent 100%)" }} />
                 <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, backgroundImage: "linear-gradient(rgba(17,17,132,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.04) 1px,transparent 1px)", backgroundSize: "52px 52px" }} />
                 <div className="absolute bottom-0 inset-x-0 h-32 pointer-events-none" style={{ zIndex: 2, background: "linear-gradient(to bottom,transparent,#020916)" }} />
@@ -101,13 +100,13 @@ export default function AboutPage() {
                 <div className="relative z-20 w-full container mx-auto px-5 md:px-[100px]" style={{ paddingTop: "max(140px,14vh)", paddingBottom: 100 }}>
                     <div className="hanim mb-4" style={{ opacity: 0 }}>
                         <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.38em] font-bold px-4 py-1.5 rounded-full"
-                            style={{ background: "rgba(22,81,209,0.15)", border: "1px solid rgba(91,155,255,0.25)", color: "#5b9bff" }}>
+                            style={{ background: "rgba(22,81,209,0.15)", border: "1px solid rgba(91,155,255,0.25)", color: "#5b9bff", marginTop: "40px" }}>
                             <span className="w-1.5 h-1.5 rounded-full bg-[#5b9bff] animate-pulse" style={{ boxShadow: "0 0 8px rgba(91,155,255,0.8)" }} />
                             TLC DME LLC · X-Ortho
                         </span>
                     </div>
                     <h1 className="hanim font-nexa uppercase text-[#f0f4ff] leading-[0.92]"
-                        style={{ opacity: 0, fontSize: "clamp(3.5rem,7vw,7rem)", fontWeight: 800, letterSpacing: "-4px" }}>
+                        style={{ opacity: 0, paddingTop: "20px", fontSize: "clamp(2.5rem,7vw,5rem)", fontWeight: 800, letterSpacing: "-4px" }}>
                         About<br />
                         <span style={{ backgroundImage: BLUE_GRAD, WebkitBackgroundClip: "text" as string, WebkitTextFillColor: "transparent", backgroundClip: "text", filter: BLUE_FILTER }}>
                             X-Ortho
