@@ -60,7 +60,6 @@ export default function Hero({ noAnimation = false, playAnimation = false }: Her
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Hide/show navbar when overlay opens/closes
   useEffect(() => {
     const navbar = document.querySelector<HTMLElement>("#main-navbar");
     if (!navbar) return;
@@ -75,7 +74,6 @@ export default function Hero({ noAnimation = false, playAnimation = false }: Her
     }
   }, [activated]);
 
-  // Hero entrance
   useEffect(() => {
     if (!playAnimation) return;
     const hero = heroRef.current;
@@ -93,7 +91,6 @@ export default function Hero({ noAnimation = false, playAnimation = false }: Her
     }
   }, [playAnimation]);
 
-  // Grid open/close animation
   useEffect(() => {
     const el = gridRef.current;
     if (!el) return;
@@ -114,7 +111,6 @@ export default function Hero({ noAnimation = false, playAnimation = false }: Her
     }
   }, [activated]);
 
-  // Detail panel animation
   useEffect(() => {
     const el = detailRef.current;
     if (!el || !selectedId) return;
@@ -129,13 +125,11 @@ export default function Hero({ noAnimation = false, playAnimation = false }: Her
     setTimeout(() => setSelectedId(id), activated ? 0 : 250);
   };
 
-  // Navigate to product detail page
   const goToProduct = (href: string) => {
     setActivated(false);
     setTimeout(() => router.push(href), 300);
   };
 
-  // Scroll to products section or navigate to /products
   const scrollToProducts = () => {
     const el = document.getElementById("products");
     if (el) {

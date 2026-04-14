@@ -18,7 +18,7 @@ export default function WebsiteIntro({ onVideoEnd }: WebsiteIntroProps) {
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-    video.play().catch(() => {});
+    video.play().catch(() => { });
     const handleEnded = () => { if (onVideoEnd) onVideoEnd(); };
     video.addEventListener("ended", handleEnded);
     return () => video.removeEventListener("ended", handleEnded);

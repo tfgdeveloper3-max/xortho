@@ -45,14 +45,12 @@ export default function KneeBraceSection() {
 
       tl.fromTo(normalRef.current, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 2.0 }, 0);
       tl.to(normalRef.current, { opacity: 0, duration: 1.2 }, 1.5);
-      // pain fades in cleanly — no scale/blink
       tl.fromTo(painRef.current, { opacity: 0 }, { opacity: 1, duration: 2.0 }, 2.0);
 
       tl.fromTo(braceRef.current,
         { opacity: 0, y: 30, scale: 0.97, clipPath: "inset(20% 0% 0% 0%)" },
         { opacity: 1, y: 0, scale: 1, clipPath: "inset(0% 0% 0% 0%)", duration: 3.0, ease: "power1.out" }, 4.0);
 
-      // ✅ FIX: healed starts BEFORE pain fades — overlap prevents white flash
       tl.fromTo(healedImgRef.current, { opacity: 0, scale: 0.98 }, { opacity: 1, scale: 1, duration: 2.5, ease: "power1.out" }, 5.0);
       tl.fromTo(healedGlowRef.current, { opacity: 0 }, { opacity: 1, duration: 1.8 }, 5.0);
 
@@ -82,12 +80,10 @@ export default function KneeBraceSection() {
         const goingForward = p >= prevP;
         prevP = p;
         if (goingForward) {
-          // Forward: pain starts at PAIN_START, healing at HEALING_START
           if (p >= HEALING_START) setPhase("healing");
           else if (p >= PAIN_START) setPhase("pain");
           else setPhase("idle");
         } else {
-          // Backward: only clear phase when well past the boundary (add hysteresis)
           if (p < HEALING_START - 0.05) setPhase("pain");
           if (p < PAIN_START - 0.05) setPhase("idle");
         }
@@ -129,7 +125,6 @@ export default function KneeBraceSection() {
   const isPain = phase === "pain";
   const isHealing = phase === "healing";
 
-  // Heartbeat — full image aura pulses like a heartbeat
   useEffect(() => {
     heartbeatRef.current?.kill();
     if (phase === "pain") {
@@ -180,7 +175,6 @@ export default function KneeBraceSection() {
 
           {/* Image side */}
           <div className="relative w-[98%] h-[280px] md:h-[440px] mx-auto md:mx-0">
-            {/* ✅ Base layer — always visible, prevents white background showing */}
             <div className="absolute inset-0" style={{ zIndex: 0 }}>
               <Image src={CLD.kneeNormal} alt="Normal knee base" fill className="object-contain object-center" priority />
             </div>

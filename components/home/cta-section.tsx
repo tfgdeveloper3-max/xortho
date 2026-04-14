@@ -123,13 +123,12 @@ export default function CTASection() {
       ref={sectionRef}
       className="relative w-full min-h-[80vh] flex items-center justify-center overflow-hidden" style={{ background: "#020916" }}
     >
-      {/* Grid */}
       <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(17,17,132,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.05) 1px,transparent 1px)", backgroundSize: "52px 52px", zIndex: 0 }} />
-      {/* Center glow */}
+
       <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(22,81,209,0.22) 0%, transparent 65%)", zIndex: 0 }} />
-      {/* Top edge */}
+
       <div className="absolute top-0 inset-x-0 h-px pointer-events-none" style={{ background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.5), transparent)", zIndex: 1 }} />
-      {/* Bottom edge */}
+
       <div className="absolute bottom-0 inset-x-0 h-px pointer-events-none" style={{ background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.2), transparent)", zIndex: 1 }} />
 
       <div
