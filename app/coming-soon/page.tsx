@@ -17,7 +17,7 @@ const PRODUCTS = {
             features: [
                 { img: CLD.xoCage, title: "Flex Strut Armor", desc: "Flexible Lightweight\nDurable Protection" },
                 { img: CLD.xoShell, title: "Anterior Shield", desc: "Removeable Pliable\nDorsal Protection" },
-                { img: CLD.xoFrontView, title: "Posterior Calf Adjustment", desc: "Accommodates Larger\nWider Lower Legs" },
+                { img: CLD.xocomingsoonfrontview, title: "Posterior Calf Adjustment", desc: "Accommodates Larger\nWider Lower Legs" },
                 { img: CLD.xoRocker, title: "Safe Step Rocker", desc: "Shock Absorption\nFluid Heel Toe Gait" },
             ],
         },
@@ -27,9 +27,9 @@ const PRODUCTS = {
             features: [
                 { img: CLD.xoLiner, title: "Air Chamber System", desc: "Compartmentalized\nCustomization" },
                 { img: CLD.xoRevolutionary, title: "Pneumatic System", desc: "Effortless & Rapid\nInflate & Deflate" },
-                { img: CLD.xoStraps, title: "Strapping System", desc: "EZ Grip Textured\nTips & 360 Swivel" },
+                { img: CLD.xocomingsoonStrap, title: "Strapping System", desc: "EZ Grip Textured\nTips & 360 Swivel" },
                 { img: CLD.sleeves, title: "AFO Undersleeve", desc: "Gentle Compression\nSkin Barrier & Hygiene" },
-            ],
+            ],  
         },
     },
     "boot-tall": {
@@ -43,7 +43,7 @@ const PRODUCTS = {
             features: [
                 { img: CLD.xoCage, title: "Flex Strut Armor", desc: "Flexible Lightweight\nDurable Protection" },
                 { img: CLD.xoShell, title: "Anterior Shield", desc: "Removeable Pliable\nDorsal Protection" },
-                { img: CLD.xoFrontView, title: "Posterior Calf Adjustment", desc: "Accommodates Larger\nWider Lower Legs" },
+                { img: CLD.xocomingsoonfrontview, title: "Posterior Calf Adjustment", desc: "Accommodates Larger\nWider Lower Legs" },
                 { img: CLD.xoRocker, title: "Safe Step Rocker", desc: "Shock Absorption\nFluid Heel Toe Gait" },
             ],
         },
@@ -53,7 +53,7 @@ const PRODUCTS = {
             features: [
                 { img: CLD.xoLiner, title: "Air Chamber System", desc: "Compartmentalized\nCustomization" },
                 { img: CLD.xoRevolutionary, title: "Pneumatic System", desc: "Effortless & Rapid\nInflate & Deflate" },
-                { img: CLD.xoStraps, title: "Strapping System", desc: "EZ Grip Textured\nTips & 360 Swivel" },
+                { img: CLD.xocomingsoonStrap, title: "Strapping System", desc: "EZ Grip Textured\nTips & 360 Swivel" },
                 { img: CLD.sleeves, title: "AFO Undersleeve", desc: "Gentle Compression\nSkin Barrier & Hygiene" },
             ],
         },
