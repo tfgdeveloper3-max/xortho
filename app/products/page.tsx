@@ -28,10 +28,10 @@ const products = [
     tag: "Pneumatic Walking Boot",
     title: "XO Boot Pneumatic",
     subtitle: "Better DME. Better Functionality. Better Outcomes.",
-    image: CLD.shoe,
+    image: CLD.XoBootHero,
     painImage: CLD.legPain,
     healImage: CLD.legHealed,
-    imgStyle: { height: 360, width: "60%", marginLeft: "80px", marginBottom: "130px" },
+    imgStyle: { height: 360, width: "60%", marginLeft: "0px", marginBottom: "0px" },
     description: "Engineered for superior strength, performance and comfort — crafted to deliver exceptional clinical outcomes. Designed with Biomechanical Engineers and feedback from Orthopedic, Urgent Care and Podiatry clients.",
     features: [
       "World class aerodynamic shell design",
@@ -53,7 +53,7 @@ const products = [
     image: CLD.kneeProduct2,
     painImage: CLD.kneePain,
     healImage: CLD.kneeHealed,
-    imgStyle: { height: 340, width: "75%", marginLeft: "12%" },
+    imgStyle: { height: 340, width: "75%", marginLeft: "0%" },
     description: "Designed and crafted by TLC DME with Biomechanical Engineers and feedback from Orthopedic, Urgent Care and Podiatry clients. PDAC approved — billable with HCPCS codes L1832 & L1833.",
     features: [
       "Dual-Axis hinge mirrors natural knee movement",

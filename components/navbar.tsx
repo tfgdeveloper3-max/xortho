@@ -12,7 +12,7 @@ const productLinks = [
     id: "xboot",
     title: "XO Boot Pneumatic",
     subtitle: "Better DME. Better Functionality. Better Outcomes.",
-    image: CLD.shoe,
+    image: CLD.XoBootHero,
     href: "/products/xboot",
     tag: "Pneumatic Walking Boot",
     description: "World class aerodynamic shell — short leg cast-like stability. Revolutionary pneumatic compression with real rocker sole.",
@@ -21,7 +21,7 @@ const productLinks = [
     id: "knee",
     title: "XO Knee Support ROM Cryo",
     subtitle: "Better DME. Better Functionality. Better Outcomes.",
-    image: CLD.kneeFront,
+    image: CLD.kneeProduct2,
     href: "/products/knee",
     tag: "Knee Support ROM Cryo",
     description: "Dual-Axis hinge mirrors natural knee movement. Removable Cryo Gel Pad — PDAC approved, HCPCS L1832 & L1833.",
@@ -176,7 +176,7 @@ export default function Navbar() {
 
                   <div className="flex-shrink-0 flex items-center justify-center rounded-xl"
                     style={{
-                      width: 56, height: 56,
+                      width: 96, height: 96,
                       background: isActive ? "rgba(22,81,209,0.3)" : "rgba(255,255,255,0.05)",
                       border: isActive ? "1px solid rgba(91,155,255,0.45)" : "1px solid rgba(255,255,255,0.07)",
                       transition: "all 0.25s ease",
@@ -184,7 +184,7 @@ export default function Navbar() {
                     }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={p.image} alt={p.title} style={{
-                      width: 38, height: 38, objectFit: "contain",
+                      width: 88, height: 88, objectFit: "contain",
                       filter: isActive ? "drop-shadow(0 0 8px rgba(91,155,255,0.8)) brightness(1.15)" : "brightness(0.55)",
                       transition: "filter 0.25s ease",
                     }} />

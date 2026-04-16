@@ -14,7 +14,7 @@ interface HeroProps {
 const products = [
   {
     id: "xboot", label: "Orthopedic\nXboot", abbr: "XB", short: "Boot", tag: "Orthopedic Boot",
-    image: CLD.xoFullBoot, title: "Orthopedic Xboot", subtitle: "Advanced Recovery Boot",
+    image: CLD.XoBootHero, title: "Orthopedic Xboot", subtitle: "Advanced Recovery Boot",
     href: "/products/xboot",
     description: "An advanced pulley system allows for tailored compression. Low profile design fits comfortably under clothing — ideal for active patients or lifestyles.",
     features: ["Tailored compression pulley system", "Vertical stays for structural integrity", "Universal strap design", "Optimal Gel Cryo Pad for cold therapy"],
@@ -351,10 +351,10 @@ export default function Hero({ noAnimation = false, playAnimation = false }: Her
                     }}>
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                       style={{ background: "linear-gradient(180deg, rgba(22,81,209,0.14) 0%, transparent 100%)" }} />
-
                     <div className="flex items-center justify-center rounded-xl transition-all duration-300"
                       style={{
-                        width: isMobile ? 56 : 80, height: isMobile ? 56 : 80,
+                        width: isMobile ? 120 : 150,   // 56→90 / 80→120
+                        height: isMobile ? 120 : 150,  // 56→90 / 80→120
                         background: isSel ? "rgba(22,81,209,0.35)" : "rgba(255,255,255,0.07)",
                         border: isSel ? "1px solid rgba(91,155,255,0.65)" : "1px dashed rgba(255,255,255,0.18)",
                         boxShadow: isSel ? "0 0 20px rgba(22,81,209,0.6)" : "none",
@@ -362,8 +362,14 @@ export default function Hero({ noAnimation = false, playAnimation = false }: Her
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={p.image} alt={p.title}
                         style={{
-                          width: isMobile ? 38 : 58, height: isMobile ? 38 : 58, objectFit: "contain", display: "block", margin: "auto",
-                          filter: isSel ? "drop-shadow(0 0 8px rgba(91,155,255,0.9)) brightness(1.15)" : "brightness(0.65) grayscale(0.25)",
+                          width: isMobile ? 82 : 102,   // 38→62 / 58→82
+                          height: isMobile ? 82 : 102,  // 38→62 / 58→82
+                          objectFit: "contain",
+                          display: "block",
+                          margin: "auto",
+                          filter: isSel
+                            ? "drop-shadow(0 0 8px rgba(91,155,255,0.9)) brightness(1.15)"
+                            : "brightness(0.65) grayscale(0.25)",
                           transition: "filter 0.3s",
                         }} />
                     </div>
