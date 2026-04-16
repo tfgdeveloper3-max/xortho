@@ -17,7 +17,7 @@ const PRODUCTS = {
             features: [
                 { img: CLD.xoCage, title: "Flex Strut Armor", desc: "Flexible Lightweight\nDurable Protection" },
                 { img: CLD.xoShell, title: "Anterior Shield", desc: "Removeable Pliable\nDorsal Protection" },
-                { img: CLD.xocomingsoonfrontview, title: "Posterior Calf Adjustment", desc: "Accommodates Larger\nWider Lower Legs" },
+                { img: CLD.xocomingsoonfrontview , title: "Posterior Calf Adjustment", desc: "Accommodates Larger\nWider Lower Legs" },
                 { img: CLD.xoRocker, title: "Safe Step Rocker", desc: "Shock Absorption\nFluid Heel Toe Gait" },
             ],
         },
