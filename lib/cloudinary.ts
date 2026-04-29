@@ -71,6 +71,10 @@ export const CLD = {
     trust: cldVideo("Trust"),
     productPreview: cldVideo("Product-Preview"),
 
+    ProductBootVideo: cldImg("Product-Boot"),
+    // ProductKneeVideo: cldVideo("Product-Knee"),
+    // ProductBackVideo: cldVideo("Product-Back"),
+
     comingsoonpreview: cldVideo("comingsoonpreview"),
 
 

@@ -29,6 +29,8 @@ const products = [
     title: "XO Boot Pneumatic",
     subtitle: "Better DME. Better Functionality. Better Outcomes.",
     image: CLD.XoBootHero,
+    // ── video replaces image in product card for xboot ──
+    video: CLD.ProductBootVideo,
     painImage: CLD.legPain,
     healImage: CLD.legHealed,
     imgStyle: { height: 360, width: "60%", marginLeft: "0px", marginBottom: "0px" },
@@ -51,6 +53,7 @@ const products = [
     title: "XO Knee Support ROM Cryo",
     subtitle: "Better DME. Better Functionality. Better Outcomes.",
     image: CLD.kneeProduct2,
+    video: null,
     painImage: CLD.kneePain,
     healImage: CLD.kneeHealed,
     imgStyle: { height: 340, width: "75%", marginLeft: "0%" },
@@ -70,7 +73,7 @@ const products = [
 ];
 
 /* ─────────────────────────────────────────────
-   3D IMAGE VIEWER — unchanged (already dark)
+   3D IMAGE VIEWER
 ───────────────────────────────────────────── */
 function ImageViewer3D({ product, onClose }: { product: (typeof products)[0]; onClose: () => void }) {
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -210,7 +213,7 @@ function ImageViewer3D({ product, onClose }: { product: (typeof products)[0]; on
           </div>
           <div className="absolute inset-0 flex items-center justify-center" style={{ perspective: "900px" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img ref={imgRef} src={product.image} alt={product.title} draggable={false}
+            <img ref={imgRef} src={product.video ? product.video : product.image} alt={product.title} draggable={false}
               style={{ maxHeight: "82%", maxWidth: "82%", objectFit: "contain", transformStyle: "preserve-3d", willChange: "transform", transition: "transform 0.08s linear", filter: "drop-shadow(0 28px 64px rgba(22,81,209,0.55)) drop-shadow(0 4px 20px rgba(0,0,0,0.5))", userSelect: "none" }} />
           </div>
         </div>
@@ -233,8 +236,10 @@ function ImageViewer3D({ product, onClose }: { product: (typeof products)[0]; on
   );
 }
 
+
+
 /* ─────────────────────────────────────────────
-   PRODUCT SECTION — dark
+   PRODUCT SECTION
 ───────────────────────────────────────────── */
 function ProductSection({
   product, index, onImageClick,
@@ -249,6 +254,9 @@ function ProductSection({
   const cardRef = useRef<HTMLDivElement>(null);
   const [barAnimate, setBarAnimate] = useState(false);
   const isEven = index % 2 === 0;
+
+  // Whether this product has a video to show in the card
+  const hasVideo = !!product.video;
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -285,14 +293,10 @@ function ProductSection({
         minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center",
         background: DARK_BG,
       }}>
-      {/* Grid overlay */}
       <div className="absolute inset-0 pointer-events-none" style={GRID} />
-      {/* Radial glow — alternates side */}
       <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse at ${isEven ? "75% 50%" : "25% 50%"}, rgba(22,81,209,0.10) 0%, transparent 60%)` }} />
-      {/* Top divider */}
       <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(91,155,255,0.18),transparent)" }} />
 
-      {/* Section number */}
       <div className="absolute top-8 inset-x-0 flex justify-center items-center gap-3 z-10">
         <div className="w-8 h-px" style={{ background: DARK_BORDER }} />
         <span className="text-[10px] uppercase tracking-[0.4em] font-bold" style={{ color: "rgba(91,155,255,0.30)" }}>
@@ -306,14 +310,12 @@ function ProductSection({
 
         {/* TEXT COLUMN */}
         <div ref={textRef} className="flex flex-col gap-6" style={{ direction: "ltr" }}>
-          {/* Tag */}
           <div className="anim-item" style={{ opacity: 0 }}>
             <span className="text-[10px] uppercase tracking-[0.35em] font-bold px-3 py-1.5 rounded-full inline-block"
               style={{ background: "rgba(22,81,209,0.15)", color: "#5b9bff", border: `1px solid ${DARK_BORDER}` }}>
               {product.tag}
             </span>
           </div>
-          {/* Title */}
           <div className="anim-item" style={{ opacity: 0 }}>
             <h2 className="font-nexa uppercase leading-[1.05] text-[#f0f4ff]"
               style={{ fontSize: "clamp(2rem,3vw,2.8rem)", fontWeight: 800, letterSpacing: "-0.5px" }}>
@@ -323,9 +325,7 @@ function ProductSection({
               {product.subtitle}
             </p>
           </div>
-          {/* Description */}
           <p className="anim-item text-white/50 text-[15px] leading-relaxed" style={{ opacity: 0 }}>{product.description}</p>
-          {/* Features */}
           <div className="anim-item rounded-2xl p-5" style={{ opacity: 0, background: DARK_CARD, border: `1px solid ${DARK_BORDER}` }}>
             <div className="grid grid-cols-2 gap-x-6 gap-y-2.5">
               {product.features.map((f, i) => (
@@ -339,7 +339,6 @@ function ProductSection({
               ))}
             </div>
           </div>
-          {/* Recovery bar */}
           <div className="anim-item" style={{ opacity: 0 }}>
             <div className="flex justify-between text-[10px] uppercase tracking-widest mb-2" style={{ color: "rgba(91,155,255,0.4)" }}>
               <span>Pain</span><span>Recovery</span>
@@ -350,7 +349,6 @@ function ProductSection({
             </div>
             <p className="text-[10px] mt-1.5 font-semibold" style={{ color: "rgba(91,155,255,0.40)" }}>{product.indicator}</p>
           </div>
-          {/* CTA */}
           <div className="anim-item flex items-center gap-4" style={{ opacity: 0 }}>
             <a href={product.id === "knee" ? "/products/knee" : `/products/${product.id}`}
               className="cursor-pointer group duration-300 transition-all w-fit rounded-full bg-[#1651D1]/30 hover:bg-[#1651D1]/50 backdrop-blur-2xl border border-white/20 p-1.5 relative overflow-hidden">
@@ -365,33 +363,43 @@ function ProductSection({
           </div>
         </div>
 
-        {/* IMAGE COLUMN */}
+        {/* IMAGE / VIDEO COLUMN */}
         <div ref={imageRef} className="flex flex-col gap-4" style={{ direction: "ltr", opacity: 0 }}>
-          {/* Main product card */}
-          <div ref={cardRef} onClick={() => onImageClick(product)}
-            className="group relative w-full rounded-3xl overflow-hidden flex items-center justify-center"
+
+          {/* ── Main product card: video for xboot, image for others ── */}
+          <div ref={cardRef}
+            onClick={() => onImageClick(product)}
+            className="group relative w-full rounded-3xl flex items-center justify-center"
             style={{
-              height: 420, cursor: "pointer",
+              height: 420,
+              overflow: "hidden",
+              cursor: "pointer",
               background: "linear-gradient(145deg, rgba(6,10,35,0.96) 0%, rgba(12,22,65,0.92) 100%)",
               border: `1px solid ${DARK_BORDER}`,
               boxShadow: "0 24px 64px rgba(22,81,209,0.12), inset 0 1px 0 rgba(255,255,255,0.04)",
               backdropFilter: "blur(16px)",
+              position: "relative",
             }}
             onMouseEnter={onCardEnter}
             onMouseLeave={onCardLeave}>
+
             {/* Corner brackets */}
             {(["tl", "tr", "bl", "br"] as const).map(c => (
               <div key={c} style={{ position: "absolute", width: 20, height: 20, top: c.startsWith("t") ? 16 : "auto", bottom: c.startsWith("b") ? 16 : "auto", left: c.endsWith("l") ? 16 : "auto", right: c.endsWith("r") ? 16 : "auto", borderTop: c.startsWith("t") ? `2px solid rgba(91,155,255,0.35)` : "none", borderBottom: c.startsWith("b") ? `2px solid rgba(91,155,255,0.35)` : "none", borderLeft: c.endsWith("l") ? `2px solid rgba(91,155,255,0.35)` : "none", borderRight: c.endsWith("r") ? `2px solid rgba(91,155,255,0.35)` : "none", borderRadius: c === "tl" ? "8px 0 0 0" : c === "tr" ? "0 8px 0 0" : c === "bl" ? "0 0 0 8px" : "0 0 8px 0" }} />
             ))}
-            {/* 3D hover hint */}
+
+            {/* 3D hover hint — all products */}
             <div className="absolute top-4 right-4 z-10 flex items-center gap-1.5 opacity-0 group-hover:opacity-100" style={{ transition: "opacity 0.35s ease" }}>
               <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#5b9bff" }} />
               <span className="text-[9px] uppercase tracking-widest font-bold" style={{ color: "#5b9bff" }}>Click · View 3D</span>
             </div>
+
             {/* Inner radial glow */}
             <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 60%, rgba(22,81,209,0.12) 0%, transparent 70%)" }} />
+
+            {/* ── Product image — click opens 3D viewer ── */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={product.image} alt={product.title} draggable={false}
+            <img src={product.video ? product.video : product.image} alt={product.title} draggable={false}
               style={{
                 ...product.imgStyle, objectFit: "contain", display: "block",
                 transition: "transform 0.55s cubic-bezier(0.34,1.2,0.64,1), filter 0.4s ease",
@@ -436,7 +444,6 @@ function ProductSection({
         </div>
       </div>
 
-      {/* Bottom divider */}
       <div className="absolute bottom-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg,transparent,rgba(91,155,255,0.12),transparent)" }} />
 
       <style jsx>{`
@@ -479,7 +486,7 @@ export default function ProductsPage() {
       {viewerProduct && <ImageViewer3D product={viewerProduct} onClose={() => setViewerProduct(null)} />}
       <div id="main-navbar" style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 99999 }}><Navbar /></div>
 
-      {/* ══ HERO ══ — already dark, unchanged */}
+      {/* ══ HERO ══ */}
       <section ref={heroRef} className="relative w-full flex items-center overflow-hidden" style={{ minHeight: "100vh", background: DARK_BG }}>
         <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "linear-gradient(135deg,rgba(2,9,22,0.90) 0%,rgba(2,9,22,0.55) 55%,transparent 100%)" }} />
         <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, ...GRID }} />
@@ -517,7 +524,7 @@ export default function ProductsPage() {
         <ProductSection key={product.id} product={product} index={index} onImageClick={setViewerProduct} />
       ))}
 
-      {/* ══ BOTTOM CTA ══ — dark */}
+      {/* ══ BOTTOM CTA ══ */}
       <section className="relative py-24 overflow-hidden" style={{ background: DARK_BG }}>
         <div className="absolute top-0 inset-x-0 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.2), transparent)" }} />
         <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(22,81,209,0.12) 0%, transparent 65%)" }} />
