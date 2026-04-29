@@ -13,14 +13,14 @@ import { useCallback } from "react";
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-// ── Shared dark tokens ────────────────────────────────────────────────────────
+// ── Shared dark tokens 
 const DARK_BG = "#020916";
 const DARK_CARD = "linear-gradient(145deg, rgba(8,12,42,0.96) 0%, rgba(14,24,72,0.88) 100%)";
 const DARK_BORDER = "rgba(91,155,255,0.12)";
 const DARK_BORDER_H = "rgba(91,155,255,0.30)";
 const BLUE_GRAD = "linear-gradient(180deg, #1a6fd4 0%, #0d4fa8 35%, #1565c8 55%, #0a3d8a 80%, #1251b0 100%)";
 const GRID: React.CSSProperties = { backgroundImage: "linear-gradient(rgba(17,17,132,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(17,17,132,0.04) 1px,transparent 1px)", backgroundSize: "52px 52px" };
-// ─────────────────────────────────────────────────────────────────────────────
+
 
 const products = [
   {
