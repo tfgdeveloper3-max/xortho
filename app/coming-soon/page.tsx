@@ -154,7 +154,7 @@ function ProductDetail({ id, onBack }: { id: ProductId; onBack: () => void }) {
 
                         <div className="px-0 sm:px-3 md:px-5">
                             <h3 className="font-nexa font-black uppercase text-center mb-2 sm:mb-4"
-                                style={{ fontSize: "clamp(0.75rem,1.7vw,1.45rem)", ...blueMetallic, whiteSpace: "nowrap", overflow: "visible" }}>
+                                style={{ fontSize: "clamp(0.65rem,1.3vw,1.35rem)", ...blueMetallic, whiteSpace: "nowrap", overflow: "visible" }}>
                                 {p.section1.title}
                             </h3>
                             <p className="font-nexa text-[10px] sm:text-xs md:text-[13px] text-center leading-relaxed mb-3 sm:mb-5"
@@ -172,8 +172,8 @@ function ProductDetail({ id, onBack }: { id: ProductId; onBack: () => void }) {
                                             <img src={f.img} alt={f.title} className="relative"
                                                 style={{ width: "90%", height: "90%", objectFit: "contain", filter: "drop-shadow(0 0 15px rgba(91,155,255,0.5))" }} />
                                         </div>
-                                        <p className="font-nexa font-black text-center text-[10px] sm:text-xs uppercase tracking-wide leading-tight" style={blueMetallic}>{f.title}</p>
-                                        <p className="font-nexa text-center text-[9px] sm:text-[11px] leading-snug whitespace-pre-line" style={{ color: "rgba(255,255,255,0.85)" }}>{f.desc}</p>
+                                        <p className="font-nexa font-black text-center text-[18px] sm:text-sm uppercase tracking-wide leading-tight" style={blueMetallic}>{f.title}</p>
+                                        <p className="font-nexa text-center text-[10px] sm:text-[12px] leading-snug whitespace-pre-line" style={{ color: "rgba(255,255,255,0.85)" }}>{f.desc}</p>
                                     </div>
                                 ))}
                             </div>
@@ -183,7 +183,7 @@ function ProductDetail({ id, onBack }: { id: ProductId; onBack: () => void }) {
 
                         <div className="px-0 sm:px-3 md:px-5">
                             <h3 className="font-nexa font-black uppercase text-center mb-2 sm:mb-4"
-                                style={{ fontSize: "clamp(0.75rem,1.7vw,1.45rem)", ...blueMetallic, whiteSpace: "nowrap", overflow: "visible" }}>
+                                style={{ fontSize: "clamp(0.65rem,1.3vw,1.35rem)", ...blueMetallic, whiteSpace: "nowrap", overflow: "visible" }}>
                                 {p.section2.title}
                             </h3>
                             <p className="font-nexa text-[10px] sm:text-xs md:text-[13px] text-center leading-relaxed mb-3 sm:mb-5"
