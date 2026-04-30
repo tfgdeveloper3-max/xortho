@@ -73,36 +73,39 @@ const products = [
 ];
 
 /* ─────────────────────────────────────────────
-   3D IMAGE VIEWER
+   IMAGE VIEWER — Pan (drag to move) + Zoom
+   No rotation — user positions image freely
 ───────────────────────────────────────────── */
 function ImageViewer3D({ product, onClose }: { product: (typeof products)[0]; onClose: () => void }) {
   const overlayRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
 
-  const rotX = useRef(0);
-  const rotY = useRef(0);
+  // Pan state
+  const panX = useRef(0);
+  const panY = useRef(0);
   const velX = useRef(0);
   const velY = useRef(0);
   const zoom = useRef(1);
   const isDragging = useRef(false);
   const lastPos = useRef({ x: 0, y: 0 });
   const rafRef = useRef<number>(0);
-  const stageRef = useRef<HTMLDivElement>(null);
 
   const applyTransform = useCallback(() => {
     const img = imgRef.current;
     if (!img) return;
-    img.style.transform = `rotateX(${rotX.current.toFixed(3)}deg) rotateY(${rotY.current.toFixed(3)}deg) scale(${zoom.current.toFixed(4)})`;
+    img.style.transform = `translate(${panX.current.toFixed(2)}px, ${panY.current.toFixed(2)}px) scale(${zoom.current.toFixed(4)})`;
   }, []);
 
+  // Inertia — smooth glide after release
   const inertiaLoop = useCallback(() => {
-    velX.current *= 0.90;
-    velY.current *= 0.90;
-    rotY.current += velX.current;
-    rotX.current = Math.max(-55, Math.min(55, rotX.current + velY.current));
+    velX.current *= 0.88;
+    velY.current *= 0.88;
+    panX.current += velX.current;
+    panY.current += velY.current;
     applyTransform();
-    if (Math.abs(velX.current) > 0.008 || Math.abs(velY.current) > 0.008) {
+    if (Math.abs(velX.current) > 0.3 || Math.abs(velY.current) > 0.3) {
       rafRef.current = requestAnimationFrame(inertiaLoop);
     }
   }, [applyTransform]);
@@ -146,10 +149,10 @@ function ImageViewer3D({ product, onClose }: { product: (typeof products)[0]; on
     if (!isDragging.current) return;
     const dx = x - lastPos.current.x;
     const dy = y - lastPos.current.y;
-    velX.current = dx * 0.40;
-    velY.current = -dy * 0.40;
-    rotY.current += velX.current;
-    rotX.current = Math.max(-55, Math.min(55, rotX.current + velY.current));
+    velX.current = dx;
+    velY.current = dy;
+    panX.current += dx;
+    panY.current += dy;
     lastPos.current = { x, y };
     applyTransform();
   }, [applyTransform]);
@@ -164,12 +167,12 @@ function ImageViewer3D({ product, onClose }: { product: (typeof products)[0]; on
   const onWheel = useCallback((e: React.WheelEvent) => {
     e.preventDefault();
     const delta = e.deltaMode === 1 ? e.deltaY * 20 : e.deltaY;
-    const target = Math.max(0.4, Math.min(3.2, zoom.current - delta * 0.0007));
+    const target = Math.max(0.5, Math.min(4, zoom.current - delta * 0.0008));
     gsap.to(zoom, { current: target, duration: 0.55, ease: "power2.out", onUpdate: applyTransform });
   }, [applyTransform]);
 
   const smoothZoom = useCallback((delta: number) => {
-    const target = Math.max(0.4, Math.min(3.2, zoom.current + delta));
+    const target = Math.max(0.5, Math.min(4, zoom.current + delta));
     gsap.to(zoom, { current: target, duration: 0.55, ease: "power2.out", onUpdate: applyTransform });
   }, [applyTransform]);
 
@@ -177,8 +180,8 @@ function ImageViewer3D({ product, onClose }: { product: (typeof products)[0]; on
     cancelAnimationFrame(rafRef.current);
     velX.current = 0;
     velY.current = 0;
-    gsap.to(rotX, { current: 0, duration: 0.75, ease: "elastic.out(1, 0.55)", onUpdate: applyTransform });
-    gsap.to(rotY, { current: 0, duration: 0.75, ease: "elastic.out(1, 0.55)", onUpdate: applyTransform });
+    gsap.to(panX, { current: 0, duration: 0.6, ease: "expo.out", onUpdate: applyTransform });
+    gsap.to(panY, { current: 0, duration: 0.6, ease: "expo.out", onUpdate: applyTransform });
     gsap.to(zoom, { current: 1, duration: 0.5, ease: "power3.out", onUpdate: applyTransform });
   }, [applyTransform]);
 
@@ -186,6 +189,8 @@ function ImageViewer3D({ product, onClose }: { product: (typeof products)[0]; on
     <div ref={overlayRef} className="fixed inset-0 z-[99999] flex items-center justify-center" style={{ opacity: 0 }}>
       <div className="absolute inset-0" style={{ background: "rgba(2,4,16,0.90)", backdropFilter: "blur(24px)" }} onClick={handleClose} />
       <div ref={containerRef} className="relative flex flex-col items-center gap-5 z-10 px-4" style={{ opacity: 0, width: "min(92vw, 640px)" }}>
+
+        {/* Header */}
         <div className="w-full flex items-center justify-between">
           <div>
             <span className="text-[10px] uppercase tracking-[0.35em] font-bold block" style={{ color: "#5b9bff" }}>{product.tag}</span>
@@ -198,29 +203,47 @@ function ImageViewer3D({ product, onClose }: { product: (typeof products)[0]; on
             <X className="w-4 h-4 text-white" />
           </button>
         </div>
+
+        {/* Stage */}
         <div ref={stageRef} className="relative w-full rounded-3xl overflow-hidden select-none"
-          style={{ height: 420, background: "linear-gradient(145deg, rgba(6,10,35,0.96) 0%, rgba(12,22,65,0.92) 100%)", border: "1px solid rgba(91,155,255,0.22)", boxShadow: "0 0 80px rgba(22,81,209,0.2), inset 0 1px 0 rgba(255,255,255,0.06)", cursor: "grab", perspective: "900px" }}
-          onMouseDown={e => startDrag(e.clientX, e.clientY)} onMouseMove={e => moveDrag(e.clientX, e.clientY)} onMouseUp={endDrag} onMouseLeave={endDrag}
-          onTouchStart={e => startDrag(e.touches[0].clientX, e.touches[0].clientY)} onTouchMove={e => moveDrag(e.touches[0].clientX, e.touches[0].clientY)} onTouchEnd={endDrag}
+          style={{ height: 420, background: "linear-gradient(145deg, rgba(6,10,35,0.96) 0%, rgba(12,22,65,0.92) 100%)", border: "1px solid rgba(91,155,255,0.22)", boxShadow: "0 0 80px rgba(22,81,209,0.2), inset 0 1px 0 rgba(255,255,255,0.06)", cursor: "grab" }}
+          onMouseDown={e => startDrag(e.clientX, e.clientY)}
+          onMouseMove={e => moveDrag(e.clientX, e.clientY)}
+          onMouseUp={endDrag}
+          onMouseLeave={endDrag}
+          onTouchStart={e => { e.preventDefault(); startDrag(e.touches[0].clientX, e.touches[0].clientY); }}
+          onTouchMove={e => { e.preventDefault(); moveDrag(e.touches[0].clientX, e.touches[0].clientY); }}
+          onTouchEnd={endDrag}
           onWheel={onWheel}>
+
+          {/* Corner brackets */}
           {(["tl", "tr", "bl", "br"] as const).map(c => (
             <div key={c} style={{ position: "absolute", width: 24, height: 24, zIndex: 2, top: c.startsWith("t") ? 16 : "auto", bottom: c.startsWith("b") ? 16 : "auto", left: c.endsWith("l") ? 16 : "auto", right: c.endsWith("r") ? 16 : "auto", borderTop: c.startsWith("t") ? "2px solid rgba(91,155,255,0.55)" : "none", borderBottom: c.startsWith("b") ? "2px solid rgba(91,155,255,0.55)" : "none", borderLeft: c.endsWith("l") ? "2px solid rgba(91,155,255,0.55)" : "none", borderRight: c.endsWith("r") ? "2px solid rgba(91,155,255,0.55)" : "none", borderRadius: c === "tl" ? "8px 0 0 0" : c === "tr" ? "0 8px 0 0" : c === "bl" ? "0 0 0 8px" : "0 0 8px 0" }} />
           ))}
+
           <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(22,81,209,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(22,81,209,0.07) 1px,transparent 1px)", backgroundSize: "44px 44px" }} />
           <div className="absolute bottom-0 inset-x-0 h-36 pointer-events-none" style={{ background: "radial-gradient(ellipse at center bottom, rgba(22,81,209,0.28) 0%, transparent 70%)" }} />
+
+          {/* Hint */}
           <div className="absolute bottom-4 inset-x-0 flex justify-center z-10 pointer-events-none">
-            <span className="text-[10px] uppercase tracking-widest font-bold" style={{ color: "rgba(91,155,255,0.4)" }}>Drag to rotate · Scroll to zoom</span>
+            <span className="text-[10px] uppercase tracking-widest font-bold" style={{ color: "rgba(91,155,255,0.4)" }}>
+              Hold &amp; drag to pan · Scroll to zoom
+            </span>
           </div>
-          <div className="absolute inset-0 flex items-center justify-center" style={{ perspective: "900px" }}>
+
+          {/* Image — pans freely, no rotation */}
+          <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img ref={imgRef} src={product.video ? product.video : product.image} alt={product.title} draggable={false}
-              style={{ maxHeight: "82%", maxWidth: "82%", objectFit: "contain", transformStyle: "preserve-3d", willChange: "transform", transition: "transform 0.08s linear", filter: "drop-shadow(0 28px 64px rgba(22,81,209,0.55)) drop-shadow(0 4px 20px rgba(0,0,0,0.5))", userSelect: "none" }} />
+              style={{ maxHeight: "82%", maxWidth: "82%", objectFit: "contain", willChange: "transform", transition: "transform 0.08s linear", filter: "drop-shadow(0 28px 64px rgba(22,81,209,0.55)) drop-shadow(0 4px 20px rgba(0,0,0,0.5))", userSelect: "none" }} />
           </div>
         </div>
+
+        {/* Controls */}
         <div className="flex items-center gap-3">
           {[
-            { icon: <ZoomIn className="w-4 h-4" />, label: "Zoom In", action: () => smoothZoom(0.25) },
-            { icon: <ZoomOut className="w-4 h-4" />, label: "Zoom Out", action: () => smoothZoom(-0.25) },
+            { icon: <ZoomIn className="w-4 h-4" />, label: "Zoom In", action: () => smoothZoom(0.3) },
+            { icon: <ZoomOut className="w-4 h-4" />, label: "Zoom Out", action: () => smoothZoom(-0.3) },
             { icon: <RotateCcw className="w-4 h-4" />, label: "Reset", action: resetView },
           ].map(btn => (
             <button key={btn.label} onClick={btn.action} className="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider"
