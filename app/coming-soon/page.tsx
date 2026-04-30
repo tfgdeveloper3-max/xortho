@@ -17,7 +17,7 @@ const PRODUCTS = {
             features: [
                 { img: CLD.xoCage, title: "Flex Strut Armor", desc: "Flexible Lightweight\nDurable Protection" },
                 { img: CLD.xoShell, title: "Anterior Shield", desc: "Removeable Pliable\nDorsal Protection" },
-                { img: CLD.xocomingsoonfrontview, title: "Posterior Calf Adjustment", desc: "Accommodates Larger\nWider Lower Legs" },
+                { img: CLD.xocomingsoonfrontview, title: "Calf Adjustment", desc: "Accommodates Larger\nWider Lower Legs" },
                 { img: CLD.xoRocker, title: "Safe Step Rocker", desc: "Shock Absorption\nFluid Heel Toe Gait" },
             ],
         },
@@ -25,7 +25,7 @@ const PRODUCTS = {
             title: "Revolutionary Compression System",
             body: "Purposefully placed compartmentalized air cells provide greater surface area contact, combined with a low force bulb & intuitive inflation deflation valve allows for controlled customization of compression. T-shirt soft interior liner regulates temperature & enhances comfort. EZ grip strapping system has textured tips with a hybrid hook loop strap & 360 swivel d-rings for quicker donning & doffing.",
             features: [
-                { img: CLD.xoLiner, title: "Air Chamber System", desc: "Compartmentalized\nCustomization" },
+                { img: CLD.xoLiner, title: "Compression System", desc: "Compartmentalized\nCustomization" },
                 { img: CLD.xoRevolutionary, title: "Pneumatic System", desc: "Effortless & Rapid\nInflate & Deflate" },
                 { img: CLD.xocomingsoonStrap, title: "Strapping System", desc: "EZ Grip Textured\nTips & 360 Swivel" },
                 { img: CLD.sleeves, title: "AFO Undersleeve", desc: "Gentle Compression\nSkin Barrier & Hygiene" },
@@ -43,7 +43,7 @@ const PRODUCTS = {
             features: [
                 { img: CLD.xoCage, title: "Flex Strut Armor", desc: "Flexible Lightweight\nDurable Protection" },
                 { img: CLD.xoShell, title: "Anterior Shield", desc: "Removeable Pliable\nDorsal Protection" },
-                { img: CLD.xocomingsoonfrontview, title: "Posterior Calf Adjustment", desc: "Accommodates Larger\nWider Lower Legs" },
+                { img: CLD.xocomingsoonfrontview, title: "Calf Adjustment", desc: "Accommodates Larger\nWider Lower Legs" },
                 { img: CLD.xoRocker, title: "Safe Step Rocker", desc: "Shock Absorption\nFluid Heel Toe Gait" },
             ],
         },
@@ -51,7 +51,7 @@ const PRODUCTS = {
             title: "Revolutionary Compression System",
             body: "Purposefully placed compartmentalized air cells provide greater surface area contact, combined with a low force bulb & intuitive inflation deflation valve allows for controlled customization of compression. T-shirt soft interior liner regulates temperature & enhances comfort. EZ grip strapping system has textured tips with a hybrid hook loop strap & 360 swivel d-rings for quicker donning & doffing.",
             features: [
-                { img: CLD.xoLiner, title: "Air Chamber System", desc: "Compartmentalized\nCustomization" },
+                { img: CLD.xoLiner, title: "Compression System", desc: "Compartmentalized\nCustomization" },
                 { img: CLD.xoRevolutionary, title: "Pneumatic System", desc: "Effortless & Rapid\nInflate & Deflate" },
                 { img: CLD.xocomingsoonStrap, title: "Strapping System", desc: "EZ Grip Textured\nTips & 360 Swivel" },
                 { img: CLD.sleeves, title: "AFO Undersleeve", desc: "Gentle Compression\nSkin Barrier & Hygiene" },
@@ -134,7 +134,7 @@ function ProductDetail({ id, onBack }: { id: ProductId; onBack: () => void }) {
                         <div className="text-center mt-3 sm:mt-4 relative w-full px-0">
                             <h2 className="font-nexa font-black uppercase w-full"
                                 style={{
-                                    fontSize: "clamp(0.75rem, 4vw, 2.4rem)",
+                                    fontSize: "clamp(0.75rem, 3vw, 1.6rem)",
                                     letterSpacing: "-0.5px",
                                     whiteSpace: "nowrap",
                                     overflow: "visible",
@@ -144,7 +144,7 @@ function ProductDetail({ id, onBack }: { id: ProductId; onBack: () => void }) {
                             </h2>
                             <p className="font-nexa mt-3 sm:mt-4 font-bold whitespace-pre-line leading-relaxed"
                                 style={{ fontSize: "clamp(0.65rem,1.1vw,0.95rem)", color: "rgba(255,255,255,0.85)" }}>
-                                {"Better Design. Better Engineering. Better Quality.\nBetter Functionality. Better Patient Experience.\nBetter Outcomes.\nBetter DME."}
+                                {"Better Design. Better Engineering. Better Quality.\nBetter Functionality. Better Patient Experience.\nBetter Outcomes. Better DME."}
                             </p>
                         </div>
                     </div>
@@ -152,12 +152,12 @@ function ProductDetail({ id, onBack }: { id: ProductId; onBack: () => void }) {
                     <div className="flex flex-col gap-5 md:gap-8 py-2 md:py-4 md:justify-end"
                         style={{ borderTop: "1px solid rgba(91,155,255,0.10)" }}>
 
-                        <div className="px-0 sm:px-3 md:px-5">
+                        <div className="px-2 sm:px-3 md:px-5">
                             <h3 className="font-nexa font-black uppercase text-center mb-2 sm:mb-4"
-                                style={{ fontSize: "clamp(0.65rem,1.3vw,1.35rem)", ...blueMetallic, whiteSpace: "nowrap", overflow: "visible" }}>
+                                style={{ fontSize: "clamp(0.65rem,1.3vw,1.2rem)", ...blueMetallic, whiteSpace: "nowrap", overflow: "visible" }}>
                                 {p.section1.title}
                             </h3>
-                            <p className="font-nexa text-[10px] sm:text-xs md:text-[13px] text-center leading-relaxed mb-3 sm:mb-5"
+                            <p className="font-nexa text-[10px] sm:text-xs md:text-[13px] text-left leading-relaxed mb-3 sm:mb-5"
                                 style={{ color: "rgba(255,255,255,0.60)" }}>
                                 {p.section1.body}
                             </p>
@@ -172,7 +172,7 @@ function ProductDetail({ id, onBack }: { id: ProductId; onBack: () => void }) {
                                             <img src={f.img} alt={f.title} className="relative"
                                                 style={{ width: "90%", height: "90%", objectFit: "contain", filter: "drop-shadow(0 0 15px rgba(91,155,255,0.5))" }} />
                                         </div>
-                                        <p className="font-nexa font-black text-center text-[18px] sm:text-sm uppercase tracking-wide leading-tight" style={blueMetallic}>{f.title}</p>
+                                        <p className="font-nexa font-black text-center text-[10px] sm:text-xs uppercase tracking-wide leading-tight whitespace-nowrap" style={blueMetallic}>{f.title}</p>
                                         <p className="font-nexa text-center text-[10px] sm:text-[12px] leading-snug whitespace-pre-line" style={{ color: "rgba(255,255,255,0.85)" }}>{f.desc}</p>
                                     </div>
                                 ))}
@@ -181,12 +181,12 @@ function ProductDetail({ id, onBack }: { id: ProductId; onBack: () => void }) {
 
                         <div className="h-px mx-0 sm:mx-3 md:mx-5" style={{ background: "linear-gradient(90deg, transparent, rgba(91,155,255,0.3), transparent)" }} />
 
-                        <div className="px-0 sm:px-3 md:px-5">
+                        <div className="px-2 sm:px-3 md:px-5">
                             <h3 className="font-nexa font-black uppercase text-center mb-2 sm:mb-4"
-                                style={{ fontSize: "clamp(0.65rem,1.3vw,1.35rem)", ...blueMetallic, whiteSpace: "nowrap", overflow: "visible" }}>
+                                style={{ fontSize: "clamp(0.65rem,1.3vw,1.2rem)", ...blueMetallic, whiteSpace: "nowrap", overflow: "visible" }}>
                                 {p.section2.title}
                             </h3>
-                            <p className="font-nexa text-[10px] sm:text-xs md:text-[13px] text-center leading-relaxed mb-3 sm:mb-5"
+                            <p className="font-nexa text-[10px] sm:text-xs md:text-[13px] text-left leading-relaxed mb-3 sm:mb-5"
                                 style={{ color: "rgba(255,255,255,0.60)" }}>
                                 {p.section2.body}
                             </p>
@@ -236,10 +236,10 @@ function CornerImages({ onProductClick }: { onProductClick: (id: ProductId) => v
     }, []);
 
     const corners = [
-        { id: "boot-short" as ProductId, src: CLD.xoBootShort, label: "XO Boot Pneumatic Short", clickable: true, pos: { top: "5%", left: "4%", right: "auto", bottom: "auto" } },
-        { id: "boot-tall" as ProductId, src: CLD.xoBootTall, label: "XO Boot Pneumatic Tall", clickable: true, pos: { top: "auto", left: "4%", right: "auto", bottom: "8%" } },
-        { id: "back" as ProductId, src: CLD.xoBackComingSoon, label: "XO Back LSO Cryo", clickable: false, pos: { top: "5%", left: "auto", right: "4%", bottom: "auto" } },
-        { id: "knee" as ProductId, src: CLD.xoKneeHingedComingSoon, label: "XO Knee ROM Cryo", clickable: false, pos: { top: "auto", left: "auto", right: "4%", bottom: "8%" } },
+        { id: "boot-short" as ProductId, src: CLD.xoBootShort, label: "XO Boot Pneumatic Short", clickable: true, pos: { top: "clamp(8px,3vh,24px)", left: "clamp(8px,2vw,20px)", right: "auto", bottom: "auto" } },
+        { id: "boot-tall" as ProductId, src: CLD.xoBootTall, label: "XO Boot Pneumatic Tall", clickable: true, pos: { top: "auto", left: "clamp(8px,2vw,20px)", right: "auto", bottom: "clamp(50px,8vh,80px)" } },
+        { id: "back" as ProductId, src: CLD.xoBackComingSoon, label: "XO Back LSO Cryo", clickable: false, pos: { top: "clamp(8px,3vh,24px)", left: "auto", right: "clamp(8px,2vw,20px)", bottom: "auto" } },
+        { id: "knee" as ProductId, src: CLD.xoKneeHingedComingSoon, label: "XO Knee ROM Cryo", clickable: false, pos: { top: "auto", left: "auto", right: "clamp(8px,2vw,20px)", bottom: "clamp(50px,8vh,80px)" } },
     ];
 
     return (
@@ -256,7 +256,7 @@ function CornerImages({ onProductClick }: { onProductClick: (id: ProductId) => v
                         className="absolute"
                         style={{ ...c.pos, zIndex: 5, cursor: c.clickable ? "pointer" : "default" }}
                     >
-                        <div className="relative" style={{ width: "clamp(56px,21vw,300px)", height: "clamp(56px,21vw,300px)" }}>
+                        <div className="relative" style={{ width: "clamp(60px,15vw,240px)", height: "clamp(60px,15vw,240px)" }}>
                             <div style={{
                                 position: "absolute", inset: 0, borderRadius: "18px",
                                 background: isHovered ? "linear-gradient(135deg, rgba(22,81,209,0.15), rgba(6,10,35,0.7))" : "transparent",
@@ -366,7 +366,7 @@ export default function ComingSoon() {
     if (activeProduct) return <ProductDetail id={activeProduct} onBack={handleBack} />;
 
     return (
-        <main key={mainKey} className="relative w-full overflow-hidden bg-[#020916]" style={{ height: "100dvh" }}>
+        <main key={mainKey} className="relative w-full bg-[#020916]" style={{ height: "100dvh", overflow: "hidden", display: "flex", flexDirection: "column" }}>
             <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" style={{ zIndex: 0, width: "100%", height: "100%" }} />
             <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "radial-gradient(ellipse at 50% 40%, transparent 35%, rgba(2,9,22,0.65) 100%)" }} />
             <div className="center-glow absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "radial-gradient(ellipse at 50% 50%, rgba(22,81,209,0.22) 0%, transparent 60%)", opacity: 0.15 }} />
