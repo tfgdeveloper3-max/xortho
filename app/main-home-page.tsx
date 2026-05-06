@@ -57,3 +57,6 @@ export default function Home() {
         </div>
     );
 }
+export { default } from "@/app/coming-soon/page";
+
+
