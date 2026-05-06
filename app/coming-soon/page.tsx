@@ -344,8 +344,8 @@ function DisplayPicker({ onSelect }: { onSelect: (v: 1 | 2) => void }) {
 
 /* ── SHARED PRODUCT ITEMS ── */
 const cornerItems = [
-    { src: CLD.xoBootShort, label: "XO Boot Pneumatic Short", clickable: true },
     { src: CLD.xoBootTall, label: "XO Boot Pneumatic Tall", clickable: true },
+    { src: CLD.xoBootShort, label: "XO Boot Pneumatic Short", clickable: true },
     { src: CLD.xoBackComingSoon, label: "XO Back LSO Cryo", clickable: false },
     { src: CLD.xoKneeHingedComingSoon, label: "XO Knee ROM Cryo", clickable: false },
 ];
