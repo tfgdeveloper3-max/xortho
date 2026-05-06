@@ -589,7 +589,7 @@ export default function ComingSoon() {
                 </div>
 
                 {/* ── Footer — bilkul bottom pe ── */}
-                <div className="cs-footer w-full flex flex-col items-center gap-1 text-center" style={{ paddingBottom: "clamp(14px,2.5vh,32px)" }}>
+                <div className="cs-footer w-full flex flex-col items-center gap-1 text-center" style={{ paddingBottom: "clamp(0px,0.5vh,0px)" }}>
                     <div className="flex flex-wrap items-center justify-center gap-x-1.5 sm:gap-x-2 gap-y-0.5 text-white/40 text-[15px] sm:text-[16px]">
                         <span>Email <a href="mailto:info@xortho.com" className="font-nexa text-[#ffffff]/80 hover:text-[#5b9bff] transition-colors font-semibold">info@xortho.com</a></span>
                         <span className="text-white/20">·</span>
