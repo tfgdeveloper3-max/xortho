@@ -249,7 +249,6 @@ function OrbitalShowcase({ products, onItemClick }: {
         return () => window.removeEventListener("mousemove", handle);
     }, []);
 
-    // Initial label setup with delay
     useEffect(() => {
         const timer = setTimeout(() => {
             if (labelNameRef.current && labelSubRef.current && labelWrapRef.current) {
@@ -353,7 +352,6 @@ function OrbitalShowcase({ products, onItemClick }: {
                     pointerEvents: "none",
                 }}
             >
-                {/* Decorative line */}
                 <div style={{
                     width: "clamp(24px,3vw,50px)",
                     height: "3px",
@@ -450,7 +448,7 @@ function OrbitalShowcase({ products, onItemClick }: {
                             marginTop: "8px",
                             fontSize: "clamp(7px,0.9vw,13px)",
                             letterSpacing: "0.1em",
-                            color: p.clickable ? "rgba(220,220,220,0.8)" : "rgba(180,180,180,0.5)",
+                            color: "rgba(220,220,220,0.8)",
                         }}>
                         {p.label}
                     </p>
