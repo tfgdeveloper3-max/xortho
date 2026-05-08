@@ -197,17 +197,20 @@ function ProductDetail({ onBack }: { onBack: () => void }) {
                     <p className="font-nexa font-black uppercase text-lg sm:text-2xl md:text-3xl" style={silverMetallic}>Better Design. Better Engineering. Better Quality.</p>
                     <p className="font-nexa font-black uppercase text-lg sm:text-2xl md:text-3xl mt-1 sm:mt-2" style={silverMetallic}>Better Functionality. Better Patient Experience.</p>
                     <p className="font-nexa font-black uppercase text-lg sm:text-2xl md:text-3xl mt-1 sm:mt-2" style={silverMetallic}>Better Outcomes. Better DME.</p>
-                    <p className="font-nexa text-[9px] sm:text-xs uppercase tracking-[0.35em] mt-3 sm:mt-5" style={{ color: "rgba(255,255,255,0.20)" }}>© {new Date().getFullYear()} X-Ortho · TLC DME LLC · info@xortho.com · 855.XORTHO1</p>
+                    <p className="font-nexa text-[9px] sm:text-xs uppercase tracking-[0.35em] mt-3 sm:mt-5" style={silverMetallic}>© {new Date().getFullYear()} X-Ortho · TLC DME LLC · info@xortho.com · 855.XORTHO1</p>
                 </div>
             </div>
         </div>
     );
 }
 
-// ── ORBITAL SHOWCASE ──
-function OrbitalShowcase({ products, onItemClick }: {
+/* ══════════════════════════════════════════════════════════════
+   ORBITAL SHOWCASE
+   ══════════════════════════════════════════════════════════════ */
+function OrbitalShowcase({ products, onItemClick, centerY = 50 }: {
     products: { src: string; label: string; clickable: boolean }[];
     onItemClick: (i: number) => void;
+    centerY?: number;
 }) {
     const ringRef = useRef<HTMLDivElement>(null);
     const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -216,11 +219,14 @@ function OrbitalShowcase({ products, onItemClick }: {
     const labelWrapRef = useRef<HTMLDivElement>(null);
     const angleRef = useRef(0);
     const frontIdxRef = useRef(0);
+    const frontClickableRef = useRef(false);
     const prevFrontRef = useRef(-1);
     const pauseUntilRef = useRef(0);
     const radiusRef = useRef({ x: 300, y: 48 });
     const mouseTarget = useRef({ x: 0, y: 0 });
     const mouseSmooth = useRef({ x: 0, y: 0 });
+    const snapTargetRef = useRef<number | null>(null);
+    const SNAP_SPEED = 0.1;
 
     useEffect(() => {
         const update = () => {
@@ -240,10 +246,8 @@ function OrbitalShowcase({ products, onItemClick }: {
 
     useEffect(() => {
         const handle = (e: MouseEvent) => {
-            const cx = window.innerWidth / 2;
-            const cy = window.innerHeight / 2;
-            mouseTarget.current.x = (e.clientX - cx) / cx;
-            mouseTarget.current.y = (e.clientY - cy) / cy;
+            mouseTarget.current.x = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
+            mouseTarget.current.y = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
         };
         window.addEventListener("mousemove", handle);
         return () => window.removeEventListener("mousemove", handle);
@@ -255,6 +259,7 @@ function OrbitalShowcase({ products, onItemClick }: {
                 labelNameRef.current.textContent = products[0].label;
                 labelSubRef.current.textContent = products[0].clickable ? "VIEW DETAILS →" : "COMING SOON";
                 labelSubRef.current.style.color = products[0].clickable ? "rgba(91,155,255,0.8)" : "rgba(91,155,255,0.45)";
+                frontClickableRef.current = products[0].clickable;
                 gsap.fromTo(labelWrapRef.current,
                     { opacity: 0, x: -40, filter: "blur(10px)" },
                     { opacity: 1, x: 0, filter: "blur(0px)", duration: 0.7, ease: "expo.out" }
@@ -269,13 +274,21 @@ function OrbitalShowcase({ products, onItemClick }: {
         const speed = 0.004;
         const pauseDuration = 5000;
         const n = products.length;
+        const TWO_PI = Math.PI * 2;
 
         const animate = () => {
             const now = performance.now();
             mouseSmooth.current.x += (mouseTarget.current.x - mouseSmooth.current.x) * 0.06;
             mouseSmooth.current.y += (mouseTarget.current.y - mouseSmooth.current.y) * 0.06;
 
-            if (now >= pauseUntilRef.current) {
+            if (snapTargetRef.current !== null) {
+                const diff = snapTargetRef.current - angleRef.current;
+                angleRef.current += diff * SNAP_SPEED;
+                if (Math.abs(diff) < 0.0005) {
+                    angleRef.current = snapTargetRef.current;
+                    snapTargetRef.current = null;
+                }
+            } else if (now >= pauseUntilRef.current) {
                 angleRef.current += speed;
             }
 
@@ -288,11 +301,13 @@ function OrbitalShowcase({ products, onItemClick }: {
             for (let i = 0; i < n; i++) {
                 const el = itemRefs.current[i];
                 if (!el) continue;
-                const ia = a + (i * Math.PI * 2) / n;
+
+                const ia = a + (i * TWO_PI) / n;
                 const px = Math.sin(ia) * rx;
                 const py = (Math.cos(ia) - 1) * ry;
                 const f = (Math.cos(ia) + 1) / 2;
                 if (f > maxF) { maxF = f; maxI = i; }
+
                 const breathe = 0.85 + 0.15 * Math.sin(a * 2);
                 const sc = 0.3 + 0.7 * f;
                 const op = 0.03 + 0.97 * f;
@@ -302,16 +317,26 @@ function OrbitalShowcase({ products, onItemClick }: {
                 const depth = 1 - f;
                 const parallaxX = mx * 18 * depth;
                 const parallaxY = my * 12 * depth;
-                el.style.transform = `translate(-50%,-50%) translateX(${px + parallaxX}px) translateY(${py + parallaxY}px) scale(${sc})`;
+
+                const totalX = px + parallaxX;
+                const totalY = py + parallaxY;
+                el.style.transform = `translate(calc(-50% + ${totalX}px), calc(-50% + ${totalY}px)) scale(${sc})`;
                 el.style.opacity = `${op}`;
                 el.style.filter = `blur(${bl}px) drop-shadow(0 0 ${glow}px rgba(91,155,255,${glowAlpha}))`;
                 el.style.zIndex = `${Math.round(f * 100)}`;
             }
 
-            if (maxI !== prevFrontRef.current && maxF > 0.98) {
+            if (maxI !== prevFrontRef.current && maxF > 0.95) {
                 prevFrontRef.current = maxI;
                 pauseUntilRef.current = now + pauseDuration;
                 frontIdxRef.current = maxI;
+                frontClickableRef.current = products[maxI].clickable;
+
+                const exactCenter = -(maxI * TWO_PI) / n;
+                const currentA = angleRef.current;
+                let diff = ((exactCenter - currentA) % TWO_PI + TWO_PI) % TWO_PI;
+                if (diff > Math.PI) diff -= TWO_PI;
+                snapTargetRef.current = currentA + diff;
 
                 const wrap = labelWrapRef.current;
                 const name = labelNameRef.current;
@@ -333,123 +358,83 @@ function OrbitalShowcase({ products, onItemClick }: {
         };
         animate();
         return () => cancelAnimationFrame(raf);
-    }, [products]);
+    }, [products, centerY]);
+
+    const handleLabelClick = () => {
+        if (frontClickableRef.current) onItemClick(frontIdxRef.current);
+    };
 
     return (
-        <div className="relative w-full" style={{ height: "clamp(280px,50vh,600px)" }}>
-
-            {/* ── LEFT SIDE BIG LABEL ── */}
-            <div
-                ref={labelWrapRef}
-                className="absolute flex flex-col gap-3"
+        <div style={{ position: "absolute", inset: 0 }}>
+            <div ref={labelWrapRef} className="absolute flex flex-col gap-3"
                 style={{
-                    left: "clamp(12px,3.5vw,55px)",
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    zIndex: 200,
-                    maxWidth: "clamp(110px,22vw,320px)",
-                    opacity: 0,
-                    pointerEvents: "none",
+                    left: "clamp(12px,3.5vw,55px)", top: `${centerY}%`, transform: "translateY(-50%)",
+                    zIndex: 200, maxWidth: "clamp(110px,22vw,320px)", opacity: 0, pointerEvents: "auto", cursor: "default",
                 }}
+                onClick={handleLabelClick}
             >
-                <div style={{
-                    width: "clamp(24px,3vw,50px)",
-                    height: "3px",
-                    borderRadius: "2px",
-                    background: "linear-gradient(90deg, rgba(91,155,255,0.8), rgba(91,155,255,0.1))",
-                    marginBottom: "-4px",
+                <div style={{ width: "clamp(24px,3vw,50px)", height: "3px", borderRadius: "2px", background: "linear-gradient(90deg, rgba(91,155,255,0.8), rgba(91,155,255,0.1))", marginBottom: "-4px" }} />
+                <p ref={labelNameRef} className="font-nexa font-black uppercase" style={{
+                    fontSize: "clamp(1.2rem,2.8vw,2.8rem)", lineHeight: 1, letterSpacing: "0.03em", whiteSpace: "pre-line",
+                    backgroundImage: "linear-gradient(180deg, #ffffff 0%, #d4d4d4 20%, #f5f5f5 35%, #b0b0b0 55%, #e8e8e8 70%, #999999 85%, #cccccc 100%)",
+                    WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
+                    filter: "drop-shadow(0 1px 0 rgba(255,255,255,0.55)) drop-shadow(0 -1px 0 rgba(0,0,0,0.45))",
                 }} />
-
-                <p
-                    ref={labelNameRef}
-                    className="font-nexa font-black uppercase"
-                    style={{
-                        fontSize: "clamp(1.2rem,2.8vw,2.8rem)",
-                        lineHeight: 1,
-                        letterSpacing: "0.03em",
-                        whiteSpace: "pre-line",
-                        backgroundImage: "linear-gradient(180deg, #ffffff 0%, #d4d4d4 20%, #f5f5f5 35%, #b0b0b0 55%, #e8e8e8 70%, #999999 85%, #cccccc 100%)",
-                        WebkitBackgroundClip: "text",
-                        WebkitTextFillColor: "transparent",
-                        backgroundClip: "text",
-                        filter: "drop-shadow(0 1px 0 rgba(255,255,255,0.55)) drop-shadow(0 -1px 0 rgba(0,0,0,0.45))",
-                    }}
-                />
-
-                <span
-                    ref={labelSubRef}
-                    className="font-nexa font-bold uppercase"
-                    style={{
-                        fontSize: "clamp(8px,0.75vw,11px)",
-                        letterSpacing: "0.28em",
-                        color: "rgba(91,155,255,0.8)",
-                    }}
-                />
+                <span ref={labelSubRef} className="font-nexa font-bold uppercase" style={{
+                    fontSize: "clamp(8px,0.75vw,11px)", letterSpacing: "0.28em", color: "rgba(91,155,255,0.8)",
+                }} />
             </div>
 
-            {/* Orbital path ring */}
-            <div ref={ringRef} className="absolute left-1/2 pointer-events-none"
+            <div ref={ringRef} className="absolute pointer-events-none"
                 style={{
-                    transform: "translate(-50%,0)",
-                    border: "1px dashed rgba(91,155,255,0.07)",
-                    borderRadius: "50%",
-                    boxShadow: "0 0 40px rgba(91,155,255,0.02), inset 0 0 40px rgba(91,155,255,0.02)",
-                    zIndex: 1,
+                    left: "50%", top: `${centerY}%`, transform: "translate(-50%, -50%)",
+                    border: "1px dashed rgba(91,155,255,0.07)", borderRadius: "50%",
+                    boxShadow: "0 0 40px rgba(91,155,255,0.02), inset 0 0 40px rgba(91,155,255,0.02)", zIndex: 1
                 }} />
 
-            {/* Tick marks */}
             {Array.from({ length: 24 }).map((_, i) => {
                 const tickAngle = (i / 24) * Math.PI * 2;
                 const tx = Math.sin(tickAngle);
                 const ty = Math.cos(tickAngle);
                 const isMajor = i % 6 === 0;
                 return (
-                    <div key={i} className="absolute left-1/2 top-1/2 pointer-events-none"
-                        style={{ transform: "translate(-50%,-50%)", width: "100%", height: "100%", zIndex: 1 }}>
+                    <div key={i} className="absolute pointer-events-none"
+                        style={{ left: "50%", top: `${centerY}%`, transform: "translate(-50%, -50%)", width: "100%", height: "100%", zIndex: 1 }}>
                         <div style={{
-                            position: "absolute",
-                            left: `${50 + tx * 49.5}%`,
-                            top: `${50 + (ty - 1) * 49.5}%`,
-                            width: isMajor ? "3px" : "1.5px",
-                            height: isMajor ? "3px" : "1.5px",
-                            borderRadius: "50%",
-                            background: isMajor ? "rgba(91,155,255,0.15)" : "rgba(91,155,255,0.06)",
-                            transform: "translate(-50%,-50%)",
+                            position: "absolute", left: `${50 + tx * 49.5}%`, top: `${50 + (ty - 1) * 49.5}%`,
+                            width: isMajor ? "3px" : "1.5px", height: isMajor ? "3px" : "1.5px", borderRadius: "50%",
+                            background: isMajor ? "rgba(91,155,255,0.15)" : "rgba(91,155,255,0.06)", transform: "translate(-50%,-50%)"
                         }} />
                     </div>
                 );
             })}
 
-            {/* Center glow */}
-            <div className="absolute left-1/2 top-1/2 pointer-events-none"
+            <div className="absolute pointer-events-none"
                 style={{
-                    transform: "translate(-50%,-50%)",
+                    left: "50%", top: `${centerY}%`, transform: "translate(-50%, -50%)",
                     width: "160px", height: "160px", borderRadius: "50%",
                     background: "radial-gradient(circle, rgba(22,81,209,0.10) 0%, transparent 70%)",
-                    filter: "blur(35px)",
-                    zIndex: 1,
+                    filter: "blur(35px)", zIndex: 1
                 }} />
 
-            {/* Orbiting items */}
             {products.map((p, i) => (
-                <div key={i} ref={el => { itemRefs.current[i] = el; }}
-                    className="absolute left-1/2 top-1/2 flex flex-col items-center"
+                <div key={i}
+                    ref={el => { itemRefs.current[i] = el; }}
+                    className="absolute flex flex-col items-center"
                     style={{
+                        left: "50%",
+                        top: `${centerY}%`,
                         width: "clamp(130px,26vw,340px)",
                         willChange: "transform,opacity,filter",
                         cursor: p.clickable ? "pointer" : "default",
+                        transform: "translate(-50%, -50%) scale(1)",
                     }}
-                    onClick={() => frontIdxRef.current === i && onItemClick(i)}
+                    onClick={() => { if (frontIdxRef.current === i && p.clickable) onItemClick(i); }}
                 >
                     <img src={p.src} alt={p.label} className="w-full pointer-events-none"
                         style={{ height: "clamp(140px,30vw,420px)", objectFit: "contain" }} />
                     <p className="font-nexa font-bold uppercase text-center whitespace-nowrap pointer-events-none"
-                        style={{
-                            marginTop: "8px",
-                            fontSize: "clamp(7px,0.9vw,13px)",
-                            letterSpacing: "0.1em",
-                            color: "rgba(220,220,220,0.8)",
-                        }}>
+                        style={{ marginTop: "8px", fontSize: "clamp(7px,0.9vw,13px)", letterSpacing: "0.1em", color: "rgba(220,220,220,0.8)" }}>
                         {p.label}
                     </p>
                     {!p.clickable && (
@@ -464,13 +449,26 @@ function OrbitalShowcase({ products, onItemClick }: {
     );
 }
 
-// ── MAIN COMING SOON ──
+/* ══════════════════════════════════════════════════════════════
+   MAIN
+   ══════════════════════════════════════════════════════════════ */
 export default function ComingSoon() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [mounted, setMounted] = useState(false);
     const [showDetail, setShowDetail] = useState(false);
     const [mainKey, setMainKey] = useState(0);
     const [unlocked, setUnlocked] = useState(false);
+    const betterRef = useRef<HTMLDivElement>(null);
+    const footerRef = useRef<HTMLDivElement>(null);
+
+    /* ── SINGLE SCROLLBAR FIX ── */
+    useEffect(() => {
+        const style = document.createElement("style");
+        style.id = "xo-overflow-fix";
+        style.textContent = `html{overflow:hidden;height:100%}body{overflow-y:auto;height:100%;margin:0;padding:0}`;
+        document.head.appendChild(style);
+        return () => { document.getElementById("xo-overflow-fix")?.remove(); };
+    }, []);
 
     const bgLayers = (
         <>
@@ -484,8 +482,7 @@ export default function ComingSoon() {
     const handleBack = () => { setShowDetail(false); setMainKey(k => k + 1); };
 
     useEffect(() => {
-        const wasUnlocked = sessionStorage.getItem(SESSION_KEY) === "1";
-        setUnlocked(wasUnlocked);
+        setUnlocked(sessionStorage.getItem(SESSION_KEY) === "1");
         setMounted(true);
     }, []);
 
@@ -494,8 +491,27 @@ export default function ComingSoon() {
         const tl = gsap.timeline({ delay: 0.05 });
         tl.fromTo(".cs-logo", { opacity: 0, y: -20, filter: "blur(6px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.4, ease: "expo.out" });
         tl.fromTo(".cs-anim", { opacity: 0, y: 16, filter: "blur(4px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.5, ease: "expo.out" }, "-=0.15");
-        tl.fromTo(".cs-footer", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.35, ease: "expo.out" }, "-=0.2");
         gsap.to(".center-glow", { opacity: 0.30, duration: 2.5, ease: "sine.inOut", yoyo: true, repeat: -1 });
+    }, [showDetail, mainKey, unlocked, mounted]);
+
+    useEffect(() => {
+        if (!mounted || !unlocked || showDetail) return;
+        const el = betterRef.current;
+        const ft = footerRef.current;
+        if (!el && !ft) return;
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    gsap.to(entry.target, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.8, ease: "expo.out" });
+                } else {
+                    const isBetter = entry.target === el;
+                    gsap.to(entry.target, { opacity: 0, y: isBetter ? 50 : 20, filter: isBetter ? "blur(8px)" : "blur(0px)", duration: 0.4, ease: "power2.in" });
+                }
+            });
+        }, { threshold: 0.12 });
+        if (el) { gsap.set(el, { opacity: 0, y: 50, filter: "blur(8px)" }); observer.observe(el); }
+        if (ft) { gsap.set(ft, { opacity: 0, y: 20 }); observer.observe(ft); }
+        return () => observer.disconnect();
     }, [showDetail, mainKey, unlocked, mounted]);
 
     useEffect(() => {
@@ -524,7 +540,7 @@ export default function ComingSoon() {
         return () => { cancelAnimationFrame(rafId); window.removeEventListener("resize", resize); };
     }, []);
 
-    if (!mounted) return <div style={{ width: "100vw", height: "100dvh", background: "#020916" }} />;
+    if (!mounted) return <div style={{ width: "100%", height: "100dvh", background: "#020916" }} />;
     if (!unlocked) return <PasswordGate onUnlock={() => setUnlocked(true)} />;
     if (showDetail) return <ProductDetail onBack={handleBack} />;
 
@@ -536,25 +552,74 @@ export default function ComingSoon() {
     ];
 
     return (
-        <main key={mainKey} className="relative w-full bg-[#020916]" style={{ height: "100vh", overflow: "hidden" }}>
+        <main key={mainKey} style={{ margin: 0, padding: 0, background: "#020916" }}>
             {bgLayers}
-            <div className="relative z-10 flex flex-col items-center w-full h-full px-4 sm:px-6 lg:px-10" style={{ paddingTop: "clamp(12px,2.5vh,28px)" }}>
-                <div className="cs-logo w-full flex justify-center mb-0" style={{ opacity: 0 }}>
+
+            <div style={{
+                position: "relative",
+                width: "100%",
+                minHeight: "150vh",
+                display: "flex",
+                flexDirection: "column",
+                margin: 0,
+                padding: 0,
+            }}>
+
+                {/* LOGO */}
+                <div className="cs-logo" style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    paddingTop: "clamp(8px, 3vh, 32px)",
+                    zIndex: 30,
+                    position: "relative",
+                    opacity: 0,
+                    flexShrink: 0,
+                }}>
                     <Image src={CLD.footerLogo} alt="X-Ortho" width={500} height={200} className="object-contain h-auto hidden sm:block"
                         style={{ width: "clamp(180px,32vw,400px)", filter: "drop-shadow(0 0 40px rgba(91,155,255,0.5)) drop-shadow(0 0 80px rgba(22,81,209,0.3))" }} />
                     <Image src={CLD.logo} alt="X-Ortho" width={160} height={160} className="object-contain h-auto block sm:hidden"
                         style={{ width: "clamp(60px,16vw,100px)", filter: "drop-shadow(0 0 40px rgba(91,155,255,0.5)) drop-shadow(0 0 80px rgba(22,81,209,0.3))" }} />
                 </div>
-                <div className="cs-anim flex-1 flex items-center justify-center w-full" style={{ opacity: 0 }}>
-                    <OrbitalShowcase products={products} onItemClick={(i) => { if (products[i].clickable) setShowDetail(true); }} />
+
+                {/* ORBIT — fills remaining space */}
+                <div className="cs-anim" style={{
+                    position: "relative",
+                    width: "100%",
+                    flex: 1,
+                    minHeight: 0,
+                    opacity: 0,
+                    margin: 0,
+                    padding: 0,
+                }}>
+                    <OrbitalShowcase
+                        products={products}
+                        onItemClick={(i) => { if (products[i].clickable) setShowDetail(true); }}
+                        centerY={50}
+                    />
                 </div>
-                <div className="cs-footer w-full flex flex-col items-center gap-1 text-center" style={{ paddingBottom: "clamp(0px,0.5vh,0px)" }}>
-                    <div className="flex flex-wrap items-center justify-center gap-x-1.5 sm:gap-x-2 gap-y-0.5 text-white/40 text-[15px] sm:text-[16px]">
-                        <span>Email <a href="mailto:info@xortho.com" className="font-nexa text-[#ffffff]/80 hover:text-[#5b9bff] transition-colors font-semibold">info@xortho.com</a></span>
-                        <span className="text-white/20">·</span>
-                        <span><a href="tel:8559678461" className="font-nexa text-[#ffffff]/80 hover:text-[#5b9bff] transition-colors font-semibold">855.XORTHO1</a></span>
-                    </div>
-                    <p className="font-nexa text-[13px] sm:text-[14px] uppercase tracking-[0.3em] font-bold" style={{ color: "rgba(255,255,255,0.12)" }}>© {new Date().getFullYear()} X-Ortho · TLC DME LLC</p>
+
+                {/* BETTER TEXT — bottom */}
+                <div ref={betterRef} className="text-center" style={{
+                    width: "100%",
+                    borderTop: "1px solid rgba(91,155,255,0.15)",
+                    paddingTop: "clamp(24px, 3.5vh, 48px)",
+                    flexShrink: 0,
+                    margin: 0,
+                }}>
+                    <p className="font-nexa font-black uppercase text-lg sm:text-2xl md:text-3xl" style={silverMetallic}>Better Design. Better Engineering. Better Quality.</p>
+                    <p className="font-nexa font-black uppercase text-lg sm:text-2xl md:text-3xl mt-1 sm:mt-2" style={silverMetallic}>Better Functionality. Better Patient Experience.</p>
+                    <p className="font-nexa font-black uppercase text-lg sm:text-2xl md:text-3xl mt-1 sm:mt-2" style={silverMetallic}>Better Outcomes. Better DME.</p>
+                </div>
+
+                {/* FOOTER — very bottom */}
+                <div ref={footerRef} className="text-center" style={{
+                    width: "100%",
+                    paddingBottom: "clamp(16px, 3vh, 40px)",
+                    flexShrink: 0,
+                    margin: 0,
+                }}>
+                    <p className="font-nexa text-[9px] sm:text-xs uppercase tracking-[0.35em]" style={silverMetallic}>© {new Date().getFullYear()} X-Ortho · TLC DME LLC · info@xortho.com · 855.XORTHO1</p>
                 </div>
             </div>
         </main>
