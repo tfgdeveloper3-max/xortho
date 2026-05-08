@@ -78,7 +78,11 @@ function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
     );
 }
 
-const PRODUCTS = {
+const PRODUCTS: Record<string, {
+    name: string; image: string;
+    section1: { title: string; body: string; features: { img: string; title: string; desc: string }[] };
+    section2: { title: string; body: string; features: { img: string; title: string; desc: string }[] };
+}> = {
     "boot-short": {
         name: "XO Boot Pneumatic Short", image: CLD.xoBootShort,
         section1: {
@@ -117,6 +121,44 @@ const PRODUCTS = {
             ]
         },
     },
+    "back": {
+        name: "XO Back LSO Cryo", image: CLD.xoBackComingSoon,
+        section1: {
+            title: "Pain Relief and Stabilization", body: "Provides pain-relieving stabilization. Restricts and controls gross trunk movement. Manages intersegmental motion of vertebrae in multiple planes. Delivers deep penetrating cold and hot therapy via a removable gel pad.", features: [
+                { img: CLD.backBelt, title: "Stabilization", desc: "Pain Relieving\nTrunk Control" },
+                { img: CLD.backBeltWorn, title: "Gross Movement", desc: "Restricts & Controls\nTrunk Motion" },
+                { img: CLD.backBeltBlueprint, title: "Vertebrae Motion", desc: "Manages Intersegmental\nMotion in Planes" },
+                { img: CLD.backBeltSide, title: "Hot & Cold Therapy", desc: "Removable Gel Pad\nDeep Penetrating Relief" },
+            ]
+        },
+        section2: {
+            title: "Superior Biomechanical Advantage", body: "Contoured carbon fiber flexible posterior panel. Next-generation 6 post dual string pulley system. Self-adjusts to each patient’s unique lordotic curve. Delivers more compression with far less effort. Simultaneously closes top & bottom of the low-profile orthosis. Reduces spine load by 30%-40%.", features: [
+                { img: CLD.backBeltFront, title: "Carbon Fiber Panel", desc: "Contoured Flexible\nPosterior Panel" },
+                { img: CLD.backBeltBlueprint, title: "Pulley System", desc: "6 Post Dual String\nNext-Generation" },
+                { img: CLD.backBeltWorn, title: "Lordotic Curve", desc: "Self-Adjusts to\nUnique Patient Curve" },
+                { img: CLD.backBelt, title: "Spine Load", desc: "Reduces Load\nBy 30%-40%" },
+            ]
+        },
+    },
+    "knee": {
+        name: "XO Knee ROM Cryo", image: CLD.xoKneeHingedComingSoon,
+        section1: {
+            title: "Applications for Knee Injuries", body: "Versatile specialized state-of-the-art solution for most injuries. State-of-the-art design adopted by leading professionals and athletes. Suitable for most knee injuries.", features: [
+                { img: CLD.kneeBrace, title: "State-of-the-Art", desc: "Adopted by Leading\nProfessionals & Athletes" },
+                { img: CLD.kneeFront, title: "Versatile Solution", desc: "Specialized Design\nFor Most Injuries" },
+                { img: CLD.kneeOpen, title: "Most Knee Injuries", desc: "Suitable & Adaptable\nBroad Application" },
+                { img: CLD.kneeSleeve, title: "Knee Sleeve", desc: "Comfortable Fit\nEnhanced Support" },
+            ]
+        },
+        section2: {
+            title: "Advanced Dual Axis Hinges & Cryotherapy", body: "Moves on two planes of motion independently. Accurately mirrors natural knee motion. ROM Unicentric Hinges control flexion and extension. Adjustable in 15-degree increments from full lockout to full range of motion. Removable medical-grade gel pad for cold and hot therapy. Provides pain relief through effective temperature management.", features: [
+                { img: CLD.kneeHinge1, title: "Dual Axis Hinges", desc: "Two Planes of Motion\nMirrors Natural Knee" },
+                { img: CLD.kneeHinge2, title: "ROM Unicentric", desc: "Controls Flexion\n& Extension" },
+                { img: CLD.kneeStrap1, title: "15° Increments", desc: "Full Lockout to\nFull Range of Motion" },
+                { img: CLD.kneeCryoPad, title: "Cryotherapy", desc: "Medical-Grade Gel Pad\nCold & Hot Therapy" },
+            ]
+        },
+    }
 };
 
 const blueMetallic: React.CSSProperties = {
@@ -134,16 +176,24 @@ const silverTextSoft: React.CSSProperties = {
     textShadow: "0 0 6px rgba(200,200,200,0.25), 0 1px 0 rgba(255,255,255,0.15)",
 };
 
-function ProductDetail({ onBack }: { onBack: () => void }) {
-    const short = PRODUCTS["boot-short"];
-    const tall = PRODUCTS["boot-tall"];
+function ProductDetail({ onBack, productIds }: { onBack: () => void; productIds: string[] }) {
+    const isSingle = productIds.length === 1;
+
     useEffect(() => {
         window.scrollTo(0, 0);
-        window.history.pushState({ detail: "boots" }, "");
+        window.history.pushState({ detail: "product" }, "");
         const handlePopState = () => { onBack(); };
         window.addEventListener("popstate", handlePopState);
         return () => { window.removeEventListener("popstate", handlePopState); };
     }, [onBack]);
+
+    const sectionsToRender = productIds.flatMap((id, idx) => {
+        const p = PRODUCTS[id];
+        if (productIds.length === 2) {
+            return idx === 0 ? [p.section1] : [p.section2];
+        }
+        return [p.section1, p.section2];
+    });
 
     return (
         <div className="fixed inset-0 z-50 overflow-y-auto" style={{ background: "#020916" }}>
@@ -160,29 +210,37 @@ function ProductDetail({ onBack }: { onBack: () => void }) {
                     <Image src={CLD.logo} alt="X-ORTHO" width={200} height={200} className="block sm:hidden"
                         style={{ width: "90px", height: "90px", objectFit: "contain", filter: "drop-shadow(0 0 12px rgba(91,155,255,0.35))" }} />
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-10 md:mb-14">
-                    {([short, tall] as const).map((product) => (
-                        <div key={product.name} className="flex flex-col items-center">
-                            <div className="relative flex items-center justify-center" style={{ width: "100%", height: "clamp(260px,38vw,480px)" }}>
-                                <img src={product.image} alt={product.name} style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", filter: "drop-shadow(0 0 60px rgba(91,155,255,0.85)) drop-shadow(0 30px 80px rgba(22,81,209,0.6))" }} />
+
+                <div className={`grid grid-cols-1 ${isSingle ? '' : 'md:grid-cols-2'} gap-8 md:gap-12 mb-10 md:mb-14`}>
+                    {productIds.map(id => {
+                        const product = PRODUCTS[id];
+                        return (
+                            <div key={id} className={`flex flex-col items-center ${isSingle ? 'md:col-span-2' : ''}`}>
+                                <div className="relative flex items-center justify-center" style={{ width: "100%", height: "clamp(260px,38vw,480px)" }}>
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                    <img src={product.image} alt={product.name} style={{ maxWidth: isSingle ? "50%" : "100%", maxHeight: "100%", objectFit: "contain", filter: "drop-shadow(0 0 60px rgba(91,155,255,0.85)) drop-shadow(0 30px 80px rgba(22,81,209,0.6))" }} />
+                                </div>
+                                <h2 className="font-nexa font-black uppercase mt-4 text-center" style={{ fontSize: "clamp(1rem,2.2vw,1.8rem)", letterSpacing: "0.05em", ...silverMetallic }}>{product.name}</h2>
                             </div>
-                            <h2 className="font-nexa font-black uppercase mt-4 text-center" style={{ fontSize: "clamp(1rem,2.2vw,1.8rem)", letterSpacing: "0.05em", ...silverMetallic }}>{product.name}</h2>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
+
+                {/* --- ALIGNMENT FIX: Added flex flex-col and mt-auto to feature grid --- */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-                    {[
-                        { heading: short.section1.title, body: short.section1.body, features: short.section1.features },
-                        { heading: tall.section2.title, body: tall.section2.body, features: tall.section2.features },
-                    ].map((section, si) => (
-                        <div key={si}>
-                            <h3 className="font-nexa font-black uppercase text-center mb-3 sm:mb-5" style={{ fontSize: "clamp(0.8rem,1.5vw,1.3rem)", ...blueMetallic }}>{section.heading}</h3>
-                            <p className="font-nexa text-[11px] sm:text-[13px] text-left leading-relaxed mb-4 sm:mb-6" style={{ color: "rgba(255,255,255,0.60)" }}>{section.body}</p>
-                            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                    {sectionsToRender.map((section, si) => (
+                        <div key={si} className="flex flex-col">
+                            <div>
+                                <h3 className="font-nexa font-black uppercase text-center mb-3 sm:mb-5" style={{ fontSize: "clamp(0.8rem,1.5vw,1.3rem)", ...blueMetallic }}>{section.title}</h3>
+                                <p className="font-nexa text-[11px] sm:text-[13px] text-left leading-relaxed mb-4 sm:mb-6" style={{ color: "rgba(255,255,255,0.60)" }}>{section.body}</p>
+                            </div>
+                            {/* mt-auto will push this grid to the bottom, forcing both sides to align */}
+                            <div className="grid grid-cols-2 gap-3 sm:gap-4 mt-auto">
                                 {section.features.map((f, i) => (
                                     <div key={i} className="flex flex-col items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-2xl" style={{ background: "rgba(8,12,42,0.7)", border: "1px solid rgba(91,155,255,0.15)" }}>
                                         <div className="relative flex items-center justify-center" style={{ width: "clamp(100px,15vw,200px)", height: "clamp(100px,15vw,200px)" }}>
                                             <div style={{ position: "absolute", inset: 0, borderRadius: "50%", background: "radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%)", filter: "blur(8px)" }} />
+                                            {/* eslint-disable-next-line @next/next/no-img-element */}
                                             <img src={f.img} alt={f.title} className="relative" style={{ width: "92%", height: "92%", objectFit: "contain", filter: "drop-shadow(0 0 15px rgba(91,155,255,0.5))" }} />
                                         </div>
                                         <p className="font-nexa font-black text-center uppercase tracking-wide leading-tight whitespace-nowrap" style={{ ...silverTextSoft, fontSize: "15px" }}>{f.title}</p>
@@ -193,6 +251,7 @@ function ProductDetail({ onBack }: { onBack: () => void }) {
                         </div>
                     ))}
                 </div>
+
                 <div className="mt-10 sm:mt-14 pt-6 sm:pt-8 text-center" style={{ borderTop: "1px solid rgba(91,155,255,0.15)" }}>
                     <p className="font-nexa font-black uppercase text-lg sm:text-2xl md:text-3xl" style={silverMetallic}>Better Design. Better Engineering. Better Quality.</p>
                     <p className="font-nexa font-black uppercase text-lg sm:text-2xl md:text-3xl mt-1 sm:mt-2" style={silverMetallic}>Better Functionality. Better Patient Experience.</p>
@@ -205,10 +264,10 @@ function ProductDetail({ onBack }: { onBack: () => void }) {
 }
 
 /* ══════════════════════════════════════════════════════════════
-   ORBITAL SHOWCASE
+   ORBITAL SHOWCASE (WITH SLOW SPEED + FIXED MOUSE DRAG)
    ══════════════════════════════════════════════════════════════ */
 function OrbitalShowcase({ products, onItemClick, centerY = 50 }: {
-    products: { src: string; label: string; clickable: boolean }[];
+    products: { src: string; label: string; clickable: boolean; ids: string[] }[];
     onItemClick: (i: number) => void;
     centerY?: number;
 }) {
@@ -226,7 +285,12 @@ function OrbitalShowcase({ products, onItemClick, centerY = 50 }: {
     const mouseTarget = useRef({ x: 0, y: 0 });
     const mouseSmooth = useRef({ x: 0, y: 0 });
     const snapTargetRef = useRef<number | null>(null);
-    const SNAP_SPEED = 0.1;
+
+    // Drag states
+    const isDragging = useRef(false);
+    const dragStartX = useRef(0);
+    const dragStartAngle = useRef(0);
+    const [dragging, setDragging] = useState(false);
 
     useEffect(() => {
         const update = () => {
@@ -253,6 +317,58 @@ function OrbitalShowcase({ products, onItemClick, centerY = 50 }: {
         return () => window.removeEventListener("mousemove", handle);
     }, []);
 
+    // Global Drag Listeners (FIXED DIRECTION & SMOOTH RESUME)
+    useEffect(() => {
+        const onMouseMove = (e: MouseEvent) => {
+            if (!isDragging.current) return;
+            const deltaX = e.clientX - dragStartX.current;
+            angleRef.current = dragStartAngle.current + deltaX * 0.004; // Fixed direction (+deltaX)
+        };
+        const onMouseUp = () => {
+            if (isDragging.current) {
+                isDragging.current = false;
+                setDragging(false);
+                // Pause auto-rotation for 4 seconds after dragging so it doesn't jump
+                pauseUntilRef.current = performance.now() + 4000;
+                prevFrontRef.current = -1; // Force re-snap to nearest item
+            }
+        };
+        const onTouchMove = (e: TouchEvent) => {
+            if (!isDragging.current) return;
+            const deltaX = e.touches[0].clientX - dragStartX.current;
+            angleRef.current = dragStartAngle.current + deltaX * 0.004; // Fixed direction (+deltaX)
+        };
+        const onTouchEnd = () => {
+            if (isDragging.current) {
+                isDragging.current = false;
+                setDragging(false);
+                pauseUntilRef.current = performance.now() + 4000;
+                prevFrontRef.current = -1;
+            }
+        };
+
+        window.addEventListener("mousemove", onMouseMove);
+        window.addEventListener("mouseup", onMouseUp);
+        window.addEventListener("touchmove", onTouchMove);
+        window.addEventListener("touchend", onTouchEnd);
+
+        return () => {
+            window.removeEventListener("mousemove", onMouseMove);
+            window.removeEventListener("mouseup", onMouseUp);
+            window.removeEventListener("touchmove", onTouchMove);
+            window.removeEventListener("touchend", onTouchEnd);
+        };
+    }, []);
+
+    const handleDragStart = (clientX: number) => {
+        isDragging.current = true;
+        dragStartX.current = clientX;
+        dragStartAngle.current = angleRef.current;
+        setDragging(true);
+        snapTargetRef.current = null;
+        pauseUntilRef.current = 0;
+    };
+
     useEffect(() => {
         const timer = setTimeout(() => {
             if (labelNameRef.current && labelSubRef.current && labelWrapRef.current) {
@@ -271,10 +387,11 @@ function OrbitalShowcase({ products, onItemClick, centerY = 50 }: {
 
     useEffect(() => {
         let raf: number;
-        const speed = 0.004;
+        const speed = 0.0015;
         const pauseDuration = 5000;
         const n = products.length;
         const TWO_PI = Math.PI * 2;
+        const SNAP_SPEED = 0.1;
 
         const animate = () => {
             const now = performance.now();
@@ -288,7 +405,7 @@ function OrbitalShowcase({ products, onItemClick, centerY = 50 }: {
                     angleRef.current = snapTargetRef.current;
                     snapTargetRef.current = null;
                 }
-            } else if (now >= pauseUntilRef.current) {
+            } else if (!isDragging.current && now >= pauseUntilRef.current) {
                 angleRef.current += speed;
             }
 
@@ -332,11 +449,13 @@ function OrbitalShowcase({ products, onItemClick, centerY = 50 }: {
                 frontIdxRef.current = maxI;
                 frontClickableRef.current = products[maxI].clickable;
 
-                const exactCenter = -(maxI * TWO_PI) / n;
-                const currentA = angleRef.current;
-                let diff = ((exactCenter - currentA) % TWO_PI + TWO_PI) % TWO_PI;
-                if (diff > Math.PI) diff -= TWO_PI;
-                snapTargetRef.current = currentA + diff;
+                if (!isDragging.current) {
+                    const exactCenter = -(maxI * TWO_PI) / n;
+                    const currentA = angleRef.current;
+                    let diff = ((exactCenter - currentA) % TWO_PI + TWO_PI) % TWO_PI;
+                    if (diff > Math.PI) diff -= TWO_PI;
+                    snapTargetRef.current = currentA + diff;
+                }
 
                 const wrap = labelWrapRef.current;
                 const name = labelNameRef.current;
@@ -365,7 +484,12 @@ function OrbitalShowcase({ products, onItemClick, centerY = 50 }: {
     };
 
     return (
-        <div style={{ position: "absolute", inset: 0 }}>
+        <div style={{ position: "absolute", inset: 0 }}
+            onMouseDown={(e) => handleDragStart(e.clientX)}
+            onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
+        >
+            <div style={{ position: "absolute", inset: 0, pointerEvents: "auto", cursor: dragging ? "grabbing" : "grab", zIndex: 0 }} />
+
             <div ref={labelWrapRef} className="absolute flex flex-col gap-3"
                 style={{
                     left: "clamp(12px,3.5vw,55px)", top: `${centerY}%`, transform: "translateY(-50%)",
@@ -428,21 +552,17 @@ function OrbitalShowcase({ products, onItemClick, centerY = 50 }: {
                         willChange: "transform,opacity,filter",
                         cursor: p.clickable ? "pointer" : "default",
                         transform: "translate(-50%, -50%) scale(1)",
+                        pointerEvents: "auto"
                     }}
-                    onClick={() => { if (frontIdxRef.current === i && p.clickable) onItemClick(i); }}
+                    onClick={() => { if (frontIdxRef.current === i && p.clickable && !dragging) onItemClick(i); }}
                 >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={p.src} alt={p.label} className="w-full pointer-events-none"
                         style={{ height: "clamp(140px,30vw,420px)", objectFit: "contain" }} />
                     <p className="font-nexa font-bold uppercase text-center whitespace-nowrap pointer-events-none"
                         style={{ marginTop: "8px", fontSize: "clamp(7px,0.9vw,13px)", letterSpacing: "0.1em", color: "rgba(220,220,220,0.8)" }}>
                         {p.label}
                     </p>
-                    {!p.clickable && (
-                        <span className="font-nexa pointer-events-none" style={{
-                            fontSize: "clamp(6px,0.65vw,9px)", letterSpacing: "0.18em",
-                            color: "rgba(91,155,255,0.45)", marginTop: "3px", fontWeight: 700,
-                        }}>COMING SOON</span>
-                    )}
                 </div>
             ))}
         </div>
@@ -455,13 +575,12 @@ function OrbitalShowcase({ products, onItemClick, centerY = 50 }: {
 export default function ComingSoon() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [mounted, setMounted] = useState(false);
-    const [showDetail, setShowDetail] = useState(false);
+    const [activeProductIds, setActiveProductIds] = useState<string[] | null>(null);
     const [mainKey, setMainKey] = useState(0);
     const [unlocked, setUnlocked] = useState(false);
     const betterRef = useRef<HTMLDivElement>(null);
     const footerRef = useRef<HTMLDivElement>(null);
 
-    /* ── SINGLE SCROLLBAR FIX ── */
     useEffect(() => {
         const style = document.createElement("style");
         style.id = "xo-overflow-fix";
@@ -479,7 +598,7 @@ export default function ComingSoon() {
         </>
     );
 
-    const handleBack = () => { setShowDetail(false); setMainKey(k => k + 1); };
+    const handleBack = () => { setActiveProductIds(null); setMainKey(k => k + 1); };
 
     useEffect(() => {
         setUnlocked(sessionStorage.getItem(SESSION_KEY) === "1");
@@ -487,15 +606,15 @@ export default function ComingSoon() {
     }, []);
 
     useEffect(() => {
-        if (!mounted || !unlocked || showDetail) return;
+        if (!mounted || !unlocked || activeProductIds) return;
         const tl = gsap.timeline({ delay: 0.05 });
         tl.fromTo(".cs-logo", { opacity: 0, y: -20, filter: "blur(6px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.4, ease: "expo.out" });
         tl.fromTo(".cs-anim", { opacity: 0, y: 16, filter: "blur(4px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.5, ease: "expo.out" }, "-=0.15");
         gsap.to(".center-glow", { opacity: 0.30, duration: 2.5, ease: "sine.inOut", yoyo: true, repeat: -1 });
-    }, [showDetail, mainKey, unlocked, mounted]);
+    }, [activeProductIds, mainKey, unlocked, mounted]);
 
     useEffect(() => {
-        if (!mounted || !unlocked || showDetail) return;
+        if (!mounted || !unlocked || activeProductIds) return;
         const el = betterRef.current;
         const ft = footerRef.current;
         if (!el && !ft) return;
@@ -512,7 +631,7 @@ export default function ComingSoon() {
         if (el) { gsap.set(el, { opacity: 0, y: 50, filter: "blur(8px)" }); observer.observe(el); }
         if (ft) { gsap.set(ft, { opacity: 0, y: 20 }); observer.observe(ft); }
         return () => observer.disconnect();
-    }, [showDetail, mainKey, unlocked, mounted]);
+    }, [activeProductIds, mainKey, unlocked, mounted]);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -542,83 +661,41 @@ export default function ComingSoon() {
 
     if (!mounted) return <div style={{ width: "100%", height: "100dvh", background: "#020916" }} />;
     if (!unlocked) return <PasswordGate onUnlock={() => setUnlocked(true)} />;
-    if (showDetail) return <ProductDetail onBack={handleBack} />;
+    if (activeProductIds) return <ProductDetail onBack={handleBack} productIds={activeProductIds} />;
 
     const products = [
-        { src: CLD.xoBootShort, label: "XO Boot\nPneumatic Short", clickable: true },
-        { src: CLD.xoBootTall, label: "XO Boot\nPneumatic Tall", clickable: true },
-        { src: CLD.xoBackComingSoon, label: "XO Back\nLSO Cryo", clickable: false },
-        { src: CLD.xoKneeHingedComingSoon, label: "XO Knee\nROM Cryo", clickable: false },
+        { src: CLD.xoBootShort, label: "XO Boot\nPneumatic Short", clickable: true, ids: ["boot-short", "boot-tall"] },
+        { src: CLD.xoBootTall, label: "XO Boot\nPneumatic Tall", clickable: true, ids: ["boot-short", "boot-tall"] },
+        { src: CLD.xoBackComingSoon, label: "XO Back\nLSO Cryo", clickable: true, ids: ["back"] },
+        { src: CLD.xoKneeHingedComingSoon, label: "XO Knee\nROM Cryo", clickable: true, ids: ["knee"] },
     ];
 
     return (
         <main key={mainKey} style={{ margin: 0, padding: 0, background: "#020916" }}>
             {bgLayers}
-
-            <div style={{
-                position: "relative",
-                width: "100%",
-                minHeight: "150vh",
-                display: "flex",
-                flexDirection: "column",
-                margin: 0,
-                padding: 0,
-            }}>
-
-                {/* LOGO */}
-                <div className="cs-logo" style={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    paddingTop: "clamp(8px, 3vh, 32px)",
-                    zIndex: 30,
-                    position: "relative",
-                    opacity: 0,
-                    flexShrink: 0,
-                }}>
+            <div style={{ position: "relative", width: "100%", minHeight: "150vh", display: "flex", flexDirection: "column", margin: 0, padding: 0 }}>
+                <div className="cs-logo" style={{ width: "100%", display: "flex", justifyContent: "center", paddingTop: "clamp(8px, 3vh, 32px)", zIndex: 30, position: "relative", opacity: 0, flexShrink: 0 }}>
                     <Image src={CLD.footerLogo} alt="X-Ortho" width={500} height={200} className="object-contain h-auto hidden sm:block"
                         style={{ width: "clamp(180px,32vw,400px)", filter: "drop-shadow(0 0 40px rgba(91,155,255,0.5)) drop-shadow(0 0 80px rgba(22,81,209,0.3))" }} />
                     <Image src={CLD.logo} alt="X-Ortho" width={160} height={160} className="object-contain h-auto block sm:hidden"
                         style={{ width: "clamp(60px,16vw,100px)", filter: "drop-shadow(0 0 40px rgba(91,155,255,0.5)) drop-shadow(0 0 80px rgba(22,81,209,0.3))" }} />
                 </div>
 
-                {/* ORBIT — fills remaining space */}
-                <div className="cs-anim" style={{
-                    position: "relative",
-                    width: "100%",
-                    flex: 1,
-                    minHeight: 0,
-                    opacity: 0,
-                    margin: 0,
-                    padding: 0,
-                }}>
+                <div className="cs-anim" style={{ position: "relative", width: "100%", flex: 1, minHeight: 0, opacity: 0, margin: 0, padding: 0 }}>
                     <OrbitalShowcase
                         products={products}
-                        onItemClick={(i) => { if (products[i].clickable) setShowDetail(true); }}
+                        onItemClick={(i) => { if (products[i].clickable) setActiveProductIds(products[i].ids); }}
                         centerY={50}
                     />
                 </div>
 
-                {/* BETTER TEXT — bottom */}
-                <div ref={betterRef} className="text-center" style={{
-                    width: "100%",
-                    borderTop: "1px solid rgba(91,155,255,0.15)",
-                    paddingTop: "clamp(24px, 3.5vh, 48px)",
-                    flexShrink: 0,
-                    margin: 0,
-                }}>
+                <div ref={betterRef} className="text-center" style={{ width: "100%", borderTop: "1px solid rgba(91,155,255,0.15)", paddingTop: "clamp(24px, 3.5vh, 48px)", flexShrink: 0, margin: 0 }}>
                     <p className="font-nexa font-black uppercase text-lg sm:text-2xl md:text-3xl" style={silverMetallic}>Better Design. Better Engineering. Better Quality.</p>
                     <p className="font-nexa font-black uppercase text-lg sm:text-2xl md:text-3xl mt-1 sm:mt-2" style={silverMetallic}>Better Functionality. Better Patient Experience.</p>
                     <p className="font-nexa font-black uppercase text-lg sm:text-2xl md:text-3xl mt-1 sm:mt-2" style={silverMetallic}>Better Outcomes. Better DME.</p>
                 </div>
 
-                {/* FOOTER — very bottom */}
-                <div ref={footerRef} className="text-center" style={{
-                    width: "100%",
-                    paddingBottom: "clamp(16px, 3vh, 40px)",
-                    flexShrink: 0,
-                    margin: 0,
-                }}>
+                <div ref={footerRef} className="text-center" style={{ width: "100%", paddingBottom: "clamp(16px, 3vh, 40px)", flexShrink: 0, margin: 0 }}>
                     <p className="font-nexa text-[9px] sm:text-xs uppercase tracking-[0.35em]" style={silverMetallic}>© {new Date().getFullYear()} X-Ortho · TLC DME LLC · info@xortho.com · 855.XORTHO1</p>
                 </div>
             </div>

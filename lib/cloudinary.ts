@@ -96,7 +96,7 @@ export const CLD = {
     // Coming Soon folder images
     xoBootShortComingSoon: cldImgComingSoon("xo-boot-short?_v=2"),
     xoBootTallComingSoon: cldImgComingSoon("xo-boot-tall?_v=2"),
-    xoBackComingSoon: cldImgComingSoon("xo-back?_v=3"),
+    xoBackComingSoon: cldImgComingSoon("xo-back?_v=4"),
     xoKneeHingedComingSoon: cldImgComingSoon("xo-knee-hinged?_v=3"),
     xocomingsoonStrap: cldImgComingSoon("comingsoon-strap"),
     xocomingsoonfrontview: cldImgComingSoon("comingsoon-front-view"),
