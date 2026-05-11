@@ -452,7 +452,7 @@ function OrbitalShowcase({ products, onItemClick, centerY = 50 }: {
 
     useEffect(() => {
         let raf: number;
-        const speed = 0.0028;
+        const speed = 0.028;
         const pauseDuration = 5000;
         const n = products.length;
         const TWO_PI = Math.PI * 2;
