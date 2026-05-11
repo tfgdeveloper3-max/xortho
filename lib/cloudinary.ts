@@ -101,6 +101,11 @@ export const CLD = {
     xocomingsoonStrap: cldImgComingSoon("comingsoon-strap"),
     xocomingsoonfrontview: cldImgComingSoon("comingsoon-front-view"),
 
+    kneesleevecomingsoonlatest: cldImgComingSoon("comingsoon-knee-sleeves"),
+    kneesInnercomingsoonlatest: cldImgComingSoon("comingsoon-knee-inner"),
+    backBeltcomingsoonlatest: cldImgComingSoon("comingsoon-back-belt"),
+    beltInnercomingsoonlatest: cldImgComingSoon("comingsoon-back-inner"),
+
     // Knee support real product images
     kneeSleeve: cldImg("knee-sleeve"),
     kneeFront: cldImg("knee-front"),

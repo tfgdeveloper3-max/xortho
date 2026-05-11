@@ -79,9 +79,9 @@ function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
 }
 
 const PRODUCTS: Record<string, {
-    name: string; image: string;
-    section1: { title: string; body: string; features: { img: string; title: string; desc: string }[] };
-    section2: { title: string; body: string; features: { img: string; title: string; desc: string }[] };
+    name: string; image: string; introTitle?: string;
+    section1: { title: string; body: string; blocks?: { heading: string; content: string }[]; features: { img: string; title: string; desc: string }[] };
+    section2: { title: string; body: string; blocks?: { heading: string; content: string }[]; features: { img: string; title: string; desc: string }[] };
 }> = {
     "boot-short": {
         name: "XO Boot Pneumatic Short", image: CLD.xoBootShort,
@@ -122,42 +122,86 @@ const PRODUCTS: Record<string, {
         },
     },
     "back": {
-        name: "XO Back LSO Cryo", image: CLD.xoBackComingSoon,
+        name: "XO Back LSO Cryo",
+        image: CLD.xoBackComingSoon,
+        introTitle: "TRANSFORMATIVE INNOVATIVE AND ADVANCED DESIGN",
         section1: {
-            title: "Pain Relief and Stabilization", body: "Provides pain-relieving stabilization. Restricts and controls gross trunk movement. Manages intersegmental motion of vertebrae in multiple planes. Delivers deep penetrating cold and hot therapy via a removable gel pad.", features: [
-                { img: CLD.backBelt, title: "Stabilization", desc: "Pain Relieving\nTrunk Control" },
-                { img: CLD.backBeltWorn, title: "Gross Movement", desc: "Restricts & Controls\nTrunk Motion" },
-                { img: CLD.backBeltBlueprint, title: "Vertebrae Motion", desc: "Manages Intersegmental\nMotion in Planes" },
-                { img: CLD.backBeltSide, title: "Hot & Cold Therapy", desc: "Removable Gel Pad\nDeep Penetrating Relief" },
+            title: "", body: "",
+            blocks: [
+                {
+                    heading: "Pain Relief and Stabilization",
+                    content: "• Provides pain-relieving stabilization\n• Restricts and controls gross trunk movement\n• Manages intersegmental motion of vertebrae in multiple planes\n• Delivers deep penetrating cold and hot therapy via a removable gel pad"
+                },
+                {
+                    heading: "Superior Biomechanical Advantage",
+                    content: "• Contoured carbon fiber flexible posterior panel\n• Next-generation 6 post dual string pulley system\n• Self-adjusts to each patient’s unique lordotic curve\n• Delivers more compression with far less effort\n• Simultaneously closes top & bottom of the low-profile orthosis\n• Reduces spine load by 30%-40%"
+                }
+            ],
+            features: [
+                { img: CLD.backBeltcomingsoonlatest, title: "6-POST-PULLEY", desc: "2X Comfort/ ½X Effort\n Dual String Advantage" }
             ]
         },
         section2: {
-            title: "Superior Biomechanical Advantage", body: "Contoured carbon fiber flexible posterior panel. Next-generation 6 post dual string pulley system. Self-adjusts to each patient’s unique lordotic curve. Delivers more compression with far less effort. Simultaneously closes top & bottom of the low-profile orthosis. Reduces spine load by 30%-40%.", features: [
-                { img: CLD.backBeltFront, title: "Carbon Fiber Panel", desc: "Contoured Flexible\nPosterior Panel" },
-                { img: CLD.backBeltBlueprint, title: "Pulley System", desc: "6 Post Dual String\nNext-Generation" },
-                { img: CLD.backBeltWorn, title: "Lordotic Curve", desc: "Self-Adjusts to\nUnique Patient Curve" },
-                { img: CLD.backBelt, title: "Spine Load", desc: "Reduces Load\nBy 30%-40%" },
+            title: "", body: "",
+            blocks: [
+                {
+                    heading: "Global Recognition and Clinical Support",
+                    content: "• Recognized as the most clinically advanced back support\n• Supported by clinical guidelines from: BCBS, American Academy of Orthopedic Surgeons, North American Spine Society & CMS\n• Approved for various HCPCS codes, enhancing reimbursement potential"
+                },
+                {
+                    heading: "Adjustable Fit and Customization",
+                    content: "• One size fits sizes SM through 4X\n• Extension panel accommodates waist sizes 22” to 60”\n• Added panels (posterior, anterior, oblique) available for increased immobilization\n• Supports step-down injury management protocols"
+                }
+            ],
+            features: [
+                { img: CLD.beltInnercomingsoonlatest, title: "CRYO GEL PAD", desc: "Easily Removeable\n Hot/Cold Therapy" }
             ]
-        },
+        }
     },
     "knee": {
-        name: "XO Knee ROM Cryo", image: CLD.xoKneeHingedComingSoon,
+        name: "XO Knee ROM Cryo",
+        image: CLD.xoKneeHingedComingSoon,
+        introTitle: "VERSATILE SPECIALIZED STATE-OF-THE-ART SOLUTION FOR MOST INJURIES",
         section1: {
-            title: "Applications for Knee Injuries", body: "Versatile specialized state-of-the-art solution for most injuries. State-of-the-art design adopted by leading professionals and athletes. Suitable for most knee injuries.", features: [
-                { img: CLD.kneeBrace, title: "State-of-the-Art", desc: "Adopted by Leading\nProfessionals & Athletes" },
-                { img: CLD.kneeFront, title: "Versatile Solution", desc: "Specialized Design\nFor Most Injuries" },
-                { img: CLD.kneeOpen, title: "Most Knee Injuries", desc: "Suitable & Adaptable\nBroad Application" },
-                { img: CLD.kneeSleeve, title: "Knee Sleeve", desc: "Comfortable Fit\nEnhanced Support" },
+            title: "", body: "",
+            blocks: [
+                {
+                    heading: "Applications for Knee Injuries",
+                    content: "• State-of-the-art design adopted by leading professionals and athletes\n• Suitable for most knee injuries"
+                },
+                {
+                    heading: "Advanced Dual Axis Hinges",
+                    content: "• Moves on two planes of motion independently\n• Accurately mirrors natural knee motion"
+                },
+                {
+                    heading: "Controlled Range of Motion",
+                    content: "• ROM Unicentric Hinges control flexion and extension\n• Adjustable in 15-degree increments from full lockout to full range of motion"
+                },
+                {
+                    heading: "Cryotherapy Features",
+                    content: "• Removable medical-grade gel pad for cold and hot therapy\n• Provides pain relief through effective temperature management"
+                }
+            ],
+            features: [
+                { img: CLD.kneesleevecomingsoonlatest, title: "KO UNDERSLEEVE", desc: "Enhanced Comfort\n T-Shirt Soft" }
             ]
         },
         section2: {
-            title: "Advanced Dual Axis Hinges & Cryotherapy", body: "Moves on two planes of motion independently. Accurately mirrors natural knee motion. ROM Unicentric Hinges control flexion and extension. Adjustable in 15-degree increments from full lockout to full range of motion. Removable medical-grade gel pad for cold and hot therapy. Provides pain relief through effective temperature management.", features: [
-                { img: CLD.kneeHinge1, title: "Dual Axis Hinges", desc: "Two Planes of Motion\nMirrors Natural Knee" },
-                { img: CLD.kneeHinge2, title: "ROM Unicentric", desc: "Controls Flexion\n& Extension" },
-                { img: CLD.kneeStrap1, title: "15° Increments", desc: "Full Lockout to\nFull Range of Motion" },
-                { img: CLD.kneeCryoPad, title: "Cryotherapy", desc: "Medical-Grade Gel Pad\nCold & Hot Therapy" },
+            title: "", body: "",
+            blocks: [
+                {
+                    heading: "Enhanced Comfort and Wearability",
+                    content: "• Multilayered blend of proprietary foam and neoprene\n• Micronized velvet sheathing for added comfort\n• Dual counter strap and wrap-around anterior closure system\n• Easy tip grip strap for frictionless donning and doffing\n• Customizable compression with a circular buttress pad for added protection\n• Adjustable Fit, sizes SM to 2X or 3X to 7X"
+                },
+                {
+                    heading: "Innovative Undersleeve",
+                    content: "• Silky soft Knee Orthosis Undersleeve included\n• Adds light compression and warmth to the knee\n• Creates a barrier for skin protection, enhancing cleanliness and extending device longevity"
+                }
+            ],
+            features: [
+                { img: CLD.kneesInnercomingsoonlatest, title: "CRYO GEL PAD", desc: "Easily Removeable\n Hot/Cold Therapy" }
             ]
-        },
+        }
     }
 };
 
@@ -178,6 +222,7 @@ const silverTextSoft: React.CSSProperties = {
 
 function ProductDetail({ onBack, productIds }: { onBack: () => void; productIds: string[] }) {
     const isSingle = productIds.length === 1;
+    const introTitle = isSingle ? PRODUCTS[productIds[0]]?.introTitle : undefined;
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -216,9 +261,14 @@ function ProductDetail({ onBack, productIds }: { onBack: () => void; productIds:
                         const product = PRODUCTS[id];
                         return (
                             <div key={id} className={`flex flex-col items-center ${isSingle ? 'md:col-span-2' : ''}`}>
-                                <div className="relative flex items-center justify-center" style={{ width: "100%", height: "clamp(260px,38vw,480px)" }}>
+                                <div className="relative flex items-center justify-center" style={{ width: "100%", height: isSingle ? "auto" : "clamp(260px,38vw,480px)" }}>
                                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                                    <img src={product.image} alt={product.name} style={{ maxWidth: isSingle ? "50%" : "100%", maxHeight: "100%", objectFit: "contain", filter: "drop-shadow(0 0 60px rgba(91,155,255,0.85)) drop-shadow(0 30px 80px rgba(22,81,209,0.6))" }} />
+                                    <img src={product.image} alt={product.name} style={{
+                                        maxWidth: isSingle ? "50%" : "100%",
+                                        maxHeight: isSingle ? "clamp(260px,38vw,480px)" : "100%",
+                                        objectFit: "contain",
+                                        filter: "drop-shadow(0 0 60px rgba(91,155,255,0.85)) drop-shadow(0 30px 80px rgba(22,81,209,0.6))"
+                                    }} />
                                 </div>
                                 <h2 className="font-nexa font-black uppercase mt-4 text-center" style={{ fontSize: "clamp(1rem,2.2vw,1.8rem)", letterSpacing: "0.05em", ...silverMetallic }}>{product.name}</h2>
                             </div>
@@ -226,16 +276,34 @@ function ProductDetail({ onBack, productIds }: { onBack: () => void; productIds:
                     })}
                 </div>
 
-                {/* --- ALIGNMENT FIX: Added flex flex-col and mt-auto to feature grid --- */}
+                {/* Main Intro Heading */}
+                {introTitle && (
+                    <h2 className="font-nexa font-black uppercase text-center mb-8 sm:mb-12" style={{ fontSize: "clamp(0.9rem,1.8vw,1.6rem)", ...blueMetallic }}>
+                        {introTitle}
+                    </h2>
+                )}
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
                     {sectionsToRender.map((section, si) => (
                         <div key={si} className="flex flex-col">
                             <div>
-                                <h3 className="font-nexa font-black uppercase text-center mb-3 sm:mb-5" style={{ fontSize: "clamp(0.8rem,1.5vw,1.3rem)", ...blueMetallic }}>{section.title}</h3>
-                                <p className="font-nexa text-[11px] sm:text-[13px] text-left leading-relaxed mb-4 sm:mb-6" style={{ color: "rgba(255,255,255,0.60)" }}>{section.body}</p>
+                                {/* Logic for Blocks vs Normal Title/Body */}
+                                {section.blocks ? (
+                                    section.blocks.map((block, bi) => (
+                                        <div key={bi} className={bi > 0 ? "mt-6 sm:mt-8" : ""}>
+                                            <h3 className="font-nexa font-black uppercase text-left mb-3 sm:mb-5" style={{ fontSize: "clamp(0.8rem,1.5vw,1.3rem)", ...blueMetallic }}>{block.heading}</h3>
+                                            <p className="font-nexa text-[11px] sm:text-[13px] text-left leading-relaxed mb-4 sm:mb-6 whitespace-pre-line" style={{ color: "rgba(255,255,255,0.60)" }}>{block.content}</p>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <>
+                                        <h3 className="font-nexa font-black uppercase text-center mb-3 sm:mb-5" style={{ fontSize: "clamp(0.8rem,1.5vw,1.3rem)", ...blueMetallic }}>{section.title}</h3>
+                                        <p className="font-nexa text-[11px] sm:text-[13px] text-left leading-relaxed mb-4 sm:mb-6 whitespace-pre-line" style={{ color: "rgba(255,255,255,0.60)" }}>{section.body}</p>
+                                    </>
+                                )}
                             </div>
-                            {/* mt-auto will push this grid to the bottom, forcing both sides to align */}
-                            <div className="grid grid-cols-2 gap-3 sm:gap-4 mt-auto">
+
+                            <div className={`grid gap-3 sm:gap-4 mt-auto ${section.features.length === 1 ? 'grid-cols-1 max-w-sm mx-auto w-full' : 'grid-cols-2'}`}>
                                 {section.features.map((f, i) => (
                                     <div key={i} className="flex flex-col items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-2xl" style={{ background: "rgba(8,12,42,0.7)", border: "1px solid rgba(91,155,255,0.15)" }}>
                                         <div className="relative flex items-center justify-center" style={{ width: "clamp(100px,15vw,200px)", height: "clamp(100px,15vw,200px)" }}>
@@ -264,7 +332,7 @@ function ProductDetail({ onBack, productIds }: { onBack: () => void; productIds:
 }
 
 /* ══════════════════════════════════════════════════════════════
-   ORBITAL SHOWCASE (WITH SLOW SPEED + FIXED MOUSE DRAG)
+   ORBITAL SHOWCASE
    ══════════════════════════════════════════════════════════════ */
 function OrbitalShowcase({ products, onItemClick, centerY = 50 }: {
     products: { src: string; label: string; clickable: boolean; ids: string[] }[];
@@ -286,7 +354,6 @@ function OrbitalShowcase({ products, onItemClick, centerY = 50 }: {
     const mouseSmooth = useRef({ x: 0, y: 0 });
     const snapTargetRef = useRef<number | null>(null);
 
-    // Drag states
     const isDragging = useRef(false);
     const dragStartX = useRef(0);
     const dragStartAngle = useRef(0);
@@ -317,26 +384,24 @@ function OrbitalShowcase({ products, onItemClick, centerY = 50 }: {
         return () => window.removeEventListener("mousemove", handle);
     }, []);
 
-    // Global Drag Listeners (FIXED DIRECTION & SMOOTH RESUME)
     useEffect(() => {
         const onMouseMove = (e: MouseEvent) => {
             if (!isDragging.current) return;
             const deltaX = e.clientX - dragStartX.current;
-            angleRef.current = dragStartAngle.current + deltaX * 0.004; // Fixed direction (+deltaX)
+            angleRef.current = dragStartAngle.current + deltaX * 0.004;
         };
         const onMouseUp = () => {
             if (isDragging.current) {
                 isDragging.current = false;
                 setDragging(false);
-                // Pause auto-rotation for 4 seconds after dragging so it doesn't jump
                 pauseUntilRef.current = performance.now() + 4000;
-                prevFrontRef.current = -1; // Force re-snap to nearest item
+                prevFrontRef.current = -1;
             }
         };
         const onTouchMove = (e: TouchEvent) => {
             if (!isDragging.current) return;
             const deltaX = e.touches[0].clientX - dragStartX.current;
-            angleRef.current = dragStartAngle.current + deltaX * 0.004; // Fixed direction (+deltaX)
+            angleRef.current = dragStartAngle.current + deltaX * 0.004;
         };
         const onTouchEnd = () => {
             if (isDragging.current) {
@@ -387,7 +452,7 @@ function OrbitalShowcase({ products, onItemClick, centerY = 50 }: {
 
     useEffect(() => {
         let raf: number;
-        const speed = 0.0015;
+        const speed = 0.0028;
         const pauseDuration = 5000;
         const n = products.length;
         const TWO_PI = Math.PI * 2;
